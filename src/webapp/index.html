@@ -16,6 +16,8 @@
   --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --tamil:'Noto Serif Tamil','Latha',serif;
 }
 *{box-sizing:border-box}
+*{scrollbar-width:thin;scrollbar-color:rgba(227,185,95,.35) transparent}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(227,185,95,.3);border-radius:8px}::-webkit-scrollbar-track{background:transparent}
 html{scroll-behavior:smooth;overflow-x:clip}
 body{margin:0;background:var(--void);color:var(--parch);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
@@ -47,7 +49,7 @@ body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opa
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:120px 20px 80px;position:relative;overflow:hidden}
+  padding:120px 20px 80px;position:relative;overflow-x:clip}
 .orbits{position:absolute;top:50%;left:50%;width:min(1100px,150vw);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.55}
 .orbits svg{width:100%;height:100%;animation:spin 180s linear infinite}
 .halo{position:absolute;top:50%;left:50%;width:560px;height:560px;transform:translate(-50%,-50%);border-radius:50%;
@@ -131,7 +133,7 @@ h2.title em{color:var(--gold-hi)}
   background:radial-gradient(circle,#c8924e 30%,#7a4a1c 70%)}
 .board::before{left:calc(var(--hx,56px) - 11px)}.board::after{right:calc(var(--hx,56px) - 11px)}
 .leaves{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;padding:16px 0}
-.ola{position:relative;opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0ms);cursor:pointer}
+.ola{position:relative;animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0ms);cursor:pointer}
 .ola-leaf,.leaf-input{position:relative;color:#2a1706;
   background:
     radial-gradient(circle at 16% 72%,rgba(120,66,20,.20) 0 5px,transparent 13px),
@@ -172,12 +174,13 @@ h2.title em{color:var(--gold-hi)}
   .bundle{--hx:26px}
   .ola-leaf{border-radius:22px/50%;padding:18px 48px}.ola-ta{font-size:16px}.ola-cap{margin:8px 10px 0}
 }
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes shimmer{to{background-position:-200% 0}}
 
 /* papers */
 .papers{display:grid;gap:14px;margin-top:10px}
 .paper{display:block;text-decoration:none;background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:18px;padding:18px 22px;
-  transition:border-color .2s,transform .2s;opacity:0;animation:rise .7s forwards;animation-delay:var(--d,0ms)}
+  transition:border-color .2s,transform .2s;animation:rise .7s both;animation-delay:var(--d,0ms)}
 .paper:hover{border-color:var(--gold);transform:translateX(4px)}
 .paper .meta{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .pill{border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--gold)}
@@ -220,7 +223,7 @@ h2.title em{color:var(--gold-hi)}
 @media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0}}
 .m-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px}
 .m-head .ref{font-family:var(--serif);font-size:26px}
-.m-head a{margin-left:auto;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+.m-head a{margin-left:0;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px}
 .m-head a:hover{border-color:var(--gold)}
 .m-en{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--dim);margin:22px 0 0;text-align:center}
 .concept-link{display:inline-flex;gap:10px;align-items:center;margin:26px 0 8px;background:rgba(227,185,95,.08);border:1px solid rgba(227,185,95,.4);
@@ -240,7 +243,7 @@ h2.title em{color:var(--gold-hi)}
 .m-section .note{font-size:12.5px;color:var(--dim);margin:0 0 16px}
 .real{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:760px){.real{grid-template-columns:1fr}}
-.real-card{border-radius:18px;padding:20px;background:linear-gradient(160deg,rgba(143,211,176,.08),rgba(22,20,34,.4));border:1px solid rgba(143,211,176,.22);opacity:0;animation:rise .7s forwards;animation-delay:var(--d,0ms)}
+.real-card{border-radius:18px;padding:20px;background:linear-gradient(160deg,rgba(143,211,176,.08),rgba(22,20,34,.4));border:1px solid rgba(143,211,176,.22);animation:rise .7s both;animation-delay:var(--d,0ms)}
 .real-card b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:6px;color:#bfe9d3}
 .real-card span{font-size:13.5px;line-height:1.55;color:var(--parch);opacity:.85}
 .skel{height:14px;border-radius:7px;margin:9px 0;background:linear-gradient(100deg,rgba(255,255,255,.05) 30%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.05) 70%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
@@ -249,6 +252,70 @@ h2.title em{color:var(--gold-hi)}
 .orbit-loader::after{content:'';position:absolute;top:-4px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ola,.paper,.real-card{opacity:1!important}.reveal{opacity:1;transform:none}}
+/* search suggestions */
+.suggest{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:30;background:rgba(14,12,24,.97);border:1px solid var(--line);
+  border-radius:18px;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,.6);display:none;text-align:left;max-height:340px;overflow:auto}
+.suggest.show{display:block;animation:sgIn .18s ease}
+@keyframes sgIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.sg-head{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding:8px 12px 4px}
+.sg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;font-size:14.5px;color:var(--parch)}
+.sg:hover,.sg.hi{background:rgba(227,185,95,.12)}
+.sg mark{background:none;color:var(--gold-hi);font-weight:700}
+.sg-k{font-size:11px;color:var(--dim);white-space:nowrap}
+.archive-wrap{position:relative;flex:1;min-width:220px}
+.archive-wrap .archive-search{width:100%}
+.chips.left{justify-content:flex-start;margin:16px 0 0}
+
+/* saving */
+.save-btn{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:rgba(227,185,95,.08);border:1px solid rgba(227,185,95,.45);
+  color:var(--gold-hi);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s}
+.save-btn:hover{background:rgba(227,185,95,.18)}
+.save-btn.on{background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,var(--ember));color:#1b1206;border-color:transparent}
+.ghost-btn{background:none;border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:7px 14px;font-size:12.5px;cursor:pointer;font-family:var(--sans)}
+.ghost-btn:hover{border-color:var(--gold);color:var(--gold-hi)}
+.cap-save{margin-left:auto;background:none;border:1px solid var(--line);color:var(--gold);width:30px;height:30px;border-radius:50%;
+  cursor:pointer;font-size:14px;line-height:1;transition:all .2s;flex:none}
+.cap-save:hover{border-color:var(--gold);background:rgba(227,185,95,.12)}
+.cap-save.on{background:var(--gold);color:#1b1206;border-color:var(--gold)}
+.note-wrap{margin-top:18px}
+.note-wrap label{display:block;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:600}
+.note-wrap textarea{width:100%;min-height:80px;background:rgba(5,6,12,.6);border:1px solid var(--line);border-radius:14px;color:var(--parch);
+  padding:12px 14px;font-family:var(--serif);font-size:17px;resize:vertical;outline:none;overflow-x:hidden;overflow-y:auto}
+.note-wrap textarea:focus{border-color:var(--gold)}
+.note-hint{font-size:11.5px;color:#7d7563}
+.lib-link{display:inline-flex;align-items:center;gap:6px}
+.lib-count{background:var(--gold);color:#1b1206;border-radius:999px;font-size:10.5px;font-weight:800;padding:1px 7px}
+.lib-count:empty{display:none}
+.who .av{cursor:pointer}
+
+/* profile library drawer */
+.drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
+.drawer-bg{position:absolute;inset:0;background:rgba(3,3,8,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .35s}
+.drawer-panel{position:absolute;top:0;right:0;bottom:0;width:min(560px,100%);overflow-y:auto;background:linear-gradient(180deg,#141222,#0b0a15);
+  border-left:1px solid var(--line);padding:34px 30px 60px;transform:translateX(100%);transition:transform .5s cubic-bezier(.2,.8,.2,1);box-shadow:-30px 0 80px rgba(0,0,0,.6)}
+.drawer.open{pointer-events:auto}.drawer.open .drawer-bg{opacity:1}.drawer.open .drawer-panel{transform:none}
+@media(max-width:600px){.drawer-panel{padding:28px 16px 50px}}
+.lib-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.av-big{width:56px;height:56px;font-size:22px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#1b1206;flex:none;
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--ember));box-shadow:0 0 30px rgba(227,185,95,.3)}
+.lib-name{font-family:var(--serif);font-size:30px;line-height:1}
+.lib-sub{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+.lib-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.lib-stats div{background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center}
+.lib-stats b{display:block;font-family:var(--serif);font-size:30px;color:var(--gold-hi);font-weight:500;line-height:1}
+.lib-stats span{font-size:11px;color:var(--dim);letter-spacing:.06em}
+.lib-list{display:flex;flex-direction:column;gap:22px;margin-top:18px}
+.lib-item{--hx:26px}
+.ola-leaf.mini{min-height:74px;padding:14px 50px;border-radius:24px/50%;cursor:pointer}
+.ola-leaf.mini .ola-ta{font-size:15px;-webkit-line-clamp:2}
+.lib-meta{margin:10px 8px 0}
+.lib-date{margin-left:auto;font-size:11.5px;color:#7d7563}
+.lib-note{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parch);margin:4px 0 0;opacity:.85}
+.lib-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.lib-actions .chip{padding:6px 12px;font-size:12px}
+.chip.danger:hover{border-color:#e5785a;color:#f2b4a0;background:rgba(229,120,90,.1)}
+.lib-empty{line-height:1.8}
+
 footer{padding:80px 20px 60px;text-align:center;color:var(--dim);font-size:13px;line-height:1.8;border-top:1px solid var(--line)}
 footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
 .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,40px);opacity:0;background:#1b1826;border:1px solid var(--line);color:var(--parch);
@@ -266,6 +333,7 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
     <a href="#explore">Explore</a>
     <a href="#analyze">Your verse</a>
     <a href="#archive" class="hide-m">Archive</a>
+    <a href="#" class="lib-link" data-lib>My leaves <span class="lib-count" id="libCount"></span></a>
     <span class="who" id="who"></span>
   </nav>
 </header>
@@ -291,6 +359,7 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
   <form class="searchbar reveal" id="heroForm">
     <input id="heroInput" placeholder="Search a cosmic idea — black holes, multiverse, light…" autocomplete="off">
     <button class="btn" type="submit">Explore</button>
+    <div class="suggest" id="heroSuggest" role="listbox"></div>
   </form>
   <div class="chips reveal" id="heroChips"></div>
   <div class="stats reveal">
@@ -333,7 +402,9 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
   <form class="searchbar" id="exploreForm" style="width:100%">
     <input id="exploreInput" placeholder="e.g. speed of light, dark matter, creation of the universe" autocomplete="off">
     <button class="btn" type="submit">Search</button>
+    <div class="suggest" id="exploreSuggest" role="listbox"></div>
   </form>
+  <div class="chips left" id="exploreChips"></div>
   <div id="exploreHead"></div>
   <div id="exploreOut"></div>
 </section>
@@ -379,6 +450,14 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
     <div id="modalBody"></div>
   </div>
 </div>
+<!-- PROFILE LIBRARY -->
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-bg" data-lib-close></div>
+  <div class="drawer-panel" role="dialog" aria-label="Your saved leaves">
+    <button class="modal-x" data-lib-close aria-label="Close">×</button>
+    <div id="libBody"></div>
+  </div>
+</aside>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -447,7 +526,8 @@ function leafCard(v, i = 0) {
   return `<article class="ola" data-id="${esc(v.id)}" style="--d:${i*70}ms">
     <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
     <div class="ola-cap">
-      <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span></div>
+      <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
+        <button class="cap-save ${SAVED[v.id] ? 'on' : ''}" data-save="${esc(v.id)}" title="${SAVED[v.id] ? 'Saved — click to remove' : 'Save this leaf'}">${SAVED[v.id] ? '★' : '☆'}</button></div>
       ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
       ${v.reason ? `<p class="cap-reason">${esc(v.reason)}</p>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
       <div class="cap-foot"><span>${esc(v.ref)}</span><span class="open">Read deeper →</span></div>
@@ -473,7 +553,8 @@ const loading = msg => `<div class="loading-line"><span class="orbit-loader"></s
 let searchTok = 0;
 async function runSearch(topic, key) {
   topic = (topic || '').trim(); if (!topic) return;
-  closeModal();
+  closeModal(); closeLibrary();
+  document.querySelectorAll('.suggest').forEach(b => b.classList.remove('show'));
   $('#exploreInput').value = topic; $('#heroInput').value = topic;
   $('#explore').scrollIntoView({behavior:'smooth'});
   const tok = ++searchTok;
@@ -509,16 +590,21 @@ function openModalShell(html) {
 function closeModal() {
   $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); modalTok++;
 }
-function modalHtml(v) {
+function modalHtml(v, fromSaved) {
   return `
     <div class="m-head">
       <span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
       <span class="ref">${esc(v.source ? v.source + ' · ' : '')}${esc(v.ref || 'Your verse')}</span>
+      <button class="save-btn" id="saveBtn" data-modal-save>☆ Save this leaf</button>
+      ${fromSaved ? '<button class="ghost-btn" data-refresh title="Ask the AI again">↻ Fresh reading</button>' : ''}
       ${v.url ? `<a href="${esc(v.url)}" target="_blank" rel="noopener">Original source ↗</a>` : ''}
     </div>
     ${bigLeaf(v.tamil)}
     ${v.english ? `<p class="m-en">“${esc(v.english)}”</p>` : ''}
     ${v.concept ? `<button class="concept-link" data-topic="${esc(v.concept)}">✦ ${esc(v.concept)} <span>explore this idea across all verses →</span></button>` : ''}
+    <div class="note-wrap" id="noteWrap" style="display:none"><label for="noteInput">Your note on this leaf</label>
+      <textarea id="noteInput" maxlength="1000" placeholder="Why does this leaf matter to you? What would you tell your professor?"></textarea>
+      <span class="note-hint" id="noteHint">Saved automatically to your leaves</span></div>
     <div class="m-grid">
       <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
       <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
@@ -539,15 +625,27 @@ function deepFailed(tok, msg) {
   $('#mLiteral').innerHTML = $('#mAnalogy').innerHTML = `<p style="color:var(--dim)">The AI is busy — ${esc(msg)}</p>`;
   $('#mReal').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
 }
-async function openVerse(v) {
+async function openVerse(v, opts = {}) {
   if (!v) return;
+  v = {...v};
+  if (!v.id || v.id === 'custom') v.id = 'custom:' + hashStr(v.tamil);
   const tok = ++modalTok;
-  openModalShell(modalHtml(v));
-  api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept}).then(d => fillDeep(d, tok)).catch(e => deepFailed(tok, e.message));
+  const saved = opts.fresh ? null : SAVED[v.id];
+  const cachedDeep = saved && saved.deep && saved.deep.literal ? saved.deep : null;
+  const cachedPapers = v.papers || (saved && saved.papers && saved.papers.length ? saved.papers : null);
+  CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
+  openModalShell(modalHtml(v, !!cachedDeep));
+  setSaveBtn(!!SAVED[v.id]);
+  const keepSaved = () => { if (SAVED[v.id] && tok === modalTok) saveLeaf(CUR.verse, CUR.deep, CUR.papers, true); };
+  if (cachedDeep) fillDeep(cachedDeep, tok);
+  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept})
+    .then(d => { if (tok !== modalTok) return; CUR.deep = d; fillDeep(d, tok); keepSaved(); })
+    .catch(e => deepFailed(tok, e.message));
   if (v.concept) {
-    const p = v.papers ? Promise.resolve({papers: v.papers}) : api('/api/papers?q=' + encodeURIComponent(v.concept));
-    p.then(d => { if (tok === modalTok) $('#mPapers').innerHTML = paperList(d.papers); })
-     .catch(() => { if (tok === modalTok) $('#mPapers').innerHTML = '<div class="empty">arXiv did not respond. Try again shortly.</div>'; });
+    if (cachedPapers) $('#mPapers').innerHTML = paperList(cachedPapers);
+    else api('/api/papers?q=' + encodeURIComponent(v.concept))
+      .then(d => { if (tok !== modalTok) return; CUR.papers = d.papers; $('#mPapers').innerHTML = paperList(d.papers); keepSaved(); })
+      .catch(() => { if (tok === modalTok) $('#mPapers').innerHTML = '<div class="empty">arXiv did not respond. Try again shortly.</div>'; });
   }
 }
 async function readCustom(text) {
@@ -574,12 +672,21 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 /* ---------------- global clicks: everything connects ---------------- */
 document.addEventListener('click', e => {
   if (e.target.closest('[data-close]')) return closeModal();
+  if (e.target.closest('[data-lib-close]')) return closeLibrary();
+  if (e.target.closest('[data-lib]') || e.target.closest('.who .av') || e.target.closest('.who .name')) { e.preventDefault(); return openLibrary(); }
+  const qs = e.target.closest('[data-save]');
+  if (qs) { const id = qs.dataset.save; return SAVED[id] ? unsaveLeaf(id) : saveLeaf(BY_ID[id]); }
+  if (e.target.closest('[data-modal-save]')) { if (!CUR) return; return SAVED[CUR.verse.id] ? unsaveLeaf(CUR.verse.id) : saveLeaf(CUR.verse, CUR.deep, CUR.papers); }
+  if (e.target.closest('[data-refresh]')) { if (CUR) openVerse(CUR.verse, {fresh: true}); return; }
+  const os = e.target.closest('[data-open-saved]');
+  if (os) { const it = SAVED[os.dataset.openSaved]; if (it) { closeLibrary(); openVerse({...it.verse, id: it.id}); } return; }
+  const un = e.target.closest('[data-unsave]'); if (un) return unsaveLeaf(un.dataset.unsave);
   const leaf = e.target.closest('.ola[data-id]'); if (leaf) return openVerse(BY_ID[leaf.dataset.id]);
   const t = e.target.closest('[data-topic]'); if (t) return runSearch(t.dataset.topic, t.dataset.key);
   const s = e.target.closest('[data-sample]'); if (s) { $('#verseInput').value = SAMPLES[+s.dataset.sample].ta; return readCustom(SAMPLES[+s.dataset.sample].ta); }
-  const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; shown = 24; renderArchive(); }
+  const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; shown = 24; document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('on', b.dataset.filter === filter)); renderList(); }
 });
-addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#drawer').classList.contains('open')) closeLibrary(); else closeModal(); } });
 
 /* ---------------- cosmic map ---------------- */
 async function buildMap() {
@@ -622,35 +729,177 @@ async function buildMap() {
 }
 
 /* ---------------- archive ---------------- */
-let filter = 'AOL', shown = 24;
-const FILTERS = [['AOL','All science'], ['A','Cosmic vision'], ['O','Observed nature'], ['L','Literal fact'], ['M','Metaphor']];
+let filter = 'AOL', shown = 24, archQ = '';
+const FILTERS = [['AOL','All science'], ['A','Cosmic vision'], ['O','Observed nature'], ['L','Literal fact'], ['M','Metaphor'], ['SAVED','★ Saved']];
+const FSET = {AOL:['A','O','L'], A:['A'], O:['O'], L:['L'], M:['M']};
 function renderArchive() {
   $('#filters').innerHTML = FILTERS.map(([k, l]) => `<button class="chip ${k === filter ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('') +
-    `<input class="archive-search" id="archQ" placeholder="Search Tamil, meaning or concept…" value="${esc(archQ)}">`;
+    `<div class="archive-wrap"><input class="archive-search" id="archQ" placeholder="Search leaves — Tamil, meaning or concept…" autocomplete="off"><div class="suggest" id="archSuggest"></div></div>`;
   $('#archQ').addEventListener('input', e => { archQ = e.target.value; shown = 24; renderList(); });
+  attachSuggest($('#archQ'), $('#archSuggest'), t => { $('#archQ').value = t; archQ = t; shown = 24; renderList(); }, 'verses');
   renderList();
 }
-let archQ = '';
 function renderList() {
   const q = archQ.trim().toLowerCase();
-  let rows = VERSES.filter(v => filter.includes(v.label));
+  let rows = filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => FSET[filter].includes(v.label));
   if (q) rows = rows.filter(v => (v.tamil + ' ' + v.english + ' ' + v.concept + ' ' + v.meaning + ' ' + v.ref).toLowerCase().includes(q));
   $('#count').textContent = `${rows.length.toLocaleString()} leaves`;
-  $('#archiveOut').innerHTML = rows.length ? bundle(rows.slice(0, shown).map((v, i) => leafCard(v, i % 24)).join('')) : '<div class="empty">No leaves match.</div>';
+  $('#archiveOut').innerHTML = rows.length ? bundle(rows.slice(0, shown).map((v, i) => leafCard(v, i % 24)).join(''))
+    : `<div class="empty">${filter === 'SAVED' && !q ? 'You have not saved any leaves yet — tap ☆ on any leaf.' : 'No leaves match.'}</div>`;
   $('#moreBtn').style.display = rows.length > shown ? 'block' : 'none';
 }
 $('#moreBtn').addEventListener('click', () => { shown += 24; renderList(); });
 
+/* ---------------- saved leaves ---------------- */
+let SAVED = {}, CUR = null, ME = '';
+function hashStr(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) | 0; return (h >>> 0).toString(36); }
+function updateLibCount() { $('#libCount').textContent = Object.keys(SAVED).length || ''; }
+function refreshSaveMarks() {
+  document.querySelectorAll('[data-save]').forEach(b => { const on = !!SAVED[b.dataset.save]; b.classList.toggle('on', on); b.textContent = on ? '★' : '☆'; b.title = on ? 'Saved — click to remove' : 'Save this leaf'; });
+  if (CUR && $('#saveBtn')) setSaveBtn(!!SAVED[CUR.verse.id]);
+  if (filter === 'SAVED') renderList();
+}
+function setSaveBtn(on) {
+  const b = $('#saveBtn'); if (!b) return;
+  b.classList.toggle('on', on); b.textContent = on ? '★ Saved to your leaves' : '☆ Save this leaf';
+  const w = $('#noteWrap');
+  if (w) { const was = w.style.display; w.style.display = on ? 'block' : 'none'; if (on && was !== 'block') $('#noteInput').value = (SAVED[CUR.verse.id] || {}).note || ''; }
+}
+async function loadSaved() {
+  try { const items = await api('/api/saved'); SAVED = {}; items.forEach(i => SAVED[i.id] = i); updateLibCount(); refreshSaveMarks(); } catch (e) {}
+}
+async function saveLeaf(v, deep, papers, quiet) {
+  if (!v) return;
+  const {papers: _p, reason: _r, ...verse} = v;
+  try {
+    const item = await api('/api/saved', {id: v.id, verse, deep: deep || {}, papers: papers || [], note: (SAVED[v.id] || {}).note || ''});
+    SAVED[item.id] = item; updateLibCount(); refreshSaveMarks(); renderLibraryIfOpen();
+    if (!quiet) toast('Saved to your leaves ★');
+  } catch (e) { toast(e.message); }
+}
+async function unsaveLeaf(id) {
+  const prev = SAVED[id]; if (!prev) return;
+  delete SAVED[id]; updateLibCount(); refreshSaveMarks(); renderLibraryIfOpen();
+  try { await api('/api/saved/delete', {id}); toast('Removed from your leaves'); }
+  catch (e) { SAVED[id] = prev; updateLibCount(); refreshSaveMarks(); renderLibraryIfOpen(); toast(e.message); }
+}
+let noteTimer;
+document.addEventListener('input', e => {
+  if (e.target.id !== 'noteInput' || !CUR || !SAVED[CUR.verse.id]) return;
+  const id = CUR.verse.id, note = e.target.value;
+  $('#noteHint').textContent = 'Saving…';
+  clearTimeout(noteTimer);
+  noteTimer = setTimeout(async () => {
+    try { await api('/api/saved/note', {id, note}); if (SAVED[id]) SAVED[id].note = note; $('#noteHint') && ($('#noteHint').textContent = 'Saved ✓'); renderLibraryIfOpen(); }
+    catch (err) { $('#noteHint') && ($('#noteHint').textContent = 'Could not save note — ' + err.message); }
+  }, 600);
+});
+
+/* ---------------- profile library drawer ---------------- */
+let libQ = '';
+function openLibrary() {
+  $('#drawer').classList.add('open'); $('#drawer').setAttribute('aria-hidden', 'false'); document.body.classList.add('lock');
+  renderLibrary(); $('.drawer-panel').scrollTop = 0;
+}
+function closeLibrary() {
+  if (!$('#drawer').classList.contains('open')) return;
+  $('#drawer').classList.remove('open'); $('#drawer').setAttribute('aria-hidden', 'true');
+  if (!$('#modal').classList.contains('open')) document.body.classList.remove('lock');
+}
+function renderLibraryIfOpen() { if ($('#drawer').classList.contains('open')) renderLibList(); }
+function renderLibrary() {
+  $('#libBody').innerHTML = `
+    <div class="lib-head"><span class="av-big">${esc((ME || '?').slice(0, 1).toUpperCase())}</span>
+      <div><div class="lib-name">${esc(ME)}</div><div class="lib-sub">Your palm-leaf library</div></div></div>
+    <div class="lib-stats" id="libStats"></div>
+    <input class="archive-search" id="libQ" placeholder="Search your leaves and notes…" autocomplete="off" style="width:100%">
+    <div class="lib-list" id="libList"></div>`;
+  $('#libQ').value = libQ;
+  $('#libQ').addEventListener('input', e => { libQ = e.target.value; renderLibList(); });
+  renderLibList();
+}
+function renderLibList() {
+  const all = Object.values(SAVED).sort((a, b) => (b.saved_at || 0) - (a.saved_at || 0));
+  $('#libStats').innerHTML = `<div><b>${all.length}</b><span>leaves saved</span></div><div><b>${all.filter(i => i.verse.label === 'A').length}</b><span>cosmic visions</span></div><div><b>${all.filter(i => i.note).length}</b><span>with your notes</span></div>`;
+  const q = libQ.trim().toLowerCase();
+  const items = q ? all.filter(i => [i.verse.tamil, i.verse.concept, i.verse.meaning, i.verse.ref, i.note].join(' ').toLowerCase().includes(q)) : all;
+  $('#libList').innerHTML = items.length ? items.map(libItem).join('')
+    : all.length ? '<div class="empty">No saved leaf matches.</div>'
+    : '<div class="empty lib-empty">No leaves saved yet.<br>Open any verse and tap <b>☆ Save this leaf</b> — the full reading, its papers and your own notes are kept here.</div>';
+}
+function libItem(i) {
+  const v = i.verse, d = new Date((i.saved_at || 0) * 1000).toLocaleDateString(undefined, {day: 'numeric', month: 'short', year: 'numeric'});
+  return `<article class="lib-item">
+    <div class="ola-leaf mini" data-open-saved="${esc(i.id)}"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
+    <div class="lib-meta">
+      <div class="cap-top"><span class="src">${esc(v.source || 'Your verse')}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span><span class="lib-date">${d}</span></div>
+      ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
+      ${i.note ? `<p class="lib-note">“${esc(i.note)}”</p>` : ''}
+      <div class="lib-actions"><button class="chip" data-open-saved="${esc(i.id)}">Open reading →</button>
+        ${v.concept ? `<button class="chip" data-topic="${esc(v.concept)}">Explore this idea</button>` : ''}
+        <button class="chip danger" data-unsave="${esc(i.id)}">Remove</button></div>
+    </div></article>`;
+}
+
+/* ---------------- search suggestions ---------------- */
+let SUGG = [];
+function buildSuggestions() {
+  const m = new Map();
+  const add = (text, kind, n = 0) => { const k = text.toLowerCase().trim(); if (!k) return; if (!m.has(k)) m.set(k, {text, kind, n}); else m.get(k).n += n; };
+  Object.values(TOPIC_NAMES).forEach(t => add(t, 'Theme'));
+  HERO_CHIPS.forEach(t => add(t, 'Popular'));
+  ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Quantum entanglement', 'Seasons', 'Time', 'Light', 'Water cycle', 'Creation of the universe']
+    .forEach(t => add(t, 'Science'));
+  VERSES.filter(v => FSET.AOL.includes(v.label) && v.concept).forEach(v => add(v.concept, 'In the verses', 1));
+  SUGG = [...m.values()];
+}
+const markHit = (t, q) => { const i = q ? t.toLowerCase().indexOf(q) : -1; return i < 0 ? esc(t) : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length)); };
+function attachSuggest(input, box, onPick, scope) {
+  let items = [], hi = -1;
+  const pool = () => scope === 'verses' ? SUGG.filter(s => s.kind === 'In the verses' || s.kind === 'Theme') : SUGG;
+  const render = () => {
+    const q = input.value.trim().toLowerCase();
+    items = q ? pool().filter(s => s.text.toLowerCase().includes(q))
+                .sort((a, b) => (b.text.toLowerCase().startsWith(q) - a.text.toLowerCase().startsWith(q)) || (b.n - a.n)).slice(0, 8)
+              : pool().filter(s => s.kind === 'Theme').slice(0, 8);
+    hi = -1;
+    if (!items.length) { box.classList.remove('show'); return; }
+    box.innerHTML = (q ? '' : '<div class="sg-head">Themes found in the verses</div>') +
+      items.map((s, i) => `<div class="sg" data-i="${i}" role="option"><span>${markHit(s.text, q)}</span><span class="sg-k">${esc(s.kind)}${s.n > 1 ? ' · ' + s.n + ' verses' : ''}</span></div>`).join('');
+    box.classList.add('show');
+  };
+  const pick = i => { const it = items[i]; if (!it) return; box.classList.remove('show'); input.value = it.text; onPick(it.text); };
+  input.addEventListener('input', render);
+  input.addEventListener('focus', render);
+  input.addEventListener('blur', () => setTimeout(() => box.classList.remove('show'), 160));
+  input.addEventListener('keydown', e => {
+    if (!box.classList.contains('show')) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault(); hi = (hi + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      box.querySelectorAll('.sg').forEach((el, i) => el.classList.toggle('hi', i === hi));
+    } else if (e.key === 'Enter' && hi >= 0) { e.preventDefault(); pick(hi); }
+    else if (e.key === 'Escape') { e.stopPropagation(); box.classList.remove('show'); }
+  });
+  box.addEventListener('mousedown', e => { const el = e.target.closest('.sg'); if (el) { e.preventDefault(); pick(+el.dataset.i); } });
+}
+
 /* ---------------- boot ---------------- */
 api('/api/me').then(me => {
+  ME = me.username;
   $('#who').innerHTML = `<span class="av">${esc(me.username.slice(0,1).toUpperCase())}</span><span class="name">${esc(me.username)}</span><button id="logout">Sign out</button>`;
   $('#logout').addEventListener('click', async () => { await fetch('/api/logout', {method:'POST', body:'{}'}); location.href = '/login'; });
 }).catch(() => {});
 (async () => {
   document.querySelectorAll('[data-count]').forEach(el => countUp(el, +el.dataset.count));
   try {
+    await loadSaved();
     VERSES = await api('/api/verses');
     VERSES.forEach(v => BY_ID[v.id] = v);
+    buildSuggestions();
+    attachSuggest($('#heroInput'), $('#heroSuggest'), t => runSearch(t));
+    attachSuggest($('#exploreInput'), $('#exploreSuggest'), t => runSearch(t));
+    $('#exploreChips').innerHTML = [...Object.values(TOPIC_NAMES).slice(0, 7), ...HERO_CHIPS.slice(0, 4)]
+      .filter((t, i, a) => a.indexOf(t) === i).map(t => `<button class="chip" data-topic="${esc(t)}">${esc(t)}</button>`).join('');
     countUp($('#statScience'), VERSES.filter(v => 'AOL'.includes(v.label)).length);
     renderArchive();
   } catch (e) { toast('Could not load verses: ' + e.message); }

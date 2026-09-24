@@ -1,6 +1,7 @@
 *
 !src/app.py
 !src/auth.py
+!src/library.py
 !src/gemini_label.py
 !src/research_report.py
 !src/webapp/

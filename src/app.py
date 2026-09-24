@@ -27,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gemini_label as g          # noqa: E402
 import research_report as rr      # noqa: E402
 import auth                        # noqa: E402
+import library                     # noqa: E402
 
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", 8765))
@@ -225,6 +226,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._static("index.html")
         if path == "/api/me":
             return self._json(200, {"username": user})
+        if path == "/api/saved":
+            return self._json(200, library.list_items(user))
         if path == "/api/verses":
             return self._json(200, verse_list())
         if path == "/api/topics":
@@ -271,8 +274,16 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/logout":
             return self._json(200, {"ok": True}, headers=[("Set-Cookie", auth.cookie_header("", self._secure(), clear=True))])
 
-        if self._gate(path) is None:
+        user = self._gate(path)
+        if user is None:
             return
+        if path == "/api/saved":
+            item, err = library.upsert(user, body)
+            return self._json(400, {"error": err}) if err else self._json(200, item)
+        if path == "/api/saved/delete":
+            return self._json(200, {"ok": library.remove(user, str(body.get("id", "")))})
+        if path == "/api/saved/note":
+            return self._json(200, {"ok": library.set_note(user, str(body.get("id", "")), body.get("note", ""))})
         if path == "/api/search_topic":
             topic = (body.get("topic") or "").strip()[:200]
             if not topic:
