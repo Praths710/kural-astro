@@ -1,0 +1,10 @@
+*
+!src/app.py
+!src/auth.py
+!src/gemini_label.py
+!src/research_report.py
+!src/webapp/
+!data/raw/thirukkural.json
+!data/processed/thiruvarutpa.jsonl
+!data/processed/arxiv_cache.json
+!data/labels/gemini_labels_dedup.json

@@ -1,0 +1,10 @@
+*.tmp
+.claude/
+.env
+.venv/
+__pycache__/
+colab_upload/
+data/.secret
+data/processed/arutpa_emb.npy
+data/raw/thiruvarutpa/
+data/users.json

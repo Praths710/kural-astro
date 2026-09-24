@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kural Astro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#05060c; --night:#0b0d1a; --glass:rgba(22,20,34,.55); --line:rgba(227,185,95,.18);
+  --gold:#e3b95f; --gold-hi:#f6d58c; --ember:#c8743a; --parch:#efe3c8; --dim:#9d937e;
+  --ink:#3a2410; --leaf1:#ecd9a6; --leaf2:#d7bc82;
+  --A:#e3b95f; --O:#8fd3b0; --L:#e59a6f; --M:#8a7d64; --N:#5b5446;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --tamil:'Noto Serif Tamil','Latha',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--void);color:var(--parch);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:var(--gold-hi)}
+#sky{position:fixed;inset:0;z-index:-2;display:block}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(5,6,12,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:12px 32px;border-color:var(--line)}
+.brand{font-family:var(--serif);font-size:24px;letter-spacing:.5px;color:var(--parch);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand .ta{font-family:var(--tamil);font-size:18px;color:var(--gold)}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:13.5px;letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover{color:var(--gold-hi)}
+.nav-links{align-items:center}
+.who{display:flex;align-items:center;gap:10px;padding-left:18px;border-left:1px solid var(--line);font-size:13px;color:var(--parch)}
+.who:empty{display:none}
+.who .av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;color:#1b1206;
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--ember))}
+.who button{background:none;border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:5px 11px;font-size:12px;cursor:pointer;font-family:var(--sans)}
+.who button:hover{border-color:var(--gold);color:var(--gold-hi)}
+@media(max-width:760px){.who{padding-left:10px}.who .name{display:none}}
+@media(max-width:760px){.nav{padding:14px 16px}.nav.solid{padding:10px 16px}.nav-links{gap:16px}.nav-links a{font-size:12.5px;white-space:nowrap}
+  .nav-links a.hide-m{display:none}.brand{font-size:21px}.brand .ta{display:none}.scrollcue{display:none}}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:120px 20px 80px;position:relative;overflow:hidden}
+.orbits{position:absolute;top:50%;left:50%;width:min(1100px,150vw);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:.55}
+.orbits svg{width:100%;height:100%;animation:spin 180s linear infinite}
+.halo{position:absolute;top:50%;left:50%;width:560px;height:560px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(227,185,95,.16),rgba(200,116,58,.06) 45%,transparent 70%);filter:blur(10px);pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;position:relative}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,7.4vw,96px);line-height:1.02;margin:0 0 26px;position:relative;letter-spacing:-.5px}
+.hero h1 em{font-style:italic;color:var(--gold-hi);text-shadow:0 0 40px rgba(227,185,95,.35)}
+.hero-verse{position:relative;max-width:640px;margin:0 auto 40px}
+.hero-verse .ta{font-family:var(--tamil);font-size:clamp(17px,2.2vw,22px);color:var(--parch);opacity:.92}
+.hero-verse .tr{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--dim);margin-top:8px}
+.searchbar{position:relative;width:min(640px,100%);display:flex;align-items:center;background:rgba(18,16,28,.6);
+  border:1px solid rgba(227,185,95,.35);border-radius:999px;padding:6px 6px 6px 24px;backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 0 rgba(227,185,95,.0),0 20px 60px rgba(0,0,0,.5);transition:box-shadow .3s,border-color .3s}
+.searchbar:focus-within{border-color:var(--gold);box-shadow:0 0 0 6px rgba(227,185,95,.1),0 20px 60px rgba(0,0,0,.5)}
+.searchbar input{flex:1;background:none;border:none;outline:none;color:var(--parch);font-size:16px;font-family:var(--sans);min-width:0;padding:12px 0}
+.searchbar input::placeholder{color:#7d7563}
+.btn{background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,var(--ember));color:#1b1206;border:none;border-radius:999px;
+  padding:14px 26px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(227,185,95,.35)}
+.btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;max-width:720px;position:relative}
+.chip{background:rgba(227,185,95,.06);border:1px solid var(--line);color:var(--parch);padding:8px 16px;border-radius:999px;
+  font-size:13px;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.chip:hover{border-color:var(--gold);background:rgba(227,185,95,.14);color:var(--gold-hi)}
+.stats{display:flex;gap:48px;justify-content:center;margin-top:64px;flex-wrap:wrap;position:relative}
+.stat .n{font-family:var(--serif);font-size:40px;color:var(--gold-hi);line-height:1}
+.stat .l{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+.scrollcue{position:relative;margin-top:56px;font-size:11px;letter-spacing:.25em;color:var(--dim);text-transform:uppercase}
+.scrollcue::after{content:'';display:block;width:1px;height:38px;margin:10px auto 0;background:linear-gradient(var(--gold),transparent);animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:600px){.stats{gap:26px}.stat .n{font-size:30px}.searchbar{padding-left:18px}.btn{padding:12px 18px}}
+
+/* ---------- sections ---------- */
+section.block{padding:120px 20px;max-width:1160px;margin:0 auto;position:relative}
+.kicker{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+h2.title{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.6vw,58px);line-height:1.05;margin:0 0 16px}
+h2.title em{color:var(--gold-hi)}
+.lede{color:var(--dim);max-width:620px;font-size:16px;line-height:1.65;margin:0 0 48px}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:600px){section.block{padding:80px 16px}}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;position:relative}
+.steps::before{content:'';position:absolute;top:44px;left:12%;right:12%;height:1px;background:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 14px);opacity:.4}
+.step{background:rgba(22,20,34,.82);border:1px solid var(--line);border-radius:22px;padding:30px 26px;position:relative}
+.step .ic{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:22px;margin-bottom:20px;
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--ember));color:#1b1206;box-shadow:0 0 30px rgba(227,185,95,.35)}
+.step h3{font-family:var(--serif);font-size:25px;font-weight:500;margin:0 0 8px}
+.step p{color:var(--dim);font-size:14.5px;line-height:1.6;margin:0}
+@media(max-width:800px){.steps{grid-template-columns:1fr}.steps::before{display:none}}
+
+/* cosmic map */
+.mapwrap{position:relative;border:1px solid var(--line);border-radius:28px;background:radial-gradient(ellipse at center,rgba(227,185,95,.07),transparent 65%);overflow:hidden}
+#map{width:100%;height:auto;display:block;cursor:default}
+#map .planet{cursor:pointer}
+#map .planet circle.body{transition:r .25s}
+#map .planet:hover circle.glow{opacity:.55}
+#map text{font-family:var(--sans);fill:var(--parch);font-size:14px;pointer-events:none}
+#map text.cnt{fill:var(--dim);font-size:11.5px}
+.maphint{position:absolute;left:24px;bottom:18px;font-size:12px;color:var(--dim)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* explore */
+.explore-bar{display:flex;gap:12px;align-items:center;margin-bottom:22px}
+.explore-bar .searchbar{width:100%}
+#exploreHead{font-family:var(--serif);font-size:30px;margin:34px 0 22px;min-height:36px}
+#exploreHead em{color:var(--gold-hi)}
+/* ---------- ஓலைச்சுவடி: palm-leaf manuscript bundle ---------- */
+.bundle{position:relative;max-width:1000px;margin:0 auto;padding:0 0 4px}
+.bundle::before,.bundle::after{content:'';position:absolute;top:18px;bottom:18px;width:4px;z-index:0;border-radius:2px;
+  background:repeating-linear-gradient(165deg,#5e3812 0 3px,#a8743a 3px 5px,#7a4a1c 5px 8px);box-shadow:1px 0 2px rgba(0,0,0,.5)}
+.bundle::before{left:calc(var(--hx,56px) - 2px)}.bundle::after{right:calc(var(--hx,56px) - 2px)}
+.board{position:relative;z-index:1;height:30px;border-radius:40px/50%;margin:0 6px;
+  background:repeating-linear-gradient(180deg,rgba(0,0,0,.18) 0 1px,transparent 1px 4px),
+    linear-gradient(90deg,rgba(0,0,0,.25),transparent 12%,transparent 88%,rgba(0,0,0,.25)),
+    linear-gradient(180deg,#6b3f1a,#4a2a10 55%,#351d0a);
+  box-shadow:inset 0 2px 0 rgba(255,210,150,.18),0 10px 22px rgba(0,0,0,.55)}
+.board::before,.board::after{content:'';position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;
+  background:radial-gradient(circle,#c8924e 30%,#7a4a1c 70%)}
+.board::before{left:calc(var(--hx,56px) - 11px)}.board::after{right:calc(var(--hx,56px) - 11px)}
+.leaves{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;padding:16px 0}
+.ola{position:relative;opacity:0;animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0ms);cursor:pointer}
+.ola-leaf,.leaf-input{position:relative;color:#2a1706;
+  background:
+    radial-gradient(circle at 16% 72%,rgba(120,66,20,.20) 0 5px,transparent 13px),
+    radial-gradient(circle at 63% 22%,rgba(120,66,20,.14) 0 4px,transparent 11px),
+    radial-gradient(ellipse at 86% 64%,rgba(120,66,20,.16) 0 8px,transparent 20px),
+    repeating-linear-gradient(180deg,rgba(92,54,18,.11) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(180deg,rgba(255,244,210,.10) 0 1px,transparent 1px 7px),
+    linear-gradient(180deg,#c89c58 0%,#e3c78d 22%,#ebd4a0 50%,#e0c287 78%,#bf924f 100%);
+  box-shadow:inset 0 0 22px rgba(96,54,16,.55),inset 0 1px 0 rgba(255,246,220,.5),0 12px 26px rgba(0,0,0,.55)}
+.ola-leaf{border-radius:34px/50%;padding:22px calc(var(--hx,56px) * 2 - 6px);min-height:96px;display:flex;align-items:center;
+  transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.ola:hover .ola-leaf{transform:translateY(-4px) rotate(-.35deg);
+  box-shadow:inset 0 0 22px rgba(96,54,16,.55),inset 0 1px 0 rgba(255,246,220,.5),0 22px 40px rgba(0,0,0,.6),0 0 0 1px rgba(246,213,140,.55)}
+.hole{position:absolute;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;
+  background:radial-gradient(circle,#140b04 45%,#3d240d 65%,rgba(120,70,25,.6) 100%);box-shadow:inset 0 1px 2px rgba(0,0,0,.8)}
+.hole::after{content:'';position:absolute;left:50%;top:-3px;bottom:-3px;width:4px;margin-left:-2px;border-radius:2px;
+  background:repeating-linear-gradient(165deg,#5e3812 0 3px,#a8743a 3px 5px,#7a4a1c 5px 8px)}
+.hole.l{left:calc(var(--hx,56px) - 7px)}.hole.r{right:calc(var(--hx,56px) - 7px)}
+.ola-ta{margin:0;width:100%;font-family:var(--tamil);font-size:18px;line-height:1.85;white-space:pre-line;letter-spacing:.2px;
+  text-shadow:0 1px 0 rgba(255,244,214,.55),0 -1px 0 rgba(60,30,5,.25);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ola-cap{position:relative;margin:10px calc(var(--hx,56px) * 2 - 6px) 0;padding:14px 18px;border-radius:14px;
+  background:rgba(16,14,26,.86);border:1px solid var(--line);font-family:var(--sans)}
+.cap-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.src{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.lbl{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em;color:#1b1206;font-family:var(--sans)}
+.lbl-A{background:var(--A)}.lbl-O{background:var(--O)}.lbl-L{background:var(--L)}.lbl-M{background:var(--M);color:#fff}.lbl-N{background:var(--N);color:#ddd}
+.cap-concept{font-family:var(--serif);font-size:21px;font-style:italic;color:var(--gold-hi);margin:0 0 3px}
+.cap-reason{font-size:13px;line-height:1.55;color:var(--dim);margin:0}
+.cap-foot{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:12px;color:#7d7563}
+.cap-foot .open{color:var(--gold);font-weight:600}
+.ola-leaf.big{cursor:default;min-height:120px}
+.ola-leaf.big .ola-ta{-webkit-line-clamp:unset;font-size:20px}
+.bundle.single::before,.bundle.single::after{top:6px;bottom:6px}
+.skel-ola{height:96px;border-radius:34px/50%;background:linear-gradient(100deg,rgba(236,217,166,.07) 30%,rgba(236,217,166,.16) 50%,rgba(236,217,166,.07) 70%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+@media(max-width:640px){
+  .bundle,.leaves,.ola-leaf,.ola-cap,.board{--hx:26px}
+  .bundle{--hx:26px}
+  .ola-leaf{border-radius:22px/50%;padding:18px 48px}.ola-ta{font-size:16px}.ola-cap{margin:8px 10px 0}
+}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* papers */
+.papers{display:grid;gap:14px;margin-top:10px}
+.paper{display:block;text-decoration:none;background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:18px;padding:18px 22px;
+  transition:border-color .2s,transform .2s;opacity:0;animation:rise .7s forwards;animation-delay:var(--d,0ms)}
+.paper:hover{border-color:var(--gold);transform:translateX(4px)}
+.paper .meta{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pill{border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--gold)}
+.paper .t{font-family:var(--serif);font-size:21px;color:var(--parch);line-height:1.3}
+.paper .au{font-size:13px;color:var(--dim);margin-top:6px}
+.paper .u{font-size:12px;color:var(--gold);margin-top:8px;word-break:break-all;opacity:.85}
+.subhead{font-family:var(--serif);font-size:30px;margin:64px 0 6px}
+.subnote{color:var(--dim);font-size:14px;margin:0 0 18px}
+.empty{color:var(--dim);font-size:15px;padding:30px;text-align:center;border:1px dashed var(--line);border-radius:18px}
+
+/* analyze */
+.bring{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+@media(max-width:860px){.bring{grid-template-columns:1fr}}
+.leaf-input{width:100%;min-height:190px;resize:vertical;border:none;outline:none;font-family:var(--tamil);font-size:17px;line-height:1.8;
+  padding:30px 64px;border-radius:30px/50%}
+.leaf-input::placeholder{color:#8a6a44}
+.samples{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.sample{text-align:left;background:none;border:1px solid var(--line);border-radius:14px;padding:12px 16px;color:var(--parch);cursor:pointer;font-family:var(--tamil);font-size:14px;transition:all .2s}
+.sample:hover{border-color:var(--gold);background:rgba(227,185,95,.06)}
+.sample small{display:block;font-family:var(--sans);font-size:11px;color:var(--dim);margin-top:4px;letter-spacing:.05em}
+
+/* archive */
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:26px}
+.filters .chip.on{background:var(--gold);color:#1b1206;border-color:var(--gold)}
+.archive-search{flex:1;min-width:220px;background:rgba(18,16,28,.6);border:1px solid var(--line);border-radius:999px;padding:11px 18px;color:var(--parch);font-size:14px;outline:none}
+.archive-search:focus{border-color:var(--gold)}
+.more{display:block;margin:34px auto 0}
+.count{color:var(--dim);font-size:13px;margin-bottom:16px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.modal-bg{position:absolute;inset:0;background:rgba(3,3,8,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .35s}
+.modal-panel{position:relative;width:min(980px,100%);max-height:92vh;overflow-y:auto;background:linear-gradient(180deg,#141222,#0c0b16);
+  border:1px solid var(--line);border-bottom:none;border-radius:30px 30px 0 0;padding:40px 44px 60px;transform:translateY(100%);
+  transition:transform .55s cubic-bezier(.2,.8,.2,1);box-shadow:0 -30px 80px rgba(0,0,0,.6)}
+.modal.open{pointer-events:auto}.modal.open .modal-bg{opacity:1}.modal.open .modal-panel{transform:none}
+.modal-x{position:sticky;top:0;float:right;margin:-18px -20px 0 0;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(20,18,32,.9);color:var(--parch);font-size:20px;cursor:pointer;z-index:2}
+.modal-x:hover{border-color:var(--gold);color:var(--gold-hi)}
+@media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0}}
+.m-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px}
+.m-head .ref{font-family:var(--serif);font-size:26px}
+.m-head a{margin-left:auto;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+.m-head a:hover{border-color:var(--gold)}
+.m-en{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--dim);margin:22px 0 0;text-align:center}
+.concept-link{display:inline-flex;gap:10px;align-items:center;margin:26px 0 8px;background:rgba(227,185,95,.08);border:1px solid rgba(227,185,95,.4);
+  color:var(--gold-hi);border-radius:999px;padding:11px 20px;font-size:15px;cursor:pointer;font-family:var(--serif);font-style:italic;transition:all .2s}
+.concept-link:hover{background:rgba(227,185,95,.18)}
+.concept-link span{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--parch);opacity:.7}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+@media(max-width:760px){.m-grid{grid-template-columns:1fr}}
+.m-card{background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:20px;padding:22px 24px}
+.m-card h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.m-card p{margin:0;color:var(--parch);font-size:15px;line-height:1.65}
+.meter{display:flex;gap:6px;margin-top:14px;align-items:center;font-size:12px;color:var(--dim)}
+.meter i{width:34px;height:6px;border-radius:3px;background:rgba(255,255,255,.1)}
+.meter i.on{background:linear-gradient(90deg,var(--gold),var(--ember))}
+.m-section{margin-top:38px}
+.m-section h3{font-family:var(--serif);font-weight:500;font-size:28px;margin:0 0 4px}
+.m-section .note{font-size:12.5px;color:var(--dim);margin:0 0 16px}
+.real{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.real{grid-template-columns:1fr}}
+.real-card{border-radius:18px;padding:20px;background:linear-gradient(160deg,rgba(143,211,176,.08),rgba(22,20,34,.4));border:1px solid rgba(143,211,176,.22);opacity:0;animation:rise .7s forwards;animation-delay:var(--d,0ms)}
+.real-card b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:6px;color:#bfe9d3}
+.real-card span{font-size:13.5px;line-height:1.55;color:var(--parch);opacity:.85}
+.skel{height:14px;border-radius:7px;margin:9px 0;background:linear-gradient(100deg,rgba(255,255,255,.05) 30%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.05) 70%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.loading-line{display:flex;align-items:center;gap:12px;color:var(--dim);font-size:14px;font-style:italic;font-family:var(--serif);font-size:18px}
+.orbit-loader{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);position:relative;animation:spin 1.4s linear infinite;flex:none}
+.orbit-loader::after{content:'';position:absolute;top:-4px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ola,.paper,.real-card{opacity:1!important}.reveal{opacity:1;transform:none}}
+footer{padding:80px 20px 60px;text-align:center;color:var(--dim);font-size:13px;line-height:1.8;border-top:1px solid var(--line)}
+footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,40px);opacity:0;background:#1b1826;border:1px solid var(--line);color:var(--parch);
+  padding:12px 20px;border-radius:999px;font-size:14px;z-index:80;transition:all .35s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top"><span class="dot"></span>Kural <span class="ta">அஸ்ட்ரோ</span></a>
+  <nav class="nav-links">
+    <a href="#map-sec" class="hide-m">Cosmic map</a>
+    <a href="#explore">Explore</a>
+    <a href="#analyze">Your verse</a>
+    <a href="#archive" class="hide-m">Archive</a>
+    <span class="who" id="who"></span>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="halo"></div>
+  <div class="orbits"><svg viewBox="0 0 1000 1000" fill="none">
+    <circle cx="500" cy="500" r="200" stroke="rgba(227,185,95,.25)"/>
+    <circle cx="500" cy="500" r="300" stroke="rgba(227,185,95,.18)" stroke-dasharray="2 8"/>
+    <circle cx="500" cy="500" r="410" stroke="rgba(227,185,95,.12)"/>
+    <circle cx="500" cy="500" r="490" stroke="rgba(227,185,95,.08)" stroke-dasharray="1 12"/>
+    <circle cx="700" cy="500" r="5" fill="#e3b95f"/><circle cx="500" cy="200" r="3.5" fill="#efe3c8"/>
+    <circle cx="210" cy="560" r="4" fill="#c8743a"/><circle cx="790" cy="760" r="3" fill="#e3b95f"/>
+    <circle cx="140" cy="280" r="2.5" fill="#efe3c8"/>
+  </svg></div>
+  <div class="eyebrow reveal">Ancient verse · Modern cosmos</div>
+  <h1 class="reveal">What did the poets<br>see in the <em>sky?</em></h1>
+  <div class="hero-verse reveal">
+    <div class="ta">அண்டங்கள் எல்லாம் அணுவில் அடைத்தருளி</div>
+    <div class="tr">“all the universes, enclosed within an atom” — Vallalar, Thiruvarutpa</div>
+  </div>
+  <form class="searchbar reveal" id="heroForm">
+    <input id="heroInput" placeholder="Search a cosmic idea — black holes, multiverse, light…" autocomplete="off">
+    <button class="btn" type="submit">Explore</button>
+  </form>
+  <div class="chips reveal" id="heroChips"></div>
+  <div class="stats reveal">
+    <div class="stat"><div class="n" data-count="9439">0</div><div class="l">verses read</div></div>
+    <div class="stat"><div class="n" id="statScience">0</div><div class="l">touch the cosmos</div></div>
+    <div class="stat"><div class="n">∞</div><div class="l">live arXiv papers</div></div>
+  </div>
+  <div class="scrollcue">Scroll</div>
+</section>
+
+<!-- HOW -->
+<section class="block" id="how">
+  <div class="kicker reveal">The method</div>
+  <h2 class="title reveal">From palm leaf <em>to telescope</em></h2>
+  <p class="lede reveal">Two Tamil classics — Thiruvalluvar's Thirukkural and Vallalar's Thiruvarutpa — read line by line by an AI, then tied to what astrophysicists are publishing today.</p>
+  <div class="steps">
+    <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>9,439 couplets and hymns are scanned for sky, light, atoms, rain and the cosmos.</p></div>
+    <div class="step reveal" style="transition-delay:.12s"><div class="ic">✦</div><h3>Name the idea</h3><p>Gemini labels each verse and names the modern concept it resembles — nested universes, lunar phases, the water cycle.</p></div>
+    <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched live on arXiv. Every paper you see is real, with its link — nothing is invented.</p></div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="block" id="map-sec">
+  <div class="kicker reveal">The cosmic map</div>
+  <h2 class="title reveal">Every theme the <em>verses touch</em></h2>
+  <p class="lede reveal">Each planet is a branch of modern science. Its size is how many verses echo it. Click one to open its verses and papers.</p>
+  <div class="mapwrap reveal">
+    <svg id="map" viewBox="0 0 1000 620"></svg>
+    <div class="maphint">Click a planet ✦</div>
+  </div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<!-- EXPLORE -->
+<section class="block" id="explore">
+  <div class="kicker reveal">Explore</div>
+  <h2 class="title reveal">Search the <em>heavens</em></h2>
+  <p class="lede reveal">Type any scientific idea. The AI finds verses that echo it and pulls the real research behind it. Open any leaf to go deeper.</p>
+  <form class="searchbar" id="exploreForm" style="width:100%">
+    <input id="exploreInput" placeholder="e.g. speed of light, dark matter, creation of the universe" autocomplete="off">
+    <button class="btn" type="submit">Search</button>
+  </form>
+  <div id="exploreHead"></div>
+  <div id="exploreOut"></div>
+</section>
+
+<!-- ANALYZE -->
+<section class="block" id="analyze">
+  <div class="bring">
+    <div>
+      <div class="kicker reveal">Bring your own verse</div>
+      <h2 class="title reveal">Read any verse <em>against the stars</em></h2>
+      <p class="lede reveal" style="margin-bottom:26px">Paste Tamil (or an English gloss). The AI tells you whether it holds real natural or cosmic content, what modern idea it resembles, where that idea shows up in the real world, and which papers study it.</p>
+      <div class="samples reveal" id="samples"></div>
+    </div>
+    <div class="reveal">
+      <textarea class="leaf-input" id="verseInput" placeholder="இங்கே ஒரு பாடலை ஒட்டவும் — paste a verse here…"></textarea>
+      <button class="btn" id="analyzeBtn" style="margin-top:18px;width:100%">Read this verse ✦</button>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHIVE -->
+<section class="block" id="archive">
+  <div class="kicker reveal">The archive</div>
+  <h2 class="title reveal">Every leaf, <em>catalogued</em></h2>
+  <p class="lede reveal">All analysed verses. Filter by what they hold; open any one for the full reading.</p>
+  <div class="filters" id="filters"></div>
+  <div class="count" id="count"></div>
+  <div id="archiveOut"></div>
+  <button class="btn more" id="moreBtn">Load more leaves</button>
+</section>
+
+<footer>
+  <div class="orn">✦ ✦ ✦</div>
+  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Papers: arXiv.org (live)<br>
+  Labels and explanations are AI-generated and unverified. These are analogies — not evidence that the poets knew modern physics.
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true">
+    <button class="modal-x" data-close aria-label="Close">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LABEL = {A:'Cosmic vision', O:'Observed nature', L:'Literal fact', M:'Metaphor', N:'No science'};
+const TOPIC_NAMES = {holographic:'Holographic universe', multiverse:'Multiverse', extra_dim:'Extra dimensions', light_medium:'Cosmic light',
+  dissolution:'End of the universe', no_centre:'No cosmic centre', cosmogony:'Birth of the cosmos', lunar:'The Moon',
+  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle'};
+let VERSES = [], BY_ID = {}, CUSTOM = {};
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)} : undefined);
+  if (r.status === 401) { location.href = '/login'; throw new Error('Please sign in.'); }
+  const d = await r.json();
+  if (!r.ok || d.error) throw new Error(d.error || ('HTTP ' + r.status));
+  return d;
+}
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3200); }
+
+/* ---------------- starfield ---------------- */
+(() => {
+  const c = $('#sky'), x = c.getContext('2d');
+  let W, H, sky, stars = [], shoot = null, mx = 0, my = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+  function size(){
+    W = innerWidth; H = innerHeight; c.width = W*dpr; c.height = H*dpr; c.style.width = W+'px'; c.style.height = H+'px'; x.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.min(420, Math.floor(W*H/3600));
+    sky = x.createRadialGradient(W*.5, H*.1, 0, W*.5, H*.1, Math.max(W,H)*.9);
+    sky.addColorStop(0,'rgba(40,28,60,.55)'); sky.addColorStop(.5,'rgba(12,10,26,.35)'); sky.addColorStop(1,'rgba(5,6,12,0)');
+    stars = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, z:Math.random()*.9+.1, r:Math.random()*1.3+.2, p:Math.random()*6.28,
+      hue: Math.random() < .12 ? 'warm' : 'cool'}));
+  }
+  addEventListener('resize', size); size();
+  addEventListener('mousemove', e => { mx = (e.clientX/W - .5); my = (e.clientY/H - .5); });
+  let t = 0;
+  (function frame(){
+    t += .016; x.clearRect(0,0,W,H);
+    x.fillStyle = sky; x.fillRect(0,0,W,H);
+    const sy = scrollY * .04;
+    for (const s of stars) {
+      const px = (s.x - mx*40*s.z + W) % W, py = ((s.y - my*30*s.z - sy*s.z) % H + H) % H;
+      const a = .35 + .65*Math.abs(Math.sin(t*1.2*s.z + s.p));
+      x.fillStyle = s.hue === 'warm' ? `rgba(246,213,140,${a})` : `rgba(236,230,215,${a*.85})`;
+      x.beginPath(); x.arc(px, py, s.r*s.z*1.3, 0, 6.283); x.fill();
+    }
+    if (!shoot && Math.random() < .004) shoot = {x:Math.random()*W*.8, y:Math.random()*H*.4, vx:7+Math.random()*4, vy:2.5+Math.random()*2, life:1};
+    if (shoot) {
+      const s = shoot, gr = x.createLinearGradient(s.x, s.y, s.x - s.vx*14, s.y - s.vy*14);
+      gr.addColorStop(0, `rgba(246,213,140,${s.life})`); gr.addColorStop(1,'rgba(246,213,140,0)');
+      x.strokeStyle = gr; x.lineWidth = 1.6; x.beginPath(); x.moveTo(s.x, s.y); x.lineTo(s.x - s.vx*14, s.y - s.vy*14); x.stroke();
+      s.x += s.vx; s.y += s.vy; s.life -= .012; if (s.life <= 0) shoot = null;
+    }
+    requestAnimationFrame(frame);
+  })();
+})();
+
+/* ---------------- nav + reveal ---------------- */
+addEventListener('scroll', () => $('#nav').classList.toggle('solid', scrollY > 40), {passive:true});
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function countUp(el, to){ let v = 0; const step = Math.max(1, Math.round(to/60)); const h = setInterval(() => { v = Math.min(to, v+step); el.textContent = v.toLocaleString(); if (v >= to) clearInterval(h); }, 20); }
+
+/* ---------------- cards ---------------- */
+function leafCard(v, i = 0) {
+  return `<article class="ola" data-id="${esc(v.id)}" style="--d:${i*70}ms">
+    <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
+    <div class="ola-cap">
+      <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span></div>
+      ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
+      ${v.reason ? `<p class="cap-reason">${esc(v.reason)}</p>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
+      <div class="cap-foot"><span>${esc(v.ref)}</span><span class="open">Read deeper →</span></div>
+    </div>
+  </article>`;
+}
+const bundle = (inner, cls = '') => `<div class="bundle ${cls}"><div class="board"></div><div class="leaves">${inner}</div><div class="board"></div></div>`;
+const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
+function paperList(papers) {
+  if (!papers || !papers.length) return `<div class="empty">No papers found for this idea on arXiv.</div>`;
+  return `<div class="papers">` + papers.map((p, i) => `
+    <a class="paper" href="${esc(p.url)}" target="_blank" rel="noopener" style="--d:${i*70}ms">
+      <div class="meta"><span class="pill">arXiv</span><span>${esc(p.year)}</span><span>· ${p.tag === 'recent' ? 'Latest research' : 'Foundational'}</span></div>
+      <div class="t">${esc(p.title)} ↗</div>
+      <div class="au">${esc((p.authors || []).join(', '))}</div>
+      <div class="u">${esc(p.url)}</div>
+    </a>`).join('') + `</div>`;
+}
+const skelLeaves = n => bundle('<div class="skel-ola"></div>'.repeat(n));
+const loading = msg => `<div class="loading-line"><span class="orbit-loader"></span>${esc(msg)}</div>`;
+
+/* ---------------- search (topic -> verses + papers) ---------------- */
+let searchTok = 0;
+async function runSearch(topic, key) {
+  topic = (topic || '').trim(); if (!topic) return;
+  closeModal();
+  $('#exploreInput').value = topic; $('#heroInput').value = topic;
+  $('#explore').scrollIntoView({behavior:'smooth'});
+  const tok = ++searchTok;
+  $('#exploreHead').innerHTML = loading(`Reading the leaves for “${topic}”…`);
+  $('#exploreOut').innerHTML = skelLeaves(4);
+  try {
+    const d = await api('/api/search_topic', {topic, key});
+    if (tok !== searchTok) return;
+    d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
+    const n = d.matches.length;
+    $('#exploreHead').innerHTML = n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`;
+    $('#exploreOut').innerHTML =
+      (n ? bundle(d.matches.map(leafCard).join(''))
+         : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
+      `<h3 class="subhead">From the observatory</h3><p class="subnote">Live research on “${esc(topic)}” from arXiv${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
+      paperList(d.papers);
+  } catch (e) {
+    if (tok !== searchTok) return;
+    $('#exploreHead').innerHTML = ''; $('#exploreOut').innerHTML = `<div class="empty">Couldn't reach the AI just now (${esc(e.message)}). Try again in a moment.</div>`;
+  }
+}
+$('#heroForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#heroInput').value); });
+$('#exploreForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#exploreInput').value); });
+const HERO_CHIPS = ['Black holes', 'Multiverse', 'Big Bang', 'Speed of light', 'Atoms', 'Eclipses', 'String theory', 'Monsoon'];
+$('#heroChips').innerHTML = HERO_CHIPS.map(t => `<button class="chip" data-topic="${t}">${t}</button>`).join('');
+
+/* ---------------- modal (deep reading) ---------------- */
+let modalTok = 0;
+function openModalShell(html) {
+  $('#modalBody').innerHTML = html; $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden','false');
+  document.body.classList.add('lock'); document.querySelector('.modal-panel').scrollTop = 0;
+}
+function closeModal() {
+  $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); modalTok++;
+}
+function modalHtml(v) {
+  return `
+    <div class="m-head">
+      <span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
+      <span class="ref">${esc(v.source ? v.source + ' · ' : '')}${esc(v.ref || 'Your verse')}</span>
+      ${v.url ? `<a href="${esc(v.url)}" target="_blank" rel="noopener">Original source ↗</a>` : ''}
+    </div>
+    ${bigLeaf(v.tamil)}
+    ${v.english ? `<p class="m-en">“${esc(v.english)}”</p>` : ''}
+    ${v.concept ? `<button class="concept-link" data-topic="${esc(v.concept)}">✦ ${esc(v.concept)} <span>explore this idea across all verses →</span></button>` : ''}
+    <div class="m-grid">
+      <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
+      <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
+    </div>
+    <div class="m-section"><h3>In the real world</h3><p class="note">Missions, experiments and observations tied to this idea — AI-summarised, verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
+    <div class="m-section"><h3>Research papers</h3><p class="note">Live from arXiv — real papers, click to read.</p><div id="mPapers">${v.concept ? loading('Searching arXiv…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
+}
+function fillDeep(d, tok) {
+  if (tok !== modalTok) return;
+  const strength = {strong:3, moderate:2, weak:1}[d.strength] || 0;
+  $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>`;
+  $('#mAnalogy').innerHTML = `<p>${esc(d.analogy || '—')}</p>` + (strength ? `<div class="meter">${[1,2,3].map(i => `<i class="${i<=strength?'on':''}"></i>`).join('')}<span>${esc(d.strength)} analogy</span></div>` : '');
+  const rw = Array.isArray(d.real_world) ? d.real_world : [];
+  $('#mReal').innerHTML = rw.length ? `<div class="real">${rw.map((r, i) => `<div class="real-card" style="--d:${i*90}ms"><b>${esc(r.title)}</b><span>${esc(r.detail)}</span></div>`).join('')}</div>` : '<div class="empty">No real-world examples for this one.</div>';
+}
+function deepFailed(tok, msg) {
+  if (tok !== modalTok) return;
+  $('#mLiteral').innerHTML = $('#mAnalogy').innerHTML = `<p style="color:var(--dim)">The AI is busy — ${esc(msg)}</p>`;
+  $('#mReal').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
+}
+async function openVerse(v) {
+  if (!v) return;
+  const tok = ++modalTok;
+  openModalShell(modalHtml(v));
+  api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept}).then(d => fillDeep(d, tok)).catch(e => deepFailed(tok, e.message));
+  if (v.concept) {
+    const p = v.papers ? Promise.resolve({papers: v.papers}) : api('/api/papers?q=' + encodeURIComponent(v.concept));
+    p.then(d => { if (tok === modalTok) $('#mPapers').innerHTML = paperList(d.papers); })
+     .catch(() => { if (tok === modalTok) $('#mPapers').innerHTML = '<div class="empty">arXiv did not respond. Try again shortly.</div>'; });
+  }
+}
+async function readCustom(text) {
+  text = (text || '').trim(); if (!text) { toast('Paste a verse first'); return; }
+  const btn = $('#analyzeBtn'); btn.disabled = true;
+  const tok = ++modalTok;
+  openModalShell(`${bigLeaf(text)}<div style="margin-top:34px">${loading('Reading your verse against the stars…')}</div>`);
+  try {
+    const r = await api('/api/analyze', {text});
+    if (tok !== modalTok) return;
+    const v = {id:'custom', source:'', ref:'Your verse', tamil:text, label:r.label, concept:r.science_concept, meaning:r.meaning, papers:r.papers};
+    openVerse(v);
+  } catch (e) {
+    if (tok === modalTok) $('#modalBody').innerHTML += `<div class="empty" style="margin-top:20px">${esc(e.message)}</div>`;
+  } finally { btn.disabled = false; }
+}
+$('#analyzeBtn').addEventListener('click', () => readCustom($('#verseInput').value));
+const SAMPLES = [
+  {ta:'அண்டமு மதன்மே லண்டமு மவற்றுள பண்டமுங் காட்டிய பரம்பர மணியே', note:'Thiruvarutpa — universe above universe'},
+  {ta:'நிறைநீர நீரவர் கேண்மை பிறைமதிப் பின்னீர பேதையார் நட்பு', note:'Thirukkural 782 — the waxing moon'},
+  {ta:'வான்நின்று உலகம் வழங்கி வருதலால் தான்அமிழ்தம் என்றுணரற் பாற்று', note:'Thirukkural 11 — the gift of rain'}];
+$('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sample="${i}">${esc(s.ta)}<small>${esc(s.note)} · click to read</small></button>`).join('');
+
+/* ---------------- global clicks: everything connects ---------------- */
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-close]')) return closeModal();
+  const leaf = e.target.closest('.ola[data-id]'); if (leaf) return openVerse(BY_ID[leaf.dataset.id]);
+  const t = e.target.closest('[data-topic]'); if (t) return runSearch(t.dataset.topic, t.dataset.key);
+  const s = e.target.closest('[data-sample]'); if (s) { $('#verseInput').value = SAMPLES[+s.dataset.sample].ta; return readCustom(SAMPLES[+s.dataset.sample].ta); }
+  const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; shown = 24; renderArchive(); }
+});
+addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ---------------- cosmic map ---------------- */
+async function buildMap() {
+  const topics = await api('/api/topics');
+  const svg = $('#map');
+  const nodes = Object.entries(topics).filter(([, t]) => t.count > 0).sort((a, b) => b[1].count - a[1].count)
+    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: i % 3, ang: i * 2.4}));
+  const C = {x:500, y:310}, OR = [{rx:190, ry:86, sp:.0022}, {rx:320, ry:146, sp:.0014}, {rx:450, ry:205, sp:.0009}];
+  let html = `<defs><radialGradient id="sun"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#f6d58c"/><stop offset="1" stop-color="#c8743a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="pl"><stop offset="0" stop-color="#f6d58c"/><stop offset="1" stop-color="#b8692f"/></radialGradient></defs>`;
+  OR.forEach(o => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(227,185,95,.22)" stroke-dasharray="3 7"/>`);
+  html += `<circle cx="${C.x}" cy="${C.y}" r="70" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="16" fill="#fff3d0"/>
+    <text x="${C.x}" y="${C.y + 44}" text-anchor="middle" style="font-family:var(--serif);font-size:18px;fill:#f6d58c">the verses</text>`;
+  nodes.forEach((n, i) => {
+    const r = 9 + Math.sqrt(n.count) * 3.6;
+    html += `<g class="planet" data-topic="${esc(n.name)}" data-key="${n.key}" id="pl${i}">
+      <circle class="glow" r="${r + 12}" fill="#e3b95f" opacity=".12"/><circle class="body" r="${r}" fill="url(#pl)"/>
+      <text x="${r + 10}" y="-2">${esc(n.name)}</text><text class="cnt" x="${r + 10}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
+  });
+  svg.innerHTML = html;
+  let paused = false;
+  svg.addEventListener('mouseover', e => { if (e.target.closest('.planet')) paused = true; });
+  svg.addEventListener('mouseout', e => { if (e.target.closest('.planet')) paused = false; });
+  (function spin() {
+    nodes.forEach((n, i) => {
+      if (!paused) n.ang += OR[n.orbit].sp * (1 + i * .03);
+      const o = OR[n.orbit], x = C.x + o.rx * Math.cos(n.ang), y = C.y + o.ry * Math.sin(n.ang);
+      const el = document.getElementById('pl' + i); el.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)})`);
+      const left = x > 700;
+      if (left !== n.left) {
+        n.left = left;
+        const r = +el.querySelector('circle.body').getAttribute('r');
+        el.querySelectorAll('text').forEach(t => { t.setAttribute('x', left ? -(r + 10) : r + 10); t.setAttribute('text-anchor', left ? 'end' : 'start'); });
+      }
+      el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
+    });
+    requestAnimationFrame(spin);
+  })();
+  $('#legend').innerHTML = nodes.map(n => `<button class="chip" data-topic="${esc(n.name)}" data-key="${n.key}">${esc(n.name)} · ${n.count}</button>`).join('');
+}
+
+/* ---------------- archive ---------------- */
+let filter = 'AOL', shown = 24;
+const FILTERS = [['AOL','All science'], ['A','Cosmic vision'], ['O','Observed nature'], ['L','Literal fact'], ['M','Metaphor']];
+function renderArchive() {
+  $('#filters').innerHTML = FILTERS.map(([k, l]) => `<button class="chip ${k === filter ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('') +
+    `<input class="archive-search" id="archQ" placeholder="Search Tamil, meaning or concept…" value="${esc(archQ)}">`;
+  $('#archQ').addEventListener('input', e => { archQ = e.target.value; shown = 24; renderList(); });
+  renderList();
+}
+let archQ = '';
+function renderList() {
+  const q = archQ.trim().toLowerCase();
+  let rows = VERSES.filter(v => filter.includes(v.label));
+  if (q) rows = rows.filter(v => (v.tamil + ' ' + v.english + ' ' + v.concept + ' ' + v.meaning + ' ' + v.ref).toLowerCase().includes(q));
+  $('#count').textContent = `${rows.length.toLocaleString()} leaves`;
+  $('#archiveOut').innerHTML = rows.length ? bundle(rows.slice(0, shown).map((v, i) => leafCard(v, i % 24)).join('')) : '<div class="empty">No leaves match.</div>';
+  $('#moreBtn').style.display = rows.length > shown ? 'block' : 'none';
+}
+$('#moreBtn').addEventListener('click', () => { shown += 24; renderList(); });
+
+/* ---------------- boot ---------------- */
+api('/api/me').then(me => {
+  $('#who').innerHTML = `<span class="av">${esc(me.username.slice(0,1).toUpperCase())}</span><span class="name">${esc(me.username)}</span><button id="logout">Sign out</button>`;
+  $('#logout').addEventListener('click', async () => { await fetch('/api/logout', {method:'POST', body:'{}'}); location.href = '/login'; });
+}).catch(() => {});
+(async () => {
+  document.querySelectorAll('[data-count]').forEach(el => countUp(el, +el.dataset.count));
+  try {
+    VERSES = await api('/api/verses');
+    VERSES.forEach(v => BY_ID[v.id] = v);
+    countUp($('#statScience'), VERSES.filter(v => 'AOL'.includes(v.label)).length);
+    renderArchive();
+  } catch (e) { toast('Could not load verses: ' + e.message); }
+  buildMap().catch(e => toast('Map failed: ' + e.message));
+})();
+</script>
+</body>
+</html>
