@@ -390,10 +390,92 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
 .ola-leaf .hole.l{left:18px}.ola-leaf .hole.r{right:18px}
 .bundle.single::before,.bundle.single::after{display:none}
 @media(max-width:640px){.ola{padding:22px 36px 18px}.ola-leaf.big{padding:26px 36px}}
+
+/* ================= v3 polish ================= */
+@keyframes rise{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
+
+/* aged palm-leaf parchment */
+:root{--parchment:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .19 0 0 0 0 .06 0 0 0 .55 -.18'/%3E%3C/filter%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .26 0 0 0 0 .08 0 0 0 .9 -.52'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E"),
+  radial-gradient(ellipse 80% 70% at 45% 40%,rgba(255,247,222,.55),transparent 70%),
+  radial-gradient(ellipse at 100% 0%,rgba(120,70,20,.30),transparent 38%),
+  radial-gradient(ellipse at 0% 100%,rgba(120,70,20,.26),transparent 40%),
+  linear-gradient(165deg,#f1e2b8 0%,#e3c993 48%,#cda870 100%);
+  --parch-shadow:inset 0 0 0 1px rgba(110,66,20,.45),inset 0 0 38px rgba(110,62,18,.55),inset 0 0 6px rgba(70,35,8,.55),0 20px 44px rgba(0,0,0,.55)}
+.ola,.ola-leaf.big,.ola-leaf.mini,.leaf-input{background:var(--parchment);box-shadow:var(--parch-shadow)}
+.ola{transition:transform .12s ease-out,box-shadow .35s;will-change:transform}
+.ola:hover{box-shadow:inset 0 0 0 1px rgba(110,66,20,.45),inset 0 0 38px rgba(110,62,18,.55),inset 0 0 6px rgba(70,35,8,.55),0 34px 64px rgba(0,0,0,.6),0 0 0 1px rgba(246,213,140,.5)}
+.frame{position:absolute;inset:10px;border-radius:15px/22px;border:1px solid rgba(120,72,24,.38);pointer-events:none;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,0),inset 0 0 0 4px rgba(120,72,24,.16)}
+.frame::before,.frame::after{content:'❋';position:absolute;left:50%;transform:translateX(-50%);font-size:11px;line-height:1;color:rgba(120,72,24,.55)}
+.frame::before{top:-6px}.frame::after{bottom:-6px}
+.glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,251,235,.55),transparent 45%);mix-blend-mode:soft-light}
+.ola:hover .glare{opacity:1}
+.ola::before,.ola::after,.ola-leaf .hole{width:15px;height:15px;margin-top:0;transform:translateY(-50%);
+  background:radial-gradient(circle,#150b03 0 38%,#5b3a1a 46%,#d2ad72 58%,#a9824a 66%,transparent 70%);box-shadow:none}
+.ola-leaf .hole{margin-top:-7.5px;transform:none}
+.ola::before{left:14px}.ola::after{right:14px}.ola-leaf .hole.l{left:14px}.ola-leaf .hole.r{right:14px}
+.ola .ola-ta,.ola-leaf.big .ola-ta,.ola-leaf.mini .ola-ta{color:#2b1606;text-shadow:0 0 .6px rgba(43,22,6,.55),0 1px 0 rgba(255,244,214,.35)}
+.ola .cap-concept{color:#6a3410}
+
+/* reading pop-up: verse spans the full width, centred like a poem */
+.bundle.single .leaves{display:block}
+.ola-leaf.big{position:relative;display:flex;justify-content:center;text-align:center;padding:42px 72px;min-height:150px}
+.ola-leaf.big .ola-ta{font-size:21px;line-height:1.95;max-width:760px;margin:0 auto}
+@media(max-width:640px){.ola-leaf.big{padding:30px 40px}.ola-leaf.big .ola-ta{font-size:17px}}
+
+/* real world, grouped by field */
+.rw-field{margin-bottom:20px}
+.rw-head{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch);margin:4px 0 10px;font-weight:600}
+.rw-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(143,211,176,.12);border:1px solid rgba(143,211,176,.3);font-size:15px}
+.rw-n{margin-left:auto;color:var(--dim);font-weight:500;letter-spacing:0;text-transform:none}
+.real{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important}
+.real-card.cred{border-color:rgba(227,185,95,.5);background:linear-gradient(160deg,rgba(227,185,95,.12),rgba(22,20,34,.55))}
+.real-card.cred b{color:var(--gold-hi)}
+.rw-org{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}
+.org{font-size:11.5px;font-weight:700;letter-spacing:.03em;color:var(--parch);background:rgba(255,255,255,.08);border-radius:6px;padding:3px 8px}
+.cred-badge{font-size:10.5px;font-weight:700;color:#1b1206;background:var(--gold);border-radius:999px;padding:2px 8px}
+.rw-year{margin-left:auto;font-size:12px;color:var(--dim)}
+.rw-link{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--gold-hi);text-decoration:none;border-bottom:1px dashed rgba(246,213,140,.5)}
+.rw-link:hover{border-bottom-style:solid}
+.sort-note{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:4px 0 2px}
+
+/* galaxy map */
+.mapwrap{border-color:rgba(150,130,255,.28);background:
+  radial-gradient(ellipse 55% 45% at 28% 34%,rgba(120,60,210,.26),transparent 70%),
+  radial-gradient(ellipse 50% 42% at 76% 66%,rgba(40,120,230,.22),transparent 70%),
+  radial-gradient(ellipse 38% 32% at 62% 22%,rgba(235,80,165,.16),transparent 70%),
+  radial-gradient(ellipse 30% 30% at 18% 78%,rgba(60,200,190,.10),transparent 70%),
+  #06051a}
+#map text{paint-order:stroke;stroke:rgba(6,5,26,.9);stroke-width:4px;stroke-linejoin:round}
+#map .tw{animation:tw var(--t,3s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:1}}
+#map .planet .body-g{transition:transform .25s}
+#map .planet:hover .body-g{transform:scale(1.18)}
+.map-tip{position:absolute;pointer-events:none;background:rgba(12,10,30,.94);border:1px solid rgba(160,140,255,.4);border-radius:14px;
+  padding:10px 14px;color:var(--parch);transform:translate(-50%,calc(-100% - 14px));opacity:0;transition:opacity .15s;white-space:nowrap;
+  box-shadow:0 12px 32px rgba(0,0,0,.55);z-index:2}
+.map-tip b{display:block;font-family:var(--serif);font-size:19px;color:#fff;font-weight:600}
+.map-tip span{color:var(--dim);font-size:12px}
+.map-tip.show{opacity:1}
+.legend .chip .pdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:-1px;box-shadow:0 0 8px currentColor}
+
+/* interaction */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:50;background:linear-gradient(90deg,#8a7bff,var(--gold),var(--ember));box-shadow:0 0 12px rgba(227,185,95,.6)}
+#cursorGlow{position:fixed;left:0;top:0;width:540px;height:540px;margin:-270px 0 0 -270px;border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle,rgba(150,130,255,.10),rgba(227,185,95,.05) 40%,transparent 70%);opacity:0;transition:opacity .5s}
+body.has-mouse #cursorGlow{opacity:1}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%)}
+.btn:hover::after{transform:translateX(120%);transition:transform .7s ease}
+.chip{transition:transform .15s,background .2s,border-color .2s,color .2s}
+.chip:hover{transform:translateY(-2px)}
+@media(prefers-reduced-motion:reduce){#cursorGlow{display:none}}
 </style>
 </head>
 <body>
 <canvas id="sky"></canvas>
+<div id="progress"></div><div id="cursorGlow"></div>
 
 <header class="nav" id="nav">
   <a class="brand" href="#top"><span class="dot"></span>Kural <span class="ta">அஸ்ட்ரோ</span></a>
@@ -458,6 +540,7 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
   <p class="lede reveal">Each planet is a branch of modern science. Its size is how many verses echo it. Click one to open its verses and papers.</p>
   <div class="mapwrap reveal">
     <svg id="map" viewBox="0 0 1000 620"></svg>
+    <div class="map-tip" id="mapTip"></div>
     <div class="maphint">Click a planet ✦</div>
   </div>
   <div class="legend" id="legend"></div>
@@ -593,6 +676,7 @@ function countUp(el, to){ let v = 0; const step = Math.max(1, Math.round(to/60))
 /* ---------------- cards ---------------- */
 function leafCard(v, i = 0) {
   return `<article class="ola" data-id="${esc(v.id)}" style="--d:${i*70}ms">
+    <span class="frame"></span><span class="glare"></span>
     <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
     <div class="ola-cap">
       <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
@@ -604,10 +688,11 @@ function leafCard(v, i = 0) {
   </article>`;
 }
 const bundle = (inner, cls = '') => `<div class="bundle ${cls}"><div class="board"></div><div class="leaves">${inner}</div><div class="board"></div></div>`;
-const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
+const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="frame"></span><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
 function paperList(papers) {
   if (!papers || !papers.length) return `<div class="empty">No papers found for this idea on arXiv.</div>`;
-  return `<div class="papers">` + papers.map((p, i) => `
+  papers = [...papers].sort((a, b) => (parseInt(b.year) || 0) - (parseInt(a.year) || 0));
+  return `<div class="sort-note">Newest → oldest</div><div class="papers">` + papers.map((p, i) => `
     <a class="paper" href="${esc(p.url)}" target="_blank" rel="noopener" style="--d:${i*70}ms">
       <div class="meta"><span class="pill">arXiv</span><span>${esc(p.year)}</span><span>· ${p.tag === 'recent' ? 'Latest research' : 'Foundational'}</span></div>
       <div class="t">${esc(p.title)} ↗</div>
@@ -678,7 +763,7 @@ function modalHtml(v, fromSaved) {
       <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
       <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
     </div>
-    <div class="m-section"><h3>In the real world</h3><p class="note">Missions, experiments and observations tied to this idea — AI-summarised, verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
+    <div class="m-section"><h3>In the real world</h3><p class="note">Grouped by field. Top space agencies, research institutes and universities come first, then newest first. Every “Official source” link was opened and checked. AI-summarised — verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Live from arXiv — real papers, click to read.</p><div id="mPapers">${v.concept ? loading('Searching arXiv…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
 function fillDeep(d, tok) {
@@ -687,7 +772,25 @@ function fillDeep(d, tok) {
   $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>`;
   $('#mAnalogy').innerHTML = `<p>${esc(d.analogy || '—')}</p>` + (strength ? `<div class="meter">${[1,2,3].map(i => `<i class="${i<=strength?'on':''}"></i>`).join('')}<span>${esc(d.strength)} analogy</span></div>` : '');
   const rw = Array.isArray(d.real_world) ? d.real_world : [];
-  $('#mReal').innerHTML = rw.length ? `<div class="real">${rw.map((r, i) => `<div class="real-card" style="--d:${i*90}ms"><b>${esc(r.title)}</b><span>${esc(r.detail)}</span></div>`).join('')}</div>` : '<div class="empty">No real-world examples for this one.</div>';
+  $('#mReal').innerHTML = realWorldHtml(rw);
+}
+const FIELD_ICON = {'Space & Astronomy': '🚀', 'Physics': '⚛️', 'Earth & Climate': '🌍', 'Medicine & Health': '🩺', 'Biology & Life': '🧬',
+  'Technology & Engineering': '🛠️', 'Mathematics & Computing': '📐', 'Environment & Agriculture': '🌱', 'General': '✦'};
+const ORG_RANK = {'space agency': 0, 'university': 0, 'research institute': 1, 'government': 1, 'company': 2};
+function realWorldHtml(rw) {
+  const items = (Array.isArray(rw) ? rw : []).filter(r => r && r.title).map(r => ({...r, field: r.field || 'General'}));
+  if (!items.length) return '<div class="empty">No real-world examples for this one.</div>';
+  const rank = r => ORG_RANK[String(r.org_type || '').toLowerCase()] ?? 3;
+  items.sort((a, b) => rank(a) - rank(b) || (parseInt(b.year) || 0) - (parseInt(a.year) || 0));
+  const groups = {};
+  items.forEach(r => (groups[r.field] = groups[r.field] || []).push(r));
+  const order = Object.keys(groups).sort((a, b) => Math.min(...groups[a].map(rank)) - Math.min(...groups[b].map(rank)) || groups[b].length - groups[a].length);
+  let k = 0;
+  return order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
+    <div class="real">${groups[f].map(r => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${(k++) * 70}ms">
+      <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${rank(r) <= 1 ? '<span class="cred-badge">✓ Top source</span>' : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
+      <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>
+      ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Official source ↗</a></div>` : ''}</div>`).join('')}</div></div>`).join('');
 }
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
@@ -762,28 +865,81 @@ document.addEventListener('click', e => {
 addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#drawer').classList.contains('open')) closeLibrary(); else closeModal(); } });
 
 /* ---------------- cosmic map ---------------- */
+const PLANET_LOOK = {
+  holographic: {c: ['#d9cfff', '#7a63e6', '#241a66'], bands: true},
+  multiverse: {c: ['#c9f6ff', '#39b3d6', '#0b3f5a'], ring: 'rgba(170,235,255,.7)'},
+  extra_dim: {c: ['#ffd1ec', '#e0529f', '#4f0e3f'], ring: 'rgba(255,170,220,.55)'},
+  light_medium: {c: ['#fffdf0', '#ffd36b', '#d9822b'], star: true},
+  dissolution: {c: ['#ffd6c9', '#e8553c', '#4f0c08']},
+  no_centre: {c: ['#ffffff', '#a9d4f5', '#355f86']},
+  cosmogony: {c: ['#fff1cf', '#ff9a3d', '#7a2808'], bands: true},
+  lunar: {c: ['#f7f7f7', '#bdbdbd', '#454545'], craters: true},
+  eclipse: {c: ['#2b2b2b', '#0b0b0b', '#000000'], corona: true},
+  solar_motion: {c: ['#fffde0', '#ffd23f', '#e2711d'], star: true},
+  monsoon: {c: ['#cdeeff', '#2f8fe0', '#08326b'], earth: true},
+};
 async function buildMap() {
   const topics = await api('/api/topics');
-  const svg = $('#map');
+  const svg = $('#map'), tip = $('#mapTip'), wrap = $('.mapwrap');
   const nodes = Object.entries(topics).filter(([, t]) => t.count > 0).sort((a, b) => b[1].count - a[1].count)
-    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: i % 3, ang: i * 2.4}));
-  const C = {x:500, y:310}, OR = [{rx:190, ry:86, sp:.0022}, {rx:320, ry:146, sp:.0014}, {rx:450, ry:205, sp:.0009}];
-  let html = `<defs><radialGradient id="sun"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#f6d58c"/><stop offset="1" stop-color="#c8743a" stop-opacity="0"/></radialGradient>
-    <radialGradient id="pl"><stop offset="0" stop-color="#f6d58c"/><stop offset="1" stop-color="#b8692f"/></radialGradient></defs>`;
-  OR.forEach(o => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(227,185,95,.22)" stroke-dasharray="3 7"/>`);
-  html += `<circle cx="${C.x}" cy="${C.y}" r="70" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="16" fill="#fff3d0"/>
-    <text x="${C.x}" y="${C.y + 44}" text-anchor="middle" style="font-family:var(--serif);font-size:18px;fill:#f6d58c">the verses</text>`;
+    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: i % 3, ang: i * 2.4,
+      look: PLANET_LOOK[key] || {c: ['#f6d58c', '#e3b95f', '#8a5a20']}}));
+  const C = {x: 500, y: 310}, OR = [{rx: 190, ry: 86, sp: .0022}, {rx: 320, ry: 146, sp: .0014}, {rx: 450, ry: 205, sp: .0009}];
+  let defs = `<radialGradient id="core"><stop offset="0" stop-color="#ffffff"/><stop offset=".18" stop-color="#fff1c9"/><stop offset=".45" stop-color="#f3b86a" stop-opacity=".55"/><stop offset="1" stop-color="#8a5cff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="shade" cx="32%" cy="28%" r="85%"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient>
+    <linearGradient id="bands" x1="0" y1="0" x2="0" y2="1">${[0,.14,.22,.36,.48,.6,.7,.82,.9,1].map((o, j) => `<stop offset="${o}" stop-color="${j % 2 ? '#000' : '#fff'}" stop-opacity="${j % 2 ? .22 : .16}"/>`).join('')}</linearGradient>`;
+  nodes.forEach(n => {
+    const [a, b, c] = n.look.c;
+    defs += `<radialGradient id="pg-${n.key}" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="${a}"/><stop offset=".5" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></radialGradient>
+      <radialGradient id="gl-${n.key}"><stop offset="0" stop-color="${b}" stop-opacity="${n.look.star ? .55 : .3}"/><stop offset="1" stop-color="${b}" stop-opacity="0"/></radialGradient>`;
+  });
+  let html = `<defs>${defs}</defs>`;
+  for (let i = 0; i < 140; i++) html += `<circle class="tw" cx="${(Math.random() * 1000).toFixed(0)}" cy="${(Math.random() * 620).toFixed(0)}" r="${(Math.random() * 1.2 + .3).toFixed(2)}" fill="${Math.random() < .3 ? '#cfc4ff' : '#fff'}" style="--t:${(2 + Math.random() * 4).toFixed(1)}s;--dl:${(-Math.random() * 5).toFixed(1)}s"/>`;
+  let gal = '';
+  for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 420; k++) {
+    const t = k / 420, ang = t * 4.2 * Math.PI + arm * Math.PI, rad = 22 + t * 430, sc = (1 - t) * 8 + 5;
+    const x = Math.cos(ang) * rad + (Math.random() - .5) * sc * 2.4, y = Math.sin(ang) * rad + (Math.random() - .5) * sc * 2.4;
+    const col = t < .22 ? '#fff1d6' : (Math.random() < .55 ? '#a9b8ff' : '#e7a8ff');
+    gal += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(Math.random() * 1.4 + .3).toFixed(2)}" fill="${col}" opacity="${(.2 + Math.random() * .6 * (1 - t * .6)).toFixed(2)}"/>`;
+  }
+  html += `<g id="galaxy">${gal}</g>`;
+  OR.forEach(o => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(170,160,255,.22)" stroke-dasharray="3 7"/>`);
+  html += `<circle cx="${C.x}" cy="${C.y}" r="95" fill="url(#core)"/><circle cx="${C.x}" cy="${C.y}" r="12" fill="#fff"/>
+    <text x="${C.x}" y="${C.y + 48}" text-anchor="middle" style="font-family:var(--serif);font-size:18px;fill:#fff1c9">the verses</text>`;
   nodes.forEach((n, i) => {
-    const r = 9 + Math.sqrt(n.count) * 3.6;
-    html += `<g class="planet" data-topic="${esc(n.name)}" data-key="${n.key}" id="pl${i}">
-      <circle class="glow" r="${r + 12}" fill="#e3b95f" opacity=".12"/><circle class="body" r="${r}" fill="url(#pl)"/>
-      <text x="${r + 10}" y="-2">${esc(n.name)}</text><text class="cnt" x="${r + 10}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
+    const r = 10 + Math.sqrt(n.count) * 3.8, L = n.look, id = n.key;
+    let body = `<circle r="${(r * (L.star ? 2.6 : 2)).toFixed(1)}" fill="url(#gl-${id})"/>`;
+    if (L.ring) body += `<ellipse rx="${(r * 1.95).toFixed(1)}" ry="${(r * .55).toFixed(1)}" fill="none" stroke="${L.ring}" stroke-width="2.6" transform="rotate(-16)"/>`;
+    if (L.corona) body += `<circle r="${(r + 5).toFixed(1)}" fill="none" stroke="rgba(255,240,205,.9)" stroke-width="2.2"/><circle r="${(r + 10).toFixed(1)}" fill="none" stroke="rgba(255,215,150,.35)" stroke-width="5"/>`;
+    body += `<circle class="body" r="${r.toFixed(1)}" fill="url(#pg-${id})"/>`;
+    if (L.bands) body += `<circle r="${r.toFixed(1)}" fill="url(#bands)"/>`;
+    if (L.earth) body += `<clipPath id="cp-${id}"><circle r="${r.toFixed(1)}"/></clipPath><g clip-path="url(#cp-${id})">
+        <ellipse cx="${(-r * .35).toFixed(1)}" cy="${(-r * .15).toFixed(1)}" rx="${(r * .45).toFixed(1)}" ry="${(r * .3).toFixed(1)}" fill="#46a35e" opacity=".85"/>
+        <ellipse cx="${(r * .45).toFixed(1)}" cy="${(r * .35).toFixed(1)}" rx="${(r * .3).toFixed(1)}" ry="${(r * .22).toFixed(1)}" fill="#3d8f52" opacity=".85"/>
+        <ellipse cx="${(r * .1).toFixed(1)}" cy="${(-r * .55).toFixed(1)}" rx="${(r * .6).toFixed(1)}" ry="${(r * .12).toFixed(1)}" fill="#fff" opacity=".55"/></g>`;
+    if (L.craters) body += [[-.35, -.2, .18], [.3, .1, .14], [-.05, .42, .11], [.4, -.38, .09]].map(([cx, cy, cr]) =>
+      `<circle cx="${(cx * r).toFixed(1)}" cy="${(cy * r).toFixed(1)}" r="${(cr * r).toFixed(1)}" fill="#6b6b6b" opacity=".45"/>`).join('');
+    body += `<circle r="${r.toFixed(1)}" fill="url(#shade)"/>`;
+    if (L.ring) body += `<path d="M ${(-r * 1.95).toFixed(1)} 0 A ${(r * 1.95).toFixed(1)} ${(r * .55).toFixed(1)} 0 0 0 ${(r * 1.95).toFixed(1)} 0" fill="none" stroke="${L.ring}" stroke-width="2.6" transform="rotate(-16)"/>`;
+    html += `<g class="planet" data-topic="${esc(n.name)}" data-key="${n.key}" data-i="${i}" id="pl${i}"><g class="body-g">${body}</g>
+      <text x="${(r + 12).toFixed(1)}" y="-2">${esc(n.name)}</text><text class="cnt" x="${(r + 12).toFixed(1)}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
+    n.r = r;
   });
   svg.innerHTML = html;
-  let paused = false;
-  svg.addEventListener('mouseover', e => { if (e.target.closest('.planet')) paused = true; });
-  svg.addEventListener('mouseout', e => { if (e.target.closest('.planet')) paused = false; });
+  const galaxy = document.getElementById('galaxy');
+  let paused = false, gAng = 0;
+  svg.addEventListener('mouseover', e => {
+    const pl = e.target.closest('.planet'); if (!pl) return;
+    paused = true;
+    const n = nodes[+pl.dataset.i], b = pl.querySelector('circle.body').getBoundingClientRect(), w = wrap.getBoundingClientRect();
+    tip.innerHTML = `<b>${esc(n.name)}</b><span>${n.count} verse${n.count > 1 ? 's' : ''} echo this · click to explore →</span>`;
+    tip.style.left = (b.left + b.width / 2 - w.left) + 'px'; tip.style.top = (b.top - w.top) + 'px';
+    tip.classList.add('show');
+  });
+  svg.addEventListener('mouseout', e => { if (e.target.closest('.planet')) { paused = false; tip.classList.remove('show'); } });
   (function spin() {
+    gAng += paused ? 0 : .025;
+    galaxy.setAttribute('transform', `translate(${C.x} ${C.y}) scale(1 .45) rotate(${gAng.toFixed(2)})`);
     nodes.forEach((n, i) => {
       if (!paused) n.ang += OR[n.orbit].sp * (1 + i * .03);
       const o = OR[n.orbit], x = C.x + o.rx * Math.cos(n.ang), y = C.y + o.ry * Math.sin(n.ang);
@@ -791,15 +947,36 @@ async function buildMap() {
       const left = x > 700;
       if (left !== n.left) {
         n.left = left;
-        const r = +el.querySelector('circle.body').getAttribute('r');
-        el.querySelectorAll('text').forEach(t => { t.setAttribute('x', left ? -(r + 10) : r + 10); t.setAttribute('text-anchor', left ? 'end' : 'start'); });
+        el.querySelectorAll('text').forEach(t => { t.setAttribute('x', left ? -(n.r + 12) : n.r + 12); t.setAttribute('text-anchor', left ? 'end' : 'start'); });
       }
-      el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
+      el.style.opacity = (.6 + .4 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
     });
     requestAnimationFrame(spin);
   })();
-  $('#legend').innerHTML = nodes.map(n => `<button class="chip" data-topic="${esc(n.name)}" data-key="${n.key}">${esc(n.name)} · ${n.count}</button>`).join('');
+  $('#legend').innerHTML = nodes.map(n => `<button class="chip" data-topic="${esc(n.name)}" data-key="${n.key}"><span class="pdot" style="background:${n.look.c[1]};color:${n.look.c[1]}"></span>${esc(n.name)} · ${n.count}</button>`).join('');
 }
+
+/* ---------------- interaction: scroll progress, cursor light, 3D leaves ---------------- */
+addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  $('#progress').style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+}, {passive: true});
+(() => {
+  const glow = $('#cursorGlow'); let gx = innerWidth / 2, gy = innerHeight / 2, tx = gx, ty = gy, tiltEl = null;
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    document.body.classList.add('has-mouse'); tx = e.clientX; ty = e.clientY;
+    const el = e.target.closest && e.target.closest('.ola');
+    if (tiltEl && tiltEl !== el) { tiltEl.style.transform = ''; tiltEl = null; }
+    if (!el) return;
+    tiltEl = el;
+    const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    el.style.transform = `perspective(900px) rotateX(${((.5 - py) * 7).toFixed(2)}deg) rotateY(${((px - .5) * 9).toFixed(2)}deg) translateY(-6px)`;
+    el.style.setProperty('--gx', (px * 100).toFixed(1) + '%'); el.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+  }, {passive: true});
+  document.addEventListener('mouseleave', () => { if (tiltEl) { tiltEl.style.transform = ''; tiltEl = null; } });
+  (function follow() { gx += (tx - gx) * .12; gy += (ty - gy) * .12; glow.style.transform = `translate(${gx.toFixed(1)}px,${gy.toFixed(1)}px)`; requestAnimationFrame(follow); })();
+})();
 
 /* ---------------- archive ---------------- */
 let filter = 'AOL', shown = 24, archQ = '';
@@ -907,7 +1084,7 @@ function renderLibList() {
 function libItem(i) {
   const v = i.verse, d = new Date((i.saved_at || 0) * 1000).toLocaleDateString(undefined, {day: 'numeric', month: 'short', year: 'numeric'});
   return `<article class="lib-item">
-    <div class="ola-leaf mini" data-open-saved="${esc(i.id)}"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
+    <div class="ola-leaf mini" data-open-saved="${esc(i.id)}"><span class="frame"></span><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
     <div class="lib-meta">
       <div class="cap-top"><span class="src">${esc(v.source || 'Your verse')}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span><span class="lib-date">${d}</span></div>
       ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}

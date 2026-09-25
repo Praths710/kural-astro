@@ -32,7 +32,11 @@ def _clean(raw):
                    ("label", 4), ("concept", 200), ("meaning", 400))},
         "deep": {"literal": _s(d.get("literal"), 1500), "analogy": _s(d.get("analogy"), 1500),
                  "strength": _s(d.get("strength"), 12),
-                 "real_world": [{"title": _s(r.get("title"), 160), "detail": _s(r.get("detail"), 500)}
+                 "real_world": [{"title": _s(r.get("title"), 160), "detail": _s(r.get("detail"), 500),
+                                 "field": _s(r.get("field"), 40), "organization": _s(r.get("organization"), 80),
+                                 "org_type": _s(r.get("org_type"), 30), "year": _s(r.get("year"), 4),
+                                 "credible": bool(r.get("credible")),
+                                 "url": _s(r.get("url"), 300) if str(r.get("url", "")).startswith("https://") else ""}
                                 for r in real[:5] if isinstance(r, dict)]},
         "papers": [{"title": _s(p.get("title"), 300), "url": _s(p.get("url"), 300), "year": _s(p.get("year"), 6),
                     "tag": _s(p.get("tag"), 16), "authors": [_s(a, 80) for a in (p.get("authors") or [])[:4]]}

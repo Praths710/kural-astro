@@ -19,6 +19,7 @@ import subprocess
 import sys
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -124,7 +125,8 @@ def match_topic(concept):
 
 def papers_for(concept, key=None):
     out = cached(ckey("papers", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
-    return (out or {}).get("title"), (out or {}).get("papers", [])
+    papers = sorted((out or {}).get("papers", []), key=lambda p: -int(re.sub(r"\D", "", str(p.get("year") or "")) or 0))
+    return (out or {}).get("title"), papers
 
 
 def _papers_live(concept, key=None):
@@ -209,17 +211,57 @@ def concept_translations(lang):
     return out
 
 
+FIELDS = ["Space & Astronomy", "Physics", "Earth & Climate", "Medicine & Health", "Biology & Life",
+          "Technology & Engineering", "Mathematics & Computing", "Environment & Agriculture"]
+CREDIBLE = {"space agency": 0, "university": 0, "research institute": 1, "government": 1, "company": 2}
+
 DEEP_SYS = (
     "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts "
-    "with modern astrophysics. Be honest: the poet did not know modern science; this is an analogy. "
+    "with modern science. Be honest: the poet did not know modern science; this is an analogy. "
     "Return JSON with keys:\n"
     "  literal: 2-3 sentences, what the verse actually says in its own religious/ethical context\n"
     "  analogy: 2-3 sentences, how its imagery resembles the given modern science concept, and where the resemblance breaks down\n"
-    "  real_world: array of 3 objects {title, detail} -- real, well-documented modern observations, experiments, "
-    "missions or technologies related to that concept (e.g. named telescopes, missions, experiments with years). "
-    "Only use things you are confident exist; no invented projects.\n"
+    "  real_world: array of 4-6 objects {title, detail, field, organization, org_type, year, url} -- real, "
+    "well-documented modern missions, experiments, observations, studies or technologies connected to the concept, "
+    "spread across every field it genuinely touches (not only space when medicine, climate, biology etc. also apply).\n"
+    "    field: exactly one of " + ", ".join(FIELDS) + "\n"
+    "    organization: who did it -- strongly prefer top credible bodies: NASA, ISRO, ESA, JAXA, CNSA, Roscosmos, CERN, "
+    "NOAA, WHO, and leading universities (Stanford, MIT, Caltech, Harvard, Oxford, Cambridge, IISc, IITs...)\n"
+    "    org_type: one of 'space agency', 'university', 'research institute', 'government', 'company', 'other'\n"
+    "    year: the year of the mission or result (number)\n"
+    "    url: the official page URL only if you are confident it exists, otherwise an empty string\n"
+    "    Only use things you are confident exist; no invented projects.\n"
     "  strength: one of 'strong', 'moderate', 'weak' -- how close the analogy honestly is"
 )
+
+
+def url_ok(u):
+    """Open the link once; keep it only if the page really exists (drops invented or dead links)."""
+    if not re.fullmatch(r"https://[^\s\"'<>]{4,300}", u or ""):
+        return False
+    try:
+        r = subprocess.run(["curl", "-sL", "-o", os.devnull, "-w", "%{http_code}", "-m", "8", "-r", "0-0",
+                            "-A", "Mozilla/5.0 (KuralAstro link check)", u], capture_output=True, text=True, timeout=12)
+        return 200 <= int(r.stdout.strip() or 0) < 400
+    except (ValueError, subprocess.SubprocessError, OSError):
+        return False
+
+
+def finalize_deep(d):
+    """Normalise real-world examples: known field, verified link, top organisations first, then newest first."""
+    items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")]
+    with ThreadPoolExecutor(6) as ex:
+        oks = list(ex.map(url_ok, [r.get("url", "") for r in items]))
+    for r, ok in zip(items, oks):
+        r["url"] = r.get("url", "") if ok else ""
+        r["field"] = r.get("field") if r.get("field") in FIELDS else "General"
+        r["org_type"] = str(r.get("org_type") or "other").lower()
+        r["credible"] = CREDIBLE.get(r["org_type"], 3) <= 1
+        m = re.search(r"\d{4}", str(r.get("year") or ""))
+        r["year"] = int(m.group()) if m else 0
+    items.sort(key=lambda r: (CREDIBLE.get(r["org_type"], 3), -r["year"]))
+    d["real_world"] = items
+    return d
 
 
 COLLECTION_SYS = (
@@ -251,7 +293,8 @@ def analyse_collection(user, lang, fresh=False):
               "tamil": i["verse"].get("tamil", "")[:200], "meaning": i["verse"].get("meaning", ""),
               "literal": (i.get("deep") or {}).get("literal", "")[:300], "analogy": (i.get("deep") or {}).get("analogy", "")[:300],
               "note": i.get("note", "")[:300],
-              "real_world": [f"{r.get('title', '')}: {r.get('detail', '')[:160]}" for r in (i.get("deep") or {}).get("real_world", [])][:4],
+              "real_world": [f"{r.get('organization') or ''} | {r.get('title', '')}: {r.get('detail', '')[:160]}"
+                             for r in (i.get("deep") or {}).get("real_world", [])][:5],
               "papers": [f"{p.get('title', '')} ({p.get('year', '')})" for p in i.get("papers", [])][:5]} for i in items]
     key = ckey("collection-v2", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
     def run():
@@ -472,8 +515,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(400, {"error": "empty text"})
             def read_it():
                 d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
-                return d if isinstance(d, dict) and d.get("literal") else None
-            out = cached(ckey("deep", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+                return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
+            out = cached(ckey("deep-v2", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
