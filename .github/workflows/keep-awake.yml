@@ -1,0 +1,15 @@
+name: Keep site awake
+
+# Render's free plan sleeps after 15 min without visitors; a ping every 10 min keeps it awake.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Ping the health endpoint
+        run: curl -fsS -m 90 --retry 3 --retry-delay 15 https://kural-astro.onrender.com/health
