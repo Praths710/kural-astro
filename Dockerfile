@@ -5,7 +5,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certifi
     && useradd -m -u 1000 app
 
 WORKDIR /app
-COPY src/app.py src/auth.py src/library.py src/gemini_label.py src/research_report.py src/
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY src/app.py src/auth.py src/library.py src/store.py src/gemini_label.py src/research_report.py src/
 COPY src/webapp/ src/webapp/
 COPY data/raw/thirukkural.json data/raw/
 COPY data/processed/thiruvarutpa.jsonl data/processed/arxiv_cache.json data/processed/

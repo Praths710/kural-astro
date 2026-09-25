@@ -1,17 +1,14 @@
-"""Per-user saved leaves ("library"). Stored in data/saved.json as {username: [item, ...]}.
+"""Per-user saved leaves ("library"), persisted through store.STORE (Postgres or data/saved.json).
 
 An item keeps everything shown in a reading so it reopens instantly without new AI calls:
 the verse, its label/concept, the deep reading, the papers, and the user's own note.
 Every field is whitelisted and length-capped: the client cannot store arbitrary data.
 """
-import json
-import os
 import threading
 import time
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-STORE = Path(os.environ.get("SAVED_FILE", ROOT / "data" / "saved.json"))
+from store import STORE
+
 MAX_ITEMS = 500
 _lock = threading.Lock()
 
@@ -44,19 +41,8 @@ def _clean(raw):
     }
 
 
-def _load():
-    return json.loads(STORE.read_text(encoding="utf-8")) if STORE.exists() else {}
-
-
-def _save(data):
-    STORE.parent.mkdir(parents=True, exist_ok=True)
-    tmp = STORE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-    tmp.replace(STORE)
-
-
 def list_items(user):
-    return _load().get(user, [])
+    return STORE.saved_list(user)
 
 
 def upsert(user, raw):
@@ -64,9 +50,7 @@ def upsert(user, raw):
     if not item:
         return None, "Nothing to save."
     with _lock:
-        data = _load()
-        items = data.get(user, [])
-        old = next((i for i in items if i["id"] == item["id"]), None)
+        old = STORE.saved_get(user, item["id"])
         if old:
             item["saved_at"] = old.get("saved_at", int(time.time()))
             if not raw.get("note") and old.get("note"):
@@ -75,35 +59,23 @@ def upsert(user, raw):
                 item["deep"] = old["deep"]
             if not item["papers"] and old.get("papers"):
                 item["papers"] = old["papers"]
-            items = [item if i["id"] == item["id"] else i for i in items]
         else:
-            if len(items) >= MAX_ITEMS:
+            if STORE.saved_count(user) >= MAX_ITEMS:
                 return None, f"Your library is full ({MAX_ITEMS} leaves). Remove some first."
             item["saved_at"] = int(time.time())
-            items.insert(0, item)
-        data[user] = items
-        _save(data)
+        STORE.saved_put(user, item)
     return item, None
 
 
 def set_note(user, item_id, note):
     with _lock:
-        data = _load()
-        for i in data.get(user, []):
-            if i["id"] == item_id:
-                i["note"] = _s(note, 1000)
-                _save(data)
-                return True
-    return False
+        item = STORE.saved_get(user, item_id)
+        if not item:
+            return False
+        item["note"] = _s(note, 1000)
+        STORE.saved_put(user, item)
+    return True
 
 
 def remove(user, item_id):
-    with _lock:
-        data = _load()
-        items = data.get(user, [])
-        kept = [i for i in items if i["id"] != item_id]
-        if len(kept) == len(items):
-            return False
-        data[user] = kept
-        _save(data)
-    return True
+    return STORE.saved_delete(user, item_id)

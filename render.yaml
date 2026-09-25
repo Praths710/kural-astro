@@ -11,3 +11,5 @@ services:
         generateValue: true
       - key: INVITE_CODE
         sync: false
+      - key: DATABASE_URL
+        sync: false

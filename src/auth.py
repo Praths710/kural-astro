@@ -2,13 +2,12 @@
 
 Passwords: PBKDF2-HMAC-SHA256, 200k iterations, per-user random salt.
 Sessions: stateless signed cookie "user|expiry|hmac" keyed by SECRET_KEY (env) or an
-auto-generated data/.secret. Users live in data/users.json (or USERS_FILE env).
+auto-generated data/.secret. Users live in store.STORE (Postgres if DATABASE_URL, else data/users.json).
 If INVITE_CODE is set in the environment, sign-up requires it.
 """
 import base64
 import hashlib
 import hmac
-import json
 import os
 import re
 import secrets
@@ -16,13 +15,15 @@ import threading
 import time
 from pathlib import Path
 
+from store import STORE
+
 ROOT = Path(__file__).resolve().parent.parent
-USERS = Path(os.environ.get("USERS_FILE", ROOT / "data" / "users.json"))
 COOKIE = "ka_session"
 MAX_AGE = 7 * 24 * 3600
 ITER = 200_000
 _lock = threading.Lock()
 _fails = {}  # ip -> [timestamps of failed logins]
+_known = {}  # username -> time it was last confirmed to exist (avoids a DB hit per request)
 
 
 def _secret():
@@ -36,10 +37,6 @@ def _secret():
 
 
 SECRET = _secret()
-
-
-def _load():
-    return json.loads(USERS.read_text(encoding="utf-8")) if USERS.exists() else {}
 
 
 def _hash(password, salt):
@@ -61,16 +58,9 @@ def create_user(username, password, invite=""):
     err = validate(username, password)
     if err:
         return err
-    with _lock:
-        users = _load()
-        if username.lower() in {u.lower() for u in users}:
-            return "That username is taken."
-        salt = secrets.token_hex(16)
-        users[username] = {"salt": salt, "hash": _hash(password, salt), "created": int(time.time())}
-        USERS.parent.mkdir(parents=True, exist_ok=True)
-        tmp = USERS.with_suffix(".tmp")
-        tmp.write_text(json.dumps(users, indent=1), encoding="utf-8")
-        tmp.replace(USERS)
+    salt = secrets.token_hex(16)
+    if not STORE.add_user(username, salt, _hash(password, salt)):
+        return "That username is taken."
     return None
 
 
@@ -84,10 +74,9 @@ def too_many_failures(ip):
 def check_login(username, password, ip):
     if too_many_failures(ip):
         return None, "Too many attempts. Wait 10 minutes and try again."
-    users = _load()
-    match = next((u for u in users if u.lower() == (username or "").lower()), None)
-    if match and hmac.compare_digest(users[match]["hash"], _hash(password or "", users[match]["salt"])):
-        return match, None
+    rec = STORE.find_user(username)
+    if rec and hmac.compare_digest(rec[2], _hash(password or "", rec[1])):
+        return rec[0], None
     _fails.setdefault(ip, []).append(time.time())
     return None, "Wrong username or password."
 
@@ -106,7 +95,13 @@ def read_token(token):
     good = hmac.new(SECRET, f"{username}|{exp}".encode(), hashlib.sha256).hexdigest()
     if not hmac.compare_digest(good, sig) or int(exp) < time.time():
         return None
-    return username if username in _load() else None
+    if time.time() - _known.get(username, 0) < 300:
+        return username
+    rec = STORE.find_user(username)
+    if rec and rec[0] == username:
+        _known[username] = time.time()
+        return username
+    return None
 
 
 def cookie_header(token, secure, clear=False):

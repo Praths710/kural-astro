@@ -321,6 +321,43 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
 .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,40px);opacity:0;background:#1b1826;border:1px solid var(--line);color:var(--parch);
   padding:12px 20px;border-radius:999px;font-size:14px;z-index:80;transition:all .35s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- classic parchment cards (restored design) ---------- */
+.bundle::before,.bundle::after,.board{display:none}
+.bundle .leaves{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;padding:0}
+@media(max-width:820px){.bundle .leaves{grid-template-columns:1fr}}
+.ola{display:flex;flex-direction:column;border-radius:22px/30px;padding:26px 44px 22px;color:var(--ink);
+  background:repeating-linear-gradient(0deg,rgba(120,80,30,.07) 0 1px,transparent 1px 9px),radial-gradient(ellipse at 30% 0%,rgba(255,255,255,.35),transparent 60%),linear-gradient(160deg,var(--leaf1),var(--leaf2));
+  box-shadow:inset 0 0 40px rgba(110,66,20,.35),inset 0 0 0 1px rgba(120,80,30,.25),0 18px 40px rgba(0,0,0,.45);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.ola:hover{transform:translateY(-6px) rotate(-.25deg);box-shadow:inset 0 0 40px rgba(110,66,20,.35),inset 0 0 0 1px rgba(120,80,30,.25),0 30px 60px rgba(0,0,0,.55),0 0 0 1px rgba(227,185,95,.4)}
+.ola::before,.ola::after{content:'';position:absolute;top:50%;width:9px;height:9px;border-radius:50%;transform:translateY(-50%);
+  background:radial-gradient(circle,#2b1a0a 40%,#6b4a24 100%);box-shadow:0 0 0 2px rgba(120,80,30,.25)}
+.ola::before{left:18px}.ola::after{right:18px}
+.ola .ola-leaf{background:none;box-shadow:none;border-radius:0;padding:0;min-height:0;display:block;transform:none!important}
+.ola:hover .ola-leaf{box-shadow:none}
+.ola .hole{display:none}
+.ola .ola-cap{display:contents}
+.ola .cap-top{order:-1;margin-bottom:12px}
+.ola .ola-ta{font-size:17px;line-height:1.75;-webkit-line-clamp:4;text-shadow:none;margin:0 0 12px}
+.ola .src{color:#7a4e22}
+.ola .cap-concept{color:#5a300c;font-weight:600;font-size:20px;margin:0 0 6px}
+.ola .cap-reason{color:#5b4428}
+.ola .cap-foot{border-top:1px dashed rgba(90,48,12,.3);padding-top:12px;margin-top:16px;color:#7a5a36}
+.ola .cap-foot .open{color:#8a4b16;font-weight:700}
+.ola .cap-save{border-color:rgba(120,80,30,.35);color:#8a4b16}
+.ola .cap-save.on{background:#8a4b16;color:var(--leaf1);border-color:#8a4b16}
+.skel-ola{height:210px;border-radius:24px}
+.ola-leaf.big,.ola-leaf.mini,.leaf-input{border-radius:22px/30px;
+  background:repeating-linear-gradient(0deg,rgba(120,80,30,.07) 0 1px,transparent 1px 9px),radial-gradient(ellipse at 30% 0%,rgba(255,255,255,.35),transparent 60%),linear-gradient(160deg,var(--leaf1),var(--leaf2));
+  box-shadow:inset 0 0 40px rgba(110,66,20,.35),inset 0 0 0 1px rgba(120,80,30,.25),0 18px 40px rgba(0,0,0,.45)}
+.ola-leaf.big{padding:32px 52px}.ola-leaf.mini{padding:16px 40px}.leaf-input{padding:28px 48px}
+.ola-leaf.big .ola-ta,.ola-leaf.mini .ola-ta{text-shadow:none}
+.ola-leaf .hole{width:9px;height:9px;margin-top:-4.5px;background:radial-gradient(circle,#2b1a0a 40%,#6b4a24 100%);box-shadow:0 0 0 2px rgba(120,80,30,.25)}
+.ola-leaf .hole::after{display:none}
+.ola-leaf .hole.l{left:18px}.ola-leaf .hole.r{right:18px}
+.bundle.single::before,.bundle.single::after{display:none}
+@media(max-width:640px){.ola{padding:22px 36px 18px}.ola-leaf.big{padding:26px 36px}}
 </style>
 </head>
 <body>
