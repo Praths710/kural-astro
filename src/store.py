@@ -30,6 +30,8 @@ class JsonStore:
     def __init__(self):
         self.users = Path(os.environ.get("USERS_FILE", ROOT / "data" / "users.json"))
         self.saved = Path(os.environ.get("SAVED_FILE", ROOT / "data" / "saved.json"))
+        self.cache = ROOT / "data" / "cache.json"
+        self.shares = ROOT / "data" / "shares.json"
         self.lock = threading.Lock()
 
     @staticmethod
@@ -73,6 +75,28 @@ class JsonStore:
             data[user] = [item] + items
             self._write(self.saved, data)
 
+    def cache_get(self, key, max_age=None):
+        e = self._read(self.cache).get(key)
+        if not e or (max_age and time.time() - e["t"] > max_age):
+            return None
+        return e["v"]
+
+    def cache_put(self, key, value):
+        with self.lock:
+            d = self._read(self.cache)
+            d[key] = {"t": int(time.time()), "v": value}
+            self._write(self.cache, d)
+
+    def share_put(self, sid, owner, item):
+        with self.lock:
+            d = self._read(self.shares)
+            d[sid] = {"owner": owner, "t": int(time.time()), "item": item}
+            self._write(self.shares, d)
+
+    def share_get(self, sid):
+        e = self._read(self.shares).get(sid)
+        return e["item"] if e else None
+
     def saved_delete(self, user, item_id):
         with self.lock:
             data = self._read(self.saved)
@@ -95,6 +119,8 @@ class PgStore:
         username TEXT NOT NULL REFERENCES users(username) ON DELETE CASCADE,
         id TEXT NOT NULL, saved_at BIGINT NOT NULL, item JSONB NOT NULL,
         PRIMARY KEY (username, id));
+    CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, created BIGINT NOT NULL, value JSONB NOT NULL);
+    CREATE TABLE IF NOT EXISTS shares (id TEXT PRIMARY KEY, owner TEXT, created BIGINT NOT NULL, item JSONB NOT NULL);
     """
 
     def __init__(self, url):
@@ -148,9 +174,28 @@ class PgStore:
                    ON CONFLICT (username, id) DO UPDATE SET item = EXCLUDED.item, saved_at = EXCLUDED.saved_at""",
                 (user, item["id"], item.get("saved_at", int(time.time())), self.Jsonb(item)))
 
+    def cache_get(self, key, max_age=None):
+        r = self._q("SELECT value, created FROM cache WHERE key = %s", (key,), "one")
+        if not r or (max_age and time.time() - r[1] > max_age):
+            return None
+        return r[0]
+
+    def cache_put(self, key, value):
+        self._q("""INSERT INTO cache (key, created, value) VALUES (%s, %s, %s)
+                   ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, created = EXCLUDED.created""",
+                (key, int(time.time()), self.Jsonb(value)))
+
+    def share_put(self, sid, owner, item):
+        self._q("INSERT INTO shares (id, owner, created, item) VALUES (%s, %s, %s, %s)",
+                (sid, owner, int(time.time()), self.Jsonb(item)))
+
+    def share_get(self, sid):
+        r = self._q("SELECT item FROM shares WHERE id = %s", (sid,), "one")
+        return r[0] if r else None
+
     def saved_delete(self, user, item_id):
         return self._q("DELETE FROM saved WHERE username = %s AND id = %s", (user, item_id)) > 0
 
 
-_url = _env("DATABASE_URL")
+_url = "" if os.environ.get("STORE") == "json" else _env("DATABASE_URL")  # STORE=json forces local files
 STORE = PgStore(_url) if _url else JsonStore()

@@ -10,8 +10,11 @@ API
   POST /api/analyze {text}         any verse -> label + concept (Gemini) + arXiv papers
   POST /api/deep {text, concept}   deep read: literal meaning, the analogy, real-world examples
 """
+import hashlib
 import json
 import os
+import re
+import secrets
 import subprocess
 import sys
 import threading
@@ -28,11 +31,32 @@ import gemini_label as g          # noqa: E402
 import research_report as rr      # noqa: E402
 import auth                        # noqa: E402
 import library                     # noqa: E402
+from store import STORE            # noqa: E402
 
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", 8765))
 MAX_BODY = 64 * 1024
 PUBLIC = {"/login", "/login.html", "/health", "/api/login", "/api/signup"}
+DAY = 86400
+TAMIL = re.compile(r"[\u0B80-\u0BFF]")
+LANG_NOTE = {"en": "", "ta": ("\nWrite every text value in clear, modern Tamil (தமிழ்). Keep names of missions, telescopes "
+                               "and scientific terms understandable (you may add the English name in brackets).")}
+
+
+def ckey(*parts):
+    return hashlib.sha256("\x1f".join(str(x) for x in parts).encode("utf-8")).hexdigest()
+
+
+def cached(key, max_age, compute, fresh=False):
+    """Serve from the shared cache; compute (an AI or arXiv call) only on a miss. Failed results are never cached."""
+    if not fresh:
+        hit = STORE.cache_get(key, max_age)
+        if hit is not None:
+            return hit
+    value = compute()
+    if value:
+        STORE.cache_put(key, value)
+    return value
 _arxiv_lock = threading.Lock()
 STATIC = ROOT / "src" / "webapp"
 
@@ -97,6 +121,11 @@ def match_topic(concept):
 
 
 def papers_for(concept, key=None):
+    out = cached(ckey("papers", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
+    return (out or {}).get("title"), (out or {}).get("papers", [])
+
+
+def _papers_live(concept, key=None):
     if key in rr.TOPICS:
         title, _, queries = rr.TOPICS[key]
     else:
@@ -116,7 +145,7 @@ def papers_for(concept, key=None):
                 if p["url"] not in seen:
                     seen.add(p["url"])
                     papers.append({**p, "tag": tag})
-    return title, papers
+    return {"title": title, "papers": papers} if papers else None
 
 
 SEARCH_SYS = (
@@ -127,10 +156,28 @@ SEARCH_SYS = (
 )
 
 
-def search_by_topic(topic, key=None):
+def english_query(topic):
+    """arXiv only understands English: translate a Tamil search term once and cache it."""
+    if not TAMIL.search(topic):
+        return topic
+    out = cached(ckey("q-en", topic), None, lambda: gemini_json(
+        'Translate this search term into a short English scientific search phrase. Return JSON {"q": "..."}.\nTerm: ' + topic,
+        attempts=3, temperature=0))
+    return (out or {}).get("q") or topic
+
+
+def search_by_topic(topic, key=None, lang="en"):
+    return cached(ckey("search", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+
+
+def _search_live(topic, key=None, lang="en"):
     verses = [v for v in verse_list() if v["label"] in ("L", "O", "A")]
     listing = "\n".join(f'{i}::{v["concept"]}::{v["meaning"]}' for i, v in enumerate(verses))
-    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}\n\nTopic: {topic}\n\nList (index::concept::meaning):\n{listing}") or []
+    reason_lang = " Write each reason in Tamil." if lang == "ta" else ""
+    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {topic}\n\nList (index::concept::meaning):\n{listing}")
+    if raw is None:
+        return None
+    raw = raw or []
     matches = []
     for m in raw if isinstance(raw, list) else []:
         try:
@@ -139,8 +186,25 @@ def search_by_topic(topic, key=None):
             continue
         if 0 <= idx < len(verses):
             matches.append({**verses[idx], "reason": m.get("reason", "")})
-    topic_title, papers = papers_for(topic, key)
+    topic_title, papers = papers_for(english_query(topic), key)
     return {"matches": matches, "topic_title": topic_title, "papers": papers}
+
+
+def concept_translations(lang):
+    """One cached AI call maps every concept phrase in the dataset to Tamil for the Tamil interface."""
+    if lang != "ta":
+        return {}
+    phrases = sorted({v["concept"] for v in verse_list() if v["label"] in ("L", "O", "A") and v["concept"]})
+    out = {}
+    for i in range(0, len(phrases), 80):
+        chunk = phrases[i:i + 80]
+        part = cached(ckey("concepts-ta", *chunk), None, lambda c=chunk: gemini_json(
+            "Translate each English science phrase into concise, natural modern Tamil. "
+            "Return a JSON object mapping each original phrase exactly to its Tamil translation.\n" + json.dumps(c, ensure_ascii=False),
+            attempts=4, temperature=0))
+        if isinstance(part, dict):
+            out.update({k: v for k, v in part.items() if isinstance(v, str)})
+    return out
 
 
 DEEP_SYS = (
@@ -154,6 +218,49 @@ DEEP_SYS = (
     "Only use things you are confident exist; no invented projects.\n"
     "  strength: one of 'strong', 'moderate', 'weak' -- how close the analogy honestly is"
 )
+
+
+COLLECTION_SYS = (
+    "You are a research assistant for a student project comparing classical Tamil verses (Thirukkural, Thiruvarutpa) "
+    "with modern science. Below are the leaves (verses) the student saved, each with its AI reading and the student's own "
+    "note. Analyse them TOGETHER, as a collection. Be honest: these are analogies, not evidence the poets knew modern science.\n"
+    "Return JSON with keys:\n"
+    "  overview: 3-4 sentences on what this collection is about\n"
+    "  themes: array of 2-5 {title, explanation, leaves: [ids]} grouping the leaves\n"
+    "  connections: array of up to 6 {leaves: [id, id], relation} -- meaningful links between specific leaves\n"
+    "  comparison: array of 2-4 {aspect, thirukkural, thiruvarutpa} -- how the two texts treat nature/cosmos differently "
+    "(write 'not in this collection' when a source is missing)\n"
+    "  interpretation: one paragraph, a deeper reading of what the collection suggests about ancient Tamil thought on the cosmos\n"
+    "  conclusions: array of 3-5 short, defensible conclusions the student could put in a report\n"
+    "  cautions: array of 2-3 limits or risks of over-claiming\n"
+    "  next_topics: array of 3-5 short ENGLISH science topics worth searching next\n"
+    "Refer to leaves only by the ids given. Use the student's notes where relevant."
+)
+
+
+def analyse_collection(user, lang, fresh=False):
+    items = library.list_items(user)[:40]
+    if len(items) < 2:
+        return None, "Save at least 2 leaves to analyse them together."
+    brief = [{"id": i["id"], "source": i["verse"].get("source") or "user verse", "ref": i["verse"].get("ref", ""),
+              "label": i["verse"].get("label", ""), "concept": i["verse"].get("concept", ""),
+              "tamil": i["verse"].get("tamil", "")[:200], "meaning": i["verse"].get("meaning", ""),
+              "literal": (i.get("deep") or {}).get("literal", "")[:300], "analogy": (i.get("deep") or {}).get("analogy", "")[:300],
+              "note": i.get("note", "")[:300]} for i in items]
+    key = ckey("collection", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
+    def run():
+        prompt = COLLECTION_SYS + LANG_NOTE[lang] + "\n\nLeaves:\n" + json.dumps(brief, ensure_ascii=False)
+        d = gemini_json(prompt, attempts=4)
+        return d if isinstance(d, dict) and d.get("overview") else None
+    report = cached(key, None, run, fresh=fresh)
+    if not report:
+        return None, "The AI service is busy. Try again in a few seconds."
+    ids = {i["id"] for i in items}
+    for t in report.get("themes") or []:
+        t["leaves"] = [x for x in (t.get("leaves") or []) if x in ids]
+    report["connections"] = [c for c in (report.get("connections") or []) if all(x in ids for x in (c.get("leaves") or [])[:2])]
+    names = {i["id"]: {"ref": i["verse"].get("ref") or "Your verse", "source": i["verse"].get("source", "")} for i in items}
+    return {"report": report, "leaves": names, "count": len(items)}, None
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -219,6 +326,12 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(200, {"invite_required": bool(os.environ.get("INVITE_CODE"))})
         if path in ("/login", "/login.html"):
             return self._redirect("/") if self._user() else self._static("login.html")
+        if re.fullmatch(r"/s/[A-Za-z0-9_-]{6,16}", path):
+            return self._static("share.html")
+        m = re.fullmatch(r"/api/share/([A-Za-z0-9_-]{6,16})", path)
+        if m:
+            item = STORE.share_get(m.group(1))
+            return self._json(200, item) if item else self._json(404, {"error": "This shared leaf does not exist."})
         user = self._gate(path)
         if user is None:
             return
@@ -238,6 +351,9 @@ class Handler(BaseHTTPRequestHandler):
                     if key:
                         counts[key]["count"] += 1
             return self._json(200, counts)
+        if path == "/api/concepts":
+            lang = (parse_qs(url.query).get("lang") or ["en"])[0]
+            return self._json(200, concept_translations(lang))
         if path == "/api/papers":
             q = (parse_qs(url.query).get("q") or [""])[0].strip()[:200]
             if not q:
@@ -284,22 +400,40 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(200, {"ok": library.remove(user, str(body.get("id", "")))})
         if path == "/api/saved/note":
             return self._json(200, {"ok": library.set_note(user, str(body.get("id", "")), body.get("note", ""))})
+        lang = "ta" if body.get("lang") == "ta" else "en"
+        if path == "/api/saved/analyze":
+            out, err = analyse_collection(user, lang, bool(body.get("fresh")))
+            return self._json(400 if err and "Save at least" in err else 502, {"error": err}) if err else self._json(200, out)
+        if path == "/api/share":
+            item = library._clean(body)
+            if not item:
+                return self._json(400, {"error": "Nothing to share."})
+            item.pop("note", None)  # notes are private
+            item["shared_by"] = user
+            sid = secrets.token_urlsafe(6)
+            STORE.share_put(sid, user, item)
+            return self._json(200, {"id": sid, "url": f"/s/{sid}"})
         if path == "/api/search_topic":
             topic = (body.get("topic") or "").strip()[:200]
             if not topic:
                 return self._json(400, {"error": "empty topic"})
-            return self._json(200, search_by_topic(topic, body.get("key")))
+            res = search_by_topic(topic, body.get("key"), lang)
+            if res is None:
+                return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
+            return self._json(200, res)
         if path == "/api/analyze":
             text = (body.get("text") or "").strip()
             if not text:
                 return self._json(400, {"error": "empty text"})
             verse = json.dumps({"id": "adhoc", "text": text[:1500]}, ensure_ascii=False)
-            result = gemini_json(f"{g.SYSTEM}\n\nVerses:\n{verse}", attempts=4, temperature=0)
-            if isinstance(result, dict):
-                result = [result]
-            if not result or not isinstance(result[0], dict):
+
+            def label_it():
+                res = gemini_json(f"{g.SYSTEM}\n\nVerses:\n{verse}", attempts=4, temperature=0)
+                res = [res] if isinstance(res, dict) else res
+                return res[0] if res and isinstance(res[0], dict) and res[0].get("label") else None
+            r = cached(ckey("analyze", text[:1500]), None, label_it)
+            if not r:
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
-            r = result[0]
             topic_title, papers = None, []
             if r.get("label") in ("L", "O", "A") and r.get("science_concept"):
                 topic_title, papers = papers_for(r["science_concept"])
@@ -308,7 +442,10 @@ class Handler(BaseHTTPRequestHandler):
             text, concept = (body.get("text") or "").strip()[:2000], (body.get("concept") or "").strip()[:200]
             if not text:
                 return self._json(400, {"error": "empty text"})
-            out = gemini_json(f"{DEEP_SYS}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+            def read_it():
+                d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+                return d if isinstance(d, dict) and d.get("literal") else None
+            out = cached(ckey("deep", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)

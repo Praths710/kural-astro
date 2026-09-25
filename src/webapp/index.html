@@ -316,6 +316,32 @@ h2.title em{color:var(--gold-hi)}
 .chip.danger:hover{border-color:#e5785a;color:#f2b4a0;background:rgba(229,120,90,.1)}
 .lib-empty{line-height:1.8}
 
+/* collection analysis */
+.analyse-btn{width:100%;margin:0 0 18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.analyse-btn small{font-weight:500;opacity:.75}
+.rep-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.rep-title{font-family:var(--serif);font-size:30px;margin:0}
+.rep-sec{margin-top:24px}
+.rep-sec h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.rep-sec p{margin:0;font-size:15px;line-height:1.7;color:var(--parch)}
+.rep-card{background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px;
+  animation:rise .6s both;animation-delay:var(--d,0ms)}
+.rep-card b{display:block;font-family:var(--serif);font-size:20px;font-weight:600;color:var(--gold-hi);margin-bottom:4px}
+.rep-card span{font-size:14px;line-height:1.6;color:var(--parch);opacity:.9}
+.leafchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.leafchip{background:rgba(236,217,166,.12);border:1px solid rgba(236,217,166,.3);color:var(--leaf1);border-radius:999px;padding:4px 11px;
+  font-size:12px;cursor:pointer;font-family:var(--sans)}
+.leafchip:hover{background:rgba(236,217,166,.22)}
+.link-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.link-row .arrow{color:var(--gold)}
+.cmp{width:100%;border-collapse:collapse;font-size:13.5px}
+.cmp th{text-align:left;color:var(--gold);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-bottom:1px solid var(--line)}
+.cmp td{padding:10px 8px;vertical-align:top;border-bottom:1px solid rgba(227,185,95,.08);line-height:1.55}
+.cmp td:first-child{color:var(--gold-hi);font-family:var(--serif);font-size:16px;width:24%}
+.concl{margin:0;padding-left:20px}
+.concl li{margin-bottom:8px;line-height:1.6;font-size:15px}
+.caution li{color:#e8c2a8}
+
 footer{padding:80px 20px 60px;text-align:center;color:var(--dim);font-size:13px;line-height:1.8;border-top:1px solid var(--line)}
 footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
 .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,40px);opacity:0;background:#1b1826;border:1px solid var(--line);color:var(--parch);
@@ -675,7 +701,7 @@ async function openVerse(v, opts = {}) {
   setSaveBtn(!!SAVED[v.id]);
   const keepSaved = () => { if (SAVED[v.id] && tok === modalTok) saveLeaf(CUR.verse, CUR.deep, CUR.papers, true); };
   if (cachedDeep) fillDeep(cachedDeep, tok);
-  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept})
+  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept, fresh: !!opts.fresh})
     .then(d => { if (tok !== modalTok) return; CUR.deep = d; fillDeep(d, tok); keepSaved(); })
     .catch(e => deepFailed(tok, e.message));
   if (v.concept) {
@@ -710,6 +736,10 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 document.addEventListener('click', e => {
   if (e.target.closest('[data-close]')) return closeModal();
   if (e.target.closest('[data-lib-close]')) return closeLibrary();
+  if (e.target.closest('[data-analyse]')) return analyseLeaves(false);
+  if (e.target.closest('[data-reanalyse]')) return analyseLeaves(true);
+  if (e.target.closest('[data-report-close]')) return closeReport();
+  if (e.target.closest('[data-copy-report]')) { navigator.clipboard.writeText(reportText()).then(() => toast('Report copied ✓'), () => toast('Could not copy')); return; }
   if (e.target.closest('[data-lib]') || e.target.closest('.who .av') || e.target.closest('.who .name')) { e.preventDefault(); return openLibrary(); }
   const qs = e.target.closest('[data-save]');
   if (qs) { const id = qs.dataset.save; return SAVED[id] ? unsaveLeaf(id) : saveLeaf(BY_ID[id]); }
@@ -849,6 +879,8 @@ function renderLibrary() {
     <div class="lib-head"><span class="av-big">${esc((ME || '?').slice(0, 1).toUpperCase())}</span>
       <div><div class="lib-name">${esc(ME)}</div><div class="lib-sub">Your palm-leaf library</div></div></div>
     <div class="lib-stats" id="libStats"></div>
+    <button class="btn analyse-btn" id="analyseBtn" data-analyse>✦ Analyse my leaves with AI <small>themes · links · conclusions</small></button>
+    <div id="libReport"></div>
     <input class="archive-search" id="libQ" placeholder="Search your leaves and notes…" autocomplete="off" style="width:100%">
     <div class="lib-list" id="libList"></div>`;
   $('#libQ').value = libQ;
@@ -857,6 +889,8 @@ function renderLibrary() {
 }
 function renderLibList() {
   const all = Object.values(SAVED).sort((a, b) => (b.saved_at || 0) - (a.saved_at || 0));
+  const ab = $('#analyseBtn');
+  if (ab) { ab.disabled = all.length < 2; ab.title = all.length < 2 ? 'Save at least 2 leaves to analyse them together' : ''; }
   $('#libStats').innerHTML = `<div><b>${all.length}</b><span>leaves saved</span></div><div><b>${all.filter(i => i.verse.label === 'A').length}</b><span>cosmic visions</span></div><div><b>${all.filter(i => i.note).length}</b><span>with your notes</span></div>`;
   const q = libQ.trim().toLowerCase();
   const items = q ? all.filter(i => [i.verse.tamil, i.verse.concept, i.verse.meaning, i.verse.ref, i.note].join(' ').toLowerCase().includes(q)) : all;
@@ -876,6 +910,60 @@ function libItem(i) {
         ${v.concept ? `<button class="chip" data-topic="${esc(v.concept)}">Explore this idea</button>` : ''}
         <button class="chip danger" data-unsave="${esc(i.id)}">Remove</button></div>
     </div></article>`;
+}
+
+/* ---------------- collection analysis ---------------- */
+let analyseTok = 0;
+async function analyseLeaves(fresh) {
+  const out = $('#libReport'), btn = $('#analyseBtn');
+  const tok = ++analyseTok;
+  btn.disabled = true;
+  ['#libQ', '#libList'].forEach(s => $(s).style.display = 'none');
+  out.innerHTML = `<div class="rep-card">${loading('Reading all your leaves together — finding themes, links and conclusions…')}</div>`;
+  try {
+    const d = await api('/api/saved/analyze', {fresh: !!fresh});
+    if (tok !== analyseTok) return;
+    out.innerHTML = reportHtml(d);
+  } catch (e) {
+    if (tok !== analyseTok) return;
+    out.innerHTML = `<div class="empty">${esc(e.message)}</div><button class="ghost-btn" data-report-close style="margin-top:12px">← Back to my leaves</button>`;
+  } finally { btn.disabled = false; }
+}
+function closeReport() {
+  analyseTok++;
+  $('#libReport').innerHTML = '';
+  ['#libQ', '#libList'].forEach(s => $(s).style.display = '');
+}
+function reportHtml(d) {
+  const r = d.report || {}, L = d.leaves || {};
+  const chip = id => L[id] ? `<button class="leafchip" data-open-saved="${esc(id)}">${esc(L[id].ref)}</button>` : '';
+  const list = a => Array.isArray(a) ? a : [];
+  const sec = (title, body) => body ? `<div class="rep-sec"><h4>${title}</h4>${body}</div>` : '';
+  const themes = list(r.themes).map((t, i) => `<div class="rep-card" style="--d:${i*80}ms"><b>${esc(t.title)}</b><span>${esc(t.explanation)}</span>
+    <div class="leafchips">${list(t.leaves).map(chip).join('')}</div></div>`).join('');
+  const links = list(r.connections).map((c, i) => `<div class="rep-card" style="--d:${i*80}ms"><div class="link-row">${chip(c.leaves[0])}<span class="arrow">⟷</span>${chip(c.leaves[1])}</div>
+    <span>${esc(c.relation)}</span></div>`).join('');
+  const cmp = list(r.comparison).length ? `<table class="cmp"><tr><th>Aspect</th><th>Thirukkural</th><th>Thiruvarutpa</th></tr>` +
+    list(r.comparison).map(c => `<tr><td>${esc(c.aspect)}</td><td>${esc(c.thirukkural)}</td><td>${esc(c.thiruvarutpa)}</td></tr>`).join('') + `</table>` : '';
+  return `<div class="rep-top"><h3 class="rep-title">Your collection, read together</h3>
+      <button class="ghost-btn" data-report-close>← Back</button></div>
+    <p class="note" style="color:var(--dim);font-size:13px;margin:0">${d.count} leaves analysed · AI interpretation — verify before citing.</p>
+    ${sec('Overview', r.overview ? `<p>${esc(r.overview)}</p>` : '')}
+    ${sec('Themes', themes)}
+    ${sec('Connections between your leaves', links)}
+    ${sec('Thirukkural vs Thiruvarutpa', cmp)}
+    ${sec('Interpretation', r.interpretation ? `<p>${esc(r.interpretation)}</p>` : '')}
+    ${sec('Conclusions for your report', list(r.conclusions).length ? `<ol class="concl">${list(r.conclusions).map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : '')}
+    ${sec('Be careful', list(r.cautions).length ? `<ul class="concl caution">${list(r.cautions).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '')}
+    ${sec('Explore next', list(r.next_topics).length ? `<div class="leafchips">${list(r.next_topics).map(t => `<button class="chip" data-topic="${esc(t)}">${esc(t)}</button>`).join('')}</div>` : '')}
+    <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+      <button class="ghost-btn" data-copy-report>⧉ Copy report</button>
+      <button class="ghost-btn" data-reanalyse>↻ Analyse again</button></div>`;
+}
+function reportText() {
+  const el = $('#libReport').cloneNode(true);
+  el.querySelectorAll('button.ghost-btn').forEach(b => b.remove());
+  return el.innerText.replace(/\n{3,}/g, '\n\n').trim();
 }
 
 /* ---------------- search suggestions ---------------- */
