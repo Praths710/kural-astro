@@ -338,6 +338,12 @@ h2.title em{color:var(--gold-hi)}
 .cmp th{text-align:left;color:var(--gold);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-bottom:1px solid var(--line)}
 .cmp td{padding:10px 8px;vertical-align:top;border-bottom:1px solid rgba(227,185,95,.08);line-height:1.55}
 .cmp td:first-child{color:var(--gold-hi);font-family:var(--serif);font-size:16px;width:24%}
+.sci-row{margin-top:8px;font-size:14px;line-height:1.6}
+.sci-row em{display:block;font-style:normal;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--O);margin-bottom:2px}
+.shared-kind{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.shared-t{font-family:var(--serif);font-size:18px;color:var(--gold-hi);text-decoration:none}
+.shared-t:hover{text-decoration:underline}
+.rep-hint{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(227,185,95,.07);border:1px dashed var(--line);font-size:13px;line-height:1.7;color:var(--dim)}
 .concl{margin:0;padding-left:20px}
 .concl li{margin-bottom:8px;line-height:1.6;font-size:15px}
 .caution li{color:#e8c2a8}
@@ -879,7 +885,7 @@ function renderLibrary() {
     <div class="lib-head"><span class="av-big">${esc((ME || '?').slice(0, 1).toUpperCase())}</span>
       <div><div class="lib-name">${esc(ME)}</div><div class="lib-sub">Your palm-leaf library</div></div></div>
     <div class="lib-stats" id="libStats"></div>
-    <button class="btn analyse-btn" id="analyseBtn" data-analyse>✦ Analyse my leaves with AI <small>themes · links · conclusions</small></button>
+    <button class="btn analyse-btn" id="analyseBtn" data-analyse>✦ Analyse my leaves with AI <small>science · shared sources · analysis</small></button>
     <div id="libReport"></div>
     <input class="archive-search" id="libQ" placeholder="Search your leaves and notes…" autocomplete="off" style="width:100%">
     <div class="lib-list" id="libList"></div>`;
@@ -939,22 +945,27 @@ function reportHtml(d) {
   const chip = id => L[id] ? `<button class="leafchip" data-open-saved="${esc(id)}">${esc(L[id].ref)}</button>` : '';
   const list = a => Array.isArray(a) ? a : [];
   const sec = (title, body) => body ? `<div class="rep-sec"><h4>${title}</h4>${body}</div>` : '';
-  const themes = list(r.themes).map((t, i) => `<div class="rep-card" style="--d:${i*80}ms"><b>${esc(t.title)}</b><span>${esc(t.explanation)}</span>
-    <div class="leafchips">${list(t.leaves).map(chip).join('')}</div></div>`).join('');
+  const science = list(r.science).map((t, i) => `<div class="rep-card" style="--d:${i*80}ms"><b>${esc(t.topic)}</b>
+    <div class="leafchips" style="margin:2px 0 10px">${list(t.leaves).map(chip).join('')}</div>
+    <div class="sci-row"><em>In the real world</em><span>${esc(t.real_world)}</span></div>
+    <div class="sci-row"><em>How well the verses match</em><span>${esc(t.match)}</span></div></div>`).join('');
+  const shared = list(d.shared).map((s, i) => `<div class="rep-card" style="--d:${i*60}ms">
+    <div class="shared-kind">${s.kind === 'paper' ? 'Research paper' + (s.year ? ' · ' + esc(s.year) : '') : 'Real-world example'}</div>
+    ${s.kind === 'paper' ? `<a class="shared-t" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)} ↗</a>` : `<b>${esc(s.title)}</b>`}
+    <div class="leafchips">${list(s.leaves).map(chip).join('')}</div></div>`).join('');
   const links = list(r.connections).map((c, i) => `<div class="rep-card" style="--d:${i*80}ms"><div class="link-row">${chip(c.leaves[0])}<span class="arrow">⟷</span>${chip(c.leaves[1])}</div>
     <span>${esc(c.relation)}</span></div>`).join('');
-  const cmp = list(r.comparison).length ? `<table class="cmp"><tr><th>Aspect</th><th>Thirukkural</th><th>Thiruvarutpa</th></tr>` +
-    list(r.comparison).map(c => `<tr><td>${esc(c.aspect)}</td><td>${esc(c.thirukkural)}</td><td>${esc(c.thiruvarutpa)}</td></tr>`).join('') + `</table>` : '';
-  return `<div class="rep-top"><h3 class="rep-title">Your collection, read together</h3>
+  const missing = list(d.without_sources);
+  return `<div class="rep-top"><h3 class="rep-title">Your leaves, analysed</h3>
       <button class="ghost-btn" data-report-close>← Back</button></div>
     <p class="note" style="color:var(--dim);font-size:13px;margin:0">${d.count} leaves analysed · AI interpretation — verify before citing.</p>
+    ${missing.length ? `<p class="rep-hint">${missing.length} of your leaves have no real-world sources saved yet (${missing.map(chip).join(' ')}). Open each one, let the reading load, and save again to include its science.</p>` : ''}
     ${sec('Overview', r.overview ? `<p>${esc(r.overview)}</p>` : '')}
-    ${sec('Themes', themes)}
+    ${sec('The science behind your leaves', science)}
+    ${sec('Sources your leaves share', shared)}
     ${sec('Connections between your leaves', links)}
-    ${sec('Thirukkural vs Thiruvarutpa', cmp)}
-    ${sec('Interpretation', r.interpretation ? `<p>${esc(r.interpretation)}</p>` : '')}
+    ${sec('Analysis', r.analysis ? r.analysis.split(/\n+/).map(p => `<p style="margin-bottom:10px">${esc(p)}</p>`).join('') : '')}
     ${sec('Conclusions for your report', list(r.conclusions).length ? `<ol class="concl">${list(r.conclusions).map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : '')}
-    ${sec('Be careful', list(r.cautions).length ? `<ul class="concl caution">${list(r.cautions).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '')}
     ${sec('Explore next', list(r.next_topics).length ? `<div class="leafchips">${list(r.next_topics).map(t => `<button class="chip" data-topic="${esc(t)}">${esc(t)}</button>`).join('')}</div>` : '')}
     <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
       <button class="ghost-btn" data-copy-report>⧉ Copy report</button>

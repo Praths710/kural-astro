@@ -223,16 +223,18 @@ DEEP_SYS = (
 COLLECTION_SYS = (
     "You are a research assistant for a student project comparing classical Tamil verses (Thirukkural, Thiruvarutpa) "
     "with modern science. Below are the leaves (verses) the student saved, each with its AI reading and the student's own "
-    "note. Analyse them TOGETHER, as a collection. Be honest: these are analogies, not evidence the poets knew modern science.\n"
+    "note, plus the REAL-WORLD science attached to it (missions, experiments, observations) and research papers. Analyse the "
+    "leaves TOGETHER and focus on the science: compare the real-world sources behind each leaf, find where leaves point to "
+    "the same science, and judge how well each verse's imagery actually matches that science. Be honest: these are "
+    "analogies, not evidence the poets knew modern science.\n"
     "Return JSON with keys:\n"
-    "  overview: 3-4 sentences on what this collection is about\n"
-    "  themes: array of 2-5 {title, explanation, leaves: [ids]} grouping the leaves\n"
-    "  connections: array of up to 6 {leaves: [id, id], relation} -- meaningful links between specific leaves\n"
-    "  comparison: array of 2-4 {aspect, thirukkural, thiruvarutpa} -- how the two texts treat nature/cosmos differently "
-    "(write 'not in this collection' when a source is missing)\n"
-    "  interpretation: one paragraph, a deeper reading of what the collection suggests about ancient Tamil thought on the cosmos\n"
+    "  overview: 3-4 sentences on what this collection is about and the science it touches\n"
+    "  science: array of 2-5 {topic, leaves: [ids], real_world, match} -- group leaves by the science they point to; "
+    "real_world = which missions/experiments/papers from their sources show this science; "
+    "match = how closely the verses' imagery fits that science and where it breaks down\n"
+    "  connections: array of up to 6 {leaves: [id, id], relation} -- links between specific leaves, especially through shared science\n"
+    "  analysis: one or two paragraphs -- your overall analysis of the collection: patterns, strongest and weakest links to real science, what it all adds up to\n"
     "  conclusions: array of 3-5 short, defensible conclusions the student could put in a report\n"
-    "  cautions: array of 2-3 limits or risks of over-claiming\n"
     "  next_topics: array of 3-5 short ENGLISH science topics worth searching next\n"
     "Refer to leaves only by the ids given. Use the student's notes where relevant."
 )
@@ -246,8 +248,10 @@ def analyse_collection(user, lang, fresh=False):
               "label": i["verse"].get("label", ""), "concept": i["verse"].get("concept", ""),
               "tamil": i["verse"].get("tamil", "")[:200], "meaning": i["verse"].get("meaning", ""),
               "literal": (i.get("deep") or {}).get("literal", "")[:300], "analogy": (i.get("deep") or {}).get("analogy", "")[:300],
-              "note": i.get("note", "")[:300]} for i in items]
-    key = ckey("collection", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
+              "note": i.get("note", "")[:300],
+              "real_world": [f"{r.get('title', '')}: {r.get('detail', '')[:160]}" for r in (i.get("deep") or {}).get("real_world", [])][:4],
+              "papers": [f"{p.get('title', '')} ({p.get('year', '')})" for p in i.get("papers", [])][:5]} for i in items]
+    key = ckey("collection-v2", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
     def run():
         prompt = COLLECTION_SYS + LANG_NOTE[lang] + "\n\nLeaves:\n" + json.dumps(brief, ensure_ascii=False)
         d = gemini_json(prompt, attempts=4)
@@ -256,11 +260,30 @@ def analyse_collection(user, lang, fresh=False):
     if not report:
         return None, "The AI service is busy. Try again in a few seconds."
     ids = {i["id"] for i in items}
-    for t in report.get("themes") or []:
+    for t in report.get("science") or []:
         t["leaves"] = [x for x in (t.get("leaves") or []) if x in ids]
     report["connections"] = [c for c in (report.get("connections") or []) if all(x in ids for x in (c.get("leaves") or [])[:2])]
     names = {i["id"]: {"ref": i["verse"].get("ref") or "Your verse", "source": i["verse"].get("source", "")} for i in items}
-    return {"report": report, "leaves": names, "count": len(items)}, None
+    return {"report": report, "leaves": names, "count": len(items), "shared": shared_sources(items),
+            "without_sources": [i["id"] for i in items if not i.get("papers") and not (i.get("deep") or {}).get("real_world")]}, None
+
+
+def shared_sources(items):
+    """Papers and real-world examples that appear under more than one saved leaf (exact matches, no AI)."""
+    seen = {}
+    for i in items:
+        for p in i.get("papers", []):
+            k = ("paper", p.get("url"))
+            seen.setdefault(k, {"kind": "paper", "title": p.get("title"), "url": p.get("url"), "year": p.get("year"), "leaves": []})
+            seen[k]["leaves"].append(i["id"])
+        for r in (i.get("deep") or {}).get("real_world", []):
+            k = ("real", re.sub(r"[^a-z0-9]+", " ", (r.get("title") or "").lower()).strip())
+            seen.setdefault(k, {"kind": "real", "title": r.get("title"), "leaves": []})
+            seen[k]["leaves"].append(i["id"])
+    shared = [s for s in seen.values() if len(set(s["leaves"])) > 1]
+    for s in shared:
+        s["leaves"] = sorted(set(s["leaves"]))
+    return sorted(shared, key=lambda s: -len(s["leaves"]))[:12]
 
 
 class Handler(BaseHTTPRequestHandler):
