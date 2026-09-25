@@ -58,6 +58,8 @@ def cached(key, max_age, compute, fresh=False):
         STORE.cache_put(key, value)
     return value
 _arxiv_lock = threading.Lock()
+STARTED = time.time()
+_health_hits = []
 STATIC = ROOT / "src" / "webapp"
 
 
@@ -344,7 +346,10 @@ class Handler(BaseHTTPRequestHandler):
         url = urlparse(self.path)
         path = url.path
         if path == "/health":
-            return self._json(200, {"ok": True})
+            now = time.time()
+            _health_hits[:] = [t for t in _health_hits if now - t < 600] + [now]
+            return self._json(200, {"ok": True, "awake_minutes": round((now - STARTED) / 60, 1),
+                                    "pings_last_10_min": len(_health_hits)})
         if path == "/api/config":
             return self._json(200, {"invite_required": bool(os.environ.get("INVITE_CODE"))})
         if path in ("/login", "/login.html"):
