@@ -425,6 +425,11 @@ footer .orn{color:var(--gold);letter-spacing:12px;margin-bottom:16px}
 @media(max-width:640px){.ola-leaf.big{padding:30px 40px}.ola-leaf.big .ola-ta{font-size:17px}}
 
 /* real world, grouped by field */
+.rw-summary{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px;padding:12px 14px;border-radius:14px;
+  background:rgba(22,20,34,.7);border:1px solid var(--line)}
+.rw-pill{font-size:12.5px;padding:5px 11px;border-radius:999px;background:rgba(143,211,176,.1);border:1px solid rgba(143,211,176,.3);color:var(--parch)}
+.rw-pill b{color:var(--O);margin-left:3px}
+.rw-top{margin-left:auto;font-size:12.5px;font-weight:600;color:var(--gold-hi)}
 .rw-field{margin-bottom:20px}
 .rw-head{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch);margin:4px 0 10px;font-weight:600}
 .rw-ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(143,211,176,.12);border:1px solid rgba(143,211,176,.3);font-size:15px}
@@ -783,7 +788,10 @@ function realWorldHtml(rw) {
   items.forEach(r => (groups[r.field] = groups[r.field] || []).push(r));
   const order = Object.keys(groups).sort((a, b) => Math.min(...groups[a].map(rank)) - Math.min(...groups[b].map(rank)) || groups[b].length - groups[a].length);
   let k = 0;
-  return order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
+  const top = items.filter(r => rank(r) <= 1).length;
+  const summary = `<div class="rw-summary">${order.map(f => `<span class="rw-pill">${FIELD_ICON[f] || '✦'} ${esc(f)} <b>${groups[f].length}</b></span>`).join('')}
+    <span class="rw-top">✓ ${top} of ${items.length} from top organisations</span></div>`;
+  return summary + order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
     <div class="real">${groups[f].map(r => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${(k++) * 70}ms">
       <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${rank(r) <= 1 ? '<span class="cred-badge">✓ Top source</span>' : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
       <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>
@@ -800,7 +808,9 @@ async function openVerse(v, opts = {}) {
   if (!v.id || v.id === 'custom') v.id = 'custom:' + hashStr(v.tamil);
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
-  const cachedDeep = saved && saved.deep && saved.deep.literal ? saved.deep : null;
+  // readings saved before real-world examples had fields/organisations are refreshed (and re-saved) instead of reused
+  const upToDate = d => d && d.literal && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type);
+  const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const cachedPapers = v.papers || (saved && saved.papers && saved.papers.length ? saved.papers : null);
   CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
   openModalShell(modalHtml(v, !!cachedDeep));
