@@ -220,7 +220,7 @@ h2.title em{color:var(--gold-hi)}
 .modal-x{position:sticky;top:0;float:right;margin:-18px -20px 0 0;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
   background:rgba(20,18,32,.9);color:var(--parch);font-size:20px;cursor:pointer;z-index:2}
 .modal-x:hover{border-color:var(--gold);color:var(--gold-hi)}
-@media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0}}
+@media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0;overflow-x:hidden}.modal-x{margin:-14px -6px 0 0}}
 .m-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px}
 .m-head .ref{font-family:var(--serif);font-size:26px}
 .m-head a{margin-left:0;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px}
@@ -484,7 +484,17 @@ body.has-mouse #cursorGlow{opacity:1}
 .why p{margin:0;font-size:13px;line-height:1.55;color:#4a3018}
 .why .on{display:block;margin-top:5px;font-size:12px;color:#6a4520}
 .why .on b{color:#5a300c}
-.search-basis{font-family:var(--sans);font-size:13px;color:var(--dim);margin:-12px 0 22px}
+.search-basis{display:block;font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--dim);margin:12px 0 4px;max-width:900px}
+#exploreHead{line-height:1.25}
+.eh-title{display:block}
+/* real-world domains flow side by side so small groups don't leave gaps */
+.rw-fields{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:flex-start}
+.rw-fields .rw-field{flex:var(--n) 1 calc(var(--n) * 250px);min-width:0;max-width:100%}
+.rw-fields .rw-head{flex-wrap:wrap;row-gap:4px}
+.rw-fields .real{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!important}
+.rw-fields .real-card{display:flex;flex-direction:column}
+.rw-fields .real-card > div:last-child{margin-top:auto}
+.rw-basis{margin:-8px 0 18px}
 .method{margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(22,20,34,.7);border:1px solid var(--line)}
 .method h5{margin:0 0 8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .method li{font-size:13px;line-height:1.6;margin-bottom:6px;color:var(--parch)}
@@ -743,7 +753,7 @@ async function runSearch(topic, key) {
     if (tok !== searchTok) return;
     d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
     const n = d.matches.length;
-    $('#exploreHead').innerHTML = (n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`) +
+    $('#exploreHead').innerHTML = `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`}</span>` +
       (n ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first.</div>` : '');
     $('#exploreOut').innerHTML =
       (n ? bundle(d.matches.map(leafCard).join(''))
@@ -831,11 +841,11 @@ function realWorldHtml(rw) {
   const summary = `<div class="rw-summary">${order.map(f => `<span class="rw-pill">${FIELD_ICON[f] || '✦'} ${esc(f)} <b>${groups[f].length}</b></span>`).join('')}
     <span class="rw-top">✓ ${top} of ${items.length} from top organisations</span></div>`;
   return summary + `<p class="rw-basis">Each example is placed in the domain of what it actually studies — e.g. a rainfall satellite goes under Water, a nutrition study under Health.</p>` +
-    order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-desc">— ${esc(FIELD_DESC[f] || '')}</span><span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
+    '<div class="rw-fields">' + order.map(f => `<div class="rw-field" style="--n:${Math.min(groups[f].length, 3)}"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-desc">— ${esc(FIELD_DESC[f] || '')}</span><span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
     <div class="real">${groups[f].map(r => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${(k++) * 70}ms">
       <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${rank(r) <= 1 ? '<span class="cred-badge">✓ Top source</span>' : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
       <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>${r.domain_reason ? `<span class="rw-why">${esc(r.domain_reason)}</span>` : ''}
-      ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Official source ↗</a></div>` : ''}</div>`).join('')}</div></div>`).join('');
+      ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Official source ↗</a></div>` : ''}</div>`).join('')}</div></div>`).join('') + '</div>';
 }
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
