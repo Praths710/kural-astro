@@ -153,10 +153,13 @@ def _papers_live(concept, key=None):
 
 
 SEARCH_SYS = (
-    "You match a research topic against a list of short science-concept phrases extracted from "
-    "classical Tamil verses. Return a JSON array of objects {\"id\": <index>, \"reason\": <one sentence>} "
-    "for the entries genuinely related to the topic, most relevant first, at most 12. Be selective: "
-    "real conceptual links only, not loose word overlap. Empty array if none."
+    "You match a research topic against a list of short science-concept phrases extracted from classical Tamil verses. "
+    "Match by MEANING (semantic similarity), not by shared words. Return a JSON array of objects "
+    "{\"id\": <index>, \"reason\": <one or two sentences explaining why this verse relates to the topic>, "
+    "\"match_type\": one of \"direct\" (the verse describes the same phenomenon), \"analogy\" (its imagery parallels the topic), "
+    "\"thematic\" (a broader shared theme), \"matched_on\": <the specific idea or image in the verse that matches>, "
+    "\"score\": <relevance 1-5>} for entries genuinely related to the topic, most relevant first, at most 12. "
+    "Be selective: real conceptual links only. Empty array if none."
 )
 
 
@@ -171,7 +174,7 @@ def english_query(topic):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v2", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 def _search_live(topic, key=None, lang="en"):
@@ -189,7 +192,14 @@ def _search_live(topic, key=None, lang="en"):
         except (TypeError, ValueError, AttributeError):
             continue
         if 0 <= idx < len(verses):
-            matches.append({**verses[idx], "reason": m.get("reason", "")})
+            try:
+                score = max(1, min(5, int(m.get("score") or 3)))
+            except (TypeError, ValueError):
+                score = 3
+            mt = m.get("match_type") if m.get("match_type") in ("direct", "analogy", "thematic") else "thematic"
+            matches.append({**verses[idx], "reason": m.get("reason", ""), "match_type": mt,
+                            "matched_on": m.get("matched_on", ""), "score": score})
+    matches.sort(key=lambda v: -v["score"])
     topic_title, papers = papers_for(english_query(topic), key)
     return {"matches": matches, "topic_title": topic_title, "papers": papers}
 
@@ -211,27 +221,36 @@ def concept_translations(lang):
     return out
 
 
-FIELDS = ["Space & Astronomy", "Physics", "Earth & Climate", "Medicine & Health", "Biology & Life",
-          "Technology & Engineering", "Mathematics & Computing", "Environment & Agriculture"]
+FIELDS = ["Space & Astronomy", "Physics", "Earth & Climate", "Water & Oceans", "Medicine & Health", "Biology & Life",
+          "Agriculture & Food", "Energy", "Technology & Engineering", "Mathematics & Computing", "Economy & Finance",
+          "Environment & Ecology"]
 CREDIBLE = {"space agency": 0, "university": 0, "research institute": 1, "government": 1, "company": 2}
 
 DEEP_SYS = (
     "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts "
-    "with modern science. Be honest: the poet did not know modern science; this is an analogy. "
+    "with modern science. Be honest: the poet did not know modern science; this is an analogy. Write clearly for a student.\n"
     "Return JSON with keys:\n"
-    "  literal: 2-3 sentences, what the verse actually says in its own religious/ethical context\n"
-    "  analogy: 2-3 sentences, how its imagery resembles the given modern science concept, and where the resemblance breaks down\n"
-    "  real_world: array of 4-6 objects {title, detail, field, organization, org_type, year, url} -- real, "
+    "  literal: 3-4 sentences -- what the verse actually says, in plain English, in its own religious/ethical context\n"
+    "  key_words: array of 2-5 {tamil, transliteration, meaning} -- the Tamil words in the verse that carry its natural or "
+    "cosmic imagery (copy the Tamil exactly as it appears in the verse)\n"
+    "  context: 1-2 sentences -- where the verse sits (e.g. its Thirukkural chapter or Thiruvarutpa hymn) and how "
+    "traditional commentators read it\n"
+    "  analogy: 3-4 sentences -- the modern science concept and exactly how the verse's imagery maps onto it\n"
+    "  similarities: array of 2-3 short points where the verse and the science genuinely line up\n"
+    "  differences: array of 2-3 short points where the analogy breaks down\n"
+    "  strength: one of 'strong', 'moderate', 'weak' -- how close the analogy honestly is\n"
+    "  strength_reason: one sentence explaining that rating\n"
+    "  real_world: array of 4-6 objects {title, detail, field, domain_reason, organization, org_type, year, url} -- real, "
     "well-documented modern missions, experiments, observations, studies or technologies connected to the concept, "
-    "spread across every field it genuinely touches (not only space when medicine, climate, biology etc. also apply).\n"
-    "    field: exactly one of " + ", ".join(FIELDS) + "\n"
+    "spread across every domain it genuinely touches (health, water, food, energy, economy... not only space).\n"
+    "    field: the domain, exactly one of " + ", ".join(FIELDS) + "\n"
+    "    domain_reason: a short phrase saying why this example belongs to that domain (what it studies)\n"
     "    organization: who did it -- strongly prefer top credible bodies: NASA, ISRO, ESA, JAXA, CNSA, Roscosmos, CERN, "
-    "NOAA, WHO, and leading universities (Stanford, MIT, Caltech, Harvard, Oxford, Cambridge, IISc, IITs...)\n"
+    "NOAA, WHO, FAO, IMF, World Bank, and leading universities (Stanford, MIT, Caltech, Harvard, Oxford, Cambridge, IISc, IITs...)\n"
     "    org_type: one of 'space agency', 'university', 'research institute', 'government', 'company', 'other'\n"
     "    year: the year of the mission or result (number)\n"
     "    url: the official page URL only if you are confident it exists, otherwise an empty string\n"
-    "    Only use things you are confident exist; no invented projects.\n"
-    "  strength: one of 'strong', 'moderate', 'weak' -- how close the analogy honestly is"
+    "    Only use things you are confident exist; no invented projects."
 )
 
 
@@ -276,7 +295,9 @@ COLLECTION_SYS = (
     "  science: array of 2-5 {topic, leaves: [ids], real_world, match} -- group leaves by the science they point to; "
     "real_world = which missions/experiments/papers from their sources show this science; "
     "match = how closely the verses' imagery fits that science and where it breaks down\n"
-    "  connections: array of up to 6 {leaves: [id, id], relation} -- links between specific leaves, especially through shared science\n"
+    "  connections: array of up to 6 {leaves: [id, id], relation, basis, how} -- links between specific leaves. "
+    "basis: one of 'same imagery', 'same scientific concept', 'shared real-world source', 'contrasting views'. "
+    "how: one sentence on exactly what you compared to find this link (which ideas, images or sources)\n"
     "  analysis: one or two paragraphs -- your overall analysis of the collection: patterns, strongest and weakest links to real science, what it all adds up to\n"
     "  conclusions: array of 3-5 short, defensible conclusions the student could put in a report\n"
     "  next_topics: array of 3-5 short ENGLISH science topics worth searching next\n"
@@ -296,7 +317,7 @@ def analyse_collection(user, lang, fresh=False):
               "real_world": [f"{r.get('organization') or ''} | {r.get('title', '')}: {r.get('detail', '')[:160]}"
                              for r in (i.get("deep") or {}).get("real_world", [])][:5],
               "papers": [f"{p.get('title', '')} ({p.get('year', '')})" for p in i.get("papers", [])][:5]} for i in items]
-    key = ckey("collection-v2", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
+    key = ckey("collection-v3", user, lang, json.dumps(brief, ensure_ascii=False, sort_keys=True))
     def run():
         prompt = COLLECTION_SYS + LANG_NOTE[lang] + "\n\nLeaves:\n" + json.dumps(brief, ensure_ascii=False)
         d = gemini_json(prompt, attempts=4)
@@ -307,10 +328,27 @@ def analyse_collection(user, lang, fresh=False):
     ids = {i["id"] for i in items}
     for t in report.get("science") or []:
         t["leaves"] = [x for x in (t.get("leaves") or []) if x in ids]
-    report["connections"] = [c for c in (report.get("connections") or []) if all(x in ids for x in (c.get("leaves") or [])[:2])]
+    report["connections"] = [c for c in (report.get("connections") or []) if len(c.get("leaves") or []) >= 2 and all(x in ids for x in c["leaves"][:2])]
+    by_id = {i["id"]: i for i in items}
+    for c in report["connections"]:
+        c["metrics"] = pair_metrics(by_id[c["leaves"][0]], by_id[c["leaves"][1]])
     names = {i["id"]: {"ref": i["verse"].get("ref") or "Your verse", "source": i["verse"].get("source", "")} for i in items}
     return {"report": report, "leaves": names, "count": len(items), "shared": shared_sources(items),
             "without_sources": [i["id"] for i in items if not i.get("papers") and not (i.get("deep") or {}).get("real_world")]}, None
+
+
+TA_WORD = re.compile(r"[\u0B80-\u0BFF]+")
+
+
+def pair_metrics(a, b):
+    """Transparent, non-AI measures for a pair of leaves: shared Tamil words (lexical) and shared sources (exact)."""
+    wa = {w for w in TA_WORD.findall(a["verse"].get("tamil", "")) if len(w) > 2}
+    wb = {w for w in TA_WORD.findall(b["verse"].get("tamil", "")) if len(w) > 2}
+    shared = sorted(wa & wb, key=len, reverse=True)
+    overlap = round(100 * len(wa & wb) / len(wa | wb)) if wa | wb else 0
+    src = lambda i: ({p.get("url") for p in i.get("papers", [])} |
+                     {re.sub(r"[^a-z0-9]+", " ", (r.get("title") or "").lower()).strip() for r in (i.get("deep") or {}).get("real_world", [])})
+    return {"word_overlap": overlap, "shared_words": shared[:5], "shared_sources": len((src(a) & src(b)) - {"", None})}
 
 
 def shared_sources(items):
@@ -516,7 +554,7 @@ class Handler(BaseHTTPRequestHandler):
             def read_it():
                 d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
                 return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
-            out = cached(ckey("deep-v2", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = cached(ckey("deep-v3", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)

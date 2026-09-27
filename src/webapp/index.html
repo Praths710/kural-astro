@@ -456,6 +456,45 @@ body.has-mouse #cursorGlow{opacity:1}
 .chip{transition:transform .15s,background .2s,border-color .2s,color .2s}
 .chip:hover{transform:translateY(-2px)}
 @media(prefers-reduced-motion:reduce){#cursorGlow{display:none}}
+
+/* ================= v4: explanations, domains, basis ================= */
+.kw-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.kw{background:rgba(236,217,166,.08);border:1px solid rgba(236,217,166,.28);border-radius:12px;padding:6px 10px;font-size:12.5px;line-height:1.4;color:var(--parch)}
+.kw b{font-family:var(--tamil);font-size:15px;color:var(--leaf1);font-weight:600;margin-right:4px}
+.kw i{color:var(--dim);font-style:normal;margin-right:4px}
+.ctx{margin-top:14px !important;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px !important;color:var(--dim) !important;font-style:italic}
+.ctx b{font-style:normal;color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-right:6px}
+.pts{list-style:none;margin:12px 0 0;padding:0}
+.pts li{position:relative;padding-left:24px;margin-bottom:7px;font-size:14px;line-height:1.55}
+.pts li::before{position:absolute;left:0;top:0;font-weight:700}
+.pts.yes li::before{content:'✓';color:var(--O)}
+.pts.no li::before{content:'✕';color:#e89a7a}
+.pts-h{margin-top:14px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.pts-h.yes{color:var(--O)}.pts-h.no{color:#e89a7a}
+.meter-why{font-size:12.5px;color:var(--dim);margin-top:6px;line-height:1.5}
+.rw-desc{font-size:12px;color:var(--dim);letter-spacing:0;text-transform:none;font-weight:400;margin-left:4px}
+.rw-why{display:block;margin-top:8px;font-size:12px;color:var(--O);opacity:.9}
+.rw-why::before{content:'Why this domain: ';color:var(--dim)}
+.rw-basis{font-size:12px;color:var(--dim);margin:-8px 0 18px}
+.why{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(90,48,12,.08);border:1px solid rgba(90,48,12,.22);font-family:var(--sans)}
+.why-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.why-h{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#6a3410}
+.why-type{font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 8px;background:#6a3410;color:#f1e2b8}
+.why-score{margin-left:auto;letter-spacing:2px;font-size:11px;color:#8a4b16}
+.why p{margin:0;font-size:13px;line-height:1.55;color:#4a3018}
+.why .on{display:block;margin-top:5px;font-size:12px;color:#6a4520}
+.why .on b{color:#5a300c}
+.search-basis{font-family:var(--sans);font-size:13px;color:var(--dim);margin:-12px 0 22px}
+.method{margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(22,20,34,.7);border:1px solid var(--line)}
+.method h5{margin:0 0 8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.method li{font-size:13px;line-height:1.6;margin-bottom:6px;color:var(--parch)}
+.method li b{color:var(--gold-hi)}
+.basis-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.bchip{font-size:11.5px;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--parch);background:rgba(255,255,255,.04)}
+.bchip.sem{border-color:rgba(143,211,176,.45);color:var(--O)}
+.bchip.lex{border-color:rgba(138,123,255,.45);color:#c4bbff}
+.bchip.src{border-color:rgba(227,185,95,.5);color:var(--gold-hi)}
+.how{display:block;margin-top:8px;font-size:12.5px;color:var(--dim);font-style:italic}
 </style>
 </head>
 <body>
@@ -666,7 +705,8 @@ function leafCard(v, i = 0) {
       <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
         <button class="cap-save ${SAVED[v.id] ? 'on' : ''}" data-save="${esc(v.id)}" title="${SAVED[v.id] ? 'Saved — click to remove' : 'Save this leaf'}">${SAVED[v.id] ? '★' : '☆'}</button></div>
       ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
-      ${v.reason ? `<p class="cap-reason">${esc(v.reason)}</p>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
+      ${v.reason ? `<div class="why"><div class="why-top"><span class="why-h">Why this verse</span>${v.match_type ? `<span class="why-type">${esc({direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared theme'}[v.match_type] || v.match_type)}</span>` : ''}${v.score ? `<span class="why-score" title="Relevance ${v.score}/5">${'●'.repeat(v.score)}${'○'.repeat(5 - v.score)}</span>` : ''}</div>
+        <p>${esc(v.reason)}</p>${v.matched_on ? `<span class="on"><b>Matched on:</b> ${esc(v.matched_on)}</span>` : ''}</div>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
       <div class="cap-foot"><span>${esc(v.ref)}</span><span class="open">Read deeper →</span></div>
     </div>
   </article>`;
@@ -703,7 +743,8 @@ async function runSearch(topic, key) {
     if (tok !== searchTok) return;
     d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
     const n = d.matches.length;
-    $('#exploreHead').innerHTML = n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`;
+    $('#exploreHead').innerHTML = (n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`) +
+      (n ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first.</div>` : '');
     $('#exploreOut').innerHTML =
       (n ? bundle(d.matches.map(leafCard).join(''))
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
@@ -753,13 +794,29 @@ function modalHtml(v, fromSaved) {
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
   const strength = {strong:3, moderate:2, weak:1}[d.strength] || 0;
-  $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>`;
-  $('#mAnalogy').innerHTML = `<p>${esc(d.analogy || '—')}</p>` + (strength ? `<div class="meter">${[1,2,3].map(i => `<i class="${i<=strength?'on':''}"></i>`).join('')}<span>${esc(d.strength)} analogy</span></div>` : '');
+  const L = a => Array.isArray(a) ? a : [];
+  $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>` +
+    (L(d.key_words).length ? `<div class="pts-h" style="color:var(--gold)">Key words in the verse</div><div class="kw-row">${L(d.key_words).map(k =>
+      `<span class="kw"><b>${esc(k.tamil)}</b>${k.transliteration ? `<i>${esc(k.transliteration)}</i>` : ''}— ${esc(k.meaning)}</span>`).join('')}</div>` : '') +
+    (d.context ? `<p class="ctx"><b>Tradition</b>${esc(d.context)}</p>` : '');
+  $('#mAnalogy').innerHTML = `<p>${esc(d.analogy || '—')}</p>` +
+    (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') +
+    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') +
+    (strength ? `<div class="meter">${[1,2,3].map(i => `<i class="${i<=strength?'on':''}"></i>`).join('')}<span>${esc(d.strength)} analogy</span></div>` : '') +
+    (d.strength_reason ? `<div class="meter-why">${esc(d.strength_reason)}</div>` : '');
   const rw = Array.isArray(d.real_world) ? d.real_world : [];
   $('#mReal').innerHTML = realWorldHtml(rw);
 }
-const FIELD_ICON = {'Space & Astronomy': '🚀', 'Physics': '⚛️', 'Earth & Climate': '🌍', 'Medicine & Health': '🩺', 'Biology & Life': '🧬',
-  'Technology & Engineering': '🛠️', 'Mathematics & Computing': '📐', 'Environment & Agriculture': '🌱', 'General': '✦'};
+const FIELD_ICON = {'Space & Astronomy': '🚀', 'Physics': '⚛️', 'Earth & Climate': '🌍', 'Water & Oceans': '💧', 'Medicine & Health': '🩺',
+  'Biology & Life': '🧬', 'Agriculture & Food': '🌾', 'Energy': '⚡', 'Technology & Engineering': '🛠️', 'Mathematics & Computing': '📐',
+  'Economy & Finance': '💰', 'Environment & Ecology': '🌱', 'Environment & Agriculture': '🌱', 'General': '✦'};
+const FIELD_DESC = {'Space & Astronomy': 'planets, stars, missions, telescopes', 'Physics': 'matter, energy, light, forces',
+  'Earth & Climate': 'weather, monsoon, climate, geology', 'Water & Oceans': 'rain, rivers, groundwater, oceans',
+  'Medicine & Health': 'the body, disease, treatment, nutrition', 'Biology & Life': 'living things, genetics, evolution',
+  'Agriculture & Food': 'crops, soil, farming, food supply', 'Energy': 'solar power, fuel, electricity',
+  'Technology & Engineering': 'instruments, machines, built systems', 'Mathematics & Computing': 'models, computation, AI',
+  'Economy & Finance': 'wealth, money, trade, governance', 'Environment & Ecology': 'ecosystems, conservation, pollution',
+  'General': 'not tied to one domain'};
 const ORG_RANK = {'space agency': 0, 'university': 0, 'research institute': 1, 'government': 1, 'company': 2};
 function realWorldHtml(rw) {
   const items = (Array.isArray(rw) ? rw : []).filter(r => r && r.title).map(r => ({...r, field: r.field || 'General'}));
@@ -773,10 +830,11 @@ function realWorldHtml(rw) {
   const top = items.filter(r => rank(r) <= 1).length;
   const summary = `<div class="rw-summary">${order.map(f => `<span class="rw-pill">${FIELD_ICON[f] || '✦'} ${esc(f)} <b>${groups[f].length}</b></span>`).join('')}
     <span class="rw-top">✓ ${top} of ${items.length} from top organisations</span></div>`;
-  return summary + order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
+  return summary + `<p class="rw-basis">Each example is placed in the domain of what it actually studies — e.g. a rainfall satellite goes under Water, a nutrition study under Health.</p>` +
+    order.map(f => `<div class="rw-field"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span>${esc(f)}<span class="rw-desc">— ${esc(FIELD_DESC[f] || '')}</span><span class="rw-n">${groups[f].length} example${groups[f].length > 1 ? 's' : ''}</span></div>
     <div class="real">${groups[f].map(r => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${(k++) * 70}ms">
       <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${rank(r) <= 1 ? '<span class="cred-badge">✓ Top source</span>' : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
-      <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>
+      <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>${r.domain_reason ? `<span class="rw-why">${esc(r.domain_reason)}</span>` : ''}
       ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Official source ↗</a></div>` : ''}</div>`).join('')}</div></div>`).join('');
 }
 function deepFailed(tok, msg) {
@@ -791,7 +849,7 @@ async function openVerse(v, opts = {}) {
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
   // readings saved before real-world examples had fields/organisations are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type);
+  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const cachedPapers = v.papers || (saved && saved.papers && saved.papers.length ? saved.papers : null);
   CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
@@ -875,19 +933,48 @@ async function buildMap() {
   let paused = false;
   svg.addEventListener('mouseover', e => { if (e.target.closest('.planet')) paused = true; });
   svg.addEventListener('mouseout', e => { if (e.target.closest('.planet')) paused = false; });
+  nodes.forEach((n, i) => {
+    n.el = document.getElementById('pl' + i); n.r0 = +n.el.querySelector('circle.body').getAttribute('r');
+    [n.t1, n.t2] = n.el.querySelectorAll('text');
+    n.w = Math.max(n.t1.getComputedTextLength(), n.t2.getComputedTextLength()) + 6; n.place = null;
+  });
+  // labels take the first free spot (right/left/above/below) so they never cover another planet, label or the centre text
+  const boxFor = (n, p) => { const r = n.r0, w = n.w, x = n.x, y = n.y;
+    return p === 'right' ? {l: x + r + 8, r: x + r + 10 + w, t: y - 15, b: y + 18}
+         : p === 'left' ? {l: x - r - 10 - w, r: x - r - 8, t: y - 15, b: y + 18}
+         : p === 'above' ? {l: x - w / 2, r: x + w / 2, t: y - r - 40, b: y - r - 6}
+         : {l: x - w / 2, r: x + w / 2, t: y + r + 6, b: y + r + 40}; };
+  const hitBox = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+  const hitCircle = (b, cx, cy, cr) => { const nx = Math.max(b.l, Math.min(cx, b.r)), ny = Math.max(b.t, Math.min(cy, b.b)); return (nx - cx) ** 2 + (ny - cy) ** 2 < cr * cr; };
+  const CENTRE_TEXT = {l: C.x - 50, r: C.x + 50, t: C.y + 30, b: C.y + 52};
+  function layoutLabels() {
+    const placed = [];
+    nodes.forEach(n => {
+      const prefer = n.x > 700 ? ['left', 'right', 'above', 'below'] : ['right', 'left', 'above', 'below'];
+      const order = n.place ? [n.place, ...prefer.filter(p => p !== n.place)] : prefer;
+      const free = p => { const b = boxFor(n, p);
+        return b.l > 4 && b.r < 996 && b.t > 4 && b.b < 616 && !hitBox(b, CENTRE_TEXT) && !hitCircle(b, C.x, C.y, 24)
+          && !nodes.some(m => m !== n && hitCircle(b, m.x, m.y, m.r0 + 3)) && !placed.some(q => hitBox(b, q)); };
+      const choice = order.find(free) || prefer[0];
+      if (choice !== n.place) {
+        n.place = choice;
+        const r = n.r0, x = choice === 'right' ? r + 10 : choice === 'left' ? -(r + 10) : 0;
+        const anchor = choice === 'right' ? 'start' : choice === 'left' ? 'end' : 'middle';
+        const y = choice === 'above' ? -(r + 22) : choice === 'below' ? r + 20 : -2;
+        [n.t1, n.t2].forEach(t => { t.setAttribute('x', x); t.setAttribute('text-anchor', anchor); });
+        n.t1.setAttribute('y', y); n.t2.setAttribute('y', y + 16);
+      }
+      placed.push(boxFor(n, n.place));
+    });
+  }
   (function spin() {
     nodes.forEach((n, i) => {
       if (!paused) n.ang += OR[n.orbit].sp * (1 + i * .03);
-      const o = OR[n.orbit], x = C.x + o.rx * Math.cos(n.ang), y = C.y + o.ry * Math.sin(n.ang);
-      const el = document.getElementById('pl' + i); el.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)})`);
-      const left = x > 700;
-      if (left !== n.left) {
-        n.left = left;
-        const r = +el.querySelector('circle.body').getAttribute('r');
-        el.querySelectorAll('text').forEach(t => { t.setAttribute('x', left ? -(r + 10) : r + 10); t.setAttribute('text-anchor', left ? 'end' : 'start'); });
-      }
-      el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
+      const o = OR[n.orbit]; n.x = C.x + o.rx * Math.cos(n.ang); n.y = C.y + o.ry * Math.sin(n.ang);
+      n.el.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
+      n.el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
     });
+    layoutLabels();
     requestAnimationFrame(spin);
   })();
   $('#legend').innerHTML = nodes.map(n => `<button class="chip" data-topic="${esc(n.name)}" data-key="${n.key}">${esc(n.name)} · ${n.count}</button>`).join('');
@@ -1067,12 +1154,21 @@ function reportHtml(d) {
     <div class="shared-kind">${s.kind === 'paper' ? 'Research paper' + (s.year ? ' · ' + esc(s.year) : '') : 'Real-world example'}</div>
     ${s.kind === 'paper' ? `<a class="shared-t" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)} ↗</a>` : `<b>${esc(s.title)}</b>`}
     <div class="leafchips">${list(s.leaves).map(chip).join('')}</div></div>`).join('');
-  const links = list(r.connections).map((c, i) => `<div class="rep-card" style="--d:${i*80}ms"><div class="link-row">${chip(c.leaves[0])}<span class="arrow">⟷</span>${chip(c.leaves[1])}</div>
-    <span>${esc(c.relation)}</span></div>`).join('');
+  const links = list(r.connections).map((c, i) => { const m = c.metrics || {};
+    return `<div class="rep-card" style="--d:${i*80}ms"><div class="link-row">${chip(c.leaves[0])}<span class="arrow">⟷</span>${chip(c.leaves[1])}</div>
+    <span>${esc(c.relation)}</span>${c.how ? `<span class="how">How: ${esc(c.how)}</span>` : ''}
+    <div class="basis-row"><span class="bchip sem">Basis: ${esc(c.basis || 'meaning')} (semantic, AI)</span>
+      <span class="bchip lex">Word overlap ${m.word_overlap ?? 0}%${(m.shared_words || []).length ? ': ' + m.shared_words.map(esc).join(', ') : ''}</span>
+      <span class="bchip src">${m.shared_sources || 0} shared source${m.shared_sources === 1 ? '' : 's'}</span></div></div>`; }).join('');
+  const method = `<div class="method"><h5>How this analysis compares your leaves</h5><ul style="margin:0;padding-left:18px">
+    <li><b>By meaning (semantic):</b> the AI reads each verse, its reading, its real-world sources and your notes, and compares the ideas and imagery — not the spelling of words. This drives the themes, connections and conclusions.</li>
+    <li><b>By words (lexical):</b> for every connection we also count the Tamil words the two verses literally share, so you can see whether a link is about wording or only about meaning.</li>
+    <li><b>By sources (exact):</b> papers and missions attached to more than one leaf are matched exactly by link or title — no AI involved.</li></ul></div>`;
   const missing = list(d.without_sources);
   return `<div class="rep-top"><h3 class="rep-title">Your leaves, analysed</h3>
       <button class="ghost-btn" data-report-close>← Back</button></div>
     <p class="note" style="color:var(--dim);font-size:13px;margin:0">${d.count} leaves analysed · AI interpretation — verify before citing.</p>
+    ${method}
     ${missing.length ? `<p class="rep-hint">${missing.length} of your leaves have no real-world sources saved yet (${missing.map(chip).join(' ')}). Open each one, let the reading load, and save again to include its science.</p>` : ''}
     ${sec('Overview', r.overview ? `<p>${esc(r.overview)}</p>` : '')}
     ${sec('The science behind your leaves', science)}
