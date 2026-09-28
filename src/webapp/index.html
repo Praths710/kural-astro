@@ -262,6 +262,18 @@ h2.title em{color:var(--gold-hi)}
 .sg:hover,.sg.hi{background:rgba(227,185,95,.12)}
 .sg mark{background:none;color:var(--gold-hi);font-weight:700}
 .sg-k{font-size:11px;color:var(--dim);white-space:nowrap}
+/* the open dropdown must sit above the chips and cards that follow the search bar */
+.searchbar{z-index:40}
+.searchbar:focus-within{z-index:41}
+.sg.ai{background:rgba(227,185,95,.07);border:1px dashed rgba(227,185,95,.35);margin-bottom:6px}
+.sg.ai span:first-child{color:var(--gold-hi)}
+.sg-tip{font-size:12px;color:var(--dim);padding:8px 12px 4px;border-top:1px solid var(--line);margin-top:6px}
+.sg-tip i{color:var(--parch);font-style:normal}
+.understood{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;padding:10px 14px;border-radius:14px;
+  background:rgba(227,185,95,.07);border:1px solid rgba(227,185,95,.3);font-family:var(--sans);font-size:13.5px;line-height:1.5;color:var(--parch)}
+.understood b{color:var(--gold-hi)}
+.understood .u-intent{flex-basis:100%;color:var(--dim)}
+.understood .chip{font-size:12px;padding:4px 11px}
 .archive-wrap{position:relative;flex:1;min-width:220px}
 .archive-wrap .archive-search{width:100%}
 .chips.left{justify-content:flex-start;margin:16px 0 0}
@@ -542,7 +554,7 @@ body.has-mouse #cursorGlow{opacity:1}
     <div class="tr">“all the universes, enclosed within an atom” — Vallalar, Thiruvarutpa</div>
   </div>
   <form class="searchbar reveal" id="heroForm">
-    <input id="heroInput" placeholder="Search a cosmic idea — black holes, multiverse, light…" autocomplete="off">
+    <input id="heroInput" placeholder="Type anything — “atoms”, or “did they know about tiny particles?”" autocomplete="off">
     <button class="btn" type="submit">Explore</button>
     <div class="suggest" id="heroSuggest" role="listbox"></div>
   </form>
@@ -583,9 +595,9 @@ body.has-mouse #cursorGlow{opacity:1}
 <section class="block" id="explore">
   <div class="kicker reveal">Explore</div>
   <h2 class="title reveal">Search the <em>heavens</em></h2>
-  <p class="lede reveal">Type any scientific idea. The AI finds verses that echo it and pulls the real research behind it. Open any leaf to go deeper.</p>
+  <p class="lede reveal">Type a topic or ask a question in your own words — English or Tamil. The AI works out what you mean, finds verses that echo it and pulls the real research behind it. Open any leaf to go deeper.</p>
   <form class="searchbar" id="exploreForm" style="width:100%">
-    <input id="exploreInput" placeholder="e.g. speed of light, dark matter, creation of the universe" autocomplete="off">
+    <input id="exploreInput" placeholder="e.g. dark matter, or “what did Vallalar say about the universe?”" autocomplete="off">
     <button class="btn" type="submit">Search</button>
     <div class="suggest" id="exploreSuggest" role="listbox"></div>
   </form>
@@ -746,19 +758,24 @@ async function runSearch(topic, key) {
   $('#exploreInput').value = topic; $('#heroInput').value = topic;
   $('#explore').scrollIntoView({behavior:'smooth'});
   const tok = ++searchTok;
-  $('#exploreHead').innerHTML = loading(`Reading the leaves for “${topic}”…`);
+  const asked = !key && (/[஀-௿?]/.test(topic) || topic.split(/\s+/).length > 3);
+  $('#exploreHead').innerHTML = loading(asked ? `Understanding your question, then reading the leaves…` : `Reading the leaves for “${topic}”…`);
   $('#exploreOut').innerHTML = skelLeaves(4);
   try {
     const d = await api('/api/search_topic', {topic, key});
     if (tok !== searchTok) return;
     d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
     const n = d.matches.length;
-    $('#exploreHead').innerHTML = `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(topic)}”` : `No verse clearly echoes “${esc(topic)}”`}</span>` +
+    const u = d.understood;
+    $('#exploreHead').innerHTML = (u ? `<div class="understood">🧠 The AI read your search as <b>${esc(u.topic)}</b>
+        ${u.related && u.related.length ? `<span style="color:var(--dim)">· also try</span>${u.related.map(r => `<button class="chip" data-topic="${esc(r)}">${esc(r)}</button>`).join('')}` : ''}
+        ${u.intent ? `<span class="u-intent">${esc(u.intent)}</span>` : ''}</div>` : '') +
+      `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(u ? u.topic : topic)}”` : `No verse clearly echoes “${esc(u ? u.topic : topic)}”`}</span>` +
       (n ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first.</div>` : '');
     $('#exploreOut').innerHTML =
       (n ? bundle(d.matches.map(leafCard).join(''))
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
-      `<h3 class="subhead">From the observatory</h3><p class="subnote">Live research on “${esc(topic)}” from arXiv${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
+      `<h3 class="subhead">From the observatory</h3><p class="subnote">Live research on “${esc(u ? u.arxiv : topic)}” from arXiv${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
       paperList(d.papers);
   } catch (e) {
     if (tok !== searchTok) return;
@@ -1216,18 +1233,25 @@ function attachSuggest(input, box, onPick, scope) {
   const render = () => {
     const q = input.value.trim().toLowerCase();
     items = q ? pool().filter(s => s.text.toLowerCase().includes(q))
-                .sort((a, b) => (b.text.toLowerCase().startsWith(q) - a.text.toLowerCase().startsWith(q)) || (b.n - a.n)).slice(0, 8)
+                .sort((a, b) => (b.text.toLowerCase().startsWith(q) - a.text.toLowerCase().startsWith(q)) || (b.n - a.n)).slice(0, 7)
               : pool().filter(s => s.kind === 'Theme').slice(0, 8);
+    // main search boxes: whatever was typed can always be sent to the AI as-is
+    const aiRow = scope !== 'verses' && q && !items.some(s => s.text.toLowerCase() === q);
+    if (aiRow) items.unshift({text: input.value.trim(), kind: 'AI', ai: true});
     hi = -1;
     if (!items.length) { box.classList.remove('show'); return; }
     box.innerHTML = (q ? '' : '<div class="sg-head">Themes found in the verses</div>') +
-      items.map((s, i) => `<div class="sg" data-i="${i}" role="option"><span>${markHit(s.text, q)}</span><span class="sg-k">${esc(s.kind)}${s.n > 1 ? ' · ' + s.n + ' verses' : ''}</span></div>`).join('');
+      items.map((s, i) => s.ai
+        ? `<div class="sg ai" data-i="${i}" role="option"><span>✦ Ask the AI: “${esc(s.text)}”</span><span class="sg-k">understands any question</span></div>`
+        : `<div class="sg" data-i="${i}" role="option"><span>${markHit(s.text, q)}</span><span class="sg-k">${esc(s.kind)}${s.n > 1 ? ' · ' + s.n + ' verses' : ''}</span></div>`).join('') +
+      (scope !== 'verses' && !q ? `<div class="sg-tip">Or ask in your own words — <i>“which verses talk about tiny particles?”</i>, <i>“did they know rain comes from the sea?”</i>, or in Tamil.</div>` : '');
     box.classList.add('show');
   };
   const pick = i => { const it = items[i]; if (!it) return; box.classList.remove('show'); input.value = it.text; onPick(it.text); };
   input.addEventListener('input', render);
   input.addEventListener('focus', render);
-  input.addEventListener('blur', () => setTimeout(() => box.classList.remove('show'), 160));
+  input.addEventListener('click', render);
+  input.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== input) box.classList.remove('show'); }, 160));
   input.addEventListener('keydown', e => {
     if (!box.classList.contains('show')) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {

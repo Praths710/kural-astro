@@ -173,15 +173,44 @@ def english_query(topic):
     return (out or {}).get("q") or topic
 
 
+UNDERSTAND_SYS = (
+    "A student typed this into the search box of an app that finds classical Tamil verses (Thirukkural, Thiruvarutpa) "
+    "echoing modern science. It may be a keyword, a question, a sentence, slang, a typo, Tamil or a mix. "
+    "Work out what they want to find. Return JSON {\"topic\": the pure modern-science idea to search for, 1-4 English words, "
+    "e.g. 'atoms', 'water cycle', 'nested universes' -- never add words like ancient, Tamil, verses, literature or history, "
+    "\"arxiv\": a short English physics/science phrase for searching research papers (again no ancient/literature words), "
+    "\"intent\": one sentence in plain English starting 'You want' describing what they are looking for, "
+    "\"related\": 3 related topics they could try next (1-3 words each)}.\n"
+)
+
+
+def is_plain_term(text):
+    """A short English keyword like 'atoms' or 'dark matter' needs no interpretation."""
+    return not TAMIL.search(text) and "?" not in text and len(text.split()) <= 3
+
+
+def understand_query(text):
+    """Turn free text ('which verses talk about tiny particles?') into a clean topic. Cached; None if the AI is busy."""
+    out = cached(ckey("understand-v2", text.lower()), None,
+                 lambda: gemini_json(UNDERSTAND_SYS + "Search box text: " + text, attempts=3, temperature=0))
+    if not isinstance(out, dict) or not str(out.get("topic") or "").strip():
+        return None
+    rel = [str(r)[:40] for r in (out.get("related") or []) if isinstance(r, str)][:4]
+    return {"topic": str(out["topic"]).strip()[:80], "arxiv": str(out.get("arxiv") or out["topic"]).strip()[:120],
+            "intent": str(out.get("intent") or "").strip()[:300], "related": rel}
+
+
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v2", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v3", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 def _search_live(topic, key=None, lang="en"):
+    understood = None if key or is_plain_term(topic) else understand_query(topic)
+    ask = f"{understood['topic']} (the student typed: \"{topic}\" -- meaning: {understood['intent']})" if understood else topic
     verses = [v for v in verse_list() if v["label"] in ("L", "O", "A")]
     listing = "\n".join(f'{i}::{v["concept"]}::{v["meaning"]}' for i, v in enumerate(verses))
     reason_lang = " Write each reason in Tamil." if lang == "ta" else ""
-    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {topic}\n\nList (index::concept::meaning):\n{listing}")
+    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {ask}\n\nList (index::concept::meaning):\n{listing}")
     if raw is None:
         return None
     raw = raw or []
@@ -200,8 +229,8 @@ def _search_live(topic, key=None, lang="en"):
             matches.append({**verses[idx], "reason": m.get("reason", ""), "match_type": mt,
                             "matched_on": m.get("matched_on", ""), "score": score})
     matches.sort(key=lambda v: -v["score"])
-    topic_title, papers = papers_for(english_query(topic), key)
-    return {"matches": matches, "topic_title": topic_title, "papers": papers}
+    topic_title, papers = papers_for(understood["arxiv"] if understood else english_query(topic), key)
+    return {"matches": matches, "topic_title": topic_title, "papers": papers, "understood": understood}
 
 
 def concept_translations(lang):
