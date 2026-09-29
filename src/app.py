@@ -291,11 +291,11 @@ DEEP_SYS = (
     "researcher could build today, inspired by the verse's imagery (not claims that the poet knew science):\n"
     "    kind: one of 'testable hypothesis' (a falsifiable scientific claim), 'theoretical idea' (a model or thought experiment), "
     "'application idea' (a technology, AI/ML system or project someone could build)\n"
-    "    title: a short name for the idea\n"
-    "    statement: 2-3 sentences stating the hypothesis or idea precisely\n"
-    "    inspired_by: which image or words of the verse sparked it\n"
-    "    how_to_test: 2-3 sentences -- the concrete data, instrument, experiment, simulation or model you would use\n"
-    "    prediction: one sentence -- what result would support it and what would refute it\n"
+    "    title: a short name for the idea (max 8 words)\n"
+    "    statement: 1-2 crisp sentences (max 45 words) stating the hypothesis or idea precisely\n"
+    "    inspired_by: the Tamil words of the verse that sparked it, with a 3-6 word English gloss (max 15 words)\n"
+    "    how_to_test: 1-2 short sentences (max 40 words) -- the concrete data, instrument, experiment, simulation or model\n"
+    "    prediction: one short sentence (max 30 words) -- what result would support it and what would refute it\n"
     "    field: exactly one of " + ", ".join(FIELDS) + "\n"
     "    Make them specific and scientifically sound; at least one should be doable by a student (e.g. with public data or ML)."
 )
@@ -607,7 +607,7 @@ class Handler(BaseHTTPRequestHandler):
             def read_it():
                 d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
                 return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
-            out = cached(ckey("deep-v4", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = cached(ckey("deep-v5", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
