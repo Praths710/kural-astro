@@ -43,7 +43,11 @@ def _clean(raw):
                                  "org_type": _s(r.get("org_type"), 30), "year": _s(r.get("year"), 4),
                                  "credible": bool(r.get("credible")),
                                  "url": _s(r.get("url"), 300) if str(r.get("url", "")).startswith("https://") else ""}
-                                for r in real[:5] if isinstance(r, dict)]},
+                                for r in real[:6] if isinstance(r, dict)],
+                 "hypotheses": [{k: _s(h.get(k), n) for k, n in
+                                 (("kind", 30), ("title", 160), ("statement", 800), ("inspired_by", 300),
+                                  ("how_to_test", 800), ("prediction", 400), ("field", 40))}
+                                for h in (d.get("hypotheses") or [])[:3] if isinstance(h, dict)]},
         "papers": [{"title": _s(p.get("title"), 300), "url": _s(p.get("url"), 300), "year": _s(p.get("year"), 6),
                     "tag": _s(p.get("tag"), 16), "authors": [_s(a, 80) for a in (p.get("authors") or [])[:4]]}
                    for p in papers[:10] if isinstance(p, dict) and str(p.get("url", "")).startswith("https://arxiv.org/")],

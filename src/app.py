@@ -157,10 +157,13 @@ SEARCH_SYS = (
     "Match by MEANING (semantic similarity), not by shared words. Return a JSON array of objects "
     "{\"id\": <index>, \"reason\": <one or two sentences explaining why this verse relates to the topic>, "
     "\"match_type\": one of \"direct\" (the verse describes the same phenomenon), \"analogy\" (its imagery parallels the topic), "
-    "\"thematic\" (a broader shared theme), \"matched_on\": <the specific idea or image in the verse that matches>, "
-    "\"score\": <relevance 1-5>} for entries genuinely related to the topic, most relevant first, at most 12. "
-    "Be selective: real conceptual links only. Empty array if none."
+    "\"thematic\" (a broader shared theme), \"possible\" (not an established link, but there is a real chance of a relation "
+    "worth a student's look -- say in the reason what the possible link is and why it is uncertain), "
+    "\"matched_on\": <the specific idea or image in the verse that matches>, \"score\": <relevance 1-5>}. "
+    "Give up to 12 genuine matches (direct/analogy/thematic), most relevant first, then up to 5 extra 'possible' ones (score 1-2). "
+    "No random filler: every entry needs a concrete reason. Empty array if none."
 )
+MATCH_TYPES = ("direct", "analogy", "thematic", "possible")
 
 
 def english_query(topic):
@@ -201,7 +204,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v3", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v4", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 def _search_live(topic, key=None, lang="en"):
@@ -225,10 +228,14 @@ def _search_live(topic, key=None, lang="en"):
                 score = max(1, min(5, int(m.get("score") or 3)))
             except (TypeError, ValueError):
                 score = 3
-            mt = m.get("match_type") if m.get("match_type") in ("direct", "analogy", "thematic") else "thematic"
+            mt = m.get("match_type") if m.get("match_type") in MATCH_TYPES else "thematic"
+            if mt == "possible":
+                score = min(score, 2)
             matches.append({**verses[idx], "reason": m.get("reason", ""), "match_type": mt,
                             "matched_on": m.get("matched_on", ""), "score": score})
-    matches.sort(key=lambda v: -v["score"])
+    seen = set()
+    matches = [m for m in matches if not (m["id"] in seen or seen.add(m["id"]))]
+    matches.sort(key=lambda v: (v["match_type"] == "possible", -v["score"]))
     topic_title, papers = papers_for(understood["arxiv"] if understood else english_query(topic), key)
     return {"matches": matches, "topic_title": topic_title, "papers": papers, "understood": understood}
 
@@ -279,7 +286,18 @@ DEEP_SYS = (
     "    org_type: one of 'space agency', 'university', 'research institute', 'government', 'company', 'other'\n"
     "    year: the year of the mission or result (number)\n"
     "    url: the official page URL only if you are confident it exists, otherwise an empty string\n"
-    "    Only use things you are confident exist; no invented projects."
+    "    Only use things you are confident exist; no invented projects.\n"
+    "  hypotheses: array of 2-3 objects {kind, title, statement, inspired_by, how_to_test, prediction, field} -- NEW ideas a "
+    "researcher could build today, inspired by the verse's imagery (not claims that the poet knew science):\n"
+    "    kind: one of 'testable hypothesis' (a falsifiable scientific claim), 'theoretical idea' (a model or thought experiment), "
+    "'application idea' (a technology, AI/ML system or project someone could build)\n"
+    "    title: a short name for the idea\n"
+    "    statement: 2-3 sentences stating the hypothesis or idea precisely\n"
+    "    inspired_by: which image or words of the verse sparked it\n"
+    "    how_to_test: 2-3 sentences -- the concrete data, instrument, experiment, simulation or model you would use\n"
+    "    prediction: one sentence -- what result would support it and what would refute it\n"
+    "    field: exactly one of " + ", ".join(FIELDS) + "\n"
+    "    Make them specific and scientifically sound; at least one should be doable by a student (e.g. with public data or ML)."
 )
 
 
@@ -309,6 +327,12 @@ def finalize_deep(d):
         r["year"] = int(m.group()) if m else 0
     items.sort(key=lambda r: (CREDIBLE.get(r["org_type"], 3), -r["year"]))
     d["real_world"] = items
+    kinds = ("testable hypothesis", "theoretical idea", "application idea")
+    hyps = [h for h in (d.get("hypotheses") or []) if isinstance(h, dict) and h.get("statement")]
+    for h in hyps:
+        h["kind"] = h.get("kind") if h.get("kind") in kinds else "theoretical idea"
+        h["field"] = h.get("field") if h.get("field") in FIELDS else "General"
+    d["hypotheses"] = hyps[:3]
     return d
 
 
@@ -583,7 +607,7 @@ class Handler(BaseHTTPRequestHandler):
             def read_it():
                 d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
                 return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
-            out = cached(ckey("deep-v3", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = cached(ckey("deep-v4", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)

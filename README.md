@@ -61,6 +61,21 @@ live arXiv), bring-your-own-verse, archive. Every verse opens a deep-reading mod
 the analogy + strength, AI-summarised real-world examples, live arXiv papers. Concepts, planets and
 chips all route back into search. Frontend: `src/webapp/index.html` (single file, no build).
 
+Search:
+- **Type anything** — a keyword ("atoms") goes straight to matching; a question or sentence, in English or
+  Tamil ("did the poets know about tiny particles?"), is first read by Gemini (`understand_query`) into a clean
+  science topic + arXiv phrase + related topics, shown as "The AI read your search as …".
+- **Why each verse** — every result carries `match_type`, `matched_on`, a 1-5 `score` and a reason.
+- **Match types** — 🎯 Direct match (same phenomenon), 🔭 Analogy (imagery parallels it), 🧵 Shared theme,
+  ❓ Possible link (a relation might exist but is uncertain; listed last, score ≤ 2). Filter buttons above the
+  results show one kind at a time.
+
+Deep reading (per verse): literal meaning, key Tamil words, tradition, analogy with where it matches / breaks
+down, strength + reason, **hypotheses & ideas** (2-3 new testable hypotheses, theoretical ideas or
+application/ML ideas sparked by the verse — each with what inspired it, how to test it and what result would
+support or refute it), real-world examples grouped into 12 domains (top organisations first, links checked),
+and live arXiv papers (newest first). Saved leaves keep all of this.
+
 ## Login
 
 Every page and API route needs a signed-in account (`src/auth.py`): PBKDF2-SHA256 salted hashes in

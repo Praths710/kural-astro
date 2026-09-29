@@ -274,6 +274,34 @@ h2.title em{color:var(--gold-hi)}
 .understood b{color:var(--gold-hi)}
 .understood .u-intent{flex-basis:100%;color:var(--dim)}
 .understood .chip{font-size:12px;padding:4px 11px}
+/* match-type filter */
+.mt-bar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;position:sticky;top:68px;z-index:5;padding:8px 0;
+  background:linear-gradient(180deg,rgba(5,6,12,.92) 70%,rgba(5,6,12,0))}
+@media(max-width:760px){.mt-bar{position:static;background:none}}
+.mt-btn{font:600 13px var(--sans);color:var(--parch);background:rgba(22,20,34,.8);border:1px solid var(--line);border-radius:999px;
+  padding:7px 14px;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .15s}
+.mt-btn:hover{transform:translateY(-2px);border-color:var(--gold)}
+.mt-btn b{margin-left:4px;color:var(--gold-hi)}
+.mt-btn.on{background:var(--gold);border-color:var(--gold);color:#1b1206}
+.mt-btn.on b{color:#1b1206}
+.mt-note{font-size:13px;color:var(--dim);min-height:0;margin:0 0 6px}
+.mt-note:empty{display:none}
+.ola.mt-hide{display:none}
+.eh-plus{font-size:.6em;color:var(--dim);font-family:var(--sans)}
+.why-type.mt-direct{background:#2f5a2a}.why-type.mt-analogy{background:#6a3410}.why-type.mt-thematic{background:#4a3a6a}
+.why-type.mt-possible{background:transparent;color:#6a3410;border:1px dashed #6a3410}
+.ola.possible .why{border-style:dashed}
+/* hypotheses */
+.hyps{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.hyp{border-radius:18px;padding:18px 20px;background:linear-gradient(160deg,rgba(150,130,255,.10),rgba(22,20,34,.5));
+  border:1px solid rgba(150,130,255,.32);animation:rise .7s both;animation-delay:var(--d,0ms);display:flex;flex-direction:column;gap:8px}
+.hyp-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.hyp-kind{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#c9bfff}
+.hyp-field{margin-left:auto;font-size:11.5px;color:var(--dim)}
+.hyp-title{font-family:var(--serif);font-size:19px;font-weight:600;color:#e4ddff;line-height:1.3}
+.hyp-st{margin:0;font-size:14px;line-height:1.6;color:var(--parch)}
+.hyp-row{font-size:13px;line-height:1.55;color:var(--parch);opacity:.9;padding-top:8px;border-top:1px dashed rgba(150,130,255,.25)}
+.hyp-row span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#b3a8f0;margin-bottom:2px}
 .archive-wrap{position:relative;flex:1;min-width:220px}
 .archive-wrap .archive-search{width:100%}
 .chips.left{justify-content:flex-start;margin:16px 0 0}
@@ -720,14 +748,14 @@ function countUp(el, to){ let v = 0; const step = Math.max(1, Math.round(to/60))
 
 /* ---------------- cards ---------------- */
 function leafCard(v, i = 0) {
-  return `<article class="ola" data-id="${esc(v.id)}" style="--d:${i*70}ms">
+  return `<article class="ola ${v.match_type === 'possible' ? 'possible' : ''}" data-id="${esc(v.id)}" data-mt="${esc(v.match_type || '')}" style="--d:${i*70}ms">
     <span class="frame"></span><span class="glare"></span>
     <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
     <div class="ola-cap">
       <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
         <button class="cap-save ${SAVED[v.id] ? 'on' : ''}" data-save="${esc(v.id)}" title="${SAVED[v.id] ? 'Saved — click to remove' : 'Save this leaf'}">${SAVED[v.id] ? '★' : '☆'}</button></div>
       ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
-      ${v.reason ? `<div class="why"><div class="why-top"><span class="why-h">Why this verse</span>${v.match_type ? `<span class="why-type">${esc({direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared theme'}[v.match_type] || v.match_type)}</span>` : ''}${v.score ? `<span class="why-score" title="Relevance ${v.score}/5">${'●'.repeat(v.score)}${'○'.repeat(5 - v.score)}</span>` : ''}</div>
+      ${v.reason ? `<div class="why"><div class="why-top"><span class="why-h">Why this verse</span>${v.match_type ? `<span class="why-type mt-${esc(v.match_type)}">${esc(MT_NAME[v.match_type] || v.match_type)}</span>` : ''}${v.score ? `<span class="why-score" title="Relevance ${v.score}/5">${'●'.repeat(v.score)}${'○'.repeat(5 - v.score)}</span>` : ''}</div>
         <p>${esc(v.reason)}</p>${v.matched_on ? `<span class="on"><b>Matched on:</b> ${esc(v.matched_on)}</span>` : ''}</div>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
       <div class="cap-foot"><span>${esc(v.ref)}</span><span class="open">Read deeper →</span></div>
     </div>
@@ -751,6 +779,24 @@ const loading = msg => `<div class="loading-line"><span class="orbit-loader"></s
 
 /* ---------------- search (topic -> verses + papers) ---------------- */
 let searchTok = 0;
+const MT_NAME = {direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared theme', possible: 'Possible link'};
+const MT_ICON = {direct: '🎯', analogy: '🔭', thematic: '🧵', possible: '❓'};
+const MT_DESC = {direct: 'describes the same phenomenon', analogy: 'its imagery parallels the idea', thematic: 'shares a broader theme',
+  possible: 'might be related — worth a look'};
+function matchFilterBar(matches) {
+  const count = t => matches.filter(m => m.match_type === t).length;
+  return `<div class="mt-bar" role="tablist"><button class="mt-btn on" data-mt-filter="all">All <b>${matches.length}</b></button>` +
+    Object.keys(MT_NAME).filter(t => count(t)).map(t =>
+      `<button class="mt-btn mt-${t}" data-mt-filter="${t}" title="${esc(MT_DESC[t])}">${MT_ICON[t]} ${MT_NAME[t]} <b>${count(t)}</b></button>`).join('') + `</div>`;
+}
+function filterMatches(t) {
+  document.querySelectorAll('.mt-btn').forEach(b => b.classList.toggle('on', b.dataset.mtFilter === t));
+  document.querySelectorAll('#exploreOut .ola[data-mt]').forEach(c => c.classList.toggle('mt-hide', t !== 'all' && c.dataset.mt !== t));
+  const note = $('#mtNote');
+  if (note) note.textContent = t === 'all' ? '' : `Showing ${MT_NAME[t].toLowerCase()} verses only — ${MT_DESC[t]}.`;
+  const bar = $('.mt-bar');
+  if (bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
 async function runSearch(topic, key) {
   topic = (topic || '').trim(); if (!topic) return;
   closeModal(); closeLibrary();
@@ -765,15 +811,15 @@ async function runSearch(topic, key) {
     const d = await api('/api/search_topic', {topic, key});
     if (tok !== searchTok) return;
     d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
-    const n = d.matches.length;
+    const n = d.matches.filter(m => m.match_type !== 'possible').length, np = d.matches.length - n;
     const u = d.understood;
     $('#exploreHead').innerHTML = (u ? `<div class="understood">🧠 The AI read your search as <b>${esc(u.topic)}</b>
         ${u.related && u.related.length ? `<span style="color:var(--dim)">· also try</span>${u.related.map(r => `<button class="chip" data-topic="${esc(r)}">${esc(r)}</button>`).join('')}` : ''}
         ${u.intent ? `<span class="u-intent">${esc(u.intent)}</span>` : ''}</div>` : '') +
-      `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(u ? u.topic : topic)}”` : `No verse clearly echoes “${esc(u ? u.topic : topic)}”`}</span>` +
-      (n ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first.</div>` : '');
+      `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(u ? u.topic : topic)}”` : `No verse clearly echoes “${esc(u ? u.topic : topic)}”`}${np ? `<span class="eh-plus"> + ${np} possible link${np > 1 ? 's' : ''}</span>` : ''}</span>` +
+      (n + np ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first; <b>possible links</b> — verses where a relation might exist but is uncertain — come last. Use the buttons to show one kind.</div>` : '');
     $('#exploreOut').innerHTML =
-      (n ? bundle(d.matches.map(leafCard).join(''))
+      (n + np ? matchFilterBar(d.matches) + `<div class="mt-note" id="mtNote"></div>` + bundle(d.matches.map(leafCard).join(''))
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
       `<h3 class="subhead">From the observatory</h3><p class="subnote">Live research on “${esc(u ? u.arxiv : topic)}” from arXiv${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
       paperList(d.papers);
@@ -815,6 +861,7 @@ function modalHtml(v, fromSaved) {
       <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
       <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
     </div>
+    <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
     <div class="m-section"><h3>In the real world</h3><p class="note">Grouped by field. Top space agencies, research institutes and universities come first, then newest first. Every “Official source” link was opened and checked. AI-summarised — verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Live from arXiv — real papers, click to read.</p><div id="mPapers">${v.concept ? loading('Searching arXiv…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
@@ -833,6 +880,20 @@ function fillDeep(d, tok) {
     (d.strength_reason ? `<div class="meter-why">${esc(d.strength_reason)}</div>` : '');
   const rw = Array.isArray(d.real_world) ? d.real_world : [];
   $('#mReal').innerHTML = realWorldHtml(rw);
+  $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
+}
+const HYP_ICON = {'testable hypothesis': '🧪', 'theoretical idea': '💭', 'application idea': '🛠️'};
+function hypothesesHtml(hs) {
+  hs = (Array.isArray(hs) ? hs : []).filter(h => h && h.statement);
+  if (!hs.length) return '<div class="empty">No hypothesis for this one — press ↻ Fresh reading on a saved leaf to ask again.</div>';
+  return `<div class="hyps">${hs.map((h, i) => `<div class="hyp" style="--d:${i * 90}ms">
+    <div class="hyp-top"><span class="hyp-kind">${HYP_ICON[h.kind] || '💡'} ${esc(h.kind || 'idea')}</span>${h.field ? `<span class="hyp-field">${FIELD_ICON[h.field] || '✦'} ${esc(h.field)}</span>` : ''}</div>
+    <b class="hyp-title">${esc(h.title || 'Idea')}</b>
+    <p class="hyp-st">${esc(h.statement)}</p>
+    ${h.inspired_by ? `<div class="hyp-row"><span>Sparked by</span>${esc(h.inspired_by)}</div>` : ''}
+    ${h.how_to_test ? `<div class="hyp-row"><span>How to test</span>${esc(h.how_to_test)}</div>` : ''}
+    ${h.prediction ? `<div class="hyp-row"><span>Proves / disproves</span>${esc(h.prediction)}</div>` : ''}
+  </div>`).join('')}</div>`;
 }
 const FIELD_ICON = {'Space & Astronomy': '🚀', 'Physics': '⚛️', 'Earth & Climate': '🌍', 'Water & Oceans': '💧', 'Medicine & Health': '🩺',
   'Biology & Life': '🧬', 'Agriculture & Food': '🌾', 'Energy': '⚡', 'Technology & Engineering': '🛠️', 'Mathematics & Computing': '📐',
@@ -867,7 +928,7 @@ function realWorldHtml(rw) {
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
   $('#mLiteral').innerHTML = $('#mAnalogy').innerHTML = `<p style="color:var(--dim)">The AI is busy — ${esc(msg)}</p>`;
-  $('#mReal').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
+  $('#mReal').innerHTML = $('#mHyp').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
 }
 async function openVerse(v, opts = {}) {
   if (!v) return;
@@ -876,7 +937,7 @@ async function openVerse(v, opts = {}) {
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
   // readings saved before real-world examples had fields/organisations are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
+  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.hypotheses || []).length && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const cachedPapers = v.papers || (saved && saved.papers && saved.papers.length ? saved.papers : null);
   CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
@@ -917,6 +978,8 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 
 /* ---------------- global clicks: everything connects ---------------- */
 document.addEventListener('click', e => {
+  const mt = e.target.closest('[data-mt-filter]');
+  if (mt) return filterMatches(mt.dataset.mtFilter);
   if (e.target.closest('[data-close]')) return closeModal();
   if (e.target.closest('[data-lib-close]')) return closeLibrary();
   if (e.target.closest('[data-analyse]')) return analyseLeaves(false);
