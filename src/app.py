@@ -143,13 +143,18 @@ def match_topic(concept):
     return None, None, None
 
 
-def papers_for(concept, key=None):
-    out = cached(ckey("papers-v9", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
+def papers_for(concept, key=None, must=None):
+    """must: core words every paper title has to contain (the rest of `concept` only helps ranking)."""
+    out = cached(ckey("papers-v10", key or "", concept.lower(), (must or "").lower()), 7 * DAY,
+                 lambda: _papers_live(concept, key, must))
     papers = sorted((out or {}).get("papers", []), key=lambda p: -int(re.sub(r"\D", "", str(p.get("year") or "")) or 0))
     return (out or {}).get("title"), papers
 
 
-def _papers_live(concept, key=None):
+def _papers_live(concept, key=None, must=None):
+    if must:   # a search topic with an AI search phrase: query it directly, no theme matching
+        papers = osrc.papers(concept, must)
+        return {"title": "Direct search", "papers": papers} if papers else None
     if key in rr.TOPICS:
         title, _, queries = rr.TOPICS[key]
     else:
@@ -223,7 +228,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v5", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v7", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -270,7 +275,16 @@ def _search_live(topic, key=None, lang="en"):
     seen = set()
     matches = [m for m in matches if not (m["id"] in seen or seen.add(m["id"]))]
     matches.sort(key=lambda v: (v["match_type"] == "possible", -v["score"]))
-    topic_title, papers = papers_for(understood["arxiv"] if understood else english_query(topic), key)
+    # a one-word topic ("Seasons") is too vague for a paper search: use the AI's scientific search phrase when there is one
+    if not understood and not key and not match_topic(topic)[0]:
+        understood_for_papers = understand_query(topic)
+    else:
+        understood_for_papers = understood
+    if understood_for_papers and not key:
+        u = understood_for_papers
+        topic_title, papers = papers_for(f'{u["topic"]} {u["arxiv"]}', None, must=u["topic"])
+    else:
+        topic_title, papers = papers_for(english_query(topic), key)
     return {"matches": matches, "topic_title": topic_title, "papers": papers, "understood": understood}
 
 

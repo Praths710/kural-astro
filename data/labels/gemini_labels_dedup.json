@@ -22621,9 +22621,9 @@
 },
 "arutpa:T158:84": {
 "id": "arutpa:T158:84",
-"label": "M",
+"label": "N",
 "science_concept": "",
-"meaning": "Praising the divine creator manifesting interchangeably as Vishnu and Brahma."
+"meaning": "Grammatical commentary on mental impurities and a tiny straw."
 },
 "arutpa:T158:85": {
 "id": "arutpa:T158:85",
@@ -22633,9 +22633,9 @@
 },
 "arutpa:T158:86": {
 "id": "arutpa:T158:86",
-"label": "M",
+"label": "N",
 "science_concept": "",
-"meaning": "Praising the miraculous power that turns fierce tigers into cows and vice versa."
+"meaning": "Lexical commentary on word transformations and colloquial terms."
 },
 "arutpa:T158:87": {
 "id": "arutpa:T158:87",
@@ -22645,9 +22645,9 @@
 },
 "arutpa:T158:88": {
 "id": "arutpa:T158:88",
-"label": "A",
-"science_concept": "interchangeability of atoms and mountains in scale",
-"meaning": "Which siddha is capable of making a single atom a great mountain and a great mountain a fine atom?"
+"label": "N",
+"science_concept": "",
+"meaning": "Lexical explanation of intimidation and daily occurrence."
 },
 "arutpa:T158:89": {
 "id": "arutpa:T158:89",
@@ -22657,9 +22657,9 @@
 },
 "arutpa:T158:90": {
 "id": "arutpa:T158:90",
-"label": "M",
+"label": "N",
 "science_concept": "",
-"meaning": "Which siddha firmly established a tiny ant so that even celestial beings could not shake it?"
+"meaning": "Grammatical splitting and meaning explanation of lifespan terms."
 },
 "arutpa:T158:91": {
 "id": "arutpa:T158:91",
@@ -22669,9 +22669,9 @@
 },
 "arutpa:T158:92": {
 "id": "arutpa:T158:92",
-"label": "M",
+"label": "N",
 "science_concept": "",
-"meaning": "Which siddha can command taste to be present in stone and absent in fruit?"
+"meaning": "Grammatical commentary on shortened forms and interjections."
 },
 "arutpa:T158:93": {
 "id": "arutpa:T158:93",
@@ -22681,9 +22681,9 @@
 },
 "arutpa:T158:94": {
 "id": "arutpa:T158:94",
-"label": "N",
-"science_concept": "",
-"meaning": "Which siddha unites with those who declare the paths to be one?"
+"label": "L",
+"science_concept": "five sensory perceptions",
+"meaning": "Refers to the five sensory faculties: taste, sight, touch, sound, and smell."
 },
 "arutpa:T158:95": {
 "id": "arutpa:T158:95",
@@ -22695,7 +22695,7 @@
 "id": "arutpa:T158:96",
 "label": "N",
 "science_concept": "",
-"meaning": "Which siddha stands in the middle of numerical oneness and duality?"
+"meaning": "Grammatical notes on word separation and stylistic usage."
 },
 "arutpa:T158:97": {
 "id": "arutpa:T158:97",
@@ -22707,7 +22707,7 @@
 "id": "arutpa:T158:98",
 "label": "N",
 "science_concept": "",
-"meaning": "Which siddha can make the moving stationary and the stationary moving without hands?"
+"meaning": "Lexical commentary on speed and contextual interpretation."
 },
 "arutpa:T158:99": {
 "id": "arutpa:T158:99",
@@ -22717,9 +22717,9 @@
 },
 "arutpa:T158:100": {
 "id": "arutpa:T158:100",
-"label": "N",
-"science_concept": "",
-"meaning": "Devotional verse about the elusive nature of God to the unsteady mind."
+"label": "L",
+"science_concept": "boil or ulcer",
+"meaning": "Defines the term silanthi as a boil or inflammatory sore."
 },
 "arutpa:T158:101": {
 "id": "arutpa:T158:101",
@@ -22731,7 +22731,7 @@
 "id": "arutpa:T158:102",
 "label": "N",
 "science_concept": "",
-"meaning": "Devotional verse about God's elusiveness to the wise versus the devoted."
+"meaning": "Lexical explanation of covering and concealment."
 },
 "arutpa:T158:103": {
 "id": "arutpa:T158:103",
@@ -22741,9 +22741,9 @@
 },
 "arutpa:T158:104": {
 "id": "arutpa:T158:104",
-"label": "N",
-"science_concept": "",
-"meaning": "Devotional verse about the divine thief hiding within the hearts of seekers."
+"label": "L",
+"science_concept": "liver and internal organs",
+"meaning": "Identifies anatomical terms related to the liver and bodily joints."
 },
 "arutpa:T158:105": {
 "id": "arutpa:T158:105",
@@ -24226,5 +24226,2027 @@
 "label": "N",
 "science_concept": "",
 "meaning": "Moral advice on enduring abuse and abandoning falsehood."
+},
+"arutpa:T158:358": {
+"id": "arutpa:T158:358",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse about women's bodies and physical vulnerability; no natural-science content."
+},
+"arutpa:T158:359": {
+"id": "arutpa:T158:359",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral and satirical verse on names and character; no natural-science content."
+},
+"arutpa:T158:360": {
+"id": "arutpa:T158:360",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on human suffering and attachments; no natural-science content."
+},
+"arutpa:T158:361": {
+"id": "arutpa:T158:361",
+"label": "N",
+"science_concept": "",
+"meaning": "Warning against harmful attachments compared to fire; no natural-science content."
+},
+"arutpa:T158:362": {
+"id": "arutpa:T158:362",
+"label": "N",
+"science_concept": "",
+"meaning": "Warning against blind following compared to tracking a tiger; no natural-science content."
+},
+"arutpa:T158:363": {
+"id": "arutpa:T158:363",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on futile devotion and human behavior; no natural-science content."
+},
+"arutpa:T158:364": {
+"id": "arutpa:T158:364",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on emotional attachments and human folly; no natural-science content."
+},
+"arutpa:T158:365": {
+"id": "arutpa:T158:365",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on enduring abuse and misplaced loyalty; no natural-science content."
+},
+"arutpa:T158:366": {
+"id": "arutpa:T158:366",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on bodily illusions and worldly infatuation; no natural-science content."
+},
+"arutpa:T158:367": {
+"id": "arutpa:T158:367",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on superficial beauty and human delusions; no natural-science content."
+},
+"arutpa:T158:368": {
+"id": "arutpa:T158:368",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral warning about chasing wrongful pleasures and hell; no natural-science content."
+},
+"arutpa:T158:369": {
+"id": "arutpa:T158:369",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse on transient pleasures and worldly associations; no natural-science content."
+},
+"arutpa:T158:370": {
+"id": "arutpa:T158:370",
+"label": "N",
+"science_concept": "",
+"meaning": "Praising a woman, referencing poison and the moon; no natural science."
+},
+"arutpa:T158:371": {
+"id": "arutpa:T158:371",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional verse on human actions and affection; no natural science."
+},
+"arutpa:T158:372": {
+"id": "arutpa:T158:372",
+"label": "N",
+"science_concept": "",
+"meaning": "Poetic verse comparing actions with trees like neem; no science content."
+},
+"arutpa:T158:373": {
+"id": "arutpa:T158:373",
+"label": "N",
+"science_concept": "",
+"meaning": "Social and devotional commentary with no physical science."
+},
+"arutpa:T158:374": {
+"id": "arutpa:T158:374",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional or interpersonal expressions; no natural science."
+},
+"arutpa:T158:375": {
+"id": "arutpa:T158:375",
+"label": "N",
+"science_concept": "",
+"meaning": "Mention of red scorpions in a poetic comparison, lacking scientific context."
+},
+"arutpa:T158:376": {
+"id": "arutpa:T158:376",
+"label": "N",
+"science_concept": "",
+"meaning": "Social verse referencing dogs and human behavior; no science."
+},
+"arutpa:T158:377": {
+"id": "arutpa:T158:377",
+"label": "N",
+"science_concept": "",
+"meaning": "Ethical or devotional commentary; no natural-science content."
+},
+"arutpa:T158:378": {
+"id": "arutpa:T158:378",
+"label": "N",
+"science_concept": "",
+"meaning": "Social relations and interactions; no science."
+},
+"arutpa:T158:379": {
+"id": "arutpa:T158:379",
+"label": "N",
+"science_concept": "",
+"meaning": "Social critique or praise with no scientific content."
+},
+"arutpa:T158:380": {
+"id": "arutpa:T158:380",
+"label": "N",
+"science_concept": "",
+"meaning": "References to cremation grounds and homes; no natural-science content."
+},
+"arutpa:T158:381": {
+"id": "arutpa:T158:381",
+"label": "N",
+"science_concept": "",
+"meaning": "Mention of a donkey's bray in a poetic context; no science."
+},
+"arutpa:T158:382": {
+"id": "arutpa:T158:382",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral and human matters; seeking support and escaping dangers in deep seas."
+},
+"arutpa:T158:383": {
+"id": "arutpa:T158:383",
+"label": "N",
+"science_concept": "",
+"meaning": "Social or domestic observations of human behavior and interactions."
+},
+"arutpa:T158:384": {
+"id": "arutpa:T158:384",
+"label": "N",
+"science_concept": "",
+"meaning": "Human interactions involving wealth, employers, and fear."
+},
+"arutpa:T158:385": {
+"id": "arutpa:T158:385",
+"label": "N",
+"science_concept": "",
+"meaning": "Observations on human gestures and confusion caused by people."
+},
+"arutpa:T158:386": {
+"id": "arutpa:T158:386",
+"label": "N",
+"science_concept": "",
+"meaning": "Critical remarks on the deceptive nature and actions of women."
+},
+"arutpa:T158:387": {
+"id": "arutpa:T158:387",
+"label": "N",
+"science_concept": "",
+"meaning": "Human inconsistency where speech, mind, and body are discordant."
+},
+"arutpa:T158:388": {
+"id": "arutpa:T158:388",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral critique of people failing to visit holy shrines and honoring foolish ways."
+},
+"arutpa:T158:389": {
+"id": "arutpa:T158:389",
+"label": "N",
+"science_concept": "",
+"meaning": "Listing various forms of deceit, karma, illusion, and hellish states."
+},
+"arutpa:T158:390": {
+"id": "arutpa:T158:390",
+"label": "N",
+"science_concept": "",
+"meaning": "Metaphorical listing of swords, illusions, world's end, and planets."
+},
+"arutpa:T158:391": {
+"id": "arutpa:T158:391",
+"label": "N",
+"science_concept": "",
+"meaning": "Listing illusions, poison, and fierce time within the world."
+},
+"arutpa:T158:392": {
+"id": "arutpa:T158:392",
+"label": "N",
+"science_concept": "",
+"meaning": "Commentary on human temptation regarding women and ascetic discipline."
+},
+"arutpa:T158:393": {
+"id": "arutpa:T158:393",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral reflections on cruel behaviors that even malevolent beings might pity."
+},
+"arutpa:T158:394": {
+"id": "arutpa:T158:394",
+"label": "N",
+"science_concept": "",
+"meaning": "Without fine garments and gold ornaments, what becomes of the body?"
+},
+"arutpa:T158:395": {
+"id": "arutpa:T158:395",
+"label": "N",
+"science_concept": "",
+"meaning": "Knowing attachment to women seeds future births, yet you do not let go."
+},
+"arutpa:T158:396": {
+"id": "arutpa:T158:396",
+"label": "N",
+"science_concept": "",
+"meaning": "Why do you harbor desire for women who bind you to karmic deeds?"
+},
+"arutpa:T158:397": {
+"id": "arutpa:T158:397",
+"label": "O",
+"science_concept": "fire consuming clarified butter",
+"meaning": "Your desire for gold flared up continuously like butter falling into a fire."
+},
+"arutpa:T158:398": {
+"id": "arutpa:T158:398",
+"label": "N",
+"science_concept": "",
+"meaning": "How many people in this earthly world have suffered and lost everything?"
+},
+"arutpa:T158:399": {
+"id": "arutpa:T158:399",
+"label": "N",
+"science_concept": "",
+"meaning": "Do the wealthy face only a sea of troubles and nothing else?"
+},
+"arutpa:T158:400": {
+"id": "arutpa:T158:400",
+"label": "N",
+"science_concept": "",
+"meaning": "What will you do to find a secure place to store wealth beyond a mother's knowledge?"
+},
+"arutpa:T158:401": {
+"id": "arutpa:T158:401",
+"label": "N",
+"science_concept": "",
+"meaning": "What will you do if the hiding place is concealed and deceived?"
+},
+"arutpa:T158:402": {
+"id": "arutpa:T158:402",
+"label": "N",
+"science_concept": "",
+"meaning": "What will you do if what you stored turns dark and rots away?"
+},
+"arutpa:T158:403": {
+"id": "arutpa:T158:403",
+"label": "L",
+"science_concept": "flowing water cannot be restrained in one place",
+"meaning": "Water flows and refuses to stay in one place; how will you protect it?"
+},
+"arutpa:T158:404": {
+"id": "arutpa:T158:404",
+"label": "N",
+"science_concept": "",
+"meaning": "What will you do if enemies violently uproot and plunder your wealth?"
+},
+"arutpa:T158:405": {
+"id": "arutpa:T158:405",
+"label": "L",
+"science_concept": "wasp stings causing severe pain",
+"meaning": "What will you do if black and red wasps sting your hands and feet?"
+},
+"arutpa:T158:406": {
+"id": "arutpa:T158:406",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral warning about death and the loss of wealth and physical body."
+},
+"arutpa:T158:407": {
+"id": "arutpa:T158:407",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual advice on overcoming ego and spiritual obstacles."
+},
+"arutpa:T158:408": {
+"id": "arutpa:T158:408",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical reflection on desire, stinginess, and ephemeral life."
+},
+"arutpa:T158:409": {
+"id": "arutpa:T158:409",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplation on the loss of worldly comforts and human worries."
+},
+"arutpa:T158:410": {
+"id": "arutpa:T158:410",
+"label": "N",
+"science_concept": "",
+"meaning": "Observation on how crowds of people disperse quickly over a few days."
+},
+"arutpa:T158:411": {
+"id": "arutpa:T158:411",
+"label": "N",
+"science_concept": "",
+"meaning": "Reference to Valluvar's verse comparing life to an assembly dispersing after a play."
+},
+"arutpa:T158:412": {
+"id": "arutpa:T158:412",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflections on mortality, time passing, and the fear of death."
+},
+"arutpa:T158:413": {
+"id": "arutpa:T158:413",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical query regarding alchemy and the illusion of material wealth."
+},
+"arutpa:T158:414": {
+"id": "arutpa:T158:414",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual inquiry into detachment from worldly attachment and alchemy."
+},
+"arutpa:T158:415": {
+"id": "arutpa:T158:415",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplation on food, bodily sustenance, and fleeting material things."
+},
+"arutpa:T158:416": {
+"id": "arutpa:T158:416",
+"label": "N",
+"science_concept": "",
+"meaning": "Commentary on the illusion of worldly attachment and gold."
+},
+"arutpa:T158:417": {
+"id": "arutpa:T158:417",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflections on whether tiny living beings require temporary worldly riches."
+},
+"arutpa:T158:418": {
+"id": "arutpa:T158:418",
+"label": "N",
+"science_concept": "",
+"meaning": "Kings who desired land ultimately perish and merge with the earth."
+},
+"arutpa:T158:419": {
+"id": "arutpa:T158:419",
+"label": "N",
+"science_concept": "",
+"meaning": "Dead bodies buried in fields do not remain in the homes of those who claimed the land."
+},
+"arutpa:T158:420": {
+"id": "arutpa:T158:420",
+"label": "N",
+"science_concept": "",
+"meaning": "Can anyone take even a handful of earth with them when the time comes to ascend to heaven?"
+},
+"arutpa:T158:421": {
+"id": "arutpa:T158:421",
+"label": "N",
+"science_concept": "",
+"meaning": "One person claimed ownership, then another did; do you not realize the truth of this world?"
+},
+"arutpa:T158:422": {
+"id": "arutpa:T158:422",
+"label": "N",
+"science_concept": "",
+"meaning": "You consider this earthly land you occupy as your permanent property."
+},
+"arutpa:T158:423": {
+"id": "arutpa:T158:423",
+"label": "N",
+"science_concept": "",
+"meaning": "You struggle for earthly land, but desiring heavenly realms would be wondrous."
+},
+"arutpa:T158:424": {
+"id": "arutpa:T158:424",
+"label": "N",
+"science_concept": "",
+"meaning": "You stand in space, yet fail to realize that the earth you claim also hangs in space."
+},
+"arutpa:T158:425": {
+"id": "arutpa:T158:425",
+"label": "N",
+"science_concept": "",
+"meaning": "Even children scold if you offer mere dirt, yet you rejoice in acquiring earthly land."
+},
+"arutpa:T158:426": {
+"id": "arutpa:T158:426",
+"label": "N",
+"science_concept": "",
+"meaning": "I spoke of ultimate liberation (house), but you mistook it for an earthly house."
+},
+"arutpa:T158:427": {
+"id": "arutpa:T158:427",
+"label": "N",
+"science_concept": "",
+"meaning": "Do you not see all houses made of clay and wood inevitably destroyed?"
+},
+"arutpa:T158:428": {
+"id": "arutpa:T158:428",
+"label": "N",
+"science_concept": "",
+"meaning": "Have you not witnessed grand mansions and powerful kings ruined over time?"
+},
+"arutpa:T158:429": {
+"id": "arutpa:T158:429",
+"label": "N",
+"science_concept": "",
+"meaning": "You hope to ascend higher, but what becomes of your worldly desires when death arrives?"
+},
+"arutpa:T158:430": {
+"id": "arutpa:T158:430",
+"label": "N",
+"science_concept": "",
+"meaning": "Questions about divine will and human desires regarding the earth."
+},
+"arutpa:T158:431": {
+"id": "arutpa:T158:431",
+"label": "N",
+"science_concept": "",
+"meaning": "Expresses wonder at divine attachment to insignificant things like a blade of grass."
+},
+"arutpa:T158:432": {
+"id": "arutpa:T158:432",
+"label": "N",
+"science_concept": "",
+"meaning": "Uses the metaphor of oceans to describe sins and anger."
+},
+"arutpa:T158:433": {
+"id": "arutpa:T158:433",
+"label": "N",
+"science_concept": "",
+"meaning": "Discusses the ethics of anger when it is effective or ineffective."
+},
+"arutpa:T158:434": {
+"id": "arutpa:T158:434",
+"label": "N",
+"science_concept": "",
+"meaning": "Advises guarding oneself by controlling anger following moral teachings."
+},
+"arutpa:T158:435": {
+"id": "arutpa:T158:435",
+"label": "O",
+"science_concept": "earth bears those who dig it",
+"meaning": "Like the earth that bears those who dig it, you failed to understand."
+},
+"arutpa:T158:436": {
+"id": "arutpa:T158:436",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflects on exposing oneself while trying to know critics."
+},
+"arutpa:T158:437": {
+"id": "arutpa:T158:437",
+"label": "N",
+"science_concept": "",
+"meaning": "States that one prone to unmitigated anger cannot attain spiritual austerity."
+},
+"arutpa:T158:438": {
+"id": "arutpa:T158:438",
+"label": "N",
+"science_concept": "",
+"meaning": "Questions where anger belongs if divine justice acts according to karma."
+},
+"arutpa:T158:439": {
+"id": "arutpa:T158:439",
+"label": "N",
+"science_concept": "",
+"meaning": "Asks what benefit is gained by being angry at those who cause harm."
+},
+"arutpa:T158:440": {
+"id": "arutpa:T158:440",
+"label": "N",
+"science_concept": "",
+"meaning": "Notes the failure to practice the supreme virtue of non-killing praised by the wise."
+},
+"arutpa:T158:441": {
+"id": "arutpa:T158:441",
+"label": "N",
+"science_concept": "",
+"meaning": "Reprimands the foolish for lacking love and compassion towards living beings."
+},
+"arutpa:T158:442": {
+"id": "arutpa:T158:442",
+"label": "N",
+"science_concept": "",
+"meaning": "Moral and spiritual reflection on purity and truth."
+},
+"arutpa:T158:443": {
+"id": "arutpa:T158:443",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional verse regarding the Lord holding a deer."
+},
+"arutpa:T158:444": {
+"id": "arutpa:T158:444",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual critique of habituation to sins."
+},
+"arutpa:T158:445": {
+"id": "arutpa:T158:445",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical observation on worldly illusions and desires."
+},
+"arutpa:T158:446": {
+"id": "arutpa:T158:446",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplation on the impermanence of youth."
+},
+"arutpa:T158:447": {
+"id": "arutpa:T158:447",
+"label": "N",
+"science_concept": "",
+"meaning": "Observation on aging and the passing of the elderly."
+},
+"arutpa:T158:448": {
+"id": "arutpa:T158:448",
+"label": "L",
+"science_concept": "physical decline in old age",
+"meaning": "Observing elderly people walking bent with a stick due to bodily decline."
+},
+"arutpa:T158:449": {
+"id": "arutpa:T158:449",
+"label": "L",
+"science_concept": "physical decline in old age",
+"meaning": "Observing frail elderly walking slowly behind their children."
+},
+"arutpa:T158:450": {
+"id": "arutpa:T158:450",
+"label": "L",
+"science_concept": "mortality and human decomposition",
+"meaning": "Observing the aged facing death, burial grounds, and decaying bodies."
+},
+"arutpa:T158:452": {
+"id": "arutpa:T158:452",
+"label": "L",
+"science_concept": "aging and bodily frailty",
+"meaning": "Observing an old person weakening as death approaches."
+},
+"arutpa:T158:453": {
+"id": "arutpa:T158:453",
+"label": "L",
+"science_concept": "diseases and throat ailments",
+"meaning": "Observing severe throat diseases affecting the body."
+},
+"arutpa:T158:454": {
+"id": "arutpa:T158:454",
+"label": "L",
+"science_concept": "degenerative diseases like leprosy",
+"meaning": "Observing severe conditions causing deformities in hands and legs."
+},
+"arutpa:T158:455": {
+"id": "arutpa:T158:455",
+"label": "N",
+"science_concept": "",
+"meaning": "Pleading with diseases and ailments to leave the afflicted."
+},
+"arutpa:T158:456": {
+"id": "arutpa:T158:456",
+"label": "N",
+"science_concept": "",
+"meaning": "Addressing the frailty of the body and impending death."
+},
+"arutpa:T158:457": {
+"id": "arutpa:T158:457",
+"label": "N",
+"science_concept": "",
+"meaning": "Questioning why mental and physical humors like wind and bile afflict people."
+},
+"arutpa:T158:458": {
+"id": "arutpa:T158:458",
+"label": "N",
+"science_concept": "",
+"meaning": "Listing various physical infirmities of the hands, legs, eyes, and body."
+},
+"arutpa:T158:459": {
+"id": "arutpa:T158:459",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflecting on paralysis and other debilitating bodily conditions."
+},
+"arutpa:T158:460": {
+"id": "arutpa:T158:460",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplating the fleeting nature of youth amidst countless illnesses."
+},
+"arutpa:T158:461": {
+"id": "arutpa:T158:461",
+"label": "N",
+"science_concept": "",
+"meaning": "Decrying the delusion of treating the transient body as permanent."
+},
+"arutpa:T158:462": {
+"id": "arutpa:T158:462",
+"label": "N",
+"science_concept": "",
+"meaning": "Mourning death while lamenting human attachment to worldly existence."
+},
+"arutpa:T158:463": {
+"id": "arutpa:T158:463",
+"label": "N",
+"science_concept": "",
+"meaning": "Witnessing funeral processions and the grief of surviving spouses."
+},
+"arutpa:T158:464": {
+"id": "arutpa:T158:464",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflecting on death and the rituals following cremation."
+},
+"arutpa:T158:465": {
+"id": "arutpa:T158:465",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplating the uncertainty of life from one day to the next."
+},
+"arutpa:T158:466": {
+"id": "arutpa:T158:466",
+"label": "N",
+"science_concept": "",
+"meaning": "Forgetting the truth that sleep resembles death."
+},
+"arutpa:T158:467": {
+"id": "arutpa:T158:467",
+"label": "N",
+"science_concept": "",
+"meaning": "You forgot the profound saying that someone alive yesterday is gone today."
+},
+"arutpa:T158:468": {
+"id": "arutpa:T158:468",
+"label": "N",
+"science_concept": "",
+"meaning": "You forgot the endless cycle of birth and death."
+},
+"arutpa:T158:470": {
+"id": "arutpa:T158:470",
+"label": "N",
+"science_concept": "",
+"meaning": "You forgot the golden words on the five senses and worldly delusion."
+},
+"arutpa:T158:471": {
+"id": "arutpa:T158:471",
+"label": "O",
+"science_concept": "water poured to relieve hiccups",
+"meaning": "Neighbors ask to pour water when hiccups rise, yet you do not melt in empathy."
+},
+"arutpa:T158:472": {
+"id": "arutpa:T158:472",
+"label": "O",
+"science_concept": "tears and departure of breath compared to ghee on fire",
+"meaning": "Like ghee poured on fire, relatives weep as tears flow and life departs the body."
+},
+"arutpa:T158:473": {
+"id": "arutpa:T158:473",
+"label": "N",
+"science_concept": "",
+"meaning": "As the sun traverses the sky, our days pass while you do not tremble."
+},
+"arutpa:T158:474": {
+"id": "arutpa:T158:474",
+"label": "N",
+"science_concept": "",
+"meaning": "You treat hours as days and do not worry about the fleeting time."
+},
+"arutpa:T158:475": {
+"id": "arutpa:T158:475",
+"label": "N",
+"science_concept": "",
+"meaning": "Even after hearing that people standing or sitting suddenly collapse and die, you do not learn."
+},
+"arutpa:T158:476": {
+"id": "arutpa:T158:476",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that someone ate, sneezed, and immediately gave up their life, you feel no shame."
+},
+"arutpa:T158:477": {
+"id": "arutpa:T158:477",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that people ate, lay down, slept, and entered eternal sleep, you do not hesitate."
+},
+"arutpa:T158:478": {
+"id": "arutpa:T158:478",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that those who married yesterday turned to ash today, you do not detach."
+},
+"arutpa:T158:479": {
+"id": "arutpa:T158:479",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that those who rode chariots and walked streets have reached the heavenly world, you do not realize."
+},
+"arutpa:T158:480": {
+"id": "arutpa:T158:480",
+"label": "N",
+"science_concept": "",
+"meaning": "Lament over human mortality and death without grasping its certainty."
+},
+"arutpa:T158:481": {
+"id": "arutpa:T158:481",
+"label": "L",
+"science_concept": "embryonic development and miscarriage",
+"meaning": "Unmatured embryos disintegrate and dissolve inside the womb."
+},
+"arutpa:T158:482": {
+"id": "arutpa:T158:482",
+"label": "L",
+"science_concept": "stages of fetal development across months",
+"meaning": "Fetuses perish during various months of gestation."
+},
+"arutpa:T158:483": {
+"id": "arutpa:T158:483",
+"label": "L",
+"science_concept": "birth trauma and infant mortality",
+"meaning": "Lives are lost in the painful squeeze of the womb during birth."
+},
+"arutpa:T158:484": {
+"id": "arutpa:T158:484",
+"label": "L",
+"science_concept": "sudden infant death",
+"meaning": "Infants instantly become corpses, causing grief."
+},
+"arutpa:T158:485": {
+"id": "arutpa:T158:485",
+"label": "L",
+"science_concept": "infant mortality",
+"meaning": "Death claims children even while nursing at their mother's breast."
+},
+"arutpa:T158:486": {
+"id": "arutpa:T158:486",
+"label": "L",
+"science_concept": "childhood mortality",
+"meaning": "Life departs suddenly while children play amidst parental joy."
+},
+"arutpa:T158:487": {
+"id": "arutpa:T158:487",
+"label": "L",
+"science_concept": "child mortality",
+"meaning": "Death takes children away during their school years."
+},
+"arutpa:T158:488": {
+"id": "arutpa:T158:488",
+"label": "L",
+"science_concept": "youth mortality",
+"meaning": "Death claims youths while people grieve their passing."
+},
+"arutpa:T158:489": {
+"id": "arutpa:T158:489",
+"label": "L",
+"science_concept": "early adult mortality",
+"meaning": "Grooms die unexpectedly around the time of their marriage."
+},
+"arutpa:T158:490": {
+"id": "arutpa:T158:490",
+"label": "L",
+"science_concept": "adult mortality",
+"meaning": "People are carried away on biers while living with spouses."
+},
+"arutpa:T158:491": {
+"id": "arutpa:T158:491",
+"label": "N",
+"science_concept": "",
+"meaning": "Failure to realize that death can strike at any unknown moment."
+},
+"arutpa:T158:492": {
+"id": "arutpa:T158:492",
+"label": "O",
+"science_concept": "letters written on water vanish quickly",
+"meaning": "Comparing the fragility of the human body to writing on water."
+},
+"arutpa:T158:493": {
+"id": "arutpa:T158:493",
+"label": "N",
+"science_concept": "",
+"meaning": "Describing the body as a nine-gated vessel and the burden of births."
+},
+"arutpa:T158:494": {
+"id": "arutpa:T158:494",
+"label": "N",
+"science_concept": "",
+"meaning": "Describing the physical body as an earthen pot and bag of foul substances."
+},
+"arutpa:T158:495": {
+"id": "arutpa:T158:495",
+"label": "O",
+"science_concept": "lightning flash as transient phenomenon",
+"meaning": "Describing the body as transient illusion, comparing it to lightning."
+},
+"arutpa:T158:496": {
+"id": "arutpa:T158:496",
+"label": "N",
+"science_concept": "",
+"meaning": "People desire worldly auspiciousness instead of pondering higher truths."
+},
+"arutpa:T158:497": {
+"id": "arutpa:T158:497",
+"label": "N",
+"science_concept": "",
+"meaning": "You struggle to nourish this body while forgetting all your learning."
+},
+"arutpa:T158:498": {
+"id": "arutpa:T158:498",
+"label": "N",
+"science_concept": "",
+"meaning": "Even hearing of the body's dissolution, you seek worldly attachments."
+},
+"arutpa:T158:499": {
+"id": "arutpa:T158:499",
+"label": "N",
+"science_concept": "",
+"meaning": "Seeing wood burn to ash, people still rush to wear fine white garments."
+},
+"arutpa:T158:500": {
+"id": "arutpa:T158:500",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that life's thread slips away, you still cling to bodily ornaments."
+},
+"arutpa:T158:501": {
+"id": "arutpa:T158:501",
+"label": "N",
+"science_concept": "",
+"meaning": "Hearing that ear ornaments will be removed at death, you still seek jewelry."
+},
+"arutpa:T158:502": {
+"id": "arutpa:T158:502",
+"label": "N",
+"science_concept": "",
+"meaning": "Smelling the foul stench of burning flesh, you still pursue pleasant fragrances."
+},
+"arutpa:T158:503": {
+"id": "arutpa:T158:503",
+"label": "N",
+"science_concept": "",
+"meaning": "Seeing sweet food turn into foul waste, you still crave delicious tastes."
+},
+"arutpa:T158:504": {
+"id": "arutpa:T158:504",
+"label": "N",
+"science_concept": "",
+"meaning": "Ethical and spiritual reflection on human attachment and mortality in a desolate setting."
+},
+"arutpa:T158:505": {
+"id": "arutpa:T158:505",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual warning about the illusory nature of the world versus spiritual reality."
+},
+"arutpa:T158:506": {
+"id": "arutpa:T158:506",
+"label": "N",
+"science_concept": "",
+"meaning": "Critique of fleeting worldly life and attachment to false domestic values."
+},
+"arutpa:T158:507": {
+"id": "arutpa:T158:507",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflection on filial neglect and the endless chain of physical birth."
+},
+"arutpa:T158:508": {
+"id": "arutpa:T158:508",
+"label": "N",
+"science_concept": "",
+"meaning": "Questioning who can truly protect one against the consequences of past karma and pain."
+},
+"arutpa:T158:509": {
+"id": "arutpa:T158:509",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical query on who can ward off destined hardships and death."
+},
+"arutpa:T158:510": {
+"id": "arutpa:T158:510",
+"label": "N",
+"science_concept": "",
+"meaning": "Comparison of worldly food to the supreme divine grace."
+},
+"arutpa:T158:511": {
+"id": "arutpa:T158:511",
+"label": "N",
+"science_concept": "",
+"meaning": "Questioning the ultimate utility of family attachments and worldly relations after death."
+},
+"arutpa:T158:512": {
+"id": "arutpa:T158:512",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflection on whether mourning relatives will share the suffering in hell."
+},
+"arutpa:T158:513": {
+"id": "arutpa:T158:513",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplation on the true spiritual companion versus transient human relations."
+},
+"arutpa:T158:514": {
+"id": "arutpa:T158:514",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical verses on the individual soul's relationship with divine law and worldly existence."
+},
+"arutpa:T158:515": {
+"id": "arutpa:T158:515",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflection on the countless births, mothers, homes, and bodies the soul has traversed."
+},
+"arutpa:T158:516": {
+"id": "arutpa:T158:516",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical reflection on how different souls are ruled and lost in various ways."
+},
+"arutpa:T158:517": {
+"id": "arutpa:T158:517",
+"label": "N",
+"science_concept": "",
+"meaning": "Advice on understanding the truth and letting go of worldly attachments today."
+},
+"arutpa:T158:518": {
+"id": "arutpa:T158:518",
+"label": "N",
+"science_concept": "",
+"meaning": "Questioning who mothers, wives, sons, and relatives truly are to one's self."
+},
+"arutpa:T158:519": {
+"id": "arutpa:T158:519",
+"label": "N",
+"science_concept": "",
+"meaning": "When Yama arrives to take your life, will loved ones keep it safe?"
+},
+"arutpa:T158:520": {
+"id": "arutpa:T158:520",
+"label": "N",
+"science_concept": "",
+"meaning": "Contemplation on paternal lineage and ancestral succession."
+},
+"arutpa:T158:521": {
+"id": "arutpa:T158:521",
+"label": "N",
+"science_concept": "",
+"meaning": "Ethical and relational question regarding the status of wives and ownership."
+},
+"arutpa:T158:522": {
+"id": "arutpa:T158:522",
+"label": "N",
+"science_concept": "",
+"meaning": "Warning against internal enemies that obstruct the path of righteous friendship."
+},
+"arutpa:T158:523": {
+"id": "arutpa:T158:523",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflecting on divine creation and the attachment of souls to worldly delusion."
+},
+"arutpa:T158:524": {
+"id": "arutpa:T158:524",
+"label": "N",
+"science_concept": "",
+"meaning": "Questioning why worldly bonds persist if one claims freedom from divine bondage."
+},
+"arutpa:T158:525": {
+"id": "arutpa:T158:525",
+"label": "N",
+"science_concept": "",
+"meaning": "Reproaching oneself for forgetting the golden teaching about Shiva helping the detached."
+},
+"arutpa:T158:527": {
+"id": "arutpa:T158:527",
+"label": "N",
+"science_concept": "",
+"meaning": "Mistaking transient illusions that arise and vanish like primal sound for reality."
+},
+"arutpa:T158:528": {
+"id": "arutpa:T158:528",
+"label": "N",
+"science_concept": "",
+"meaning": "Believing the deceptive drama where brass is passed off as gold."
+},
+"arutpa:T158:529": {
+"id": "arutpa:T158:529",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical discourse on illusory worldly life created by divine play."
+},
+"arutpa:T158:530": {
+"id": "arutpa:T158:530",
+"label": "N",
+"science_concept": "",
+"meaning": "Ensnared within the threefold delusion of maya, darkness, and inertia."
+},
+"arutpa:T158:531": {
+"id": "arutpa:T158:531",
+"label": "O",
+"science_concept": "mirage appearing as water",
+"meaning": "Rejoicing in the illusory mirage as if it were real water."
+},
+"arutpa:T158:532": {
+"id": "arutpa:T158:532",
+"label": "N",
+"science_concept": "",
+"meaning": "Entangled in the worldly bonds that are merely the play of the divine mother."
+},
+"arutpa:T158:533": {
+"id": "arutpa:T158:533",
+"label": "N",
+"science_concept": "",
+"meaning": "Mistaking transient worldly illusions for permanent reality."
+},
+"arutpa:T158:534": {
+"id": "arutpa:T158:534",
+"label": "N",
+"science_concept": "",
+"meaning": "Being captivated by hearing tales of cosmic sport and illusion."
+},
+"arutpa:T158:535": {
+"id": "arutpa:T158:535",
+"label": "N",
+"science_concept": "",
+"meaning": "Wasting time and falsely treating fleeting clouds or illusions as real."
+},
+"arutpa:T158:536": {
+"id": "arutpa:T158:536",
+"label": "N",
+"science_concept": "",
+"meaning": "Wandering blindly in deep darkness, failing to perceive any truth."
+},
+"arutpa:T158:537": {
+"id": "arutpa:T158:537",
+"label": "N",
+"science_concept": "",
+"meaning": "Mistaking the dark night for day, ignoring the wisdom of elders."
+},
+"arutpa:T158:538": {
+"id": "arutpa:T158:538",
+"label": "N",
+"science_concept": "",
+"meaning": "Ignorant of the body's falsity and trapped in delusions and desires."
+},
+"arutpa:T158:539": {
+"id": "arutpa:T158:539",
+"label": "N",
+"science_concept": "",
+"meaning": "Acting foolishly like someone searching for flowers to adorn a burning crown."
+},
+"arutpa:T158:540": {
+"id": "arutpa:T158:540",
+"label": "N",
+"science_concept": "",
+"meaning": "Ignoring that life changes in an instant and foolishly falling to ruin."
+},
+"arutpa:T158:541": {
+"id": "arutpa:T158:541",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical verse on spiritual delusion and ignorance, unrelated to science."
+},
+"arutpa:T158:542": {
+"id": "arutpa:T158:542",
+"label": "O",
+"science_concept": "horns of a desert hare",
+"meaning": "Comparison to a non-existent hare's horn to denote impossibility."
+},
+"arutpa:T158:543": {
+"id": "arutpa:T158:543",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical discourse on worldly illusions and human behavior."
+},
+"arutpa:T158:544": {
+"id": "arutpa:T158:544",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical reflection on the impermanence of worldly phenomena."
+},
+"arutpa:T158:545": {
+"id": "arutpa:T158:545",
+"label": "L",
+"science_concept": "universal deluge floods",
+"meaning": "Reference to the cosmic deluge flood that submerges the world."
+},
+"arutpa:T158:546": {
+"id": "arutpa:T158:546",
+"label": "A",
+"science_concept": "multiple cosmological worlds and physical instruments",
+"meaning": "Reference to many worlds, bodily experiences, and sensory instruments in a cosmic sense."
+},
+"arutpa:T158:547": {
+"id": "arutpa:T158:547",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical verse on repetitive human experiences and actions."
+},
+"arutpa:T158:548": {
+"id": "arutpa:T158:548",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical critique of repetitive worldly conduct and ignorance."
+},
+"arutpa:T158:549": {
+"id": "arutpa:T158:549",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical commentary on speech and foolish behavior."
+},
+"arutpa:T158:550": {
+"id": "arutpa:T158:550",
+"label": "L",
+"science_concept": "flow of past, present, and future time",
+"meaning": "Observing the continuous passage of time from past and present into the future."
+},
+"arutpa:T158:551": {
+"id": "arutpa:T158:551",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual advice urging the realization of divine grace before time runs out."
+},
+"arutpa:T158:552": {
+"id": "arutpa:T158:552",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual doctrine explaining human ruin caused by innate egoism (anava)."
+},
+"arutpa:T158:553": {
+"id": "arutpa:T158:553",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical inquiry into identity and the self; no natural science content."
+},
+"arutpa:T158:554": {
+"id": "arutpa:T158:554",
+"label": "N",
+"science_concept": "",
+"meaning": "Query regarding bodily existence and ego; no natural science content."
+},
+"arutpa:T158:555": {
+"id": "arutpa:T158:555",
+"label": "N",
+"science_concept": "",
+"meaning": "Suffering and endurance during hardship; no natural science content."
+},
+"arutpa:T158:556": {
+"id": "arutpa:T158:556",
+"label": "N",
+"science_concept": "",
+"meaning": "Spatial separation between 'you' and 'me'; spiritual discourse."
+},
+"arutpa:T158:557": {
+"id": "arutpa:T158:557",
+"label": "N",
+"science_concept": "",
+"meaning": "Spiritual paradox of taking one thing and seeing another."
+},
+"arutpa:T158:558": {
+"id": "arutpa:T158:558",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional intoxication and forgetfulness; no natural science content."
+},
+"arutpa:T158:559": {
+"id": "arutpa:T158:559",
+"label": "N",
+"science_concept": "",
+"meaning": "Attachment and sorrow in relationship with the divine."
+},
+"arutpa:T158:560": {
+"id": "arutpa:T158:560",
+"label": "N",
+"science_concept": "",
+"meaning": "Divine compulsion and human reluctance; spiritual discourse."
+},
+"arutpa:T158:561": {
+"id": "arutpa:T158:561",
+"label": "N",
+"science_concept": "",
+"meaning": "Being caught in the divine machinations and movements."
+},
+"arutpa:T158:562": {
+"id": "arutpa:T158:562",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflecting divine action in human movement; devotional metaphor."
+},
+"arutpa:T158:563": {
+"id": "arutpa:T158:563",
+"label": "O",
+"science_concept": "bucket and rope in a deep well",
+"meaning": "Comparing oneself to a water pot and rope in a cosmic well."
+},
+"arutpa:T158:564": {
+"id": "arutpa:T158:564",
+"label": "O",
+"science_concept": "straw caught in an ocean whirlpool",
+"meaning": "Comparing oneself to a blade of grass tossed in a whirlpool of the sea."
+},
+"arutpa:T158:565": {
+"id": "arutpa:T158:565",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical verse expressing devotion and self-surrender."
+},
+"arutpa:T158:566": {
+"id": "arutpa:T158:566",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional verse using metaphoric imagery of threads and looms."
+},
+"arutpa:T158:567": {
+"id": "arutpa:T158:567",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional verse about the relationship between the devotee and the divine."
+},
+"arutpa:T158:568": {
+"id": "arutpa:T158:568",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotional comparison using the shadow of a soaring kite."
+},
+"arutpa:T158:569": {
+"id": "arutpa:T158:569",
+"label": "N",
+"science_concept": "",
+"meaning": "Verse discussing devotion, slander, and surrender to the divine."
+},
+"arutpa:T158:570": {
+"id": "arutpa:T158:570",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional verse on divine grace and worship by celestials."
+},
+"arutpa:T158:571": {
+"id": "arutpa:T158:571",
+"label": "M",
+"science_concept": "",
+"meaning": "Describing the supreme light as a fruit held in the hand."
+},
+"arutpa:T158:572": {
+"id": "arutpa:T158:572",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional lament about the mind's restlessness and divine control."
+},
+"arutpa:T158:573": {
+"id": "arutpa:T158:573",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotional hyperbole mentioning the submarine fire of the ocean."
+},
+"arutpa:T158:574": {
+"id": "arutpa:T158:574",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotional hyperbole about controlling the sun."
+},
+"arutpa:T158:575": {
+"id": "arutpa:T158:575",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotional hyperbole about gathering the three worlds in a garment."
+},
+"arutpa:T158:576": {
+"id": "arutpa:T158:576",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical reflection on lands, time, directions, and worldly conventions."
+},
+"arutpa:T158:577": {
+"id": "arutpa:T158:577",
+"label": "N",
+"science_concept": "",
+"meaning": "Mentions clouds among various concepts of enjoyment, senses, yoga, and theories."
+},
+"arutpa:T158:578": {
+"id": "arutpa:T158:578",
+"label": "N",
+"science_concept": "",
+"meaning": "Lists sky, oceans, mountains, earth, flesh, and relationships."
+},
+"arutpa:T158:579": {
+"id": "arutpa:T158:579",
+"label": "N",
+"science_concept": "",
+"meaning": "Discusses caste, life, status, worldly justice, and karma."
+},
+"arutpa:T158:581": {
+"id": "arutpa:T158:581",
+"label": "N",
+"science_concept": "",
+"meaning": "Pondering the thoughts of worldly people arising and moving within divine memory."
+},
+"arutpa:T158:582": {
+"id": "arutpa:T158:582",
+"label": "N",
+"science_concept": "",
+"meaning": "Some claim Brahma exists as the creator, ignorant of divine actions."
+},
+"arutpa:T158:583": {
+"id": "arutpa:T158:583",
+"label": "N",
+"science_concept": "",
+"meaning": "Expressing confusion as the divine alternately affirms and denies things."
+},
+"arutpa:T158:584": {
+"id": "arutpa:T158:584",
+"label": "N",
+"science_concept": "",
+"meaning": "Seeking eternal birthless bliss while facing contradictory divine responses."
+},
+"arutpa:T158:585": {
+"id": "arutpa:T158:585",
+"label": "N",
+"science_concept": "",
+"meaning": "Complaining about divine actions causing evil and erratic behavior."
+},
+"arutpa:T158:586": {
+"id": "arutpa:T158:586",
+"label": "N",
+"science_concept": "",
+"meaning": "Acknowledging creation and destruction come from the divine, lamenting personal suffering."
+},
+"arutpa:T158:587": {
+"id": "arutpa:T158:587",
+"label": "N",
+"science_concept": "",
+"meaning": "Expressing distress over physical form, worldly ties, and relationships."
+},
+"arutpa:T158:588": {
+"id": "arutpa:T158:588",
+"label": "N",
+"science_concept": "",
+"meaning": "Despairing that even the divine companion cannot alleviate bodily and worldly distress."
+},
+"arutpa:T158:589": {
+"id": "arutpa:T158:589",
+"label": "N",
+"science_concept": "",
+"meaning": "Lamenting that desires lead to sorrow and birth is the ultimate suffering."
+},
+"arutpa:T158:590": {
+"id": "arutpa:T158:590",
+"label": "N",
+"science_concept": "",
+"meaning": "Lamenting the immense suffering of worldly life and feeling bewildered."
+},
+"arutpa:T158:591": {
+"id": "arutpa:T158:591",
+"label": "N",
+"science_concept": "",
+"meaning": "Expressing continuous suffering that cannot be fully voiced even if the entire body had mouths."
+},
+"arutpa:T158:592": {
+"id": "arutpa:T158:592",
+"label": "N",
+"science_concept": "",
+"meaning": "Wondering what to do and lamenting how the divine watched all this suffering and walked away."
+},
+"arutpa:T158:593": {
+"id": "arutpa:T158:593",
+"label": "N",
+"science_concept": "",
+"meaning": "Asking what happens when a fragile pot of life breaks, wandering and complaining that the divine did not protect one."
+},
+"arutpa:T158:594": {
+"id": "arutpa:T158:594",
+"label": "N",
+"science_concept": "",
+"meaning": "Pondering when the messengers of death (Yama) will be sent, whether tomorrow or today."
+},
+"arutpa:T158:595": {
+"id": "arutpa:T158:595",
+"label": "N",
+"science_concept": "",
+"meaning": "The messengers of death will not listen even if we plead, nor will they turn back if we refuse to go."
+},
+"arutpa:T158:596": {
+"id": "arutpa:T158:596",
+"label": "N",
+"science_concept": "",
+"meaning": "Pleas for sweet words or staying a bit longer will not be accepted by death."
+},
+"arutpa:T158:597": {
+"id": "arutpa:T158:597",
+"label": "N",
+"science_concept": "",
+"meaning": "If Brahma, Vishnu and others do not speak up, our own pleas will not prevail against death."
+},
+"arutpa:T158:598": {
+"id": "arutpa:T158:598",
+"label": "N",
+"science_concept": "",
+"meaning": "Urging to seek the grace of the primal being before that fatal day arrives."
+},
+"arutpa:T158:599": {
+"id": "arutpa:T158:599",
+"label": "N",
+"science_concept": "",
+"meaning": "Lamenting that despite hearing this advice, the person ignores it and continues in worldly ways."
+},
+"arutpa:T158:600": {
+"id": "arutpa:T158:600",
+"label": "N",
+"science_concept": "",
+"meaning": "Speaking of fleeting worldly relationships and attachments that replace enduring bonds."
+},
+"arutpa:T158:601": {
+"id": "arutpa:T158:601",
+"label": "M",
+"science_concept": "",
+"meaning": "Describing Tamasa (darkness/inertia) as ignorance, veiling, and an ocean of delusion."
+},
+"arutpa:T158:602": {
+"id": "arutpa:T158:602",
+"label": "N",
+"science_concept": "",
+"meaning": "Expressed as falsehood or truth; no natural-science content."
+},
+"arutpa:T158:603": {
+"id": "arutpa:T158:603",
+"label": "N",
+"science_concept": "",
+"meaning": "Relates to enemies and companionship; no natural-science content."
+},
+"arutpa:T158:604": {
+"id": "arutpa:T158:604",
+"label": "N",
+"science_concept": "",
+"meaning": "Refers to Adi Shesha and Brahma; no natural-science content."
+},
+"arutpa:T158:605": {
+"id": "arutpa:T158:605",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional plea regarding divine actions; no natural-science content."
+},
+"arutpa:T158:606": {
+"id": "arutpa:T158:606",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional suffering and impurities; no natural-science content."
+},
+"arutpa:T158:608": {
+"id": "arutpa:T158:608",
+"label": "N",
+"science_concept": "",
+"meaning": "Praising divine glory; no natural-science content."
+},
+"arutpa:T158:609": {
+"id": "arutpa:T158:609",
+"label": "M",
+"science_concept": "",
+"meaning": "When the mind subdues, all worlds subdue; mental control metaphor, no real physical scale."
+},
+"arutpa:T158:610": {
+"id": "arutpa:T158:610",
+"label": "N",
+"science_concept": "",
+"meaning": "Vedas praising divine grace; no natural-science content."
+},
+"arutpa:T158:611": {
+"id": "arutpa:T158:611",
+"label": "N",
+"science_concept": "",
+"meaning": "Mental absorption and heavenly state; no natural-science content."
+},
+"arutpa:T158:612": {
+"id": "arutpa:T158:612",
+"label": "N",
+"science_concept": "",
+"meaning": "Pleading for divine grace and abandonment of baseness."
+},
+"arutpa:T158:613": {
+"id": "arutpa:T158:613",
+"label": "N",
+"science_concept": "",
+"meaning": "Seeking true bliss and casting away flaws."
+},
+"arutpa:T158:614": {
+"id": "arutpa:T158:614",
+"label": "N",
+"science_concept": "",
+"meaning": "Distinguishing true bliss from ignorance and delusion."
+},
+"arutpa:T158:615": {
+"id": "arutpa:T158:615",
+"label": "N",
+"science_concept": "",
+"meaning": "Philosophical discussion on different kinds of happiness and actions."
+},
+"arutpa:T158:617": {
+"id": "arutpa:T158:617",
+"label": "N",
+"science_concept": "",
+"meaning": "Reflections on internal perception and external experiences of bliss."
+},
+"arutpa:T158:618": {
+"id": "arutpa:T158:618",
+"label": "N",
+"science_concept": "",
+"meaning": "Discourse on varying notions of bliss, including the void."
+},
+"arutpa:T158:619": {
+"id": "arutpa:T158:619",
+"label": "N",
+"science_concept": "",
+"meaning": "People in the wide ocean-girt world speak of false notions of happiness."
+},
+"arutpa:T158:620": {
+"id": "arutpa:T158:620",
+"label": "N",
+"science_concept": "",
+"meaning": "Transcending the elemental principles and philosophical categories."
+},
+"arutpa:T158:621": {
+"id": "arutpa:T158:621",
+"label": "N",
+"science_concept": "",
+"meaning": "A timeless, placeless state devoid of day and night, uniform within and without."
+},
+"arutpa:T158:622": {
+"id": "arutpa:T158:622",
+"label": "M",
+"science_concept": "",
+"meaning": "Bliss surrounding all like the heat of fire emanating from supreme Shiva."
+},
+"arutpa:T158:623": {
+"id": "arutpa:T158:623",
+"label": "N",
+"science_concept": "",
+"meaning": "Discussing what is required and what is impossible to achieve that state."
+},
+"arutpa:T158:624": {
+"id": "arutpa:T158:624",
+"label": "N",
+"science_concept": "",
+"meaning": "One must hold onto the feet of the detached one, which requires shedding attachments."
+},
+"arutpa:T158:625": {
+"id": "arutpa:T158:625",
+"label": "N",
+"science_concept": "",
+"meaning": "Worldly habits and afflictions must vanish for true freedom to arise."
+},
+"arutpa:T158:626": {
+"id": "arutpa:T158:626",
+"label": "N",
+"science_concept": "",
+"meaning": "Wisdom seeking divine grace to overcome the flaws of this worldly life."
+},
+"arutpa:T158:627": {
+"id": "arutpa:T158:627",
+"label": "N",
+"science_concept": "",
+"meaning": "Recognizing worldly pleasures as false through transient discrimination."
+},
+"arutpa:T158:628": {
+"id": "arutpa:T158:628",
+"label": "N",
+"science_concept": "",
+"meaning": "Advice on careful thought and discernment when meeting people."
+},
+"arutpa:T158:629": {
+"id": "arutpa:T158:629",
+"label": "N",
+"science_concept": "",
+"meaning": "Advice to avoid harmful assemblies and associate with righteous people."
+},
+"arutpa:T158:630": {
+"id": "arutpa:T158:630",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid associating with ignorant or deceitful people."
+},
+"arutpa:T158:631": {
+"id": "arutpa:T158:631",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not associate with erratic or argumentative people."
+},
+"arutpa:T158:632": {
+"id": "arutpa:T158:632",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who argue, cause confusion, or create division."
+},
+"arutpa:T158:633": {
+"id": "arutpa:T158:633",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who question sacred paths and true divinity."
+},
+"arutpa:T158:634": {
+"id": "arutpa:T158:634",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not associate with blasphemers who revile Shiva and equate minor deities."
+},
+"arutpa:T158:635": {
+"id": "arutpa:T158:635",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who deny divine presence in all things."
+},
+"arutpa:T158:636": {
+"id": "arutpa:T158:636",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who falsely claim individual identity is the ultimate Brahman."
+},
+"arutpa:T158:637": {
+"id": "arutpa:T158:637",
+"label": "N",
+"science_concept": "",
+"meaning": "Reject arrogant people who claim all knowledge originates solely from themselves."
+},
+"arutpa:T158:638": {
+"id": "arutpa:T158:638",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not associate with those who mistake transient things for the eternal reality."
+},
+"arutpa:T158:639": {
+"id": "arutpa:T158:639",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who mistake psychic powers or illusory forces for ultimate reality."
+},
+"arutpa:T158:640": {
+"id": "arutpa:T158:640",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who argue about karma, birth, and destiny as ultimate reality."
+},
+"arutpa:T158:641": {
+"id": "arutpa:T158:641",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who claim space, heaven, or yoga are the highest purpose."
+},
+"arutpa:T158:642": {
+"id": "arutpa:T158:642",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who worship earth, sky, fire/sun/moon, or women as supreme."
+},
+"arutpa:T158:643": {
+"id": "arutpa:T158:643",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid those who claim trees are deities and disregard true spiritual teachings."
+},
+"arutpa:T158:644": {
+"id": "arutpa:T158:644",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not associate with those who reject the power of ritual worship and devotion."
+},
+"arutpa:T158:645": {
+"id": "arutpa:T158:645",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid fools who dismiss sacred worship as vain and useless."
+},
+"arutpa:T158:646": {
+"id": "arutpa:T158:646",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not associate with those who obstruct the path of righteous spiritual leaders."
+},
+"arutpa:T158:647": {
+"id": "arutpa:T158:647",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid hypocrites who pretend to have righteous conduct inwardly while deceiving."
+},
+"arutpa:T158:648": {
+"id": "arutpa:T158:648",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not seek out or follow the delusional teachings of false, chaotic texts."
+},
+"arutpa:T158:649": {
+"id": "arutpa:T158:649",
+"label": "N",
+"science_concept": "",
+"meaning": "Avoid assemblies of those who do not follow the Shaivite path, no matter the wealth offered."
+},
+"arutpa:T158:650": {
+"id": "arutpa:T158:650",
+"label": "N",
+"science_concept": "",
+"meaning": "Treat those who do not practice the vow of non-killing as insignificant grass."
+},
+"arutpa:T158:651": {
+"id": "arutpa:T158:651",
+"label": "N",
+"science_concept": "",
+"meaning": "Do not even in dreams think of those who lack devotion to the Lord."
+},
+"arutpa:T158:652": {
+"id": "arutpa:T158:652",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotional praise describing God as embodiment of grace, life, and supreme bliss."
+},
+"arutpa:T158:653": {
+"id": "arutpa:T158:653",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotional acts and ornaments dedicated to the Lord."
+},
+"arutpa:T158:654": {
+"id": "arutpa:T158:654",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees stringing pure floral garlands for the Lord."
+},
+"arutpa:T158:655": {
+"id": "arutpa:T158:655",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees joyfully performing service in the garden for the Lord."
+},
+"arutpa:T158:656": {
+"id": "arutpa:T158:656",
+"label": "M",
+"science_concept": "",
+"meaning": "Devotees melting like wax in fire, smearing the temple floor with devotion."
+},
+"arutpa:T158:657": {
+"id": "arutpa:T158:657",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees lighting the temple, nurtured by the compassionate Lord like a mother."
+},
+"arutpa:T158:658": {
+"id": "arutpa:T158:658",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees performing lamp-lighting and rituals with love in the temple."
+},
+"arutpa:T158:659": {
+"id": "arutpa:T158:659",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees offering nectar to the loving devotees and engaging in daily pious acts."
+},
+"arutpa:T158:660": {
+"id": "arutpa:T158:660",
+"label": "M",
+"science_concept": "",
+"meaning": "Praising the Lord as honey, nectar, and Shiva, rejoicing with devotion."
+},
+"arutpa:T158:661": {
+"id": "arutpa:T158:661",
+"label": "M",
+"science_concept": "",
+"meaning": "Contemplating the Lord as king, ocean of grace, ruby, and mother."
+},
+"arutpa:T158:662": {
+"id": "arutpa:T158:662",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees praising with sweet words, shedding tears of joy from the heart."
+},
+"arutpa:T158:663": {
+"id": "arutpa:T158:663",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees rejoicing daily upon beholding the golden form of the Lord."
+},
+"arutpa:T158:664": {
+"id": "arutpa:T158:664",
+"label": "N",
+"science_concept": "",
+"meaning": "Devotees who praise and chant the sacred hymns of the three Tamil saints."
+},
+"arutpa:T158:665": {
+"id": "arutpa:T158:665",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who utter the sacred Tiruvachakam, a precious gem not kept in impurity."
+},
+"arutpa:T158:666": {
+"id": "arutpa:T158:666",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who sing the primordial sweet musical hymns praised by great people."
+},
+"arutpa:T158:667": {
+"id": "arutpa:T158:667",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who speak of and listen to the glories of our Lord who grants a good life."
+},
+"arutpa:T158:668": {
+"id": "arutpa:T158:668",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who lovingly explain the Vedas and Agamas starting from the Sama Veda."
+},
+"arutpa:T158:669": {
+"id": "arutpa:T158:669",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who perform Shiva worship, realizing Shiva is the supreme truth for those in Vedanta."
+},
+"arutpa:T158:670": {
+"id": "arutpa:T158:670",
+"label": "N",
+"science_concept": "",
+"meaning": "Those with deep devotion to Shiva, keeping the Lord in the temple of their good heart."
+},
+"arutpa:T158:671": {
+"id": "arutpa:T158:671",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who worship and abide in the five syllables of our Lord, which contain all five elements."
+},
+"arutpa:T158:672": {
+"id": "arutpa:T158:672",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who dedicate the sensory perceptions of their five senses to the sacred feet of our Lord."
+},
+"arutpa:T158:673": {
+"id": "arutpa:T158:673",
+"label": "N",
+"science_concept": "",
+"meaning": "Good people who surrender their souls as an offering to the meritorious Lord who removes suffering."
+},
+"arutpa:T158:674": {
+"id": "arutpa:T158:674",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who meditate deeply on the dancing feet of our Lord who performs cosmic activities."
+},
+"arutpa:T158:675": {
+"id": "arutpa:T158:675",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who follow the path of devotion to our Lord through pure waking and dreamless sleep states."
+},
+"arutpa:T158:676": {
+"id": "arutpa:T158:676",
+"label": "M",
+"science_concept": "",
+"meaning": "Spiritual state of transcendence and oneness, using sky as metaphor."
+},
+"arutpa:T158:677": {
+"id": "arutpa:T158:677",
+"label": "O",
+"science_concept": "peacocks dancing upon seeing the sky and rain clouds",
+"meaning": "Ascetics rejoicing at the presence of the Lord like peacocks dancing seeing the sky."
+},
+"arutpa:T158:678": {
+"id": "arutpa:T158:678",
+"label": "N",
+"science_concept": "",
+"meaning": "Ascetics living with matted locks, sacred ash, and devotion."
+},
+"arutpa:T158:679": {
+"id": "arutpa:T158:679",
+"label": "M",
+"science_concept": "",
+"meaning": "Philosophical concepts of maya and elemental manifestations."
+},
+"arutpa:T158:681": {
+"id": "arutpa:T158:681",
+"label": "M",
+"science_concept": "",
+"meaning": "Transcendence of speech, elements, and foundational philosophical categories."
+},
+"arutpa:T158:682": {
+"id": "arutpa:T158:682",
+"label": "M",
+"science_concept": "",
+"meaning": "Reaching the realm of pure knowledge and cosmic sound (nada)."
+},
+"arutpa:T158:684": {
+"id": "arutpa:T158:684",
+"label": "M",
+"science_concept": "",
+"meaning": "Contemplating the self-luminous light of supreme bliss."
+},
+"arutpa:T158:686": {
+"id": "arutpa:T158:686",
+"label": "M",
+"science_concept": "",
+"meaning": "Abiding in the supreme truth with purity as one's form."
+},
+"arutpa:T158:687": {
+"id": "arutpa:T158:687",
+"label": "N",
+"science_concept": "",
+"meaning": "Equanimity in seeing all pleasure and pain as the Lord's action."
+},
+"arutpa:T158:688": {
+"id": "arutpa:T158:688",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who have transcended worldly signs, qualities, and lineage."
+},
+"arutpa:T158:689": {
+"id": "arutpa:T158:689",
+"label": "N",
+"science_concept": "",
+"meaning": "Wandering with inner peace that digests all experiences."
+},
+"arutpa:T158:690": {
+"id": "arutpa:T158:690",
+"label": "N",
+"science_concept": "",
+"meaning": "Living righteously without personal attachment to worldly consciousness."
+},
+"arutpa:T158:691": {
+"id": "arutpa:T158:691",
+"label": "N",
+"science_concept": "",
+"meaning": "Crossing the vast ocean of desire like water in a cow's hoofprint."
+},
+"arutpa:T158:692": {
+"id": "arutpa:T158:692",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who find their true wealth and attain supreme eternal bliss."
+},
+"arutpa:T158:693": {
+"id": "arutpa:T158:693",
+"label": "N",
+"science_concept": "",
+"meaning": "Great souls who view all women as mothers, acting like children or madmen."
+},
+"arutpa:T158:694": {
+"id": "arutpa:T158:694",
+"label": "N",
+"science_concept": "",
+"meaning": "Wise ones capable of sustaining all worlds with a mere blade of grass."
+},
+"arutpa:T158:695": {
+"id": "arutpa:T158:695",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who know everything yet act ignorant, transcending birth and death."
+},
+"arutpa:T158:696": {
+"id": "arutpa:T158:696",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who remain unswerving whether cursed or blessed with longevity."
+},
+"arutpa:T158:697": {
+"id": "arutpa:T158:697",
+"label": "N",
+"science_concept": "",
+"meaning": "Those who see the unstable world as Shiva and remain balanced without rising or falling."
+},
+"arutpa:T158:698": {
+"id": "arutpa:T158:698",
+"label": "N",
+"science_concept": "",
+"meaning": "Those established in supreme bliss and silence at the ultimate state."
+},
+"arutpa:T158:699": {
+"id": "arutpa:T158:699",
+"label": "N",
+"science_concept": "",
+"meaning": "Who else can truly know the greatness of the gathering of such noble saints?"
+},
+"arutpa:T158:700": {
+"id": "arutpa:T158:700",
+"label": "N",
+"science_concept": "",
+"meaning": "Serving humbly in the assembly of saints to be freed from sorrow."
+},
+"arutpa:T158:701": {
+"id": "arutpa:T158:701",
+"label": "N",
+"science_concept": "",
+"meaning": "Meditating constantly with grace as the tongue on the five-syllable mantra."
+},
+"arutpa:T158:702": {
+"id": "arutpa:T158:702",
+"label": "N",
+"science_concept": "",
+"meaning": "Surrendering at the feet of Shiva who wears the thumbai flower with pollen."
+},
+"arutpa:T158:703": {
+"id": "arutpa:T158:703",
+"label": "N",
+"science_concept": "",
+"meaning": "A wish for eternal divine life and joy, devoid of physical science."
 }
 }

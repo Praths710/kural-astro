@@ -114,17 +114,19 @@ def _stems(text):
 def relevant(title, query, need=0.6):
     """Keep a paper only if its title carries most of the query's key words (crude but transparent)."""
     q = _stems(query)
-    want = len(q) if len(q) <= 2 else max(2, round(need * len(q)))   # short queries: every key word
+    want = len(q) if len(q) <= 2 else max(2, -(-3 * len(q) // 4) if len(q) <= 4 else round(need * len(q)))
     return not q or len(q & _stems(title)) >= want
 
 
-def papers(query):
-    """Up to ~10 papers: the most cited and the most recent notable-publisher articles, plus NASA reports."""
-    found = [p for p in crossref(query) if relevant(p["title"], query)]
+def papers(query, must=None):
+    """Up to ~10 papers: the most cited and the most recent articles, plus NASA reports.
+    must: core words every title has to contain; defaults to the whole query."""
+    must = must or query
+    found = [p for p in crossref(query) if relevant(p["title"], must)]
     cited = sorted(found, key=lambda p: -p["citations"])[:4]
     recent = sorted((p for p in found if p not in cited), key=lambda p: -int(p["year"]))[:4]
     out = [{**p, "tag": "foundational"} for p in cited] + [{**p, "tag": "recent"} for p in recent]
-    out += [{**p, "tag": "nasa"} for p in ntrs(query, 8) if relevant(p["title"], query)][:3]
+    out += [{**p, "tag": "nasa"} for p in ntrs(must, 8) if relevant(p["title"], must)][:3]
     seen, uniq = set(), []
     for p in out:
         if p["url"] not in seen:
