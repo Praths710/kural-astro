@@ -11,3 +11,7 @@ data/users.json
 data/saved.json
 data/cache.json
 data/shares.json
+data/raw/tolkappiyam/
+data/processed/tolkappiyam.jsonl
+data/raw/thiruppavai/
+docs/

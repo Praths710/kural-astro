@@ -6,8 +6,11 @@
 !requirements.txt
 !src/gemini_label.py
 !src/research_report.py
+!src/official_sources.py
 !src/webapp/
 !data/raw/thirukkural.json
 !data/processed/thiruvarutpa.jsonl
+!data/processed/tolkappiyam_text.jsonl
+!data/processed/thiruppavai.jsonl
 !data/processed/arxiv_cache.json
 !data/labels/gemini_labels_dedup.json

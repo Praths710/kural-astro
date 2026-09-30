@@ -1242,3 +1242,915 @@
 {"id": "kural:1173", "label": "N", "science_concept": "", "meaning": "Eyes that gazed eagerly that day weeping today is a matter of amusement."}
 {"id": "kural:1048", "label": "N", "science_concept": "", "meaning": "Will the killing poverty of yesterday continue to torment me even today?"}
 {"id": "arutpa:T237:1", "label": "A", "science_concept": "categories of universes and bodily forms", "meaning": "The singular deity providing light to all categories of universes, bodily forms, souls, and instruments in space."}
+{"id": "kural:841", "label": "N", "science_concept": "", "meaning": "Ignorance is considered the worst form of poverty by the world."}
+{"id": "kural:842", "label": "N", "science_concept": "", "meaning": "A fool's joyful giving is actually due to the recipient's past merit."}
+{"id": "kural:843", "label": "N", "science_concept": "", "meaning": "Fools inflict self-torments that even enemies cannot match."}
+{"id": "kural:844", "label": "N", "science_concept": "", "meaning": "True ignorance is the arrogant belief that one possesses wisdom."}
+{"id": "kural:845", "label": "N", "science_concept": "", "meaning": "Pretending to have learning creates doubt even about what one truly knows."}
+{"id": "kural:846", "label": "N", "science_concept": "", "meaning": "Fools cover their physical flaws while exposing their moral faults."}
+{"id": "kural:847", "label": "N", "science_concept": "", "meaning": "An ignorant person ignoring wise counsel brings great ruin upon himself."}
+{"id": "kural:848", "label": "N", "science_concept": "", "meaning": "One who neither listens nor understands is a lifelong burden to existence."}
+{"id": "kural:849", "label": "N", "science_concept": "", "meaning": "The blind guide cannot see, and the blind follower sees only through distorted vision."}
+{"id": "kural:851", "label": "N", "science_concept": "", "meaning": "Hatred is a disease that alienates people and destroys unity."}
+{"id": "kural:853", "label": "N", "science_concept": "", "meaning": "Removing the plague of enmity brings everlasting and flawless glory."}
+{"id": "kural:854", "label": "N", "science_concept": "", "meaning": "Destroying the misery of hatred yields the greatest of all joys."}
+{"id": "kural:855", "label": "N", "science_concept": "", "meaning": "Ethics of non-enmity and how to handle opposition."}
+{"id": "kural:856", "label": "N", "science_concept": "", "meaning": "Those who cherish enmity will soon face ruin and fall."}
+{"id": "kural:857", "label": "N", "science_concept": "", "meaning": "Envious and hateful people fail to perceive the supreme truth."}
+{"id": "kural:858", "label": "N", "science_concept": "", "meaning": "Avoiding enmity brings prosperity, while fostering it brings destruction."}
+{"id": "kural:859", "label": "N", "science_concept": "", "meaning": "Prosperity avoids the hateful, and hatred brings impending ruin."}
+{"id": "kural:860", "label": "N", "science_concept": "", "meaning": "Enmity causes all evils, while pleasant smiles foster goodness."}
+{"id": "kural:861", "label": "N", "science_concept": "", "meaning": "Avoid fighting the powerful; fighting the weak is shameful."}
+{"id": "kural:862", "label": "N", "science_concept": "", "meaning": "A king without love, allies, or strength cannot face a strong enemy."}
+{"id": "kural:863", "label": "N", "science_concept": "", "meaning": "A cowardly, ignorant, and ungenerous person easily falls prey to enemies."}
+{"id": "kural:865", "label": "N", "science_concept": "", "meaning": "An unprincipled ruler who lacks foresight is an easy target for foes."}
+{"id": "kural:866", "label": "N", "science_concept": "", "meaning": "A man blinded by rage and lust makes it easy for enemies to hate him."}
+{"id": "kural:867", "label": "N", "science_concept": "", "meaning": "One should even pay to appease or distance an inept enemy."}
+{"id": "kural:869", "label": "N", "science_concept": "", "meaning": "The joy of defeating foolish and timid opponents knows no bounds."}
+{"id": "kural:871", "label": "N", "science_concept": "", "meaning": "One should not court enmity even as a joke or sport."}
+{"id": "kural:872", "label": "N", "science_concept": "", "meaning": "It is better to incur the enmity of warriors than of scholars."}
+{"id": "kural:873", "label": "N", "science_concept": "", "meaning": "A person standing alone who makes many enemies is extremely foolish."}
+{"id": "kural:874", "label": "N", "science_concept": "", "meaning": "The world depends on the noble quality of turning enemies into friends."}
+{"id": "kural:875", "label": "N", "science_concept": "", "meaning": "When facing two foes alone, one should befriend one of them."}
+{"id": "kural:876", "label": "N", "science_concept": "", "meaning": "Whether trusting or not, during trouble one must keep aloof from foes."}
+{"id": "kural:877", "label": "N", "science_concept": "", "meaning": "Do not reveal your pain or weakness to enemies."}
+{"id": "kural:878", "label": "N", "science_concept": "", "meaning": "By self-control and proper strategy, the pride of enemies will perish."}
+{"id": "kural:879", "label": "O", "science_concept": "young thorn trees are soft, mature ones are hard and injure hands", "meaning": "Cut thorn-trees when young; when grown hard, they will pierce your hands."}
+{"id": "kural:882", "label": "N", "science_concept": "", "meaning": "Fear not open enemies like swords, but fear foes who act like dear kinsmen."}
+{"id": "kural:883", "label": "N", "science_concept": "", "meaning": "Guard against secret internal foes, who ruin you utterly in times of trouble."}
+{"id": "kural:884", "label": "N", "science_concept": "", "meaning": "Internal enemies cause numerous destructive troubles among kinsmen."}
+{"id": "kural:885", "label": "N", "science_concept": "", "meaning": "Betrayal from trusted relatives brings fatal destruction."}
+{"id": "kural:886", "label": "N", "science_concept": "", "meaning": "Disunity among allies leads to permanent ruin."}
+{"id": "kural:887", "label": "N", "science_concept": "", "meaning": "A household with internal enemies resembles a loosely fitted lid."}
+{"id": "kural:888", "label": "O", "science_concept": "abrasive wear of metal by a file", "meaning": "A family ruined by internal enemies wears away like gold filed down."}
+{"id": "kural:889", "label": "O", "science_concept": "sesame seed split structure", "meaning": "Even slight internal enmity causes ruin, like the division in a sesame seed."}
+{"id": "kural:890", "label": "O", "science_concept": "cohabitation danger with venomous snakes", "meaning": "Living with hostile people is like sharing a hut with a snake."}
+{"id": "kural:891", "label": "N", "science_concept": "", "meaning": "Respecting the powerful is the best form of self-preservation."}
+{"id": "kural:892", "label": "N", "science_concept": "", "meaning": "Disrespecting great people brings ceaseless troubles."}
+{"id": "kural:893", "label": "N", "science_concept": "", "meaning": "Acting rashly against the powerful invites destruction."}
+{"id": "kural:894", "label": "N", "science_concept": "", "meaning": "The weak harming the strong is like calling death upon oneself."}
+{"id": "kural:895", "label": "N", "science_concept": "", "meaning": "Those targeted by a powerful monarch's wrath can find no safe refuge."}
+{"id": "kural:897", "label": "N", "science_concept": "", "meaning": "Anger of great sages ruins wealth and noble life."}
+{"id": "kural:900", "label": "N", "science_concept": "", "meaning": "Even well-protected men cannot escape the wrath of noble seers."}
+{"id": "kural:901", "label": "N", "science_concept": "", "meaning": "Those obsessed with wives fail, a folly active men reject."}
+{"id": "kural:902", "label": "N", "science_concept": "", "meaning": "Unmanly attachment to women brings profound shame and disgrace."}
+{"id": "kural:903", "label": "N", "science_concept": "", "meaning": "Servility to one's wife brings shame among virtuous people."}
+{"id": "kural:904", "label": "N", "science_concept": "", "meaning": "Men who fear their wives lack spiritual grace and effective action."}
+{"id": "kural:906", "label": "N", "science_concept": "", "meaning": "Men who fear their wives' shoulders lack dignity despite divine living."}
+{"id": "kural:907", "label": "N", "science_concept": "", "meaning": "A bashful woman has more greatness than a man serving her will."}
+{"id": "kural:908", "label": "N", "science_concept": "", "meaning": "Those governed by fair-browed wives cannot help friends or do good."}
+{"id": "kural:909", "label": "N", "science_concept": "", "meaning": "Virtue, wealth, and joy are absent in men subservient to women."}
+{"id": "kural:910", "label": "N", "science_concept": "", "meaning": "Strong-minded and broad-hearted thinkers never fall into the folly of women."}
+{"id": "kural:911", "label": "N", "science_concept": "", "meaning": "Sweet words of women who seek wealth without love bring ruin."}
+{"id": "kural:912", "label": "N", "science_concept": "", "meaning": "Avoid transactional women who pretend love for selfish gain."}
+{"id": "kural:913", "label": "O", "science_concept": "corpse in a dark room", "meaning": "Embracing a mercenary woman is like embracing a corpse in the dark."}
+{"id": "kural:914", "label": "N", "science_concept": "", "meaning": "The wise who seek grace do not embrace harlots."}
+{"id": "kural:915", "label": "N", "science_concept": "", "meaning": "The wise will not desire the physical charms of a harlot."}
+{"id": "kural:916", "label": "N", "science_concept": "", "meaning": "Those who protect their moral welfare shun the harlot's embrace."}
+{"id": "kural:917", "label": "N", "science_concept": "", "meaning": "Only those lacking a steadfast heart desire deceitful partners."}
+{"id": "kural:918", "label": "N", "science_concept": "", "meaning": "Foolish men are ruined by the deceptive embrace of harlots."}
+{"id": "kural:919", "label": "N", "science_concept": "", "meaning": "The embrace of harlots is like a hell for the degraded."}
+{"id": "kural:922", "label": "N", "science_concept": "", "meaning": "Do not drink liquor; only the unworthy may drink."}
+{"id": "kural:923", "label": "N", "science_concept": "", "meaning": "Drunkenness pains even a mother; how much more the wise."}
+{"id": "kural:924", "label": "N", "science_concept": "", "meaning": "Modesty abandons those who commit the great crime of drinking wine."}
+{"id": "kural:925", "label": "N", "science_concept": "", "meaning": "Paying to lose one's consciousness through drink is supreme ignorance."}
+{"id": "kural:926", "label": "N", "science_concept": "", "meaning": "Drinking toddy is compared to death and poison; ethical warning against intoxicants."}
+{"id": "kural:927", "label": "N", "science_concept": "", "meaning": "Secret drinkers will be exposed and laughed at by locals."}
+{"id": "kural:928", "label": "N", "science_concept": "", "meaning": "Do not deny drinking, for inner deceit reveals itself outwardly."}
+{"id": "kural:930", "label": "N", "science_concept": "", "meaning": "When sober people see a drunkard, do they not realize the foolishness of drunkenness?"}
+{"id": "kural:931", "label": "O", "science_concept": "fish swallowing a baited hook", "meaning": "Avoid gambling; even winning is like a fish swallowing a baited hook."}
+{"id": "kural:933", "label": "N", "science_concept": "", "meaning": "Excessive gambling leads to the loss of accumulated wealth."}
+{"id": "kural:934", "label": "N", "science_concept": "", "meaning": "Nothing brings poverty and destroys fame like gambling."}
+{"id": "kural:935", "label": "N", "science_concept": "", "meaning": "Those devoted to the gambling hall and dice eventually lose everything."}
+{"id": "kural:936", "label": "N", "science_concept": "", "meaning": "Those obsessed with dice suffer poverty and endless grief."}
+{"id": "kural:937", "label": "N", "science_concept": "", "meaning": "Spending time in gambling dens destroys ancestral wealth and noble qualities."}
+{"id": "kural:938", "label": "N", "science_concept": "", "meaning": "Gambling destroys wealth, fosters falsehood, ruins grace, and brings misery."}
+{"id": "kural:939", "label": "N", "science_concept": "", "meaning": "Clothing, wealth, food, fame, and learning are all lost through gambling."}
+{"id": "kural:941", "label": "L", "science_concept": "imbalance of bodily humours causes disease", "meaning": "Excess or deficiency of wind, bile and phlegm causes disease according to medical science."}
+{"id": "kural:942", "label": "L", "science_concept": "proper digestion prevents illness", "meaning": "One who eats only after prior food is digested needs no medicine."}
+{"id": "kural:943", "label": "L", "science_concept": "eating according to digestive capacity sustains life", "meaning": "Eat recognizing digestion to prolong bodily health and life."}
+{"id": "kural:944", "label": "L", "science_concept": "digestive state and appropriate diet", "meaning": "Understand digestion, eat proper food with true hunger."}
+{"id": "kural:945", "label": "L", "science_concept": "moderate and measured eating prevents disease", "meaning": "Eating compatible food with moderation prevents bodily harm."}
+{"id": "kural:946", "label": "L", "science_concept": "dietary moderation brings health while gluttony brings disease", "meaning": "Moderate eaters enjoy health, while gluttons suffer disease."}
+{"id": "kural:948", "label": "L", "science_concept": "medical diagnosis of disease and its root cause", "meaning": "Examine the disease, its origin, and apply the correct cure."}
+{"id": "kural:951", "label": "N", "science_concept": "", "meaning": "Noble birth naturally possesses integrity and modesty."}
+{"id": "kural:952", "label": "N", "science_concept": "", "meaning": "The noble-born never fail in conduct, truth, and modesty."}
+{"id": "kural:953", "label": "N", "science_concept": "", "meaning": "Smile, charity, sweet words, and respect characterize true nobility."}
+{"id": "kural:954", "label": "N", "science_concept": "", "meaning": "Noble-born persons will not commit base acts even for wealth."}
+{"id": "kural:955", "label": "N", "science_concept": "", "meaning": "Ancient noble families retain their good character even in poverty."}
+{"id": "kural:956", "label": "N", "science_concept": "", "meaning": "Those who guard family prestige do not stoop to cunning acts."}
+{"id": "kural:958", "label": "N", "science_concept": "", "meaning": "If good people show lack of love, their lineage is doubted."}
+{"id": "kural:959", "label": "O", "science_concept": "plant growth reflects soil properties", "meaning": "Sprouts show the soil's nature; words show the worth of birth."}
+{"id": "kural:960", "label": "N", "science_concept": "", "meaning": "Modesty brings goodness; humility preserves noble lineage."}
+{"id": "kural:961", "label": "N", "science_concept": "", "meaning": "Even vital gains should be abandoned if achieved through degradation."}
+{"id": "kural:962", "label": "N", "science_concept": "", "meaning": "Those seeking honour and fame will not commit mean deeds."}
+{"id": "kural:963", "label": "N", "science_concept": "", "meaning": "Be humble in prosperity, and maintain dignity in adversity."}
+{"id": "kural:965", "label": "N", "science_concept": "", "meaning": "Even great men fall due to small misdeeds."}
+{"id": "kural:967", "label": "N", "science_concept": "", "meaning": "Better to die than live subservient to enemies."}
+{"id": "kural:968", "label": "N", "science_concept": "", "meaning": "Nurturing the body is worthless when honour is lost."}
+{"id": "kural:972", "label": "N", "science_concept": "", "meaning": "All humans are equal by birth, differing only in actions."}
+{"id": "kural:973", "label": "N", "science_concept": "", "meaning": "The ignoble high are not truly high; the noble low are not low."}
+{"id": "kural:974", "label": "N", "science_concept": "", "meaning": "Greatness like chastity is sustained through self-discipline and proper conduct."}
+{"id": "kural:975", "label": "N", "science_concept": "", "meaning": "Great souls accomplish difficult and rare deeds through determined effort."}
+{"id": "kural:976", "label": "N", "science_concept": "", "meaning": "The small-minded lack the discernment to cherish and seek great people."}
+{"id": "kural:977", "label": "N", "science_concept": "", "meaning": "Power and privilege make base people act with insolence and harm."}
+{"id": "kural:978", "label": "N", "science_concept": "", "meaning": "Truly great people are humble, whereas petty individuals boast with vanity."}
+{"id": "kural:979", "label": "N", "science_concept": "", "meaning": "True greatness avoids arrogance, while littleness is driven by pride."}
+{"id": "kural:980", "label": "N", "science_concept": "", "meaning": "Greatness conceals the faults of others, while smallness exposes them."}
+{"id": "kural:981", "label": "N", "science_concept": "", "meaning": "All virtuous actions are a duty for those who uphold nobility."}
+{"id": "kural:982", "label": "N", "science_concept": "", "meaning": "Good character is the true excellence of the noble; other traits do not matter."}
+{"id": "kural:983", "label": "N", "science_concept": "", "meaning": "Love, modesty, equity, grace, and truth form the pillars of nobility."}
+{"id": "kural:984", "label": "N", "science_concept": "", "meaning": "Non-violence is the essence of asceticism, and refraining from slander is nobility."}
+{"id": "kural:985", "label": "N", "science_concept": "", "meaning": "Humility is the strength of the wise and a weapon that converts enemies."}
+{"id": "kural:986", "label": "N", "science_concept": "", "meaning": "Accepting defeat even from inferiors is the test of noble character."}
+{"id": "kural:987", "label": "N", "science_concept": "", "meaning": "What is the worth of perfection if it does not return good for evil?"}
+{"id": "kural:988", "label": "N", "science_concept": "", "meaning": "Poverty is no disgrace to one who possesses the strength of good character."}
+{"id": "kural:991", "label": "N", "science_concept": "", "meaning": "Courtesy and friendliness are easily attained by those who are accessible."}
+{"id": "kural:992", "label": "N", "science_concept": "", "meaning": "Possessing love and noble birth fosters the practice of courtesy."}
+{"id": "kural:993", "label": "N", "science_concept": "", "meaning": "True likeness is of character, not mere physical resemblance."}
+{"id": "kural:994", "label": "N", "science_concept": "", "meaning": "The world praises the character of helpful and righteous people."}
+{"id": "kural:995", "label": "N", "science_concept": "", "meaning": "The wise do not show contempt even in jest, even towards enemies."}
+{"id": "kural:997", "label": "N", "science_concept": "", "meaning": "Those lacking human character are like wooden blocks, despite sharp intellect."}
+{"id": "kural:998", "label": "N", "science_concept": "", "meaning": "Failing to show courtesy even to unfriendly people is a grave fault."}
+{"id": "kural:1000", "label": "O", "science_concept": "milk spoils when kept in an unclean vessel", "meaning": "The wealth of a churlish man is like milk spoiled by an impure vessel."}
+{"id": "kural:1001", "label": "N", "science_concept": "", "meaning": "A miser hoarding wealth without enjoying it is considered as good as dead."}
+{"id": "kural:1002", "label": "N", "science_concept": "", "meaning": "A miser's hoard leads only to a ruined birth."}
+{"id": "kural:1004", "label": "N", "science_concept": "", "meaning": "An unloved person leaves no lasting legacy."}
+{"id": "kural:1005", "label": "N", "science_concept": "", "meaning": "Hoarding wealth without giving or enjoying is useless."}
+{"id": "kural:1006", "label": "N", "science_concept": "", "meaning": "Great wealth is useless if not enjoyed or given to the worthy."}
+{"id": "kural:1007", "label": "N", "science_concept": "", "meaning": "Wealth that helps no one is like a lonely beauty aging unwed."}
+{"id": "kural:1008", "label": "O", "science_concept": "poisonous fruit tree in a village", "meaning": "The wealth of an ungenerous man is like a poison-fruit tree in a town."}
+{"id": "kural:1009", "label": "N", "science_concept": "", "meaning": "Wealth gathered without love or virtue will be seized by others."}
+{"id": "kural:1011", "label": "N", "science_concept": "", "meaning": "True shame is shrinking from evil deeds."}
+{"id": "kural:1012", "label": "N", "science_concept": "", "meaning": "Basic needs are common to all; modesty distinguishes noble people."}
+{"id": "kural:1013", "label": "N", "science_concept": "", "meaning": "All physical life depends on the body, just as nobility depends on modesty."}
+{"id": "kural:1014", "label": "N", "science_concept": "", "meaning": "Modesty is the true ornament of the wise."}
+{"id": "kural:1015", "label": "N", "science_concept": "", "meaning": "Those who feel shame for faults are the abode of modesty."}
+{"id": "kural:1017", "label": "N", "science_concept": "", "meaning": "People of shame give up life for shame; they do not give up shame for life."}
+{"id": "kural:1018", "label": "N", "science_concept": "", "meaning": "If one is not ashamed of what others are ashamed of, it brings shame to virtue."}
+{"id": "kural:1019", "label": "N", "science_concept": "", "meaning": "Bad conduct ruins family lineage, and lack of shame destroys all good traits."}
+{"id": "kural:1020", "label": "O", "science_concept": "puppet string mechanism", "meaning": "The movement of the shameless is like a wooden puppet made to dance by strings."}
+{"id": "kural:1021", "label": "N", "science_concept": "", "meaning": "There is no greater glory than a person saying 'I will not fail in my task.'"}
+{"id": "kural:1022", "label": "N", "science_concept": "", "meaning": "A family prospers through persistent effort and profound wisdom combined."}
+{"id": "kural:1023", "label": "N", "science_concept": "", "meaning": "For one who resolves to uplift his family, divinity itself steps forward to assist."}
+{"id": "kural:1024", "label": "N", "science_concept": "", "meaning": "Success comes effortlessly to those who tirelessly work to lift their lineage."}
+{"id": "kural:1025", "label": "N", "science_concept": "", "meaning": "The world surrounds and claims as kin the faultless person who supports his family."}
+{"id": "kural:1026", "label": "N", "science_concept": "", "meaning": "True manliness is making one's native household prosperous and strong."}
+{"id": "kural:1027", "label": "N", "science_concept": "", "meaning": "Like brave heroes in battle, the burden of the household rests on the capable."}
+{"id": "kural:1029", "label": "N", "science_concept": "", "meaning": "Is not the body a vessel of sorrows for one who protects his family from ruin?"}
+{"id": "pavai:1", "label": "M", "science_concept": "", "meaning": "Devotional praise describing Krishna's complexion like a dark cloud, sun, and moon."}
+{"id": "pavai:2", "label": "N", "science_concept": "", "meaning": "Rules of observance, fasting, and charity during Margazhi."}
+{"id": "pavai:3", "label": "O", "science_concept": "seasonal rain, crop growth, and water life", "meaning": "Abundant rain makes paddy grow, fish leap, and bees sleep in lotus flowers."}
+{"id": "pavai:4", "label": "O", "science_concept": "rain clouds, lightning, thunder, and heavy downpour", "meaning": "Clouds gather water from the sea, flash like Vishnu's discus, thunder, and rain arrows."}
+{"id": "pavai:5", "label": "M", "science_concept": "", "meaning": "Past sins burn to ash like cotton in fire through devotion."}
+{"id": "pavai:6", "label": "O", "science_concept": "birds waking and sounding at dawn", "meaning": "Birds chirp at dawn while devotees chant the name of Vishnu."}
+{"id": "pavai:7", "label": "O", "science_concept": "birds and churning sound at dawn", "meaning": "Birds chatter and cowherds churn curd, making sounds at dawn."}
+{"id": "pavai:8", "label": "O", "science_concept": "eastern sky brightening and cattle grazing at dawn", "meaning": "The eastern sky whitens and buffaloes spread out to graze early."}
+{"id": "pavai:9", "label": "N", "science_concept": "", "meaning": "Calling out to a sleeping cousin to wake up and chant Vishnu's names."}
+{"id": "pavai:10", "label": "N", "science_concept": "", "meaning": "Teasing a sleeping girl comparing her deep slumber to that of Kumbhakarna."}
+{"id": "pavai:11", "label": "N", "science_concept": "", "meaning": "Praising a cowherd girl and urging her to join in singing the Lord's praise."}
+{"id": "pavai:12", "label": "O", "science_concept": "mother cows leaking milk for calves", "meaning": "Mugging calves make milk flow from cow's udders, dampening the muddy courtyard."}
+{"id": "pavai:13", "label": "O", "science_concept": "Venus rising, Jupiter setting, birds chirping", "meaning": "Venus rises, Jupiter sets, and birds chirp at dawn."}
+{"id": "pavai:14", "label": "O", "science_concept": "lotus blooms at sunrise, water lilies close", "meaning": "Water lilies open at sunrise and night-blooming lilies close."}
+{"id": "pavai:15", "label": "N", "science_concept": "", "meaning": "Waking up a companion girl; no natural-science content."}
+{"id": "pavai:16", "label": "N", "science_concept": "", "meaning": "Requesting the temple guardian to open the door; no natural-science content."}
+{"id": "pavai:17", "label": "N", "science_concept": "", "meaning": "Praising figures of authority and Krishna; no natural-science content."}
+{"id": "pavai:18", "label": "O", "science_concept": "roosters crowing at dawn, cuckoos singing", "meaning": "Roosters call and cuckoos sing in the morning."}
+{"id": "pavai:19", "label": "N", "science_concept": "", "meaning": "Urging Nappinnai to let her husband wake; no natural-science content."}
+{"id": "pavai:20", "label": "N", "science_concept": "", "meaning": "Praising gods and awakening Nappinnai; no natural-science content."}
+{"id": "pavai:21", "label": "O", "science_concept": "cows yielding abundant milk", "meaning": "Generous cows overflow milking vessels with milk."}
+{"id": "pavai:22", "label": "O", "science_concept": "sun and moon rising together", "meaning": "Eyes opening like the simultaneous rising of the sun and moon."}
+{"id": "pavai:23", "label": "O", "science_concept": "lion waking up and roaring", "meaning": "A lion wakes up in a mountain cave and roars."}
+{"id": "pavai:24", "label": "N", "science_concept": "", "meaning": "Praising Vishnu's mythical exploits; no natural-science content."}
+{"id": "pavai:25", "label": "M", "science_concept": "", "meaning": "Devotional verse about Krishna causing fear in Kamsa like fire in the belly."}
+{"id": "pavai:26", "label": "M", "science_concept": "", "meaning": "Praising Vishnu, the banyan leaf entity, and asking for festival items."}
+{"id": "pavai:27", "label": "N", "science_concept": "", "meaning": "Devotees ask Krishna for ornaments, garments, and a feast of rice with ghee."}
+{"id": "pavai:28", "label": "N", "science_concept": "", "meaning": "Cowherd girls express eternal kinship and love for Govinda, asking for forgiveness."}
+{"id": "pavai:29", "label": "N", "science_concept": "", "meaning": "Pledging servitude to Krishna across seven times seven births."}
+{"id": "pavai:30", "label": "N", "science_concept": "", "meaning": "Concluding verse on the benefits of chanting Andal's Tiruppavai."}
+{"id": "kural:1030", "label": "N", "science_concept": "", "meaning": "A household without a capable helper collapses during hard times."}
+{"id": "kural:1031", "label": "L", "science_concept": "agriculture is the foundational economic activity sustaining society", "meaning": "Though people pursue various trades, the world revolves around the plow; farming is supreme."}
+{"id": "kural:1032", "label": "L", "science_concept": "farmers are the linchpin supporting all other professions", "meaning": "Farmers are the linchpin of mankind, supporting all other workers who cannot till."}
+{"id": "kural:1033", "label": "L", "science_concept": "self-sufficient agricultural labor is true independent living", "meaning": "Only those who live by farming truly live; all others follow and eat by bowing to others."}
+{"id": "kural:1034", "label": "N", "science_concept": "", "meaning": "Those who possess abundant crops will see monarchs of many umbrellas seek their shade."}
+{"id": "kural:1035", "label": "N", "science_concept": "", "meaning": "Those who labor with their hands do not beg, but share their food with others."}
+{"id": "kural:1036", "label": "L", "science_concept": "agriculture sustains human life and monks", "meaning": "If ploughmen fold their hands, even those who renounce desire face starvation."}
+{"id": "kural:1038", "label": "L", "science_concept": "manuring, weeding and crop protection in agriculture", "meaning": "Manuring is better than ploughing, weeding is better than watering, and protection is vital."}
+{"id": "kural:1041", "label": "N", "science_concept": "", "meaning": "Nothing causes more misery and pain than poverty itself."}
+{"id": "kural:1043", "label": "N", "science_concept": "", "meaning": "Poverty destroys noble ancestry and the dignity of speech."}
+{"id": "kural:1044", "label": "N", "science_concept": "", "meaning": "Poverty causes even born gentlemen to utter demeaning words."}
+{"id": "kural:1045", "label": "N", "science_concept": "", "meaning": "The affliction of poverty brings numerous other sorrows along with it."}
+{"id": "kural:1047", "label": "N", "science_concept": "", "meaning": "A mother treats her own poverty-stricken son as if he were a stranger."}
+{"id": "kural:1051", "label": "N", "science_concept": "", "meaning": "Beg from those who can give; if they refuse, the fault is theirs."}
+{"id": "kural:1052", "label": "N", "science_concept": "", "meaning": "Begging can be a joy if the requested item comes without humiliation."}
+{"id": "kural:1053", "label": "N", "science_concept": "", "meaning": "It is graceful to ask from open-hearted people who understand their duty."}
+{"id": "kural:1054", "label": "N", "science_concept": "", "meaning": "Begging from the generous is like giving, for they do not hide their wealth."}
+{"id": "kural:1056", "label": "N", "science_concept": "", "meaning": "The pain of poverty vanishes when one meets generous people who do not hoard."}
+{"id": "kural:1057", "label": "N", "science_concept": "", "meaning": "Seeing generous givers without scorn brings joy to the inner heart."}
+{"id": "kural:1059", "label": "N", "science_concept": "", "meaning": "What is the glory of givers when there are no beggars around."}
+{"id": "kural:1060", "label": "N", "science_concept": "", "meaning": "The needy should not show anger at refusal, as their own poverty is proof enough."}
+{"id": "kural:1061", "label": "N", "science_concept": "", "meaning": "Not to beg is worth a billion, even from dear friends who give with joy."}
+{"id": "kural:1062", "label": "N", "science_concept": "", "meaning": "If one must live by begging, let the Creator of the world perish."}
+{"id": "kural:1063", "label": "N", "science_concept": "", "meaning": "Nothing is as harsh as saying one will cure poverty by begging."}
+{"id": "kural:1067", "label": "N", "science_concept": "", "meaning": "If I must beg of beggars, I beg them not to beg from misers."}
+{"id": "kural:1068", "label": "O", "science_concept": "shipwreck on a hidden rock", "meaning": "The fragile boat of beggary shatters when it strikes the rock of refusal."}
+{"id": "kural:1070", "label": "N", "science_concept": "", "meaning": "Where will misers hide when the beggar's sharp words cause their life to depart?"}
+{"id": "kural:1071", "label": "N", "science_concept": "", "meaning": "Base persons resemble humans only in form, having no true likeness."}
+{"id": "kural:1072", "label": "N", "science_concept": "", "meaning": "The base appear richer than the wise because they are free from mental anxiety."}
+{"id": "kural:1073", "label": "N", "science_concept": "", "meaning": "The base are like gods because they too act entirely as their desires prompt."}
+{"id": "kural:1074", "label": "N", "science_concept": "", "meaning": "Base people rejoice and feel superior when they see someone ruined."}
+{"id": "kural:1075", "label": "N", "science_concept": "", "meaning": "Fear governs the conduct of the base, and some craving may still remain."}
+{"id": "kural:1077", "label": "N", "science_concept": "", "meaning": "The base will not give anything unless forced by violence to their jaws."}
+{"id": "kural:1078", "label": "N", "science_concept": "", "meaning": "The wise are moved by gentle words, while the base yield only when crushed like sugarcane."}
+{"id": "kural:1079", "label": "N", "science_concept": "", "meaning": "The mean look for faults in others upon seeing what they eat and wear."}
+{"id": "kural:1080", "label": "N", "science_concept": "", "meaning": "The base are ready to sell themselves quickly when trouble strikes."}
+{"id": "kural:1081", "label": "O", "science_concept": "peacock plumage and appearance", "meaning": "Is she a goddess, a peacock, or a jewelled woman that bewilders my mind?"}
+{"id": "kural:1082", "label": "N", "science_concept": "", "meaning": "The mutual glance of the woman is like an armed attack of a love-goddess."}
+{"id": "kural:1083", "label": "N", "science_concept": "", "meaning": "I did not know death before, but now I know it in the form of a woman with battling eyes."}
+{"id": "kural:1084", "label": "N", "science_concept": "", "meaning": "The innocent woman's darting eyes consume the lives of those who look at her."}
+{"id": "kural:1087", "label": "O", "science_concept": "rutting elephant eye-cover and behavior", "meaning": "The garment on the woman's breast resembles the eye-cover of a rutting elephant."}
+{"id": "kural:1088", "label": "N", "science_concept": "", "meaning": "My pride, feared by enemies in battle, is broken by her bright forehead."}
+{"id": "kural:1089", "label": "N", "science_concept": "", "meaning": "A beautiful and modest woman needs no added ornaments."}
+{"id": "kural:1090", "label": "N", "science_concept": "", "meaning": "Wine intoxicates only when drunk, but the sight of love intoxicates on contact."}
+{"id": "kural:1091", "label": "N", "science_concept": "", "meaning": "Her painted eyes have two glances: one causes pain, the other cures it."}
+{"id": "kural:1092", "label": "N", "science_concept": "", "meaning": "A furtive glance is greater than half the joy of love."}
+{"id": "kural:1095", "label": "N", "science_concept": "", "meaning": "She avoids a direct look, casting a side-long glance with a smile."}
+{"id": "kural:1096", "label": "N", "science_concept": "", "meaning": "Words that seem distant are quickly understood as friendly."}
+{"id": "kural:1097", "label": "N", "science_concept": "", "meaning": "Harsh words and angry looks from loved ones are actually signs of affection."}
+{"id": "kural:1098", "label": "N", "science_concept": "", "meaning": "What grace the slender maid possesses as she smiles gently at my gaze."}
+{"id": "kural:1099", "label": "N", "science_concept": "", "meaning": "Lovers sometimes exchange glances as though they were complete strangers."}
+{"id": "kural:1100", "label": "N", "science_concept": "", "meaning": "Spoken words are useless when the eyes meet in complete accord."}
+{"id": "kural:1102", "label": "N", "science_concept": "", "meaning": "Illnesses have external cures, but the fair maid is her own cure for love-sickness."}
+{"id": "kural:1105", "label": "N", "science_concept": "", "meaning": "The embrace of the flower-tressed maid adapts to whatever desire I hold."}
+{"id": "kural:1107", "label": "N", "science_concept": "", "meaning": "The embrace of a beloved is like sharing one's meal."}
+{"id": "kural:1108", "label": "O", "science_concept": "air cannot pass through a tight embrace", "meaning": "A tight embrace that allows no air to pass between lovers."}
+{"id": "kural:1109", "label": "N", "science_concept": "", "meaning": "Sulking, reconciliation, and union are the joys of love."}
+{"id": "kural:1110", "label": "N", "science_concept": "", "meaning": "Love grows deeper and more mysterious the closer one gets."}
+{"id": "kural:1111", "label": "O", "science_concept": "softness of anicha flower compared to human skin", "meaning": "The beloved is softer than the delicate anicha flower."}
+{"id": "kural:1112", "label": "N", "science_concept": "", "meaning": "Common flowers cannot compare to the beauty of her eyes."}
+{"id": "kural:1113", "label": "N", "science_concept": "", "meaning": "Descriptions of the beloved's body parts and pleasant attributes."}
+{"id": "kural:1114", "label": "O", "science_concept": "water lily drooping towards the ground", "meaning": "The water lily droops, admitting defeat to her beautiful eyes."}
+{"id": "kural:1115", "label": "O", "science_concept": "heavy weight of anicha flower with its stem on the body", "meaning": "Even the delicate anicha flower with its stem is too heavy for her."}
+{"id": "kural:1120", "label": "O", "science_concept": "softness of anicha flower and swan feathers", "meaning": "Soft flowers and swan down feel like sharp thorns to her feet."}
+{"id": "kural:1122", "label": "N", "science_concept": "", "meaning": "The bond between lovers is like the union of soul and body."}
+{"id": "kural:1123", "label": "O", "science_concept": "reflection in the pupil of the eye", "meaning": "Asking the image in the pupil to step aside for the beloved."}
+{"id": "kural:1124", "label": "N", "science_concept": "", "meaning": "Union with the beloved is life, and separation is death."}
+{"id": "kural:1125", "label": "N", "science_concept": "", "meaning": "The lover constantly remembers the virtues of his beloved."}
+{"id": "kural:1126", "label": "N", "science_concept": "", "meaning": "The subtle lover remains in the eye without leaving."}
+{"id": "kural:1127", "label": "N", "science_concept": "", "meaning": "The lover is in the eyes, so makeup is avoided."}
+{"id": "kural:1129", "label": "N", "science_concept": "", "meaning": "Avoiding winking to keep the lover hidden, though the town misinterprets."}
+{"id": "kural:1130", "label": "N", "science_concept": "", "meaning": "The lover stays in the heart, but outsiders think otherwise."}
+{"id": "kural:1131", "label": "N", "science_concept": "", "meaning": "Riding the palmyra horse is the only remedy for love's pangs."}
+{"id": "kural:1132", "label": "N", "science_concept": "", "meaning": "Discarding shame, pining body and mind resort to riding the palmyra stem."}
+{"id": "kural:1136", "label": "N", "science_concept": "", "meaning": "Thinking of riding the palmyra horse at midnight while eyes stay sleepless."}
+{"id": "kural:1138", "label": "N", "science_concept": "", "meaning": "Uncontrollable love breaks through modesty and exposes itself publicly."}
+{"id": "kural:1139", "label": "N", "science_concept": "", "meaning": "Secret love wanders bewildered in public streets, falsely thinking nobody knows."}
+{"id": "kural:1140", "label": "N", "science_concept": "", "meaning": "Ignorant people laugh openly because they do not feel the lover's suffering."}
+{"id": "kural:1141", "label": "N", "science_concept": "", "meaning": "Rumor sustains the speaker's life, a secret luck unknown to many."}
+{"id": "kural:1142", "label": "N", "science_concept": "", "meaning": "The town gives the speaker rumor instead of appreciating the flower-eyed lady."}
+{"id": "kural:1143", "label": "N", "science_concept": "", "meaning": "Public rumor feels like acquiring something without actually possessing it."}
+{"id": "kural:1144", "label": "N", "science_concept": "", "meaning": "Rumor intensifies love, which would otherwise lose its distinctive edge."}
+{"id": "kural:1145", "label": "N", "science_concept": "", "meaning": "Just as drinking liquor pleases, love becomes sweeter as it becomes public."}
+{"id": "kural:1149", "label": "N", "science_concept": "", "meaning": "Why feel shame over rumor when the lover who promised no fear has abandoned her?"}
+{"id": "kural:1150", "label": "N", "science_concept": "", "meaning": "The lover is willing to grant love, while the town raises this noisy rumor."}
+{"id": "kural:1151", "label": "N", "science_concept": "", "meaning": "Tell me if you are not leaving; speak of your quick return to those who stay alive."}
+{"id": "kural:1152", "label": "N", "science_concept": "", "meaning": "His glance brought joy, but union brings pain due to the constant fear of parting."}
+{"id": "kural:1153", "label": "N", "science_concept": "", "meaning": "Trust is difficult even with the wise because the possibility of parting exists."}
+{"id": "kural:1154", "label": "N", "science_concept": "", "meaning": "Is it a fault to trust the reassuring words of one who now departs?"}
+{"id": "kural:1155", "label": "N", "science_concept": "", "meaning": "Prevent the trusted companion from leaving, as reunion is difficult once parted."}
+{"id": "kural:1156", "label": "N", "science_concept": "", "meaning": "Parting words and the lingering hope of renewed love."}
+{"id": "kural:1158", "label": "N", "science_concept": "", "meaning": "Living in a friendless place is hard, but parting from loved ones is worse."}
+{"id": "kural:1162", "label": "N", "science_concept": "", "meaning": "Cannot conceal the pain of love nor confess it without shame."}
+{"id": "kural:1163", "label": "N", "science_concept": "", "meaning": "Lust and shame are balanced inside this weary body."}
+{"id": "kural:1165", "label": "N", "science_concept": "", "meaning": "What will those do as foes who cause woe while in friendship?"}
+{"id": "kural:1171", "label": "N", "science_concept": "", "meaning": "Why do the eyes weep now, having brought this endless pain?"}
+{"id": "kural:1174", "label": "N", "science_concept": "", "meaning": "Eyes left dry without relief, causing incurable pain."}
+{"id": "kural:1176", "label": "N", "science_concept": "", "meaning": "The eyes that caused this love-sickness are now victims of it."}
+{"id": "kural:1178", "label": "N", "science_concept": "", "meaning": "My eyes still pine to see him even though his heart is indifferent."}
+{"id": "kural:1179", "label": "N", "science_concept": "", "meaning": "No sleep whether he comes or goes; the fate of weeping eyes."}
+{"id": "kural:1180", "label": "N", "science_concept": "", "meaning": "Eyes reveal secrets like a beating drum."}
+{"id": "kural:1181", "label": "N", "science_concept": "", "meaning": "To whom can I explain my pale complexion caused by my lover's absence?"}
+{"id": "kural:1182", "label": "N", "science_concept": "", "meaning": "Pallor appears on the body due to longing for the lover."}
+{"id": "kural:1183", "label": "N", "science_concept": "", "meaning": "The lover took away beauty and modesty, leaving illness and pallor."}
+{"id": "kural:1184", "label": "N", "science_concept": "", "meaning": "Thoughts of the lover cause pallor to spread over the body."}
+{"id": "kural:1185", "label": "N", "science_concept": "", "meaning": "As the lover departs there, pallor takes over the body here."}
+{"id": "kural:1187", "label": "N", "science_concept": "", "meaning": "Pallor engulfs the body the moment the embrace is broken."}
+{"id": "kural:1188", "label": "N", "science_concept": "", "meaning": "People blame her pallor without acknowledging the lover who abandoned her."}
+{"id": "kural:1189", "label": "N", "science_concept": "", "meaning": "Let the body turn pale if the lover who caused it fares well."}
+{"id": "kural:1190", "label": "N", "science_concept": "", "meaning": "It is good to be called pale if it protects the lover from blame."}
+{"id": "kural:1191", "label": "N", "science_concept": "", "meaning": "Mutual love is like a stoneless fruit of desire."}
+{"id": "kural:1193", "label": "N", "science_concept": "", "meaning": "The pride of life belongs to those whose love is reciprocated."}
+{"id": "kural:1194", "label": "N", "science_concept": "", "meaning": "Unrequited lovers lack companionship and fortune."}
+{"id": "kural:1195", "label": "N", "science_concept": "", "meaning": "What can a lover do if they do not share the same affection?"}
+{"id": "kural:1196", "label": "O", "science_concept": "shoulder poles balance weight", "meaning": "Unrequited love causes pain, while mutual love balances and pleases like shoulder-poles."}
+{"id": "kural:1197", "label": "N", "science_concept": "", "meaning": "Lamenting over the unilateral pain inflicted by the god of love."}
+{"id": "kural:1199", "label": "N", "science_concept": "", "meaning": "The lover's words remain sweet to the ear even when neglected."}
+{"id": "kural:1202", "label": "N", "science_concept": "", "meaning": "Love is sweet because thinking of the beloved brings joy."}
+{"id": "kural:1203", "label": "O", "science_concept": "sneeze reflex as a sign of being remembered", "meaning": "A suppressed sneeze feels like an unfulfilled thought from the beloved."}
+{"id": "kural:1204", "label": "N", "science_concept": "", "meaning": "Wondering if the beloved's heart holds the speaker as the speaker's heart holds them."}
+{"id": "kural:1205", "label": "N", "science_concept": "", "meaning": "Complaining that the beloved enters the speaker's heart while barring entry to theirs."}
+{"id": "kural:1206", "label": "N", "science_concept": "", "meaning": "The speaker only exists through the memory of days spent with the beloved."}
+{"id": "kural:1207", "label": "N", "science_concept": "", "meaning": "Even remembering the beloved burns the heart, making forgetting impossible."}
+{"id": "kural:1208", "label": "N", "science_concept": "", "meaning": "The beloved never gets angry despite constant remembrance."}
+{"id": "kural:1209", "label": "N", "science_concept": "", "meaning": "Life fades thinking of the cruelty of one who claimed they were inseparable."}
+{"id": "kural:1211", "label": "N", "science_concept": "", "meaning": "How to reward the dream that brings the message of the beloved."}
+{"id": "kural:1212", "label": "N", "science_concept": "", "meaning": "Eyes compared to fish expressing grief of separation; no science content."}
+{"id": "kural:1213", "label": "N", "science_concept": "", "meaning": "Sustaining life through dreams of the beloved; no natural-science content."}
+{"id": "kural:1214", "label": "N", "science_concept": "", "meaning": "Desire generated by dreams when waking love is absent; emotional theme."}
+{"id": "kural:1215", "label": "N", "science_concept": "", "meaning": "Comparing the joy of seeing the beloved in dream and awake."}
+{"id": "kural:1216", "label": "N", "science_concept": "", "meaning": "Wish for the absence of waking reality so dreams of the lover persist."}
+{"id": "kural:1217", "label": "N", "science_concept": "", "meaning": "Complaining about the cruel lover appearing in dreams while ignoring her awake."}
+{"id": "kural:1218", "label": "N", "science_concept": "", "meaning": "Embracing in sleep and dwelling in the heart when awake; love poetry."}
+{"id": "kural:1219", "label": "N", "science_concept": "", "meaning": "Those who do not see their lovers in dreams lament their waking absence."}
+{"id": "kural:1220", "label": "N", "science_concept": "", "meaning": "Townspeople misjudging the lover's departure based on dream states."}
+{"id": "kural:1222", "label": "M", "science_concept": "", "meaning": "Addressing the evening as having a cruel companion; personification."}
+{"id": "kural:1224", "label": "M", "science_concept": "", "meaning": "Evening arrives like an executioner when the lover is absent; metaphor."}
+{"id": "kural:1225", "label": "N", "science_concept": "", "meaning": "Contrasting the pleasant morning with the painful evening; emotional state."}
+{"id": "kural:1226", "label": "N", "science_concept": "", "meaning": "Evening pangs were unknown to me when my lord did not leave me."}
+{"id": "kural:1231", "label": "N", "science_concept": "", "meaning": "Thinking of him who left to banish poverty, my eyes put flowers to shame."}
+{"id": "kural:1232", "label": "N", "science_concept": "", "meaning": "Pale and tearful eyes reveal the unkind absence of my lover."}
+{"id": "kural:1234", "label": "N", "science_concept": "", "meaning": "Bracelets slip off and shoulders lose their beauty due to his separation."}
+{"id": "kural:1235", "label": "N", "science_concept": "", "meaning": "Faded arms and loose bracelets proclaim the cruelty of my absent lord."}
+{"id": "kural:1236", "label": "N", "science_concept": "", "meaning": "My thinning arms grieve when you call my husband cruel."}
+{"id": "kural:1237", "label": "N", "science_concept": "", "meaning": "O heart, go and tell the cruel one of the distress of my wasted arms."}
+{"id": "kural:1240", "label": "N", "science_concept": "", "meaning": "My eyes grew pale seeing the pallor on the bright forehead of this lady."}
+{"id": "kural:1242", "label": "N", "science_concept": "", "meaning": "O my heart, it is foolish to pine for one who has no love for us."}
+{"id": "kural:1243", "label": "N", "science_concept": "", "meaning": "O heart, why grieve and pine? Those who caused this pain have no pity."}
+{"id": "kural:1244", "label": "N", "science_concept": "", "meaning": "O heart, take these eyes with you to see him, or they will consume me."}
+{"id": "kural:1245", "label": "N", "science_concept": "", "meaning": "O heart, even if he spurns us, can we ever abandon him as a foe?"}
+{"id": "kural:1247", "label": "N", "science_concept": "", "meaning": "Internal conflict between love and shame."}
+{"id": "kural:1249", "label": "N", "science_concept": "", "meaning": "The lover residing in the mind and thoughts."}
+{"id": "kural:1250", "label": "N", "science_concept": "", "meaning": "Suffering and loss of beauty due to desertion."}
+{"id": "kural:1251", "label": "N", "science_concept": "", "meaning": "Passion breaking down the barriers of reserve."}
+{"id": "kural:1252", "label": "N", "science_concept": "", "meaning": "The relentless power of lust controlling the heart at midnight."}
+{"id": "kural:1253", "label": "O", "science_concept": "sneezing as an involuntary reflex", "meaning": "Desire reveals itself involuntarily just like a sudden sneeze."}
+{"id": "kural:1254", "label": "N", "science_concept": "", "meaning": "Desire betraying personal reserve and restraint."}
+{"id": "kural:1255", "label": "N", "science_concept": "", "meaning": "Dignity fails those who are afflicted by love-sickness."}
+{"id": "kural:1256", "label": "N", "science_concept": "", "meaning": "The peculiar grief and caprice of being lovesick."}
+{"id": "kural:1257", "label": "N", "science_concept": "", "meaning": "Shame is forgotten when fulfilling the desires of a lover."}
+{"id": "kural:1258", "label": "N", "science_concept": "", "meaning": "The deceptive and tempting words of a cunning lover."}
+{"id": "kural:1261", "label": "N", "science_concept": "", "meaning": "Dim eyes and worn fingers counting the days of separation."}
+{"id": "kural:1263", "label": "N", "science_concept": "", "meaning": "A wife lives in hope of her husband's return."}
+{"id": "kural:1264", "label": "N", "science_concept": "", "meaning": "The heart beats with joy anticipating the return of the lover."}
+{"id": "kural:1265", "label": "N", "science_concept": "", "meaning": "Sallowness of shoulders will vanish when I see my husband."}
+{"id": "kural:1267", "label": "N", "science_concept": "", "meaning": "Pondering whether to sulk, embrace, or welcome the beloved."}
+{"id": "kural:1270", "label": "N", "science_concept": "", "meaning": "Acquisitions and embraces matter little when the heart is broken."}
+{"id": "kural:1271", "label": "N", "science_concept": "", "meaning": "The expressive eyes betray the emotions despite attempts to hide."}
+{"id": "kural:1272", "label": "O", "science_concept": "bamboo stem comparison to arms", "meaning": "The simple maiden has bamboo-like arms and admirable qualities."}
+{"id": "kural:1273", "label": "O", "science_concept": "thread passing through a gem", "meaning": "Something shines through her ornaments like thread through a gem."}
+{"id": "kural:1274", "label": "O", "science_concept": "fragrance residing within a flower bud", "meaning": "A subtle meaning is concealed in her smile like fragrance in a bud."}
+{"id": "kural:1276", "label": "N", "science_concept": "", "meaning": "Deep embraces bring comfort but also hint at eventual parting."}
+{"id": "kural:1277", "label": "N", "science_concept": "", "meaning": "Bracelets loosen, sensing the impending separation from the lord."}
+{"id": "kural:1279", "label": "N", "science_concept": "", "meaning": "She checks her bracelets, arms, and feet in pensive shyness."}
+{"id": "kural:1281", "label": "N", "science_concept": "", "meaning": "The ecstasy of thought and joy of sight belong to love rather than wine."}
+{"id": "kural:1282", "label": "N", "science_concept": "", "meaning": "Sulking should be minimal when passion grows immense like a palmyra tree."}
+{"id": "kural:1283", "label": "N", "science_concept": "", "meaning": "Though the lord slights her, her restless eyes still long to see him."}
+{"id": "kural:1284", "label": "N", "science_concept": "", "meaning": "She intended to sulk, but her heart forgot and rushed to embrace him."}
+{"id": "kural:1285", "label": "O", "science_concept": "eye unable to see the pencil applying collyrium", "meaning": "When seeing her lord she sees no flaws, like eyes that see not the painter's brush."}
+{"id": "kural:1286", "label": "N", "science_concept": "", "meaning": "When he is present she sees no faults, and when absent she sees nothing else."}
+{"id": "kural:1287", "label": "O", "science_concept": "jumping into a rushing flood knowing the danger", "meaning": "Feign a huff with the lord just like diving into a rushing stream knowing it carries one away."}
+{"id": "kural:1288", "label": "N", "science_concept": "", "meaning": "Like intoxicating wine, the lover's breast is sweet despite humiliation."}
+{"id": "kural:1291", "label": "N", "science_concept": "", "meaning": "His heart belongs to him, but why does my heart refuse to obey me?"}
+{"id": "kural:1292", "label": "N", "science_concept": "", "meaning": "Though he slights her, her heart still seeks him out as a friend."}
+{"id": "kural:1293", "label": "N", "science_concept": "", "meaning": "You follow him blindly; is it because the fallen have no friends?"}
+{"id": "kural:1294", "label": "N", "science_concept": "", "meaning": "Since you will not sulk and then enjoy union, who will consult you, my heart?"}
+{"id": "kural:1295", "label": "N", "science_concept": "", "meaning": "The heart suffers ceaseless pain fearing loss and separation in love."}
+{"id": "kural:1296", "label": "N", "science_concept": "", "meaning": "My mind consumes me as I muse on him alone."}
+{"id": "kural:1297", "label": "N", "science_concept": "", "meaning": "I forget shame but cannot forget him, caught in my foolish mind."}
+{"id": "kural:1298", "label": "N", "science_concept": "", "meaning": "My heart loves him and cherishes his glory, ignoring any shame."}
+{"id": "kural:1299", "label": "N", "science_concept": "", "meaning": "Who can support someone in grief if their own heart does not help?"}
+{"id": "kural:1300", "label": "N", "science_concept": "", "meaning": "Why expect strangers to be loyal when one's own heart is not?"}
+{"id": "kural:1301", "label": "N", "science_concept": "", "meaning": "Do not embrace him immediately so we can see his distress."}
+{"id": "kural:1303", "label": "N", "science_concept": "", "meaning": "Refusing to embrace a pouting lover causes them unnecessary grief."}
+{"id": "kural:1304", "label": "O", "science_concept": "cutting the root of a wilting plant", "meaning": "Failing to comfort a pouting lover is like cutting the root of a wilting plant."}
+{"id": "kural:1305", "label": "N", "science_concept": "", "meaning": "The pout of flower-eyed women adds a lovely grace to good partners."}
+{"id": "kural:1306", "label": "O", "science_concept": "ripe and unripe fruits", "meaning": "Love without lovers' quarrels is like missing both ripe and raw fruits."}
+{"id": "kural:1307", "label": "N", "science_concept": "", "meaning": "The doubt of when union will happen brings pain during lovers' pouts."}
+{"id": "kural:1308", "label": "N", "science_concept": "", "meaning": "Grieving in the absence of a caring lover who understands pain."}
+{"id": "kural:1310", "label": "N", "science_concept": "", "meaning": "The heart still desires union with the one who caused sulking."}
+{"id": "kural:1311", "label": "N", "science_concept": "", "meaning": "Refusing a lover's embrace because he is common to many women."}
+{"id": "kural:1314", "label": "N", "science_concept": "", "meaning": "A lover becomes jealous and sulks when told she is loved most."}
+{"id": "kural:1315", "label": "N", "science_concept": "", "meaning": "Eyes fill with tears at the mere mention of possible separation."}
+{"id": "kural:1318", "label": "N", "science_concept": "", "meaning": "Suppressed sneeze makes her weep, suspecting hidden thoughts."}
+{"id": "kural:1319", "label": "N", "science_concept": "", "meaning": "She is angry even when coaxed, suspecting similar behavior with others."}
+{"id": "kural:1320", "label": "N", "science_concept": "", "meaning": "She scolds when gazed at thoughtfully, suspecting thoughts of another."}
+{"id": "kural:1321", "label": "N", "science_concept": "", "meaning": "Feigning sulking even without fault to test a lover's affection."}
+{"id": "kural:1322", "label": "N", "science_concept": "", "meaning": "Petty pouting enhances the value of subsequent affectionate reconciliation."}
+{"id": "kural:1324", "label": "N", "science_concept": "", "meaning": "A weapon of resistance appears within sustained pouting after an embrace."}
+{"id": "kural:1325", "label": "N", "science_concept": "", "meaning": "There is a special charm in releasing oneself from a beloved's faultless arms."}
+{"id": "kural:1326", "label": "L", "science_concept": "food digestion is beneficial for health", "meaning": "Digestion of food is sweeter than eating itself."}
+{"id": "kural:1328", "label": "O", "science_concept": "perspiration on forehead from physical exertion/warmth", "meaning": "Dew-like sweat on the brow during loving union."}
+{"id": "kural:1330", "label": "N", "science_concept": "", "meaning": "Lovers' quarrels and subsequent union bring delight; no natural-science content."}
+{"id": "tolka:1", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining the primary letters of the Tamil alphabet."}
+{"id": "tolka:2", "label": "N", "science_concept": "", "meaning": "Grammatical classification of specific modified characters in Tamil."}
+{"id": "tolka:3", "label": "N", "science_concept": "", "meaning": "Definition of short vowels and their one-mora duration."}
+{"id": "tolka:4", "label": "N", "science_concept": "", "meaning": "Definition of long vowels and their two-mora duration."}
+{"id": "tolka:5", "label": "N", "science_concept": "", "meaning": "Rule stating single letters do not naturally sound for three morae."}
+{"id": "tolka:6", "label": "N", "science_concept": "", "meaning": "Poetic rule on prolonging vowel sounds by combining letters for extra duration."}
+{"id": "tolka:7", "label": "L", "science_concept": "duration of a blink and finger snap as time units", "meaning": "A mora is defined by the time taken for an eye blink or finger snap."}
+{"id": "tolka:8", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining the twelve vowel letters."}
+{"id": "tolka:9", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining the eighteen consonant letters."}
+{"id": "tolka:10", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding vowel and consonant combinations; no natural science content."}
+{"id": "tolka:11", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining the half-mora duration of consonants."}
+{"id": "tolka:12", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding dependent letters and their duration."}
+{"id": "tolka:13", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the shortened duration of the letter ma."}
+{"id": "tolka:14", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shape and dot of the consonant ma."}
+{"id": "tolka:15", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that consonants naturally bear a dot."}
+{"id": "tolka:16", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the dot in certain vowels."}
+{"id": "tolka:17", "label": "N", "science_concept": "", "meaning": "Grammatical rule describing how vowels and consonants combine into compound letters."}
+{"id": "tolka:18", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the phonetic sequence of compound letters."}
+{"id": "tolka:19", "label": "N", "science_concept": "", "meaning": "Grammatical classification of hard consonants."}
+{"id": "tolka:20", "label": "N", "science_concept": "", "meaning": "Grammatical classification of soft nasal consonants."}
+{"id": "tolka:21", "label": "N", "science_concept": "", "meaning": "Grammatical classification of intermediate consonants."}
+{"id": "tolka:22", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding consonant clusters and letter combinations."}
+{"id": "tolka:23", "label": "N", "science_concept": "", "meaning": "Grammatical rule on specific consonant clusters preceding certain plosives."}
+{"id": "tolka:24", "label": "N", "science_concept": "", "meaning": "Grammatical rule about 'y' and 'v' following 'l' and 'ḷ' consonants."}
+{"id": "tolka:25", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding nasal consonants combining with their homorganic plosives."}
+{"id": "tolka:26", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant combinations following retroflex nasals 'ṇ' and 'ṉ'."}
+{"id": "tolka:27", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the semi-vowel 'y' following specific nasal and labial consonants."}
+{"id": "tolka:28", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating the semi-vowel 'v' appears after the consonant 'm'."}
+{"id": "tolka:29", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant combinations following 'y', 'r', and 'ẓ'."}
+{"id": "tolka:30", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating consonants can generally double themselves, except 'r', 'ẓ', and 'ḷ'."}
+{"id": "tolka:31", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining demonstrative vowels as 'a', 'i', and 'u'."}
+{"id": "tolka:32", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining interrogative vowels as 'ā', 'ē', and 'ō'."}
+{"id": "tolka:33", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the elongation of vowels and consonants in musical contexts."}
+{"id": "tolka:34", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shortening of the vowel i (kutriyalikaram)."}
+{"id": "tolka:35", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the shortening of kutriyalikaram during word combination."}
+{"id": "tolka:36", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shortening of the vowel u (kutriyalukaram)."}
+{"id": "tolka:37", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the further shortening of kutriyalukaram within compound words."}
+{"id": "tolka:38", "label": "N", "science_concept": "", "meaning": "Grammatical rule describing the placement of the Aydham sign after a short vowel."}
+{"id": "tolka:39", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the phonetic duration of the Aydham in word combinations."}
+{"id": "tolka:40", "label": "N", "science_concept": "", "meaning": "Grammatical and phonetic rules regarding the Aydham in visual and auditory expressions."}
+{"id": "tolka:41", "label": "N", "science_concept": "", "meaning": "Grammatical rule describing vowel prolongation (alalbedai) to fulfill metric requirements."}
+{"id": "tolka:42", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding metric prolongation using specific vowels for 'Ai' and 'Au'."}
+{"id": "tolka:43", "label": "N", "science_concept": "", "meaning": "Grammatical classification of the seven long vowels functioning as single-letter words."}
+{"id": "tolka:44", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that short vowels alone generally do not form standalone words."}
+{"id": "tolka:45", "label": "N", "science_concept": "", "meaning": "Grammatical classification of words into single-letter, two-letter, and multi-letter forms."}
+{"id": "tolka:46", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the combination of pure consonants with the vowel 'a'."}
+{"id": "tolka:47", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding consonant clusters and letter names."}
+{"id": "tolka:48", "label": "N", "science_concept": "", "meaning": "Grammatical rule about consonant clusters following 'ya', 'ra', and 'la'."}
+{"id": "tolka:49", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that 'ra' and 'la' cannot be dependent consonants after short vowels."}
+{"id": "tolka:50", "label": "N", "science_concept": "", "meaning": "Grammatical rule concerning the measurement of short and long vowels in words."}
+{"id": "tolka:51", "label": "N", "science_concept": "", "meaning": "Grammatical rule about double consonant clusters ending poetic words."}
+{"id": "tolka:52", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the 'ma' sound shortens after the 'na' sound."}
+{"id": "tolka:53", "label": "N", "science_concept": "", "meaning": "Grammatical rule that letters retain their moraic value in different words."}
+{"id": "tolka:54", "label": "N", "science_concept": "", "meaning": "Grammatical rule that the combination of 'a' and 'i' sounds like 'ai'."}
+{"id": "tolka:55", "label": "N", "science_concept": "", "meaning": "Grammatical rule that the combination of 'a' and 'u' sounds like 'au'."}
+{"id": "tolka:56", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the phonetic appearance of 'i' or 'y' after 'a'."}
+{"id": "tolka:57", "label": "N", "science_concept": "", "meaning": "Grammatical rule noting that 'ai' and 'au' can sometimes have a single mora length."}
+{"id": "tolka:58", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the behavior of the letters i and ya at word endings."}
+{"id": "tolka:59", "label": "N", "science_concept": "", "meaning": "Rule stating that twelve vowels can appear at the beginning of words."}
+{"id": "tolka:60", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonants not acting as word-initial sounds."}
+{"id": "tolka:61", "label": "N", "science_concept": "", "meaning": "Grammatical rule detailing word-initial consonant-vowel combinations with examples like fields and earth."}
+{"id": "tolka:62", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the letter sa at the beginning of words."}
+{"id": "tolka:63", "label": "N", "science_concept": "", "meaning": "Grammatical rule restricting specific vowels from combining with the consonant va."}
+{"id": "tolka:64", "label": "N", "science_concept": "", "meaning": "Grammatical rule restricting certain vowels to combine with the consonant nya."}
+{"id": "tolka:65", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating the consonant ya only combines with the vowel aa initially."}
+{"id": "tolka:66", "label": "N", "science_concept": "", "meaning": "Grammatical rule on letters occurring as names of letters."}
+{"id": "tolka:67", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the short u (kutriyalukaram) combining with nasal letters."}
+{"id": "tolka:68", "label": "N", "science_concept": "", "meaning": "Grammatical rule on pronunciation variations of kinship terms not altering meaning."}
+{"id": "tolka:69", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating which vowels can appear at the ends of words."}
+{"id": "tolka:70", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the behavior of the letter 'au' and its ending positions."}
+{"id": "tolka:71", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the vowel 'e' does not end words as a consonant-vowel."}
+{"id": "tolka:72", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the vowel 'o' combines with the consonant 'n'."}
+{"id": "tolka:73", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that vowels 'e' and 'o' do not combine with the consonant 'ny'."}
+{"id": "tolka:74", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the vowels 'u' and 'uu' not combining with 'n' and 'v'."}
+{"id": "tolka:75", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the restricted ending usage of the syllable 'su'."}
+{"id": "tolka:76", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the ending usage of the syllable 'pu' in verbs."}
+{"id": "tolka:77", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the remaining consonant-vowel combinations."}
+{"id": "tolka:78", "label": "N", "science_concept": "", "meaning": "Grammatical listing of the eleven pure consonants that can end a word."}
+{"id": "tolka:79", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the ending usage of the consonant 'n'."}
+{"id": "tolka:80", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the ending usage of the consonant 'ny'."}
+{"id": "tolka:81", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the consonant 'v' can end four specific words."}
+{"id": "tolka:82", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding word endings and non-human noun classifications."}
+{"id": "tolka:83", "label": "L", "science_concept": "physiological mechanism of speech sound production using breath and vocal organs", "meaning": "Air originating from the navel rises through the body to articulate speech sounds using eight organs."}
+{"id": "tolka:84", "label": "L", "science_concept": "air from the throat produces twelve vowel sounds", "meaning": "The twelve vowels are produced by the breath originating in the throat."}
+{"id": "tolka:85", "label": "L", "science_concept": "vowels a and aa produced by opening the mouth", "meaning": "The vowels a and aa are produced by the action of opening the mouth."}
+{"id": "tolka:86", "label": "L", "science_concept": "vowels i, ee, e, ay, ai produced with tongue and teeth contact", "meaning": "Five vowels produced by opening the mouth with tongue edge touching the upper teeth."}
+{"id": "tolka:87", "label": "L", "science_concept": "vowels u, oo, o, oo, ou produced by rounding lips", "meaning": "Five vowels produced with the rounding of the lips."}
+{"id": "tolka:88", "label": "L", "science_concept": "subtle variations in the articulation points of speech sounds", "meaning": "Differences in the birth places of these sounds are of a small scale."}
+{"id": "tolka:89", "label": "L", "science_concept": "velar consonants produced by tongue root and palate contact", "meaning": "Ka and nga are produced when the root of the tongue meets the palate."}
+{"id": "tolka:90", "label": "L", "science_concept": "palatal consonants produced by middle tongue and palate contact", "meaning": "Sa and nya are produced when the middle of the tongue meets the palate."}
+{"id": "tolka:91", "label": "L", "science_concept": "retroflex consonants produced by tongue tip and hard palate contact", "meaning": "Ta and ṇa are produced when the tip of the tongue meets the tip of the palate."}
+{"id": "tolka:92", "label": "L", "science_concept": "three distinct places of articulation for groups of consonants", "meaning": "The six mentioned letters belong to three different types of origins sequentially."}
+{"id": "tolka:93", "label": "L", "science_concept": "dental consonants produced by tongue tip spreading against upper teeth base", "meaning": "Ta and na are produced when the flat tongue tip touches the upper teeth base."}
+{"id": "tolka:94", "label": "L", "science_concept": "articulatory phonetics of retroflex consonants", "meaning": "Sounds 'ra' and 'na' are produced by the tip of the tongue touching the upper palate."}
+{"id": "tolka:95", "label": "L", "science_concept": "articulatory phonetics of liquid consonants", "meaning": "Sounds 'ra' and 'la' are produced by the tip of the tongue tracing the upper palate."}
+{"id": "tolka:96", "label": "L", "science_concept": "articulatory phonetics of lateral and retroflex consonants", "meaning": "Sounds 'la' and 'la' are produced with the edge of the tongue touching the teeth and palate."}
+{"id": "tolka:97", "label": "L", "science_concept": "articulatory phonetics of bilabial consonants", "meaning": "Sounds 'pa' and 'ma' are produced when the lower and upper lips meet."}
+{"id": "tolka:98", "label": "L", "science_concept": "articulatory phonetics of labiodental consonants", "meaning": "Sound 'va' is produced when the upper teeth and lower lip meet."}
+{"id": "tolka:99", "label": "L", "science_concept": "aerodynamics of speech sound production", "meaning": "Breath from the naval combined with vocal cords produces the sound 'ya' against the palate."}
+{"id": "tolka:100", "label": "L", "science_concept": "nasal airflow in nasal consonant articulation", "meaning": "Nasal consonants are produced when airflow is channeled through the nose."}
+{"id": "tolka:101", "label": "L", "science_concept": "dependent phonetics of secondary sounds", "meaning": "Dependent sounds arise in conjunction with specific primary articulatory organs."}
+{"id": "tolka:102", "label": "L", "science_concept": "internal breath dynamics in speech", "meaning": "Speech sounds are produced by internal air currents circulating and exiting through vocal organs."}
+{"id": "tolka:103", "label": "L", "science_concept": "speech duration and breath measurement", "meaning": "The duration of externalized vocal sounds is measured in terms of breath units."}
+{"id": "tolka:104", "label": "N", "science_concept": "", "meaning": "Rules governing the initial and final consonant and vowel letters in words."}
+{"id": "tolka:105", "label": "N", "science_concept": "", "meaning": "Consonants ending a word must be written with a dot diacritic."}
+{"id": "tolka:106", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shortening of the ukaram sound and its dot notation."}
+{"id": "tolka:107", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that compound consonants ending in vowels act like pure vowels."}
+{"id": "tolka:108", "label": "N", "science_concept": "", "meaning": "Grammatical classification of the four possible combinations of vowels and consonants in word junction."}
+{"id": "tolka:109", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding noun and verb combinations during word junction."}
+{"id": "tolka:110", "label": "N", "science_concept": "", "meaning": "Grammatical explanation of phonetic changes such as modification, addition, and reduction in word junction."}
+{"id": "tolka:111", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that words with adjectives can also undergo normal junction."}
+{"id": "tolka:112", "label": "N", "science_concept": "", "meaning": "Grammatical rules for modified or contracted words and irregular morphophonemic combinations."}
+{"id": "tolka:113", "label": "N", "science_concept": "", "meaning": "Grammatical classification of word junction into case relations and non-case relations with phonetic additions."}
+{"id": "tolka:114", "label": "N", "science_concept": "", "meaning": "Grammatical listing of the six case markers in Tamil."}
+{"id": "tolka:115", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding consonant doubling before case markers."}
+{"id": "tolka:116", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the elision of the final vowel in the sixth case marker."}
+{"id": "tolka:117", "label": "N", "science_concept": "", "meaning": "Grammatical rule explaining how case markers follow noun stems in word junction."}
+{"id": "tolka:118", "label": "N", "science_concept": "", "meaning": "Grammatical rule classifying nouns into high-caste and ordinary categories."}
+{"id": "tolka:119", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding transitional particles between nouns and case markers."}
+{"id": "tolka:120", "label": "N", "science_concept": "", "meaning": "Grammatical listing of specific transitional particle words."}
+{"id": "tolka:121", "label": "N", "science_concept": "", "meaning": "Grammatical rule concerning the elision of the letter 'i' in specific particles."}
+{"id": "tolka:122", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding unit-of-measurement words during compounding."}
+{"id": "tolka:123", "label": "N", "science_concept": "", "meaning": "Grammatical rule for demonstrative words taking specific case suffixes."}
+{"id": "tolka:124", "label": "N", "science_concept": "", "meaning": "Grammatical rule changing a specific consonant in a particle for the fourth case."}
+{"id": "tolka:125", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding consonant shifts in specific particles before action words."}
+{"id": "tolka:126", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the elision of a vowel in the 'athu' particle."}
+{"id": "tolka:127", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the elision of a vowel in the 'ikku' particle after specific endings."}
+{"id": "tolka:128", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the elision of a vowel in the 'ikku' particle after 'ai' endings."}
+{"id": "tolka:129", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the elision of specific consonants and vowels before hard consonants."}
+{"id": "tolka:130", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding consonant transformations in Tamil word combinations."}
+{"id": "tolka:131", "label": "N", "science_concept": "", "meaning": "Grammatical rule about the omission of the affix 'am' before nasal and medial consonants."}
+{"id": "tolka:132", "label": "N", "science_concept": "", "meaning": "Grammatical rule concerning case markers and prohibited infixes."}
+{"id": "tolka:133", "label": "N", "science_concept": "", "meaning": "Grammatical rule on infixes appearing between nouns and verbs in compounds."}
+{"id": "tolka:134", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the dropping of consonants and hardening of plosives with specific infixes."}
+{"id": "tolka:135", "label": "N", "science_concept": "", "meaning": "Grammatical rule defining specific letter-suffixes like karam, kaaram, and kaan."}
+{"id": "tolka:136", "label": "N", "science_concept": "", "meaning": "Grammatical restriction stating that certain letter-suffixes do not apply to long vowels."}
+{"id": "tolka:137", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding letter-suffixes applicable to short vowels."}
+{"id": "tolka:138", "label": "N", "science_concept": "", "meaning": "Grammatical rule allowing specific letter-suffixes for the vowels ai and au."}
+{"id": "tolka:139", "label": "N", "science_concept": "", "meaning": "Grammatical rule on how vowels join with preceding consonant endings."}
+{"id": "tolka:140", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that a consonant stripped of a vowel reverts to its pure dot form."}
+{"id": "tolka:141", "label": "N", "science_concept": "", "meaning": "Grammatical rule requiring transitional glide consonants when vowels meet vowels."}
+{"id": "tolka:142", "label": "N", "science_concept": "", "meaning": "Grammatical rules on letters, sounds, and the morphophonemic combination of words."}
+{"id": "tolka:143", "label": "N", "science_concept": "", "meaning": "Grammatical rule explaining implied meanings in combined words without explicit letter markers."}
+{"id": "tolka:144", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the appearance of homorganic nasal consonants when plosives follow."}
+{"id": "tolka:145", "label": "N", "science_concept": "", "meaning": "Grammatical rule on words starting with specific nasals and vowels remaining unchanged in combination."}
+{"id": "tolka:146", "label": "N", "science_concept": "", "meaning": "Grammatical rule allowing nasal consonants to optionally double or remain unchanged in certain compounds."}
+{"id": "tolka:147", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the behavior of 'na' and 'ṇa' before certain verbs."}
+{"id": "tolka:148", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that final 'ṇa' and 'na' do not undergo mutation in non-case combinations."}
+{"id": "tolka:149", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding unchanged consonants in case-inflected combinations without initial plosives."}
+{"id": "tolka:150", "label": "N", "science_concept": "", "meaning": "Grammatical rule on how 'ta' and 'na' mutate when following the consonants 'la' and 'ṇa'."}
+{"id": "tolka:151", "label": "N", "science_concept": "", "meaning": "Grammatical rule on how 'ta' and 'na' mutate after the consonant points 'ṇa' and 'la'."}
+{"id": "tolka:152", "label": "N", "science_concept": "", "meaning": "Grammatical rule on second-person verbs ending in vowels or consonants when followed by plosives."}
+{"id": "tolka:153", "label": "N", "science_concept": "", "meaning": "Grammatical exceptions regarding specific ending sounds in second-person imperative words."}
+{"id": "tolka:154", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding nominal endings in high-class nouns; no natural science content."}
+{"id": "tolka:155", "label": "N", "science_concept": "", "meaning": "Grammar rule for 'i' ending nouns; no natural science content."}
+{"id": "tolka:156", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding mixed gender nouns; no natural science content."}
+{"id": "tolka:157", "label": "N", "science_concept": "", "meaning": "Grammar rules for consonant and vowel ending words in noun-verb compounds."}
+{"id": "tolka:158", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning consonant and nasal mutations in word junctions."}
+{"id": "tolka:159", "label": "N", "science_concept": "", "meaning": "Grammatical rules for 'i' and 'ai' ending words in non-case conjunctions."}
+{"id": "tolka:160", "label": "N", "science_concept": "", "meaning": "Grammar rules for demonstrative and interrogative pronouns."}
+{"id": "tolka:161", "label": "N", "science_concept": "", "meaning": "Grammar rule about dropping consonants after long vowels and doubling after short vowels."}
+{"id": "tolka:162", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding case markers and shortening of initial vowels."}
+{"id": "tolka:163", "label": "N", "science_concept": "", "meaning": "Grammatical rules for specific pronoun suffixes with case markers."}
+{"id": "tolka:164", "label": "N", "science_concept": "", "meaning": "Grammar rules for consonant-ending words combining with vowels and 'y'."}
+{"id": "tolka:165", "label": "N", "science_concept": "", "meaning": "Grammar rules for words denoting measure, weight, and numbers taking suffixes."}
+{"id": "tolka:166", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the particle 'e' attached to measurements like ulakku and tondu."}
+{"id": "tolka:167", "label": "N", "science_concept": "", "meaning": "Grammatical rules on case endings for words denoting measure, weight, and number."}
+{"id": "tolka:168", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the 'in' augment with shortened u-karam endings."}
+{"id": "tolka:169", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the 'attu' augment for the measure word 'kalam'."}
+{"id": "tolka:170", "label": "N", "science_concept": "", "meaning": "Grammatical rules for units of measurement 'panai' and weight 'ka'."}
+{"id": "tolka:171", "label": "N", "science_concept": "", "meaning": "Grammatical classification of initial letters for measurement and weight terms."}
+{"id": "tolka:172", "label": "N", "science_concept": "", "meaning": "General grammatical rule on how word combinations align with actual usage."}
+{"id": "tolka:173", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding consonant elision and insertion in specific pronouns."}
+{"id": "tolka:174", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the 'in' augment after specific vowel-ending words."}
+{"id": "tolka:175", "label": "N", "science_concept": "", "meaning": "Grammatical rule on plural nouns ending in 'a' taking the 'vattu' augment."}
+{"id": "tolka:176", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the interrogative pronoun 'ya' taking the 'vattu' augment."}
+{"id": "tolka:177", "label": "N", "science_concept": "", "meaning": "Grammatical rule on demonstrative pronouns combining with the 'an' augment."}
+{"id": "tolka:178", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding case suffixes and connecting particles for demonstrative pronouns."}
+{"id": "tolka:179", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning interrogative pronoun suffixes and elision."}
+{"id": "tolka:180", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shortening of the vowel in the pronoun 'ni'."}
+{"id": "tolka:181", "label": "N", "science_concept": "", "meaning": "Grammatical rule specifying 'on' as the connecting particle for words ending in 'o'."}
+{"id": "tolka:182", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding tree names ending in 'a' taking the 'athu' particle."}
+{"id": "tolka:183", "label": "N", "science_concept": "", "meaning": "Grammatical rule specifying 'in' as the connecting particle for words ending in 'nj' and 'n'."}
+{"id": "tolka:184", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding demonstrative pronouns with 'va' endings taking case suffixes."}
+{"id": "tolka:185", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that other words ending in 'va' take the 'in' particle."}
+{"id": "tolka:186", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that words ending in the consonant 'm' take the 'athu' particle."}
+{"id": "tolka:187", "label": "N", "science_concept": "", "meaning": "Grammatical rule noting exceptions where words ending in 'm' take the 'in' particle."}
+{"id": "tolka:188", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the plural pronoun ending 'num' takes case suffixes naturally without connecting particles."}
+{"id": "tolka:189", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the declension and vowel changes of the pronouns thaam, naam, and yaam."}
+{"id": "tolka:190", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding case suffixes and bound forms for the word 'ellam'."}
+{"id": "tolka:191", "label": "N", "science_concept": "", "meaning": "Grammar rule for 'ellam' when referring to high-caste or rational beings."}
+{"id": "tolka:192", "label": "N", "science_concept": "", "meaning": "Grammar rule on elision of certain letters in plural pronouns."}
+{"id": "tolka:193", "label": "N", "science_concept": "", "meaning": "Grammar rules for first-person pronoun forms like 'than' and 'yan'."}
+{"id": "tolka:194", "label": "N", "science_concept": "", "meaning": "Grammar rule concerning specific morphophonemic inflections for the words azhan and puzhan."}
+{"id": "tolka:195", "label": "N", "science_concept": "", "meaning": "Grammar rule prescribing the 'an' interfix for the numeral seven."}
+{"id": "tolka:196", "label": "N", "science_concept": "", "meaning": "Grammar rule stating the 'in' interfix appears after words ending in Kutriyulugaram."}
+{"id": "tolka:197", "label": "N", "science_concept": "", "meaning": "Grammar rule on consonant doubling after long vowels in certain words."}
+{"id": "tolka:198", "label": "N", "science_concept": "", "meaning": "Grammar rule stating certain inflected words naturally stand without interfixes."}
+{"id": "tolka:199", "label": "N", "science_concept": "", "meaning": "Grammar rule combining numeral endings with the 'an' interfix."}
+{"id": "tolka:200", "label": "N", "science_concept": "", "meaning": "Grammar rules governing the 'an' interfix and consonant changes in numbers above ten."}
+{"id": "tolka:201", "label": "N", "science_concept": "", "meaning": "Grammar rules regarding case suffixes and elision for interrogative and demonstrative pronouns containing an aytham."}
+{"id": "tolka:202", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding case suffixes and directional nouns; no natural-science content."}
+{"id": "tolka:203", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding consonant and vowel ending words; no natural-science content."}
+{"id": "tolka:204", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding noun endings and consonant mutation; no natural-science content."}
+{"id": "tolka:205", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding verbal participles and consonant doubling; no natural-science content."}
+{"id": "tolka:206", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding demonstrative prefixes and consonant mutation; no natural-science content."}
+{"id": "tolka:207", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding demonstratives followed by glides; no natural-science content."}
+{"id": "tolka:208", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding demonstrative prefixes before vowels; no natural-science content."}
+{"id": "tolka:209", "label": "N", "science_concept": "", "meaning": "Grammar rule on the lengthening of demonstratives in poetry; no natural-science content."}
+{"id": "tolka:210", "label": "N", "science_concept": "", "meaning": "Grammar rule on the elision of specific verbal suffixes; no natural-science content."}
+{"id": "tolka:211", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding specific noun and verb endings; no natural-science content."}
+{"id": "tolka:212", "label": "N", "science_concept": "", "meaning": "Grammar rule on the elision of the optative verb ending; no natural-science content."}
+{"id": "tolka:213", "label": "N", "science_concept": "", "meaning": "Grammar rule on the lengthening of a specific particle; no natural-science content."}
+{"id": "tolka:214", "label": "N", "science_concept": "", "meaning": "Grammar sutra on plural suffix elongation in poetry; no science content."}
+{"id": "tolka:215", "label": "N", "science_concept": "", "meaning": "Grammar sutra on consonant mutation of plural endings; no science content."}
+{"id": "tolka:216", "label": "N", "science_concept": "", "meaning": "Grammar sutra on word combination rules and hard consonants; no science content."}
+{"id": "tolka:217", "label": "N", "science_concept": "", "meaning": "Grammar sutra on case-inflection word joining rules; no science content."}
+{"id": "tolka:218", "label": "N", "science_concept": "", "meaning": "Grammar sutra on tree names taking nasal consonants in inflection; no science content."}
+{"id": "tolka:219", "label": "N", "science_concept": "", "meaning": "Grammar sutra on the 'in' affix for the word 'maga'; no science content."}
+{"id": "tolka:220", "label": "N", "science_concept": "", "meaning": "Grammar sutra on the 'athu' affix option for 'maga'; no science content."}
+{"id": "tolka:221", "label": "N", "science_concept": "", "meaning": "Grammar sutra on the plural word 'pala' taking 'vattu' in case inflection; no science content."}
+{"id": "tolka:222", "label": "N", "science_concept": "", "meaning": "Grammar sutra on 'a'-ending nouns behaving like short 'a' endings; no science content."}
+{"id": "tolka:223", "label": "N", "science_concept": "", "meaning": "Grammar sutra on negative participle verbs and consonant mutation; no science content."}
+{"id": "tolka:224", "label": "N", "science_concept": "", "meaning": "Grammar sutra on compound words with implied ummai showing 'a' lengthening; no science content."}
+{"id": "tolka:225", "label": "N", "science_concept": "", "meaning": "Grammar sutra on natural ending behavior for specific vowels and interrogatives; no science content."}
+{"id": "tolka:226", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding noun endings and consonant doubling in Tamil morphology."}
+{"id": "tolka:227", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning vowel lengths and letters preceding specific nouns."}
+{"id": "tolka:228", "label": "N", "science_concept": "", "meaning": "Grammatical exception regarding the word for night and its consonant behavior."}
+{"id": "tolka:229", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the word for moon and transitional particles."}
+{"id": "tolka:230", "label": "L", "science_concept": "botanical names of trees and plants", "meaning": "Grammatical rules referencing specific tree and plant names like ya, pida, and thala."}
+{"id": "tolka:231", "label": "L", "science_concept": "botanical names of trees and plants", "meaning": "Grammatical rules mentioning botanical terms such as parts of the ya, pida, and thala trees."}
+{"id": "tolka:232", "label": "L", "science_concept": "names of trees and animals", "meaning": "Grammatical rules referencing specific animal and tree names like ma and a."}
+{"id": "tolka:233", "label": "L", "science_concept": "animal-derived products like ghee", "meaning": "Grammatical rule referencing cattle-derived products like ghee."}
+{"id": "tolka:234", "label": "L", "science_concept": "animal body parts and products", "meaning": "Grammatical rule mentioning cattle-related terms and anatomical references."}
+{"id": "tolka:235", "label": "L", "science_concept": "botanical morphology of tree trunks", "meaning": "Grammatical rule citing poetic examples of rough-barked, large tree trunks."}
+{"id": "tolka:236", "label": "N", "science_concept": "", "meaning": "Grammatical rules on noun endings with 'i' and subsequent consonant mutations."}
+{"id": "tolka:237", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding specific particles indicating time, place, and demonstratives."}
+{"id": "tolka:238", "label": "N", "science_concept": "", "meaning": "Grammatical rule on word endings and vowel transformations in poetry."}
+{"id": "tolka:239", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the nature of demonstrative prefixes."}
+{"id": "tolka:240", "label": "N", "science_concept": "", "meaning": "Grammatical rule for compounding specific measurement terms."}
+{"id": "tolka:241", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the elision of letters in specific measure words."}
+{"id": "tolka:242", "label": "N", "science_concept": "", "meaning": "Grammatical rule on case suffixes for the word representing the cold season."}
+{"id": "tolka:243", "label": "L", "science_concept": "wind as one of the classical elements", "meaning": "Grammatical rules regarding the word referring to wind as a fundamental element."}
+{"id": "tolka:244", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding nasal consonant mutations for the Uthi tree."}
+{"id": "tolka:245", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the specific bound morpheme for the tamarind tree."}
+{"id": "tolka:246", "label": "N", "science_concept": "", "meaning": "Grammatical rule for non-tree tamarind terms regarding nasal letters."}
+{"id": "tolka:247", "label": "N", "science_concept": "", "meaning": "Grammatical exception regarding hard consonants in tamarind-related terms."}
+{"id": "tolka:248", "label": "N", "science_concept": "", "meaning": "Grammatical rule on intercalated suffixes for day-related nouns."}
+{"id": "tolka:249", "label": "N", "science_concept": "", "meaning": "Grammatical rule on intercalated suffixes for month-related nouns."}
+{"id": "tolka:250", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the combination of Tamil words ending in the vowel i."}
+{"id": "tolka:251", "label": "N", "science_concept": "", "meaning": "Grammar rule for words like ni, pi, and mi combining with consonants."}
+{"id": "tolka:252", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding exceptions for the word mi."}
+{"id": "tolka:253", "label": "N", "science_concept": "", "meaning": "Grammar rule for words ending in i in case-inflection contexts."}
+{"id": "tolka:254", "label": "N", "science_concept": "", "meaning": "Grammar rule for the pronoun ni combining with noun inflections."}
+{"id": "tolka:255", "label": "N", "science_concept": "", "meaning": "Grammar rule for words ending in the vowel u."}
+{"id": "tolka:256", "label": "N", "science_concept": "", "meaning": "Grammar rule for demonstrative words ending in u."}
+{"id": "tolka:257", "label": "N", "science_concept": "", "meaning": "Grammar rules for demonstrative words ending in u before various consonants and vowels."}
+{"id": "tolka:258", "label": "N", "science_concept": "", "meaning": "Grammar rule stating that certain demonstratives ending in u remain unchanged."}
+{"id": "tolka:259", "label": "N", "science_concept": "", "meaning": "Poetic grammar rules for demonstrative pronouns combining with the word antru and suffixes."}
+{"id": "tolka:260", "label": "N", "science_concept": "", "meaning": "Grammar rule for words ending in u in case-inflection contexts."}
+{"id": "tolka:261", "label": "N", "science_concept": "", "meaning": "Grammar rule for the compounding behavior of specific words like eru and seru."}
+{"id": "tolka:262", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the lengthening of the ukaram vowel after the letter lakaram."}
+{"id": "tolka:263", "label": "N", "science_concept": "", "meaning": "Grammar rule for noun endings and word coalescence in poetic Tamil."}
+{"id": "tolka:264", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding demonstrative prefixes and word joining."}
+{"id": "tolka:265", "label": "N", "science_concept": "", "meaning": "Grammar rule on the behavior of ukaram word endings in compounds."}
+{"id": "tolka:266", "label": "N", "science_concept": "", "meaning": "Grammar rule for finite verbs and imperative word endings."}
+{"id": "tolka:267", "label": "N", "science_concept": "", "meaning": "Grammar rule for case markers and word endings."}
+{"id": "tolka:268", "label": "N", "science_concept": "", "meaning": "Grammar rule on adding ukaram after short letters and single-letter words."}
+{"id": "tolka:269", "label": "N", "science_concept": "", "meaning": "Grammar rule specifically for the single-letter word meaning flower."}
+{"id": "tolka:270", "label": "N", "science_concept": "", "meaning": "Grammar rule for the single-letter word indicating flesh."}
+{"id": "tolka:271", "label": "N", "science_concept": "", "meaning": "Grammar rule on specific connective suffixes for flesh-related terms."}
+{"id": "tolka:272", "label": "N", "science_concept": "", "meaning": "Grammar rules for gender-specific nouns like male and female terms."}
+{"id": "tolka:273", "label": "N", "science_concept": "", "meaning": "Grammar rules regarding the vowels e and o as noun endings."}
+{"id": "tolka:274", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding letters and harsh consonants."}
+{"id": "tolka:275", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the ending letter of words."}
+{"id": "tolka:276", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding interrogative and residual particles."}
+{"id": "tolka:277", "label": "N", "science_concept": "", "meaning": "Grammatical rule for case inflections involving specific word endings."}
+{"id": "tolka:278", "label": "N", "science_concept": "", "meaning": "Grammatical rule about vowel transformations in word endings."}
+{"id": "tolka:279", "label": "N", "science_concept": "", "meaning": "Grammatical rule for tree names ending in a specific vowel."}
+{"id": "tolka:280", "label": "N", "science_concept": "", "meaning": "Grammatical rule when the tree name refers to cattle."}
+{"id": "tolka:281", "label": "N", "science_concept": "", "meaning": "Grammatical rule for words ending in 'ai' in compound cases."}
+{"id": "tolka:282", "label": "N", "science_concept": "", "meaning": "Grammatical morphophonemic rules for demonstrative words."}
+{"id": "tolka:283", "label": "N", "science_concept": "", "meaning": "Grammatical rules for specific tree names regarding nasal consonants."}
+{"id": "tolka:284", "label": "N", "science_concept": "", "meaning": "Grammatical rules for specific tree names involving auxiliary particles."}
+{"id": "tolka:285", "label": "N", "science_concept": "", "meaning": "Grammatical vowel mutation rule specifically for the word palm tree."}
+{"id": "tolka:286", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding consonant mutation in word combination."}
+{"id": "tolka:287", "label": "N", "science_concept": "", "meaning": "Grammar rule for noun endings and day names."}
+{"id": "tolka:288", "label": "N", "science_concept": "", "meaning": "Grammar rule for the word rain combining with wind."}
+{"id": "tolka:289", "label": "N", "science_concept": "", "meaning": "Grammar rule for poetic elision of words."}
+{"id": "tolka:290", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the vowel O."}
+{"id": "tolka:291", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding interrogative and doubtful vowel O."}
+{"id": "tolka:292", "label": "N", "science_concept": "", "meaning": "Grammar rule on residual forms of vowel O."}
+{"id": "tolka:293", "label": "N", "science_concept": "", "meaning": "Grammar rule for case endings with vowel O."}
+{"id": "tolka:294", "label": "N", "science_concept": "", "meaning": "Grammar rule for combining O with the word ill."}
+{"id": "tolka:295", "label": "N", "science_concept": "", "meaning": "Grammar rule on case markers with vowel O."}
+{"id": "tolka:296", "label": "N", "science_concept": "", "meaning": "Grammar rule for the AU vowel ending."}
+{"id": "tolka:297", "label": "N", "science_concept": "", "meaning": "Grammar rule for verbal nouns ending in NYA."}
+{"id": "tolka:298", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding consonant combinations and word endings in Tamil grammar."}
+{"id": "tolka:299", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning the letter 'na' and its sandhi transformations."}
+{"id": "tolka:300", "label": "N", "science_concept": "", "meaning": "Grammatical rules on case relations and the omission of letters in word combinations."}
+{"id": "tolka:301", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the elision of the ending of the word 'verin'."}
+{"id": "tolka:302", "label": "N", "science_concept": "", "meaning": "Grammatical exception regarding the hardening of consonants after elision."}
+{"id": "tolka:303", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the mutation of the letter 'na' to 'ta' in compound nouns."}
+{"id": "tolka:304", "label": "N", "science_concept": "", "meaning": "Grammatical convention regarding the natural gender categories of male and female."}
+{"id": "tolka:305", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding specific tree names taking specific morphs."}
+{"id": "tolka:306", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning the sky-denoting word 'vin' in poetic usage."}
+{"id": "tolka:307", "label": "N", "science_concept": "", "meaning": "Grammatical rules on how verbal nouns ending in 'na' behave in sandhi."}
+{"id": "tolka:308", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding kinship terms ending in the letter 'na'."}
+{"id": "tolka:309", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the food-item noun 'el' (sesame) in non-case combinations."}
+{"id": "tolka:310", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the noun 'muran' and its case inflections."}
+{"id": "tolka:311", "label": "N", "science_concept": "", "meaning": "Grammatical rule on word-final 'makaram' before plosives."}
+{"id": "tolka:312", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the elongation of vowels before 'makaram'."}
+{"id": "tolka:313", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding nasal letter substitutions in words."}
+{"id": "tolka:314", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the tree name 'illam'."}
+{"id": "tolka:315", "label": "N", "science_concept": "", "meaning": "Grammatical rule on final 'makaram' becoming nasal in non-case relations."}
+{"id": "tolka:316", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the combination of the word 'akam' with 'kai'."}
+{"id": "tolka:317", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the poetic usage of the word 'ilam'."}
+{"id": "tolka:318", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the numeral 'ayiram' with numerical suffixes."}
+{"id": "tolka:319", "label": "N", "science_concept": "", "meaning": "Grammatical rule on modified forms of the numeral 'ayiram'."}
+{"id": "tolka:320", "label": "N", "science_concept": "", "meaning": "Grammatical rule on units of measurement following 'ayiram'."}
+{"id": "tolka:321", "label": "N", "science_concept": "", "meaning": "Grammatical rules on third and second-person pronouns in oblique cases."}
+{"id": "tolka:322", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding word endings and suffixes in Tamil."}
+{"id": "tolka:323", "label": "N", "science_concept": "", "meaning": "Grammatical rules on the word 'ellam' and its transformations."}
+{"id": "tolka:324", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding nasal letters after the word 'ellam'."}
+{"id": "tolka:325", "label": "N", "science_concept": "", "meaning": "Grammatical rules when 'ellam' refers to high-class nouns."}
+{"id": "tolka:326", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding nasal letters for the pronoun 'num'."}
+{"id": "tolka:327", "label": "N", "science_concept": "", "meaning": "Grammatical morphophonemic rules for the word 'num'."}
+{"id": "tolka:328", "label": "N", "science_concept": "", "meaning": "Grammatical rules for verbal nouns ending in 'm'."}
+{"id": "tolka:329", "label": "N", "science_concept": "", "meaning": "Grammatical rules for specific words like 'eem', 'kam', and 'urum'."}
+{"id": "tolka:330", "label": "N", "science_concept": "", "meaning": "Grammatical rules adding 'akku' suffix to specific words in the oblique case."}
+{"id": "tolka:331", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the shortening of the nasal 'm' before 'v'."}
+{"id": "tolka:332", "label": "N", "science_concept": "", "meaning": "Grammatical rules for time-related nouns ending in 'm'."}
+{"id": "tolka:333", "label": "N", "science_concept": "", "meaning": "Grammatical rule where a final 'n' changes to 't' before hard consonants in the oblique case."}
+{"id": "tolka:334", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding specific suffixes, verbal participles, and consonant mutations."}
+{"id": "tolka:335", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning demonstrative and interrogative pronouns before consonants."}
+{"id": "tolka:336", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the word 'kuyin' remains unchanged in compounding."}
+{"id": "tolka:337", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the noun 'yekin' when referring to a tree."}
+{"id": "tolka:338", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the word 'yekin' when it does not refer to a tree."}
+{"id": "tolka:339", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding kinship terms ending in the letter 'n'."}
+{"id": "tolka:340", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the word 'min' (fish/star) combining with hard consonants."}
+{"id": "tolka:341", "label": "N", "science_concept": "", "meaning": "Grammatical rule for compounding the word 'then' (honey) with hard consonants."}
+{"id": "tolka:342", "label": "N", "science_concept": "", "meaning": "Grammatical allowance of nasal consonant doubling in compounding 'then'."}
+{"id": "tolka:343", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the word 'then' when preceding nasal consonants."}
+{"id": "tolka:344", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the natural compounding of 'then' with 'iral'."}
+{"id": "tolka:345", "label": "N", "science_concept": "", "meaning": "Grammatical alternative for compounding 'then' with 'iral' involving a dental sound."}
+{"id": "tolka:346", "label": "N", "science_concept": "", "meaning": "Grammar and morphophonology rules regarding specific action nouns and derivative suffixes."}
+{"id": "tolka:347", "label": "N", "science_concept": "", "meaning": "Grammar rules for noun morphology and declension patterns."}
+{"id": "tolka:348", "label": "N", "science_concept": "", "meaning": "Grammar rule on elision of suffixes in proper names when indicating father-son relationships."}
+{"id": "tolka:349", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the elision of specific endings in proper names."}
+{"id": "tolka:350", "label": "N", "science_concept": "", "meaning": "Grammar rule for maintaining base forms of names when modified by adjectives."}
+{"id": "tolka:351", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding compounding of proper names denoting family relationships."}
+{"id": "tolka:352", "label": "N", "science_concept": "", "meaning": "Grammar exception for specific proper names remaining unvaried in compounds."}
+{"id": "tolka:353", "label": "N", "science_concept": "", "meaning": "Grammar rules for case suffixation and shortening of pronouns."}
+{"id": "tolka:354", "label": "N", "science_concept": "", "meaning": "Grammar rule stating certain pronouns remain unchanged in non-case contexts."}
+{"id": "tolka:355", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the elision of the final nasal in the word for fire/pot."}
+{"id": "tolka:356", "label": "N", "science_concept": "", "meaning": "Grammar convention regarding the morphophonemic blending of front and house."}
+{"id": "tolka:357", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding poetic license and elision in the word for gold."}
+{"id": "tolka:358", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding consonant combinations with 'ya' in nominal declension."}
+{"id": "tolka:359", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the word 'thay' remains unchanged before hard consonants."}
+{"id": "tolka:360", "label": "N", "science_concept": "", "meaning": "Grammatical rule concerning compounds related to a son's action with the word 'thay'."}
+{"id": "tolka:361", "label": "N", "science_concept": "", "meaning": "Grammatical rule on words where nasal consonants optionally replace hard consonants."}
+{"id": "tolka:362", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating words ending in 'y' remain unchanged in non-declension contexts."}
+{"id": "tolka:363", "label": "N", "science_concept": "", "meaning": "Grammatical rule for words ending in 'ra', behaving similarly to words ending in 'ya'."}
+{"id": "tolka:364", "label": "N", "science_concept": "", "meaning": "Grammatical rule where specific plant and tree names take nasal increments."}
+{"id": "tolka:365", "label": "N", "science_concept": "", "meaning": "Grammatical rule for compounding the word 'sar' with 'kazh' requiring a hard consonant."}
+{"id": "tolka:366", "label": "N", "science_concept": "", "meaning": "Grammatical rule allowing the word 'peer' to optionally take the 'am' inflectional increment."}
+{"id": "tolka:367", "label": "N", "science_concept": "", "meaning": "Grammatical rule where final 'la' changes to 'ra' before hard consonants."}
+{"id": "tolka:368", "label": "N", "science_concept": "", "meaning": "Grammatical rule where final 'la' changes to 'na' before nasal consonants."}
+{"id": "tolka:369", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding optional hardening in non-declension contexts for 'la' ending words."}
+{"id": "tolka:370", "label": "N", "science_concept": "", "meaning": "Grammatical rule on phonological changes of the letter lakaram into aytam and rakaram."}
+{"id": "tolka:371", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the behavior of the final lakaram in long letters."}
+{"id": "tolka:372", "label": "N", "science_concept": "", "meaning": "Grammatical rules governing specific words ending in lakaram before consonants."}
+{"id": "tolka:373", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the word 'il' expressing non-existence in word combinations."}
+{"id": "tolka:374", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the word 'val' functioning as a verbal noun."}
+{"id": "tolka:375", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the elision of ukaram when specific words follow 'val'."}
+{"id": "tolka:376", "label": "N", "science_concept": "", "meaning": "Grammatical rule adding the 'am' augment to specific tree names in the genitive case."}
+{"id": "tolka:377", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that all verbal nouns ending in lakaram follow verbal noun patterns."}
+{"id": "tolka:378", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating that the word 'veyil' behaves like 'mazhai' regarding augments."}
+{"id": "tolka:379", "label": "N", "science_concept": "", "meaning": "Grammatical rule for demonstrative words ending in 'v' taking case inflections."}
+{"id": "tolka:380", "label": "N", "science_concept": "", "meaning": "Grammatical rule changing demonstrative 'v' to an aytam sound before hard consonants."}
+{"id": "tolka:381", "label": "N", "science_concept": "", "meaning": "Grammatical rule assimilating demonstrative final consonants into nasals before nasal sounds."}
+{"id": "tolka:382", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding word combination and phonology in Tamil."}
+{"id": "tolka:383", "label": "N", "science_concept": "", "meaning": "Grammatical rules on verbal nouns and sound changes."}
+{"id": "tolka:384", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the phonological behavior of the letter ழ."}
+{"id": "tolka:385", "label": "N", "science_concept": "", "meaning": "Grammatical rule on word combinations involving 'தாழ்'."}
+{"id": "tolka:386", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the combination of the word 'தமிழ்'."}
+{"id": "tolka:387", "label": "N", "science_concept": "", "meaning": "Grammatical rule for tree names like 'குமிழ்'."}
+{"id": "tolka:388", "label": "L", "science_concept": "abandoned or ruined wells", "meaning": "Grammatical rule referencing abandoned wells (பாழ்க்கிணறு/பாழ்ங்கிணறு)."}
+{"id": "tolka:389", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the numeral 'ஏழ்'."}
+{"id": "tolka:390", "label": "N", "science_concept": "", "meaning": "Grammatical rules on measurements and numerals."}
+{"id": "tolka:391", "label": "N", "science_concept": "", "meaning": "Grammatical rule for combining numerals with 'பத்து'."}
+{"id": "tolka:392", "label": "N", "science_concept": "", "meaning": "Grammatical rule for combining 'ஏழ்' with 'ஆயிரம்'."}
+{"id": "tolka:393", "label": "N", "science_concept": "", "meaning": "Grammatical rule for combining 'ஏழ்' with 'நூறாயிரம்'."}
+{"id": "tolka:394", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the sandhi rules of the number 'ezh'."}
+{"id": "tolka:395", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the sandhi of 'ezh' before vowels."}
+{"id": "tolka:396", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the optional doubling of the word 'kizh'."}
+{"id": "tolka:397", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the conversion of 'zh' to 'zh' before hard consonants."}
+{"id": "tolka:398", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the conversion of 'zh' before nasal consonants."}
+{"id": "tolka:399", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding 'zh' ending in non-case contexts."}
+{"id": "tolka:400", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding 'zh' transforming into Aytham before 'ta'."}
+{"id": "tolka:401", "label": "N", "science_concept": "", "meaning": "Grammar rule on long-vowel preceding 'zh' sandhi forms."}
+{"id": "tolka:402", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding verbal nouns ending in 'zh'."}
+{"id": "tolka:403", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the morphological behavior of the word 'irul'."}
+{"id": "tolka:404", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding verbal noun behaviors for specific words like 'pull'."}
+{"id": "tolka:405", "label": "N", "science_concept": "", "meaning": "Grammar rule regarding the transformation of the word 'makkal'."}
+{"id": "tolka:406", "label": "N", "science_concept": "", "meaning": "Grammatical rule on extending poetic applications and conventions beyond explicit rules."}
+{"id": "tolka:407", "label": "N", "science_concept": "", "meaning": "Grammatical classification of types of words ending in short u (kutriyalamugaram)."}
+{"id": "tolka:408", "label": "N", "science_concept": "", "meaning": "Grammatical rule on double-consonant word endings and intermediate consonants."}
+{"id": "tolka:409", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the unaltered duration of the short u sound in certain contexts."}
+{"id": "tolka:410", "label": "N", "science_concept": "", "meaning": "Grammatical rule on hard consonant clusters involving short u."}
+{"id": "tolka:411", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the phonetic shift of short u to i when followed by ya."}
+{"id": "tolka:412", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant mutation in compound words involving short u."}
+{"id": "tolka:413", "label": "N", "science_concept": "", "meaning": "Grammatical exception regarding intermediate homorganic consonants in compounding."}
+{"id": "tolka:414", "label": "N", "science_concept": "", "meaning": "Grammatical rule on how intermediate and aytham consonant clusters combine naturally."}
+{"id": "tolka:415", "label": "N", "science_concept": "", "meaning": "Grammatical rule on nasal and hard consonant mutations in word compounding."}
+{"id": "tolka:416", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the 'am' augment particle used with tree names."}
+{"id": "tolka:417", "label": "N", "science_concept": "", "meaning": "Grammatical exceptions where nasal consonants in tree names do not shift to hard consonants."}
+{"id": "tolka:418", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding sandhi and morphophonemic changes in words."}
+{"id": "tolka:419", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning consonant assimilation and suffixes."}
+{"id": "tolka:420", "label": "N", "science_concept": "", "meaning": "Grammatical rules for numbers ending in kuṭṟiyalukaram."}
+{"id": "tolka:421", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the words 'vaṇṭu' and 'peṇṭu'."}
+{"id": "tolka:422", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the word 'peṇṭu' taking a specific suffix."}
+{"id": "tolka:423", "label": "N", "science_concept": "", "meaning": "Grammatical rules for demonstrative and interrogative pronouns with aytam."}
+{"id": "tolka:424", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the retention of the aytam letter before vowels."}
+{"id": "tolka:425", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the deletion of the aytam before non-vowel sounds."}
+{"id": "tolka:426", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating kuṭṟiyalukaram words naturally follow standard patterns."}
+{"id": "tolka:427", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding hard consonant doubling after hard-consonant clusters."}
+{"id": "tolka:428", "label": "N", "science_concept": "", "meaning": "Grammatical rule on nasal clusters and interrogatives maintaining regular forms."}
+{"id": "tolka:429", "label": "N", "science_concept": "", "meaning": "Grammatical rule allowing interrogative words to remain in their natural form."}
+{"id": "tolka:430", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding the behavior of four specific demonstrative words."}
+{"id": "tolka:431", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the transformation of the word meaning existence."}
+{"id": "tolka:432", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining directional terms with intervening vowel sounds."}
+{"id": "tolka:433", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the combination of direction and noun terms."}
+{"id": "tolka:434", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining numbers one through eight with the word ten."}
+{"id": "tolka:435", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining the number ten with two."}
+{"id": "tolka:436", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining ten with thousand."}
+{"id": "tolka:437", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining weight and measure terms with ten."}
+{"id": "tolka:438", "label": "N", "science_concept": "", "meaning": "Grammatical rules for combining numbers one to nine with ten, forming a glottal stop."}
+{"id": "tolka:439", "label": "N", "science_concept": "", "meaning": "Grammatical rules for modifying the first two numbers when combining with ten."}
+{"id": "tolka:440", "label": "N", "science_concept": "", "meaning": "Grammatical rules for the modification of the number two in compounds."}
+{"id": "tolka:441", "label": "N", "science_concept": "", "meaning": "Grammatical rules for shortening vowel sounds in the numbers three and six."}
+{"id": "tolka:442", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant mutation for the number four."}
+{"id": "tolka:443", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant mutation for the number five."}
+{"id": "tolka:444", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant mutation for the number eight."}
+{"id": "tolka:445", "label": "N", "science_concept": "", "meaning": "Grammatical rule on consonant and vowel changes for the number nine."}
+{"id": "tolka:446", "label": "N", "science_concept": "", "meaning": "Grammatical rules for numbers one through nine with units of measurement."}
+{"id": "tolka:447", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the number three preceding units of measurement."}
+{"id": "tolka:448", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the number five preceding units of measurement."}
+{"id": "tolka:449", "label": "N", "science_concept": "", "meaning": "Grammatical rules for numeral changes before hard consonants."}
+{"id": "tolka:450", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the number eight preceding specific consonants."}
+{"id": "tolka:451", "label": "N", "science_concept": "", "meaning": "Grammatical rule for numbers five and three preceding nasal consonants."}
+{"id": "tolka:452", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the number three preceding the consonant 'v'."}
+{"id": "tolka:453", "label": "N", "science_concept": "", "meaning": "Grammatical rule for the number four preceding the consonant 'v'."}
+{"id": "tolka:454", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding consonant mutation in number combinations."}
+{"id": "tolka:455", "label": "N", "science_concept": "", "meaning": "Grammatical rule for vowel loss and vowel elongation in number words."}
+{"id": "tolka:456", "label": "N", "science_concept": "", "meaning": "Grammatical rules for numbers three, four, and five before vowel-initial words."}
+{"id": "tolka:457", "label": "N", "science_concept": "", "meaning": "Grammatical rule lengthening the vowel of three before measure words."}
+{"id": "tolka:458", "label": "N", "science_concept": "", "meaning": "Grammatical rule lengthening the initial vowel of the number six."}
+{"id": "tolka:459", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the number nine taking a particle before measures."}
+{"id": "tolka:460", "label": "N", "science_concept": "", "meaning": "Grammatical rule for numbers preceding the word for hundred."}
+{"id": "tolka:461", "label": "N", "science_concept": "", "meaning": "Grammatical rule changing the nasal consonant in the number three."}
+{"id": "tolka:462", "label": "N", "science_concept": "", "meaning": "Grammatical rule stating consonants of four and five remain unchanged before hundred."}
+{"id": "tolka:463", "label": "N", "science_concept": "", "meaning": "Complex grammatical rule deriving the compound word for nine hundred."}
+{"id": "tolka:464", "label": "N", "science_concept": "", "meaning": "Grammatical rule modifying the first two numbers when followed by thousand."}
+{"id": "tolka:465", "label": "N", "science_concept": "", "meaning": "Grammatical allowance for vowel elongation in number words."}
+{"id": "tolka:466", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the transformation of letter consonants in numerals."}
+{"id": "tolka:467", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the transformation of letter consonants in numerals."}
+{"id": "tolka:468", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the transformation of letter consonants in numerals."}
+{"id": "tolka:469", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the shortening of the vowel in the numeral six."}
+{"id": "tolka:470", "label": "N", "science_concept": "", "meaning": "Grammatical rule about adding a specific morph before the word thousand."}
+{"id": "tolka:471", "label": "N", "science_concept": "", "meaning": "Grammatical rules governing how numbers precede the word hundred thousand."}
+{"id": "tolka:472", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the appearance of a consonant when numbers precede hundred."}
+{"id": "tolka:473", "label": "N", "science_concept": "", "meaning": "Grammatical rule for numbers combining with the word ten."}
+{"id": "tolka:474", "label": "N", "science_concept": "", "meaning": "Grammatical rules for numbers combining with units of measurement and weight."}
+{"id": "tolka:475", "label": "N", "science_concept": "", "meaning": "Grammatical rule when numbers one through nine follow tens."}
+{"id": "tolka:476", "label": "N", "science_concept": "", "meaning": "Grammatical rule when the word thousand follows tens."}
+{"id": "tolka:477", "label": "N", "science_concept": "", "meaning": "Grammatical rules for units of measurement and weight following tens."}
+{"id": "tolka:478", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding consonant clusters and initial sounds in word combinations."}
+{"id": "tolka:479", "label": "N", "science_concept": "", "meaning": "Grammatical rules for modifying specific numeral words before vowels and semi-vowels."}
+{"id": "tolka:480", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning numeral words combined with specific measure terms."}
+{"id": "tolka:481", "label": "N", "science_concept": "", "meaning": "Grammatical rules on auxiliary suffixes following words ending in certain consonants."}
+{"id": "tolka:482", "label": "N", "science_concept": "", "meaning": "Grammatical explanations on irregular word forms, compounds, and suffixes in poetry."}
+{"id": "tolka:483", "label": "N", "science_concept": "", "meaning": "Guidance for scholars on understanding and applying both poetic and common language usages."}
+{"id": "tolka:484", "label": "N", "science_concept": "", "meaning": "Grammatical classification of nouns into rational (humans) and irrational categories."}
+{"id": "tolka:485", "label": "N", "science_concept": "", "meaning": "Classification of rational gender terms into masculine, feminine, and plural."}
+{"id": "tolka:486", "label": "N", "science_concept": "", "meaning": "Classification of irrational gender terms into singular and plural forms."}
+{"id": "tolka:487", "label": "N", "science_concept": "", "meaning": "Grammatical gender rules for epicene nouns, intersex individuals, and deities."}
+{"id": "tolka:488", "label": "N", "science_concept": "", "meaning": "Grammatical rule identifying words ending in the consonant 'n' as masculine."}
+{"id": "tolka:489", "label": "N", "science_concept": "", "meaning": "Grammatical rule identifying words ending in the consonant 'l' as feminine."}
+{"id": "tolka:490", "label": "N", "science_concept": "", "meaning": "Grammatical rules concerning verb endings denoting plural categories."}
+{"id": "tolka:491", "label": "N", "science_concept": "", "meaning": "Grammatical rules regarding specific letters forming singular neuter endings."}
+{"id": "tolka:492", "label": "N", "science_concept": "", "meaning": "Grammatical rules defining plural neuter word endings."}
+{"id": "tolka:493", "label": "N", "science_concept": "", "meaning": "Grammatical explanation of eleven letters indicating the five genders."}
+{"id": "tolka:494", "label": "N", "science_concept": "", "meaning": "Grammatical rule on the consistency of gender-indicating nouns and verbs."}
+{"id": "tolka:495", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding terms for intersex or non-conforming gender descriptions."}
+{"id": "tolka:496", "label": "N", "science_concept": "", "meaning": "Poetic rule on avoiding errors in questions and answers."}
+{"id": "tolka:497", "label": "N", "science_concept": "", "meaning": "Grammatical rule where a question itself serves as a valid response."}
+{"id": "tolka:498", "label": "N", "science_concept": "", "meaning": "Poetic allowance for indirect or contextually relevant non-standard answers."}
+{"id": "tolka:499", "label": "N", "science_concept": "", "meaning": "Grammatical rule matching parts to parts and wholes to wholes in comparisons."}
+{"id": "tolka:500", "label": "N", "science_concept": "", "meaning": "Poetic conventions for euphemism and figurative language usage."}
+{"id": "tolka:501", "label": "N", "science_concept": "", "meaning": "Poetic license for descriptive adjectives without direct contrasting categories."}
+{"id": "tolka:502", "label": "L", "science_concept": "physical properties of elements like land, water, fire, wind", "meaning": "Describing inherent physical properties of elements such as earth, water, fire, and wind without altering causes."}
+{"id": "tolka:503", "label": "L", "science_concept": "artificial or caused physical changes like boiling water", "meaning": "Stating transformed physical states resulting from a cause, such as water boiling."}
+{"id": "tolka:504", "label": "L", "science_concept": "causal relationship in physical heating", "meaning": "Stating the cause first when describing an artificial physical change, like water becoming hot due to fire."}
+{"id": "tolka:505", "label": "L", "science_concept": "growth and biological conditions of crops and hair", "meaning": "Colloquial usage may sometimes omit explicit causes when describing states like healthy crops or hair."}
+{"id": "tolka:506", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding gender and number ambiguity in pronouns and nouns."}
+{"id": "tolka:507", "label": "N", "science_concept": "", "meaning": "Grammatical rule on resolving ambiguity in gender and non-human plural forms."}
+{"id": "tolka:508", "label": "N", "science_concept": "", "meaning": "Grammatical rule concerning negative particles used to resolve uncertain identification."}
+{"id": "tolka:509", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding the proper order of attribute, limb, and whole in descriptive terms."}
+{"id": "tolka:510", "label": "N", "science_concept": "", "meaning": "Grammatical rule about honorific plurals used for single individuals."}
+{"id": "tolka:511", "label": "N", "science_concept": "", "meaning": "Grammatical rule regarding verbs of motion and transfer across grammatical persons."}
+{"id": "tolka:512", "label": "N", "science_concept": "", "meaning": "Grammatical rule restricting specific verbs of coming and giving to first and second persons."}
+{"id": "tolka:513", "label": "N", "science_concept": "", "meaning": "Grammatical rule restricting verbs of going and giving to the third person."}

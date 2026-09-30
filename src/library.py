@@ -17,6 +17,9 @@ def _s(v, n):
     return str(v or "")[:n]
 
 
+OFFICIAL = ("https://doi.org/", "https://ntrs.nasa.gov/", "https://ieeexplore.ieee.org/")
+
+
 def _clean(raw):
     v = raw.get("verse") if isinstance(raw.get("verse"), dict) else {}
     d = raw.get("deep") if isinstance(raw.get("deep"), dict) else {}
@@ -47,10 +50,16 @@ def _clean(raw):
                  "hypotheses": [{k: _s(h.get(k), n) for k, n in
                                  (("kind", 30), ("title", 160), ("statement", 800), ("inspired_by", 300),
                                   ("how_to_test", 800), ("prediction", 400), ("field", 40))}
-                                for h in (d.get("hypotheses") or [])[:3] if isinstance(h, dict)]},
+                                for h in (d.get("hypotheses") or [])[:3] if isinstance(h, dict)],
+                 "observation": [{"method": _s(o.get("method"), 40), "applies": bool(o.get("applies")),
+                                  "how": _s(o.get("how"), 400), "instrument": _s(o.get("instrument"), 160),
+                                  "organization": _s(o.get("organization"), 100),
+                                  "url": _s(o.get("url"), 300) if str(o.get("url", "")).startswith("https://") else ""}
+                                 for o in (d.get("observation") or [])[:6] if isinstance(o, dict)]},
         "papers": [{"title": _s(p.get("title"), 300), "url": _s(p.get("url"), 300), "year": _s(p.get("year"), 6),
-                    "tag": _s(p.get("tag"), 16), "authors": [_s(a, 80) for a in (p.get("authors") or [])[:4]]}
-                   for p in papers[:10] if isinstance(p, dict) and str(p.get("url", "")).startswith("https://arxiv.org/")],
+                    "tag": _s(p.get("tag"), 16), "authors": [_s(a, 80) for a in (p.get("authors") or [])[:4]],
+                    "publisher": _s(p.get("publisher"), 40), "venue": _s(p.get("venue"), 160)}
+                   for p in papers[:12] if isinstance(p, dict) and str(p.get("url", "")).startswith(OFFICIAL)],
         "note": _s(raw.get("note"), 1000),
     }
 

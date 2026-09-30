@@ -299,6 +299,34 @@ h2.title em{color:var(--gold-hi)}
 .why-type.mt-possible{background:transparent;color:#6a3410;border:1px dashed #6a3410}
 .ola.possible .why{border-style:dashed}
 /* hypotheses */
+/* observational lens */
+.obs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.obs{border-radius:16px;padding:16px 18px;background:rgba(22,20,34,.55);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.obs.on{border-color:rgba(143,211,176,.45);background:linear-gradient(160deg,rgba(143,211,176,.08),rgba(22,20,34,.55))}
+.obs-top{display:flex;align-items:center;gap:8px}
+.obs-top b{font-size:14px;color:var(--parch)}
+.obs-ic{font-size:18px}
+.obs-badge{margin-left:auto;font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:rgba(255,255,255,.07);color:var(--dim)}
+.obs.on .obs-badge{background:rgba(143,211,176,.18);color:var(--O)}
+.obs p{margin:0;font-size:13px;line-height:1.55;color:var(--parch);opacity:.9}
+.obs-inst{font-size:12.5px;color:var(--parch);opacity:.85}
+.obs-inst span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:1px}
+.beta{margin-top:6px;padding-top:10px;border-top:1px dashed var(--line)}
+.beta svg{width:100%;height:auto;font:10px var(--sans);fill:#bfb49c}
+.beta-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--parch)}
+.beta-row input{flex:1;accent-color:#e3b95f}
+.beta-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.beta-presets button{font:600 11px var(--sans);color:var(--parch);background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:3px 9px;cursor:pointer}
+.beta-presets button:hover{border-color:var(--gold)}
+.beta-note{font-size:11.5px!important;color:var(--dim)!important;margin-top:6px!important}
+/* official NASA images */
+.nasa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.nasa{display:flex;flex-direction:column;text-decoration:none;border-radius:14px;overflow:hidden;background:rgba(22,20,34,.7);border:1px solid var(--line);transition:border-color .2s,transform .2s}
+.nasa:hover{border-color:var(--gold);transform:translateY(-3px)}
+.nasa img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#07060d}
+.nasa-cap{padding:8px 10px 2px;font-size:12.5px;line-height:1.4;color:var(--parch);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nasa-cap em{font-style:normal;font-size:10px;font-weight:700;color:#1b1206;background:var(--gold);border-radius:999px;padding:1px 7px;margin-right:6px}
+.nasa-meta{padding:2px 10px 10px;font-size:11px;color:var(--dim)}
 /* each idea is one full-width card: the idea on the left, how to test it on the right */
 .hyps{display:flex;flex-direction:column;gap:12px}
 .hyp{border-radius:18px;padding:16px 20px;background:linear-gradient(120deg,rgba(150,130,255,.11),rgba(22,20,34,.5));
@@ -610,9 +638,9 @@ body.has-mouse #cursorGlow{opacity:1}
   </form>
   <div class="chips reveal" id="heroChips"></div>
   <div class="stats reveal">
-    <div class="stat"><div class="n" data-count="9439">0</div><div class="l">verses read</div></div>
+    <div class="stat"><div class="n" data-count="11076">0</div><div class="l">verses read</div></div>
     <div class="stat"><div class="n" id="statScience">0</div><div class="l">touch the cosmos</div></div>
-    <div class="stat"><div class="n">∞</div><div class="l">live arXiv papers</div></div>
+    <div class="stat"><div class="n">∞</div><div class="l">official papers &amp; NASA data</div></div>
   </div>
   <div class="scrollcue">Scroll</div>
 </section>
@@ -621,11 +649,11 @@ body.has-mouse #cursorGlow{opacity:1}
 <section class="block" id="how">
   <div class="kicker reveal">The method</div>
   <h2 class="title reveal">From palm leaf <em>to telescope</em></h2>
-  <p class="lede reveal">Two Tamil classics — Thiruvalluvar's Thirukkural and Vallalar's Thiruvarutpa — read line by line by an AI, then tied to what astrophysicists are publishing today.</p>
+  <p class="lede reveal">Four Tamil classics — Thiruvalluvar's Thirukkural, Vallalar's Thiruvarutpa, the Tolkappiyam and Andal's Thiruppavai — read line by line by an AI, then tied to what scientists are publishing today.</p>
   <div class="steps">
-    <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>9,439 couplets and hymns are scanned for sky, light, atoms, rain and the cosmos.</p></div>
+    <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>11,076 couplets, hymns and sutras are scanned for sky, light, atoms, rain and the cosmos.</p></div>
     <div class="step reveal" style="transition-delay:.12s"><div class="ic">✦</div><h3>Name the idea</h3><p>Gemini labels each verse and names the modern concept it resembles — nested universes, lunar phases, the water cycle.</p></div>
-    <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched live on arXiv. Every paper you see is real, with its link — nothing is invented.</p></div>
+    <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched in official publishers (IEEE, Springer Nature, Elsevier, IOP, AAS) and NASA. Every paper is real, with its official link.</p></div>
   </div>
 </section>
 
@@ -685,7 +713,7 @@ body.has-mouse #cursorGlow{opacity:1}
 
 <footer>
   <div class="orn">✦ ✦ ✦</div>
-  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Papers: arXiv.org (live)<br>
+  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Tolkappiyam: Central Institute of Classical Tamil (CICT) · Thiruppavai: Tamil Wikisource · Papers: Crossref (IEEE, Springer Nature, Elsevier, IOP, AAS, APS…) and NASA NTRS · Images: NASA Image and Video Library<br>
   Labels and explanations are AI-generated and unverified. These are analogies — not evidence that the poets knew modern physics.
 </footer>
 
@@ -786,13 +814,14 @@ function leafCard(v, i = 0) {
 const bundle = (inner, cls = '') => `<div class="bundle ${cls}"><div class="board"></div><div class="leaves">${inner}</div><div class="board"></div></div>`;
 const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="frame"></span><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
 function paperList(papers) {
-  if (!papers || !papers.length) return `<div class="empty">No papers found for this idea on arXiv.</div>`;
+  papers = (papers || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
+  if (!papers.length) return `<div class="empty">No papers from official publishers matched this idea closely enough.</div>`;
   papers = [...papers].sort((a, b) => (parseInt(b.year) || 0) - (parseInt(a.year) || 0));
   return `<div class="sort-note">Newest → oldest</div><div class="papers">` + papers.map((p, i) => `
     <a class="paper" href="${esc(p.url)}" target="_blank" rel="noopener" style="--d:${i*70}ms">
-      <div class="meta"><span class="pill">arXiv</span><span>${esc(p.year)}</span><span>· ${p.tag === 'recent' ? 'Latest research' : 'Foundational'}</span></div>
+      <div class="meta"><span class="pill">${esc(p.publisher || 'Journal')}</span><span>${esc(p.year)}</span><span>· ${{recent: 'Latest research', nasa: 'NASA report'}[p.tag] || 'Most cited'}</span></div>
       <div class="t">${esc(p.title)} ↗</div>
-      <div class="au">${esc((p.authors || []).join(', '))}</div>
+      <div class="au">${esc((p.authors || []).join(', '))}${p.venue ? ` · <i>${esc(p.venue)}</i>` : ''}</div>
       <div class="u">${esc(p.url)}</div>
     </a>`).join('') + `</div>`;
 }
@@ -843,7 +872,7 @@ async function runSearch(topic, key) {
     $('#exploreOut').innerHTML =
       (n + np ? matchFilterBar(d.matches) + `<div class="mt-note" id="mtNote"></div>` + bundle(d.matches.map(leafCard).join(''))
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
-      `<h3 class="subhead">From the observatory</h3><p class="subnote">Live research on “${esc(u ? u.arxiv : topic)}” from arXiv${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
+      `<h3 class="subhead">From the observatory</h3><p class="subnote">Research on “${esc(u ? u.arxiv : topic)}” from official publishers and NASA${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
       paperList(d.papers);
   } catch (e) {
     if (tok !== searchTok) return;
@@ -888,8 +917,10 @@ function modalHtml(v, fromSaved) {
       <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
     </div>
     <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
+    <div class="m-section"><h3>Observational astronomy lens</h3><p class="note">How astronomers would actually study the natural idea behind this verse: radio spectral imaging, photometry, cosmology, beta (spectral index) scaling, petascale data and visualisation, each with a real official instrument.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
     <div class="m-section"><h3>In the real world</h3><p class="note">Grouped by field. Top space agencies, research institutes and universities come first, then newest first. Every “Official source” link was opened and checked. AI-summarised — verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
-    <div class="m-section"><h3>Research papers</h3><p class="note">Live from arXiv — real papers, click to read.</p><div id="mPapers">${v.concept ? loading('Searching arXiv…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
+    <div class="m-section"><h3>Official images</h3><p class="note">From the NASA Image and Video Library, including radio images. Click an image for its official page.</p><div id="mImg">${v.concept ? loading('Opening the NASA archive…') : '<div class="empty">No natural-science idea to look up.</div>'}</div></div>
+    <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed papers from official publishers (IEEE, Springer Nature, Elsevier, IOP, AAS, APS…) and NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
@@ -907,6 +938,56 @@ function fillDeep(d, tok) {
   const rw = Array.isArray(d.real_world) ? d.real_world : [];
   $('#mReal').innerHTML = realWorldHtml(rw);
   $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
+  $('#mObs').innerHTML = obsHtml(d.observation);
+  initBeta();
+}
+const OBS_ICON = {'Radio spectral imaging': '📡', 'Photometry': '🔆', 'Cosmology': '🌌', 'Beta scaling': '📈',
+  'Petascale data': '🗄️', 'Visualisation': '🗺️'};
+function obsHtml(obs) {
+  obs = (Array.isArray(obs) ? obs : []).filter(o => o && o.method && o.how);
+  if (!obs.length) return '<div class="empty">No observational reading for this one.</div>';
+  return `<div class="obs-grid">${obs.map(o => `<div class="obs ${o.applies ? 'on' : ''}">
+    <div class="obs-top"><span class="obs-ic">${OBS_ICON[o.method] || '✦'}</span><b>${esc(o.method)}</b>
+      <span class="obs-badge">${o.applies ? 'Applies' : 'Limited'}</span></div>
+    <p>${esc(o.how || '')}</p>
+    ${o.instrument ? `<div class="obs-inst"><span>Instrument</span>${esc(o.instrument)}${o.organization ? ` · ${esc(o.organization)}` : ''}</div>` : ''}
+    ${o.url ? `<a class="rw-link" href="${esc(o.url)}" target="_blank" rel="noopener">Official page ↗</a>` : ''}
+    ${o.method === 'Beta scaling' ? BETA_WIDGET : ''}
+  </div>`).join('')}</div>`;
+}
+const BETA_WIDGET = `<div class="beta" data-beta>
+  <svg viewBox="0 0 320 170" aria-label="Brightness against frequency on log scales for the chosen beta"></svg>
+  <div class="beta-row"><label>β <b data-bval>-0.7</b></label><input type="range" min="-3" max="4" step="0.1" value="-0.7" data-bslider></div>
+  <div class="beta-presets"><button data-bp="-0.7">Synchrotron −0.7</button><button data-bp="-0.1">Free-free −0.1</button><button data-bp="2">Rayleigh-Jeans +2</button><button data-bp="3.7">Thermal dust +3.7</button></div>
+  <p class="beta-note">Brightness S ∝ ν<sup>β</sup>: the slope on a log-log plot tells you what is emitting.</p></div>`;
+function drawBeta(box, b) {
+  const W = 320, H = 170, L = 34, B = 24, x = lv => L + (lv + 1) / 3 * (W - L - 8), y = ls => 8 + (1 - (ls + 4) / 8) * (H - B - 8);
+  let path = '';
+  for (let i = 0; i <= 60; i++) { const lv = -1 + i / 20, ls = Math.max(-4, Math.min(4, b * lv)); path += (i ? 'L' : 'M') + x(lv).toFixed(1) + ' ' + y(ls).toFixed(1); }
+  const ticks = [-1, 0, 1, 2].map(t => `<line x1="${x(t)}" y1="${H - B}" x2="${x(t)}" y2="${H - B + 4}" stroke="#8a8173"/><text x="${x(t)}" y="${H - 8}" text-anchor="middle">${[0.1, 1, 10, 100][t + 1]}</text>`).join('');
+  box.querySelector('svg').innerHTML = `<rect x="${L}" y="8" width="${W - L - 8}" height="${H - B - 8}" fill="rgba(255,255,255,.03)" stroke="rgba(236,217,166,.2)"/>
+    ${ticks}<text x="${(W + L) / 2}" y="${H}" text-anchor="middle" opacity=".7">frequency ν (GHz, log)</text>
+    <text x="10" y="${(H - B) / 2}" transform="rotate(-90 10 ${(H - B) / 2})" text-anchor="middle" opacity=".7">brightness S (log)</text>
+    <path d="${path}" fill="none" stroke="#e3b95f" stroke-width="2.5"/>`;
+  box.querySelector('[data-bval]').textContent = b.toFixed(1);
+}
+function initBeta() {
+  document.querySelectorAll('[data-beta]').forEach(box => {
+    const sl = box.querySelector('[data-bslider]');
+    const go = v => { sl.value = v; drawBeta(box, +v); };
+    sl.addEventListener('input', () => go(sl.value));
+    box.querySelectorAll('[data-bp]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.bp)));
+    go(sl.value);
+  });
+}
+function imagesHtml(d) {
+  const all = [...(d.radio || []).map(i => ({...i, radio: true})), ...(d.general || [])];
+  const seen = new Set(), items = all.filter(i => !seen.has(i.url) && seen.add(i.url)).slice(0, 8);
+  if (!items.length) return '<div class="empty">NASA has no close image match for this idea.</div>';
+  return `<div class="nasa-grid">${items.map(i => `<a class="nasa" href="${esc(i.url)}" target="_blank" rel="noopener" title="${esc(i.description || i.title)}">
+    <img src="${esc(i.thumb)}" alt="${esc(i.title)}" loading="lazy">
+    <span class="nasa-cap">${i.radio ? '<em>Radio</em>' : ''}${esc(i.title)}</span>
+    <span class="nasa-meta">NASA ${esc(i.center)}${i.year ? ' · ' + esc(i.year) : ''} ↗</span></a>`).join('')}</div>`;
 }
 const HYP_ICON = {'testable hypothesis': '🧪', 'theoretical idea': '💭', 'application idea': '🛠️'};
 function hypothesesHtml(hs) {
@@ -959,7 +1040,7 @@ function realWorldHtml(rw) {
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
   $('#mLiteral').innerHTML = $('#mAnalogy').innerHTML = `<p style="color:var(--dim)">The AI is busy — ${esc(msg)}</p>`;
-  $('#mReal').innerHTML = $('#mHyp').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
+  $('#mReal').innerHTML = $('#mHyp').innerHTML = $('#mObs').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
 }
 async function openVerse(v, opts = {}) {
   if (!v) return;
@@ -968,22 +1049,26 @@ async function openVerse(v, opts = {}) {
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
   // readings saved before real-world examples had fields/organisations are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.hypotheses || []).length && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
+  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.hypotheses || []).length && (d.observation || []).filter(o => o.how).length >= 3 && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
-  const cachedPapers = v.papers || (saved && saved.papers && saved.papers.length ? saved.papers : null);
+  const official = ps => (ps || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
+  const cachedPapers = official(v.papers).length ? official(v.papers) : (saved && official(saved.papers).length ? official(saved.papers) : null);
   CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
   openModalShell(modalHtml(v, !!cachedDeep));
   setSaveBtn(!!SAVED[v.id]);
   const keepSaved = () => { if (SAVED[v.id] && tok === modalTok) saveLeaf(CUR.verse, CUR.deep, CUR.papers, true); };
   if (cachedDeep) fillDeep(cachedDeep, tok);
-  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : ''), concept: v.concept, fresh: !!opts.fresh})
+  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : '') + (v.commentary ? ' | உரை: ' + v.commentary : ''), concept: v.concept, fresh: !!opts.fresh})
     .then(d => { if (tok !== modalTok) return; CUR.deep = d; fillDeep(d, tok); keepSaved(); })
     .catch(e => deepFailed(tok, e.message));
   if (v.concept) {
+    api('/api/images?q=' + encodeURIComponent(v.concept))
+      .then(d => { if (tok === modalTok) $('#mImg').innerHTML = imagesHtml(d); })
+      .catch(() => { if (tok === modalTok) $('#mImg').innerHTML = '<div class="empty">The NASA archive did not respond.</div>'; });
     if (cachedPapers) $('#mPapers').innerHTML = paperList(cachedPapers);
     else api('/api/papers?q=' + encodeURIComponent(v.concept))
       .then(d => { if (tok !== modalTok) return; CUR.papers = d.papers; $('#mPapers').innerHTML = paperList(d.papers); keepSaved(); })
-      .catch(() => { if (tok === modalTok) $('#mPapers').innerHTML = '<div class="empty">arXiv did not respond. Try again shortly.</div>'; });
+      .catch(() => { if (tok === modalTok) $('#mPapers').innerHTML = '<div class="empty">The publishers did not respond. Try again shortly.</div>'; });
   }
 }
 async function readCustom(text) {

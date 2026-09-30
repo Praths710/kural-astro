@@ -5,9 +5,10 @@ Run:  python src/app.py   then open http://localhost:8765
 API
   GET  /api/verses                 all Gemini-labeled verses (cached in memory)
   GET  /api/topics                 verse count per physics category (for the cosmic map)
-  GET  /api/papers?q=<concept>     live arXiv papers for a concept (no LLM call, fast)
-  POST /api/search_topic {topic}   topic -> matching verses (Gemini) + arXiv papers
-  POST /api/analyze {text}         any verse -> label + concept (Gemini) + arXiv papers
+  GET  /api/papers?q=<concept>     papers from official publishers (Crossref: IEEE, Springer, AAS...) + NASA NTRS
+  GET  /api/images?q=<concept>     official images from the NASA Image and Video Library
+  POST /api/search_topic {topic}   topic -> matching verses (Gemini) + official papers
+  POST /api/analyze {text}         any verse -> label + concept (Gemini) + official papers
   POST /api/deep {text, concept}   deep read: literal meaning, the analogy, real-world examples
 """
 import hashlib
@@ -30,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gemini_label as g          # noqa: E402
 import research_report as rr      # noqa: E402
+import official_sources as osrc   # noqa: E402
 import auth                        # noqa: E402
 import library                     # noqa: E402
 from store import STORE            # noqa: E402
@@ -70,16 +72,22 @@ def verse_list():
     kurals = {k["Number"]: k for k in json.loads((ROOT / "data/raw/thirukkural.json").read_text(encoding="utf-8"))["kural"]}
     arutpa = {(r["section_id"], r["stanza_no"]): r for r in
               (json.loads(l) for l in (ROOT / "data/processed/thiruvarutpa.jsonl").read_text(encoding="utf-8").splitlines())}
+    jl = lambda name: [json.loads(l) for l in (ROOT / f"data/processed/{name}.jsonl").read_text(encoding="utf-8").splitlines()
+                       if l.strip()] if (ROOT / f"data/processed/{name}.jsonl").exists() else []
+    tolka = {r["no"]: r for r in (jl("tolkappiyam_text") or jl("tolkappiyam"))}
+    pavai = {r["no"]: r for r in jl("thiruppavai")}
     out = []
     for vid, r in gem.items():
         kind, *rest = vid.split(":")
+        if kind not in ("kural", "arutpa", "tolka", "pavai"):
+            continue
         if kind == "kural":
             k = kurals.get(int(rest[0]))
             if not k:
                 continue
             item = {"source": "Thirukkural", "ref": f"Kural {rest[0]}", "tamil": f"{k['Line1']}\n{k['Line2']}",
                     "english": k.get("Translation", ""), "url": f"https://thirukkural.io/kural/{int(rest[0])}"}
-        else:
+        elif kind == "arutpa":
             sec, stanza = rest[0], int(rest[1])
             v = arutpa.get((sec, stanza))
             if not v:
@@ -87,6 +95,18 @@ def verse_list():
             title = v["section_title"].split(". ", 1)[-1]
             item = {"source": "Thiruvarutpa", "ref": f"{title} · stanza {stanza}", "tamil": v["text"],
                     "english": "", "url": v.get("source_url", "")}
+        elif kind == "tolka":
+            v = tolka.get(int(rest[0]))
+            if not v:
+                continue
+            item = {"source": "Tolkappiyam", "ref": f"{v['iyal']} · sutra {v['no']}", "tamil": v["text"],
+                    "english": "", "url": v["source_url"]}
+        elif kind == "pavai":
+            v = pavai.get(int(rest[0]))
+            if not v:
+                continue
+            item = {"source": "Thiruppavai", "ref": f"Andal · pasuram {v['no']}", "tamil": v["text"],
+                    "english": "", "url": v["source_url"]}
         out.append({"id": vid, **item, "label": r.get("label", ""),
                     "concept": r.get("science_concept", ""), "meaning": r.get("meaning", "")})
     order = {"A": 0, "O": 1, "L": 2, "M": 3, "N": 4}
@@ -124,7 +144,7 @@ def match_topic(concept):
 
 
 def papers_for(concept, key=None):
-    out = cached(ckey("papers", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
+    out = cached(ckey("papers-v6", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
     papers = sorted((out or {}).get("papers", []), key=lambda p: -int(re.sub(r"\D", "", str(p.get("year") or "")) or 0))
     return (out or {}).get("title"), papers
 
@@ -135,20 +155,18 @@ def _papers_live(concept, key=None):
     else:
         key, title, queries = match_topic(concept)
     if not queries:
-        queries = [f'all:"{concept}"']
+        # a poetic concept phrase rarely matches a paper title: let the AI turn it into a scientific search phrase
+        u = understand_query(concept) if not is_plain_term(concept) else None
+        queries = [u["arxiv"], u["topic"]] if u else [concept]
         title = "Direct search"
     papers, seen = [], set()
-    for q in queries[:2]:
-        for tag, sort in (("foundational", "relevance"), ("recent", "submittedDate")):
-            try:
-                with _arxiv_lock:
-                    found = rr.arxiv(q, sort)
-            except Exception:
-                found = []
-            for p in found:
-                if p["url"] not in seen:
-                    seen.add(p["url"])
-                    papers.append({**p, "tag": tag})
+    for q in list(dict.fromkeys(osrc.plain_query(x) for x in queries))[:4]:
+        for p in osrc.papers(q):
+            if p["url"] not in seen:
+                seen.add(p["url"])
+                papers.append(p)
+        if len(papers) >= 8:
+            break
     return {"title": title, "papers": papers} if papers else None
 
 
@@ -262,6 +280,8 @@ FIELDS = ["Space & Astronomy", "Physics", "Earth & Climate", "Water & Oceans", "
           "Environment & Ecology"]
 CREDIBLE = {"space agency": 0, "university": 0, "research institute": 1, "government": 1, "company": 2}
 
+OBS_METHODS = ["Radio spectral imaging", "Photometry", "Cosmology", "Beta scaling", "Petascale data", "Visualisation"]
+
 DEEP_SYS = (
     "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts "
     "with modern science. Be honest: the poet did not know modern science; this is an analogy. Write clearly for a student.\n"
@@ -269,7 +289,8 @@ DEEP_SYS = (
     "  literal: 3-4 sentences -- what the verse actually says, in plain English, in its own religious/ethical context\n"
     "  key_words: array of 2-5 {tamil, transliteration, meaning} -- the Tamil words in the verse that carry its natural or "
     "cosmic imagery (copy the Tamil exactly as it appears in the verse)\n"
-    "  context: 1-2 sentences -- where the verse sits (e.g. its Thirukkural chapter or Thiruvarutpa hymn) and how "
+    "  context: 1-2 sentences -- where the verse sits (its Thirukkural chapter, Thiruvarutpa hymn, Tolkappiyam "
+    "section or Thiruppavai pasuram) and how "
     "traditional commentators read it\n"
     "  analogy: 3-4 sentences -- the modern science concept and exactly how the verse's imagery maps onto it\n"
     "  similarities: array of 2-3 short points where the verse and the science genuinely line up\n"
@@ -297,7 +318,23 @@ DEEP_SYS = (
     "    how_to_test: 1-2 short sentences (max 40 words) -- the concrete data, instrument, experiment, simulation or model\n"
     "    prediction: one short sentence (max 30 words) -- what result would support it and what would refute it\n"
     "    field: exactly one of " + ", ".join(FIELDS) + "\n"
-    "    Make them specific and scientifically sound; at least one should be doable by a student (e.g. with public data or ML)."
+    "    Make them specific and scientifically sound; at least one should be doable by a student (e.g. with public data or ML).\n"
+    "  observation: array of exactly 6 objects, one per method in this order: " + ", ".join(OBS_METHODS) + ". "
+    "Each {method, applies, how, instrument, organization, url}:\n"
+    "    applies: true if this method genuinely helps study the natural phenomenon behind the verse's imagery, else false\n"
+    "    how: 1-2 sentences on how the method would study it, or why it does not apply\n"
+    "    instrument: a real official instrument, survey, mission or facility. For sky phenomena prefer ISRO AstroSat, "
+    "NCRA GMRT, SKA, NRAO VLA, ALMA, SDSS, Gaia, JWST, Hubble, Planck, Rubin Observatory LSST. For Earth, weather or "
+    "living-world phenomena use real Earth-observation or field instruments (weather radar, INSAT-3D, Oceansat, GPM, "
+    "NOAA, ECMWF) and NEVER an astronomical telescope. Set applies false when the method has no genuine use.\n"
+    "    organization: who runs it; url: its official page only if you are confident it exists, else ''\n"
+    "    Radio spectral imaging = mapping the sky at radio frequencies and how intensity changes across frequency. "
+    "Photometry = measuring brightness through filters over time or colour. Cosmology = the origin, structure and "
+    "evolution of the universe. Beta scaling = a power law in which flux or brightness scales as frequency or "
+    "wavelength to the power beta, e.g. the radio spectral index of synchrotron emission (about -0.7), the dust "
+    "emissivity index (about 1.5 to 2) or the ultraviolet slope beta of galaxies. Petascale data = petabyte datasets "
+    "and petaflop computing, as in SKA, Rubin LSST or climate reanalysis. Visualisation = the clearest way to show the "
+    "phenomenon (sky map, light curve, spectrum, simulation) and the official tool or dataset that provides it."
 )
 
 
@@ -333,6 +370,23 @@ def finalize_deep(d):
         h["kind"] = h.get("kind") if h.get("kind") in kinds else "theoretical idea"
         h["field"] = h.get("field") if h.get("field") in FIELDS else "General"
     d["hypotheses"] = hyps[:3]
+    # match the model's method names loosely ("Radio Spectral Imaging", "Petascale Data Handling", ...)
+    keys = {"radio": 0, "photometr": 1, "cosmolog": 2, "beta": 3, "peta": 4, "visuali": 5}
+    obs = {}
+    for o in (d.get("observation") or []):
+        name = str(o.get("method", "")).lower() if isinstance(o, dict) else ""
+        hit = next((i for k, i in keys.items() if k in name), None)
+        if hit is not None and hit not in obs:
+            obs[hit] = o
+    rows = [{**obs.get(i, {}), "method": m} for i, m in enumerate(OBS_METHODS)]
+    with ThreadPoolExecutor(6) as ex:
+        oks = list(ex.map(url_ok, [o.get("url", "") for o in rows]))
+    for o, ok in zip(rows, oks):
+        o["applies"] = bool(o.get("applies"))
+        o["url"] = o.get("url", "") if ok else ""
+        for k in ("how", "instrument", "organization"):
+            o[k] = str(o.get(k) or "")[:400]
+    d["observation"] = rows
     return d
 
 
@@ -516,6 +570,13 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/concepts":
             lang = (parse_qs(url.query).get("lang") or ["en"])[0]
             return self._json(200, concept_translations(lang))
+        if path == "/api/images":
+            q = (parse_qs(url.query).get("q") or [""])[0].strip()[:120]
+            if not q:
+                return self._json(400, {"error": "empty q"})
+            imgs = cached(ckey("nasa-img-v2", q.lower()), 7 * DAY, lambda: {
+                "general": osrc.nasa_images_best(q, 6), "radio": osrc.nasa_images(" ".join(q.split()[:2]) + " radio", 3)})
+            return self._json(200, imgs or {"general": [], "radio": []})
         if path == "/api/papers":
             q = (parse_qs(url.query).get("q") or [""])[0].strip()[:200]
             if not q:
@@ -605,9 +666,15 @@ class Handler(BaseHTTPRequestHandler):
             if not text:
                 return self._json(400, {"error": "empty text"})
             def read_it():
-                d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
-                return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
-            out = cached(ckey("deep-v5", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+                for _ in range(2):   # retry once if the model skipped the observational lens
+                    d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+                    if not (isinstance(d, dict) and d.get("literal")):
+                        return None
+                    d = finalize_deep(d)
+                    if sum(1 for o in d["observation"] if o["how"]) >= 3:
+                        break
+                return d
+            out = cached(ckey("deep-v7", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)

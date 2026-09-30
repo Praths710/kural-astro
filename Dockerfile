@@ -7,10 +7,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certifi
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY src/app.py src/auth.py src/library.py src/store.py src/gemini_label.py src/research_report.py src/
+COPY src/app.py src/auth.py src/library.py src/store.py src/gemini_label.py src/research_report.py src/official_sources.py src/
 COPY src/webapp/ src/webapp/
 COPY data/raw/thirukkural.json data/raw/
-COPY data/processed/thiruvarutpa.jsonl data/processed/arxiv_cache.json data/processed/
+COPY data/processed/thiruvarutpa.jsonl data/processed/tolkappiyam_text.jsonl data/processed/thiruppavai.jsonl data/processed/arxiv_cache.json data/processed/
 COPY data/labels/gemini_labels_dedup.json data/labels/
 RUN chown -R app:app /app/data
 

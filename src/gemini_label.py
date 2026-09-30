@@ -47,6 +47,9 @@ SYSTEM = (
     "M = natural or cosmic-sounding words used as ordinary metaphor/devotional praise, no real "
     "physical or cosmic-scale content.\n"
     "N = the verse has no natural-science content at all (ethics, love, court life, etc).\n"
+    "Tolkappiyam sutras (ids starting tolka:) are grammar and poetics: a rule about letters, sounds, words or "
+    "poetic convention is N; label by any natural content the sutra itself describes (landscapes, seasons, the five "
+    "elements, living beings).\n"
     "Ancient poets did not know modern physics: A/O/L are about content in the verse, never a "
     "claim the poet anticipated science. Return ONLY a JSON array, one object per input verse, "
     "same order, same ids. No other text.\n\n"
@@ -72,10 +75,11 @@ def call_gemini(verses):
         "generationConfig": {"temperature": 0, "responseMimeType": "application/json"},
     })
     for attempt in range(10):
+        # body via stdin: Windows mangles Tamil passed as a command-line argument
         r = subprocess.run(["curl", "-s", "-m", "90", "-H", "Content-Type: application/json", "-H", KEY_HEADER,
-                            "-d", body, URL], capture_output=True, text=True)
+                            "--data-binary", "@-", URL], input=body.encode("utf-8"), capture_output=True)
         try:
-            resp = json.loads(r.stdout)
+            resp = json.loads(r.stdout.decode("utf-8"))
         except json.JSONDecodeError:
             time.sleep(min(15 * (attempt + 1), 90))
             continue
@@ -108,6 +112,14 @@ def load_verses():
     rows = [json.loads(l) for l in (ROOT / "data/processed/thiruvarutpa.jsonl").read_text(encoding="utf-8").splitlines()]
     for r in rows:
         out.append({"id": f"arutpa:{r['section_id']}:{r['stanza_no']}", "text": r["text"].replace("\n", " ")})
+    # Tolkappiyam is a grammar: the CICT explanation goes with each sutra so the model knows what it says
+    for name, key, text in (("tolkappiyam", "tolka", lambda r: f"{r['text']} | {r['explanation']}"),
+                            ("thiruppavai", "pavai", lambda r: r["text"])):
+        p = ROOT / f"data/processed/{name}.jsonl"
+        if p.exists():
+            for l in p.read_text(encoding="utf-8").splitlines():
+                r = json.loads(l)
+                out.append({"id": f"{key}:{r['no']}", "text": text(r).replace("\n", " ")})
     return out
 
 
@@ -120,7 +132,8 @@ def main():
                 done.add(json.loads(l)["id"])
             except Exception:
                 pass
-    todo = [v for v in verses if v["id"] not in done]
+    order = {"pavai": 0, "kural": 1, "tolka": 2, "arutpa": 3}   # short texts first; Thiruvarutpa is the long tail
+    todo = sorted((v for v in verses if v["id"] not in done), key=lambda v: order.get(v["id"].split(":")[0], 9))
     print(f"{len(verses)} total, {len(done)} already labelled, {len(todo)} remaining")
     with OUT.open("a", encoding="utf-8") as f:
         for i in range(0, len(todo), BATCH):
