@@ -299,6 +299,16 @@ h2.title em{color:var(--gold-hi)}
 .why-type.mt-possible{background:transparent;color:#6a3410;border:1px dashed #6a3410}
 .ola.possible .why{border-style:dashed}
 /* hypotheses */
+/* verse lines on cards: hanging indent, balanced wrapping */
+.ola .ola-ta.vlines{display:block;-webkit-line-clamp:unset;overflow:visible}
+.vl{display:block;padding-left:1.1em;text-indent:-1.1em;text-wrap:pretty;margin-bottom:2px}
+/* results: filter by text */
+.src-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-8px 0 16px;font:600 12.5px var(--sans);color:var(--dim)}
+.src-bar > span{letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;margin-right:4px}
+.src-btn{font:600 12.5px var(--sans);color:var(--parch);background:rgba(22,20,34,.7);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.src-btn b{margin-left:3px;color:var(--gold-hi)}
+.src-btn.on{background:rgba(227,185,95,.18);border-color:var(--gold)}
+.src-btn:disabled{opacity:.4;cursor:default}
 /* observational lens */
 .obs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .obs{border-radius:16px;padding:16px 18px;background:rgba(22,20,34,.55);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
@@ -653,7 +663,7 @@ body.has-mouse #cursorGlow{opacity:1}
   <div class="steps">
     <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>11,076 couplets, hymns and sutras are scanned for sky, light, atoms, rain and the cosmos.</p></div>
     <div class="step reveal" style="transition-delay:.12s"><div class="ic">✦</div><h3>Name the idea</h3><p>Gemini labels each verse and names the modern concept it resembles — nested universes, lunar phases, the water cycle.</p></div>
-    <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched in official publishers (IEEE, Springer Nature, Elsevier, IOP, AAS) and NASA. Every paper is real, with its official link.</p></div>
+    <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched among peer reviewed papers with registered DOIs (IEEE, Springer Nature, Elsevier, Current Science and more) and NASA reports. Every paper is real, with its official link.</p></div>
   </div>
 </section>
 
@@ -713,7 +723,7 @@ body.has-mouse #cursorGlow{opacity:1}
 
 <footer>
   <div class="orn">✦ ✦ ✦</div>
-  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Tolkappiyam: Central Institute of Classical Tamil (CICT) · Thiruppavai: Tamil Wikisource · Papers: Crossref (IEEE, Springer Nature, Elsevier, IOP, AAS, APS…) and NASA NTRS · Images: NASA Image and Video Library<br>
+  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Tolkappiyam: Central Institute of Classical Tamil (CICT) · Thiruppavai: Tamil Wikisource · Papers: Crossref DOI registry (peer reviewed journals and conferences) and NASA NTRS · Images: NASA Image and Video Library<br>
   Labels and explanations are AI-generated and unverified. These are analogies — not evidence that the poets knew modern physics.
 </footer>
 
@@ -797,10 +807,16 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 function countUp(el, to){ let v = 0; const step = Math.max(1, Math.round(to/60)); const h = setInterval(() => { v = Math.min(to, v+step); el.textContent = v.toLocaleString(); if (v >= to) clearInterval(h); }, 20); }
 
 /* ---------------- cards ---------------- */
+// a card shows the first lines of a verse; each line is its own block so a wrapped line reads as a continuation
+function verseLines(text, max) {
+  const lines = String(text || '').split('\n').map(l => l.trim()).filter(Boolean);
+  const shown = lines.slice(0, max).map((l, i) => `<span class="vl">${esc(l)}${i === max - 1 && lines.length > max ? ' …' : ''}</span>`);
+  return `<p class="ola-ta vlines">${shown.join('')}</p>`;
+}
 function leafCard(v, i = 0) {
-  return `<article class="ola ${v.match_type === 'possible' ? 'possible' : ''}" data-id="${esc(v.id)}" data-mt="${esc(v.match_type || '')}" style="--d:${i*70}ms">
+  return `<article class="ola ${v.match_type === 'possible' ? 'possible' : ''}" data-id="${esc(v.id)}" data-mt="${esc(v.match_type || '')}" data-src="${esc(v.source || '')}" style="--d:${i*70}ms">
     <span class="frame"></span><span class="glare"></span>
-    <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(v.tamil)}</p></div>
+    <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span>${verseLines(v.tamil, 2)}</div>
     <div class="ola-cap">
       <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
         <button class="cap-save ${SAVED[v.id] ? 'on' : ''}" data-save="${esc(v.id)}" title="${SAVED[v.id] ? 'Saved — click to remove' : 'Save this leaf'}">${SAVED[v.id] ? '★' : '☆'}</button></div>
@@ -815,7 +831,7 @@ const bundle = (inner, cls = '') => `<div class="bundle ${cls}"><div class="boar
 const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="frame"></span><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
 function paperList(papers) {
   papers = (papers || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
-  if (!papers.length) return `<div class="empty">No papers from official publishers matched this idea closely enough.</div>`;
+  if (!papers.length) return `<div class="empty">No peer reviewed papers matched this idea closely enough.</div>`;
   papers = [...papers].sort((a, b) => (parseInt(b.year) || 0) - (parseInt(a.year) || 0));
   return `<div class="sort-note">Newest → oldest</div><div class="papers">` + papers.map((p, i) => `
     <a class="paper" href="${esc(p.url)}" target="_blank" rel="noopener" style="--d:${i*70}ms">
@@ -834,17 +850,29 @@ const MT_NAME = {direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared t
 const MT_ICON = {direct: '🎯', analogy: '🔭', thematic: '🧵', possible: '❓'};
 const MT_DESC = {direct: 'describes the same phenomenon', analogy: 'its imagery parallels the idea', thematic: 'shares a broader theme',
   possible: 'might be related — worth a look'};
+const SOURCES = ['Thirukkural', 'Thiruvarutpa', 'Tolkappiyam', 'Thiruppavai'];
+let FILTER = {mt: 'all', src: 'all'};
 function matchFilterBar(matches) {
+  FILTER = {mt: 'all', src: 'all'};
   const count = t => matches.filter(m => m.match_type === t).length;
+  const bySrc = s => matches.filter(m => m.source === s).length;
   return `<div class="mt-bar" role="tablist"><button class="mt-btn on" data-mt-filter="all">All <b>${matches.length}</b></button>` +
     Object.keys(MT_NAME).filter(t => count(t)).map(t =>
-      `<button class="mt-btn mt-${t}" data-mt-filter="${t}" title="${esc(MT_DESC[t])}">${MT_ICON[t]} ${MT_NAME[t]} <b>${count(t)}</b></button>`).join('') + `</div>`;
+      `<button class="mt-btn mt-${t}" data-mt-filter="${t}" title="${esc(MT_DESC[t])}">${MT_ICON[t]} ${MT_NAME[t]} <b>${count(t)}</b></button>`).join('') + `</div>` +
+    `<div class="src-bar"><span>From</span><button class="src-btn on" data-src-filter="all">All texts</button>` +
+    SOURCES.map(s => `<button class="src-btn" data-src-filter="${s}" ${bySrc(s) ? '' : 'disabled'}>${s} <b>${bySrc(s)}</b></button>`).join('') + `</div>`;
 }
-function filterMatches(t) {
-  document.querySelectorAll('.mt-btn').forEach(b => b.classList.toggle('on', b.dataset.mtFilter === t));
-  document.querySelectorAll('#exploreOut .ola[data-mt]').forEach(c => c.classList.toggle('mt-hide', t !== 'all' && c.dataset.mt !== t));
-  const note = $('#mtNote');
-  if (note) note.textContent = t === 'all' ? '' : `Showing ${MT_NAME[t].toLowerCase()} verses only — ${MT_DESC[t]}.`;
+function filterMatches(t, src) {
+  if (t) FILTER.mt = t;
+  if (src) FILTER.src = src;
+  document.querySelectorAll('.mt-btn').forEach(b => b.classList.toggle('on', b.dataset.mtFilter === FILTER.mt));
+  document.querySelectorAll('.src-btn').forEach(b => b.classList.toggle('on', b.dataset.srcFilter === FILTER.src));
+  document.querySelectorAll('#exploreOut .ola[data-mt]').forEach(c => c.classList.toggle('mt-hide',
+    (FILTER.mt !== 'all' && c.dataset.mt !== FILTER.mt) || (FILTER.src !== 'all' && c.dataset.src !== FILTER.src)));
+  const note = $('#mtNote'), parts = [];
+  if (FILTER.mt !== 'all') parts.push(`${MT_NAME[FILTER.mt].toLowerCase()} verses (${MT_DESC[FILTER.mt]})`);
+  if (FILTER.src !== 'all') parts.push(`from ${FILTER.src}`);
+  if (note) note.textContent = parts.length ? `Showing ${parts.join(', ')}.` : '';
   const bar = $('.mt-bar');
   if (bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
@@ -872,7 +900,7 @@ async function runSearch(topic, key) {
     $('#exploreOut').innerHTML =
       (n + np ? matchFilterBar(d.matches) + `<div class="mt-note" id="mtNote"></div>` + bundle(d.matches.map(leafCard).join(''))
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
-      `<h3 class="subhead">From the observatory</h3><p class="subnote">Research on “${esc(u ? u.arxiv : topic)}” from official publishers and NASA${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
+      `<h3 class="subhead">From the observatory</h3><p class="subnote">Research on “${esc(u ? u.arxiv : topic)}” from peer reviewed journals and NASA${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
       paperList(d.papers);
   } catch (e) {
     if (tok !== searchTok) return;
@@ -881,7 +909,7 @@ async function runSearch(topic, key) {
 }
 $('#heroForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#heroInput').value); });
 $('#exploreForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#exploreInput').value); });
-const HERO_CHIPS = ['Black holes', 'Multiverse', 'Big Bang', 'Speed of light', 'Atoms', 'Eclipses', 'String theory', 'Monsoon'];
+const HERO_CHIPS = ['Black holes', 'Multiverse', 'Atoms', 'Rain and monsoon', 'Moon phases', 'Five elements', 'Dawn and planets', 'Seasons'];
 $('#heroChips').innerHTML = HERO_CHIPS.map(t => `<button class="chip" data-topic="${t}">${t}</button>`).join('');
 
 /* ---------------- modal (deep reading) ---------------- */
@@ -920,7 +948,7 @@ function modalHtml(v, fromSaved) {
     <div class="m-section"><h3>Observational astronomy lens</h3><p class="note">How astronomers would actually study the natural idea behind this verse: radio spectral imaging, photometry, cosmology, beta (spectral index) scaling, petascale data and visualisation, each with a real official instrument.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
     <div class="m-section"><h3>In the real world</h3><p class="note">Grouped by field. Top space agencies, research institutes and universities come first, then newest first. Every “Official source” link was opened and checked. AI-summarised — verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Official images</h3><p class="note">From the NASA Image and Video Library, including radio images. Click an image for its official page.</p><div id="mImg">${v.concept ? loading('Opening the NASA archive…') : '<div class="empty">No natural-science idea to look up.</div>'}</div></div>
-    <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed papers from official publishers (IEEE, Springer Nature, Elsevier, IOP, AAS, APS…) and NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
+    <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
@@ -1096,6 +1124,8 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 document.addEventListener('click', e => {
   const mt = e.target.closest('[data-mt-filter]');
   if (mt) return filterMatches(mt.dataset.mtFilter);
+  const sf = e.target.closest('[data-src-filter]');
+  if (sf && !sf.disabled) return filterMatches(null, sf.dataset.srcFilter);
   if (e.target.closest('[data-close]')) return closeModal();
   if (e.target.closest('[data-lib-close]')) return closeLibrary();
   if (e.target.closest('[data-analyse]')) return analyseLeaves(false);

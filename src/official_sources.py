@@ -1,6 +1,6 @@
-"""Research papers and images from official, notable sources only (no preprint servers).
+"""Research papers and images from verified sources only (no preprint servers).
 
-Papers: Crossref (the DOI registry) restricted to recognised scholarly publishers such as IEEE, Elsevier,
+Papers: Crossref (the DOI registry): any peer reviewed journal or conference paper with a registered DOI, e.g. IEEE, Elsevier,
 Springer Nature, IOP, the AAS, Oxford (MNRAS) and APS, each linking to its official DOI page; plus NASA's
 Technical Reports Server (NTRS). Images: the NASA Image and Video Library.
 All calls go through curl (as the rest of the app does) and return [] on any failure.
@@ -27,7 +27,16 @@ PUBLISHERS = [
 
 
 NON_SCIENCE = re.compile(r"philosoph|religio|theolog|buddh|hindu|spiritual|literature|linguistic|humanit|history of|"
-                         r"finance|econom|stock|business|marketing|psycholog", re.I)
+                         r"finance|econom|stock|business|marketing|psycholog|educat|teach", re.I)
+
+
+# publishers widely listed as predatory or low quality, plus humanities aggregators: never shown as dependable
+NOT_DEPENDABLE = re.compile(
+    r"scientific research publishing|international journal of science and research|naksh|uniscience|nan yang academy|"
+    r"science publishing group|omics|longdom|hilaris|pulsus|walsh medical|juniper publishers|austin publishing|"
+    r"lupine|crimson publishers|iris publishers|allied academies|gavin publishers|ecronicon|scitechnol|medwin|"
+    r"iosr|global journals|research publish|scholars research library|ijraset|ijrar|academic journals inc|"
+    r"project muse|jstor|chartered institute of brewers", re.I)
 
 
 def _get(url, timeout=25):
@@ -61,11 +70,14 @@ def crossref(query, rows=40):
     d = _get("https://api.crossref.org/works?" + params)
     out = []
     for w in ((d or {}).get("message") or {}).get("items", []):
-        label = publisher_label(w.get("publisher"))
+        # any peer reviewed journal or conference paper with a registered DOI counts as a verified source;
+        # well-known publishers get a short label, others keep their registered publisher name
+        label = publisher_label(w.get("publisher")) or _clean(w.get("publisher", ""))[:40]
         title = _clean((w.get("title") or [""])[0])
         year = ((w.get("issued") or {}).get("date-parts") or [[None]])[0][0]
         venue = _clean((w.get("container-title") or [""])[0])
-        if not (label and title and year and w.get("DOI")) or NON_SCIENCE.search(venue):
+        if not (label and venue and title and year and w.get("DOI")) or NON_SCIENCE.search(venue) \
+                or NOT_DEPENDABLE.search(f'{w.get("publisher", "")} {venue}'):
             continue
         out.append({"title": title, "url": "https://doi.org/" + w["DOI"], "year": str(year),
                     "authors": [" ".join(x for x in (a.get("given"), a.get("family")) if x) for a in (w.get("author") or [])[:4]],
@@ -94,7 +106,9 @@ STOP = {"the", "and", "with", "from", "into", "within", "that", "this", "their",
 
 
 def _stems(text):
-    return {w[:6] for w in re.findall(r"[a-z]{4,}", text.lower()) if w not in STOP}
+    """Crude stems: drop a plural 's' ('holes' -> 'hole'), then keep the first 6 letters."""
+    words = (w for w in re.findall(r"[a-z]{4,}", text.lower()) if w not in STOP)
+    return {(w[:-1] if len(w) > 4 and w.endswith("s") and not w.endswith("ss") else w)[:6] for w in words}
 
 
 def relevant(title, query, need=0.6):

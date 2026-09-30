@@ -144,7 +144,7 @@ def match_topic(concept):
 
 
 def papers_for(concept, key=None):
-    out = cached(ckey("papers-v6", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
+    out = cached(ckey("papers-v9", key or "", concept.lower()), 7 * DAY, lambda: _papers_live(concept, key))
     papers = sorted((out or {}).get("papers", []), key=lambda p: -int(re.sub(r"\D", "", str(p.get("year") or "")) or 0))
     return (out or {}).get("title"), papers
 
@@ -179,7 +179,8 @@ SEARCH_SYS = (
     "worth a student's look -- say in the reason what the possible link is and why it is uncertain), "
     "\"matched_on\": <the specific idea or image in the verse that matches>, \"score\": <relevance 1-5>}. "
     "Give up to 12 genuine matches (direct/analogy/thematic), most relevant first, then up to 5 extra 'possible' ones (score 1-2). "
-    "No random filler: every entry needs a concrete reason. Empty array if none."
+    "No random filler: every entry needs a concrete reason. Empty array if none. The list mixes four works "
+    "(Thirukkural, Thiruvarutpa, Tolkappiyam, Thiruppavai): judge every entry on its own merit, whatever work it comes from."
 )
 MATCH_TYPES = ("direct", "analogy", "thematic", "possible")
 
@@ -222,16 +223,31 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v4", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v5", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+
+
+@lru_cache(maxsize=1)
+def interleaved_science_verses():
+    """Science verses taken round-robin from each text, so no text sits at the top of the list the AI reads."""
+    by_src = {}
+    for v in verse_list():
+        if v["label"] in ("L", "O", "A"):
+            by_src.setdefault(v["source"], []).append(v)
+    out, queues = [], list(by_src.values())
+    while any(queues):
+        for q in queues:
+            if q:
+                out.append(q.pop(0))
+    return out
 
 
 def _search_live(topic, key=None, lang="en"):
     understood = None if key or is_plain_term(topic) else understand_query(topic)
     ask = f"{understood['topic']} (the student typed: \"{topic}\" -- meaning: {understood['intent']})" if understood else topic
-    verses = [v for v in verse_list() if v["label"] in ("L", "O", "A")]
-    listing = "\n".join(f'{i}::{v["concept"]}::{v["meaning"]}' for i, v in enumerate(verses))
+    verses = interleaved_science_verses()
+    listing = "\n".join(f'{i}::{v["source"]}::{v["concept"]}::{v["meaning"]}' for i, v in enumerate(verses))
     reason_lang = " Write each reason in Tamil." if lang == "ta" else ""
-    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {ask}\n\nList (index::concept::meaning):\n{listing}")
+    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {ask}\n\nList (index::work::concept::meaning):\n{listing}")
     if raw is None:
         return None
     raw = raw or []
@@ -326,7 +342,10 @@ DEEP_SYS = (
     "    instrument: a real official instrument, survey, mission or facility. For sky phenomena prefer ISRO AstroSat, "
     "NCRA GMRT, SKA, NRAO VLA, ALMA, SDSS, Gaia, JWST, Hubble, Planck, Rubin Observatory LSST. For Earth, weather or "
     "living-world phenomena use real Earth-observation or field instruments (weather radar, INSAT-3D, Oceansat, GPM, "
-    "NOAA, ECMWF) and NEVER an astronomical telescope. Set applies false when the method has no genuine use.\n"
+    "NOAA, ECMWF) and NEVER an astronomical telescope: GMRT, SKA, VLA, ALMA, Hubble, JWST, Gaia, SDSS, Planck and AstroSat "
+    "observe the sky and must not be named for rain, clouds, weather, oceans, land, plants or animals (for radar or radio "
+    "measurements of weather name a weather radar such as ISRO DWR or NOAA NEXRAD). Set applies false when the method has no "
+    "genuine use.\n"
     "    organization: who runs it; url: its official page only if you are confident it exists, else ''\n"
     "    Radio spectral imaging = mapping the sky at radio frequencies and how intensity changes across frequency. "
     "Photometry = measuring brightness through filters over time or colour. Cosmology = the origin, structure and "
@@ -674,7 +693,7 @@ class Handler(BaseHTTPRequestHandler):
                     if sum(1 for o in d["observation"] if o["how"]) >= 3:
                         break
                 return d
-            out = cached(ckey("deep-v7", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = cached(ckey("deep-v8", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
