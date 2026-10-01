@@ -303,6 +303,7 @@ h2.title em{color:var(--gold-hi)}
 .ola .ola-ta.vlines{display:block;-webkit-line-clamp:unset;overflow:visible}
 .vl{display:block;padding-left:1.1em;text-indent:-1.1em;text-wrap:pretty;margin-bottom:2px}
 /* results: filter by text */
+.arch-src{margin:4px 0 14px!important}
 .src-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:-8px 0 16px;font:600 12.5px var(--sans);color:var(--dim)}
 .src-bar > span{letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;margin-right:4px}
 .src-btn{font:600 12.5px var(--sans);color:var(--parch);background:rgba(22,20,34,.7);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
@@ -1244,14 +1245,27 @@ const FILTERS = [['AOL','All science'], ['A','Cosmic vision'], ['O','Observed na
 const FSET = {AOL:['A','O','L'], A:['A'], O:['O'], L:['L'], M:['M']};
 function renderArchive() {
   $('#filters').innerHTML = FILTERS.map(([k, l]) => `<button class="chip ${k === filter ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('') +
+    `<div class="src-bar arch-src"><span>From</span>${['all', ...SOURCES].map(x => `<button class="src-btn ${x === archSrc ? 'on' : ''}" data-arch-src="${x}">${x === 'all' ? 'All texts' : x} <b>${archCount(x)}</b></button>`).join('')}</div>` +
     `<div class="archive-wrap"><input class="archive-search" id="archQ" placeholder="Search leaves — Tamil, meaning or concept…" autocomplete="off"><div class="suggest" id="archSuggest"></div></div>`;
   $('#archQ').addEventListener('input', e => { archQ = e.target.value; shown = 24; renderList(); });
   attachSuggest($('#archQ'), $('#archSuggest'), t => { $('#archQ').value = t; archQ = t; shown = 24; renderList(); }, 'verses');
   renderList();
 }
+let archSrc = 'all';
+const archBase = () => filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => FSET[filter].includes(v.label));
+const archCount = x => archBase().filter(v => x === 'all' || v.source === x).length.toLocaleString();
+// mix the texts round-robin so no single text fills the first pages (cosmic vision verses are mostly Thiruvarutpa)
+function interleaveBySource(rows) {
+  const q = {}; rows.forEach(v => (q[v.source] = q[v.source] || []).push(v));
+  const lists = Object.values(q), out = [];
+  for (let i = 0; out.length < rows.length; i++) lists.forEach(l => { if (l[i]) out.push(l[i]); });
+  return out;
+}
 function renderList() {
   const q = archQ.trim().toLowerCase();
-  let rows = filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => FSET[filter].includes(v.label));
+  let rows = archBase();
+  rows = archSrc === 'all' ? interleaveBySource(rows) : rows.filter(v => v.source === archSrc);
+  document.querySelectorAll('[data-arch-src] b').forEach(b => { b.textContent = archCount(b.parentElement.dataset.archSrc); });
   if (q) rows = rows.filter(v => (v.tamil + ' ' + v.english + ' ' + v.concept + ' ' + v.meaning + ' ' + v.ref).toLowerCase().includes(q));
   $('#count').textContent = `${rows.length.toLocaleString()} leaves`;
   $('#archiveOut').innerHTML = rows.length ? bundle(rows.slice(0, shown).map((v, i) => leafCard(v, i % 24)).join(''))
@@ -1259,6 +1273,12 @@ function renderList() {
   $('#moreBtn').style.display = rows.length > shown ? 'block' : 'none';
 }
 $('#moreBtn').addEventListener('click', () => { shown += 24; renderList(); });
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-arch-src]'); if (!b) return;
+  archSrc = b.dataset.archSrc; shown = 24;
+  document.querySelectorAll('[data-arch-src]').forEach(x => x.classList.toggle('on', x.dataset.archSrc === archSrc));
+  renderList();
+});
 
 /* ---------------- saved leaves ---------------- */
 let SAVED = {}, CUR = null, ME = '';
