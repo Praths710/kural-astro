@@ -21,7 +21,7 @@ the rain chapter (kurals 11-20), i.e. hydrology/monsoon, not astrophysics.
 
 ## Thiruvarutpa (Vallalar)
 
-`src/fetch_thiruvarutpa.py` scrapes thiruarutpa.org (385 sections, 8,109 stanzas, Tamil only) ->
+`src/fetch_thiruvarutpa.py` scrapes thiruarutpa.org (385 sections, 8,040 stanzas after removing 69 editor footnotes, Tamil only) ->
 `data/processed/thiruvarutpa.jsonl`. `src/candidates_arutpa.py` -> 258 candidates.
 `src/silver_labels_arutpa.py` (silver, unverified): 63 A (mystic-cosmological), 3 O, 150 M, 42 N.
 The A set holds the real material: nested/multiple universes, universes inside an atom, layered

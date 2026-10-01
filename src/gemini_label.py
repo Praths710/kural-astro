@@ -129,7 +129,9 @@ def main():
     if OUT.exists():
         for l in OUT.read_text(encoding="utf-8").splitlines():
             try:
-                done.add(json.loads(l)["id"])
+                r = json.loads(l)
+                if r.get("label") in ("L", "O", "A", "M", "N"):   # PARSE_ERROR rows are retried
+                    done.add(r["id"])
             except Exception:
                 pass
     order = {"pavai": 0, "kural": 1, "tolka": 2, "arutpa": 3}   # short texts first; Thiruvarutpa is the long tail
