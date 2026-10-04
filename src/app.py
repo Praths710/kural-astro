@@ -183,11 +183,27 @@ SEARCH_SYS = (
     "\"thematic\" (a broader shared theme), \"possible\" (not an established link, but there is a real chance of a relation "
     "worth a student's look -- say in the reason what the possible link is and why it is uncertain), "
     "\"matched_on\": <the specific idea or image in the verse that matches>, \"score\": <relevance 1-5>}. "
-    "Give up to 12 genuine matches (direct/analogy/thematic), most relevant first, then up to 5 extra 'possible' ones (score 1-2). "
+    "Give ALL genuine matches (direct/analogy/thematic), up to 40, most relevant first, then up to 8 extra 'possible' ones (score 1-2). "
     "No random filler: every entry needs a concrete reason. Empty array if none. The list mixes four works "
     "(Thirukkural, Thiruvarutpa, Tolkappiyam, Thiruppavai): judge every entry on its own merit, whatever work it comes from."
 )
 MATCH_TYPES = ("direct", "analogy", "thematic", "possible")
+SEARCH_STOP = {"and", "the", "of", "in", "on", "a", "an", "to", "for", "with", "what", "did", "does", "do", "is", "are", "was",
+               "were", "they", "poets", "poet", "verse", "verses", "about", "know", "knew", "tamil", "ancient", "inside",
+               "there", "this", "that", "how", "why", "when", "who", "say", "said", "any", "all", "from", "into", "their"}
+
+
+WORD_START = chr(92) + "b"   # regex word boundary
+
+
+def topic_words(text):
+    """Search words for the word match: plural 's' dropped ('atoms' -> 'atom'), short and common words ignored."""
+    out = set()
+    for w in re.findall(r"[a-z]{3,}", (text or "").lower()):
+        if w in SEARCH_STOP:
+            continue
+        out.add(w[:-1] if len(w) > 4 and w.endswith("s") and not w.endswith("ss") else w)
+    return out
 
 
 def english_query(topic):
@@ -228,7 +244,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v7", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -274,7 +290,19 @@ def _search_live(topic, key=None, lang="en"):
                             "matched_on": m.get("matched_on", ""), "score": score})
     seen = set()
     matches = [m for m in matches if not (m["id"] in seen or seen.add(m["id"]))]
-    matches.sort(key=lambda v: (v["match_type"] == "possible", -v["score"]))
+    # word search on top of the AI: every science verse whose concept or meaning contains the search words is
+    # included, so a topic like "atoms" returns all its verses rather than only the ones the AI chose to list
+    words = topic_words(understood["topic"] if understood else topic) | topic_words(topic)
+    if words:
+        chosen = {m["id"] for m in matches}
+        for v in verses:
+            text = f'{v["concept"]} {v["meaning"]}'.lower()
+            hits = sorted(w for w in words if re.search(WORD_START + re.escape(w), text))
+            if hits and v["id"] not in chosen:
+                matches.append({**v, "match_type": "keyword", "score": 2 if len(hits) > 1 else 1, "matched_on": ", ".join(hits),
+                                "reason": f'Its science concept, "{v["concept"]}", mentions {", ".join(hits)}.'})
+    rank = {"direct": 0, "analogy": 1, "thematic": 2, "keyword": 3, "possible": 4}
+    matches.sort(key=lambda v: (rank.get(v["match_type"], 5), -v["score"]))
     # a one-word topic ("Seasons") is too vague for a paper search: use the AI's scientific search phrase when there is one
     if not understood and not key and not match_topic(topic)[0]:
         understood_for_papers = understand_query(topic)

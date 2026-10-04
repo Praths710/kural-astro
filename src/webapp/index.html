@@ -294,6 +294,10 @@ h2.title em{color:var(--gold-hi)}
 .mt-note{font-size:13px;color:var(--dim);min-height:0;margin:0 0 6px}
 .mt-note:empty{display:none}
 .ola.mt-hide{display:none}
+.mt-more{display:block;margin:18px auto 8px;font:600 14px var(--sans);color:#1b1206;background:var(--gold);border:0;border-radius:999px;padding:11px 26px;cursor:pointer}
+.mt-more span{font-weight:500;opacity:.75;margin-left:4px}
+.mt-more:hover{background:var(--gold-hi)}
+.why-type.mt-keyword{background:transparent;color:#6a3410;border:1px solid #6a3410}
 .eh-plus{font-size:.6em;color:var(--dim);font-family:var(--sans)}
 .why-type.mt-direct{background:#2f5a2a}.why-type.mt-analogy{background:#6a3410}.why-type.mt-thematic{background:#4a3a6a}
 .why-type.mt-possible{background:transparent;color:#6a3410;border:1px dashed #6a3410}
@@ -909,14 +913,16 @@ const loading = msg => `<div class="loading-line"><span class="orbit-loader"></s
 
 /* ---------------- search (topic -> verses + papers) ---------------- */
 let searchTok = 0;
-const MT_NAME = {direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared theme', possible: 'Possible link'};
-const MT_ICON = {direct: '🎯', analogy: '🔭', thematic: '🧵', possible: '❓'};
+const MT_NAME = {direct: 'Direct match', analogy: 'Analogy', thematic: 'Shared theme', keyword: 'Word match', possible: 'Possible link'};
+const MT_ICON = {direct: '🎯', analogy: '🔭', thematic: '🧵', keyword: '🔤', possible: '❓'};
 const MT_DESC = {direct: 'describes the same phenomenon', analogy: 'its imagery parallels the idea', thematic: 'shares a broader theme',
-  possible: 'might be related — worth a look'};
+  keyword: 'its science concept uses your search words', possible: 'might be related, worth a look'};
+const PAGE = 24;
+let SHOWN = PAGE;
 const SOURCES = ['Thirukkural', 'Thiruvarutpa', 'Tolkappiyam', 'Thiruppavai'];
 let FILTER = {mt: 'all', src: 'all'};
 function matchFilterBar(matches) {
-  FILTER = {mt: 'all', src: 'all'};
+  FILTER = {mt: 'all', src: 'all'}; SHOWN = PAGE;
   const count = t => matches.filter(m => m.match_type === t).length;
   const bySrc = s => matches.filter(m => m.source === s).length;
   return `<div class="mt-bar" role="tablist"><button class="mt-btn on" data-mt-filter="all">All <b>${matches.length}</b></button>` +
@@ -928,17 +934,30 @@ function matchFilterBar(matches) {
 function filterMatches(t, src) {
   if (t) FILTER.mt = t;
   if (src) FILTER.src = src;
+  if (t || src) SHOWN = PAGE;
   document.querySelectorAll('.mt-btn').forEach(b => b.classList.toggle('on', b.dataset.mtFilter === FILTER.mt));
   document.querySelectorAll('.src-btn').forEach(b => b.classList.toggle('on', b.dataset.srcFilter === FILTER.src));
-  document.querySelectorAll('#exploreOut .ola[data-mt]').forEach(c => c.classList.toggle('mt-hide',
-    (FILTER.mt !== 'all' && c.dataset.mt !== FILTER.mt) || (FILTER.src !== 'all' && c.dataset.src !== FILTER.src)));
+  // filters apply to every result; then only the first SHOWN of the matching ones are drawn
+  let seen = 0;
+  document.querySelectorAll('#exploreOut .ola[data-mt]').forEach(c => {
+    const ok = (FILTER.mt === 'all' || c.dataset.mt === FILTER.mt) && (FILTER.src === 'all' || c.dataset.src === FILTER.src);
+    if (ok) seen++;
+    c.classList.toggle('mt-hide', !ok || seen > SHOWN);
+  });
+  const more = $('#mtMore');
+  if (more) {
+    const left = seen - SHOWN;
+    more.style.display = left > 0 ? '' : 'none';
+    if (left > 0) more.innerHTML = `Show ${Math.min(left, PAGE)} more <span>(${SHOWN} of ${seen} shown)</span>`;
+  }
   const note = $('#mtNote'), parts = [];
   if (FILTER.mt !== 'all') parts.push(`${MT_NAME[FILTER.mt].toLowerCase()} verses (${MT_DESC[FILTER.mt]})`);
   if (FILTER.src !== 'all') parts.push(`from ${FILTER.src}`);
   if (note) note.textContent = parts.length ? `Showing ${parts.join(', ')}.` : '';
   const bar = $('.mt-bar');
-  if (bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({behavior: 'smooth', block: 'start'});
+  if ((t || src) && bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
+function showMore() { SHOWN += PAGE; filterMatches(); }
 async function runSearch(topic, key) {
   topic = (topic || '').trim(); if (!topic) return;
   closeModal(); closeLibrary();
@@ -959,12 +978,13 @@ async function runSearch(topic, key) {
         ${u.related && u.related.length ? `<span style="color:var(--dim)">· also try</span>${u.related.map(r => `<button class="chip" data-topic="${esc(r)}">${esc(r)}</button>`).join('')}` : ''}
         ${u.intent ? `<span class="u-intent">${esc(u.intent)}</span>` : ''}</div>` : '') +
       `<span class="eh-title">${n ? `<em>${n}</em> verse${n>1?'s':''} echo “${esc(u ? u.topic : topic)}”` : `No verse clearly echoes “${esc(u ? u.topic : topic)}”`}${np ? `<span class="eh-plus"> + ${np} possible link${np > 1 ? 's' : ''}</span>` : ''}</span>` +
-      (n + np ? `<div class="search-basis">Matched by <b>meaning</b>, not by shared words: the AI compares your topic with the science idea found in each verse. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first; <b>possible links</b> — verses where a relation might exist but is uncertain — come last. Use the buttons to show one kind.</div>` : '');
+      (n + np ? `<div class="search-basis">Matched by <b>meaning</b>: the AI compares your topic with the science idea found in each verse, and every verse whose science concept uses your words is added as a <b>word match</b>. Each card says why it was picked, what it matched on, and how relevant it is (●●●●● = strongest). Strongest first; <b>possible links</b> — verses where a relation might exist but is uncertain — come last. Use the buttons to show one kind.</div>` : '');
     $('#exploreOut').innerHTML =
-      (n + np ? matchFilterBar(d.matches) + `<div class="mt-note" id="mtNote"></div>` + bundle(d.matches.map(leafCard).join(''))
+      (n + np ? matchFilterBar(d.matches) + `<div class="mt-note" id="mtNote"></div>` + bundle(d.matches.map((m, i) => leafCard(m, i % PAGE)).join('')) + `<button class="mt-more" id="mtMore" type="button"></button>`
          : `<div class="empty">The verses are silent on this one — but here is what modern science says.</div>`) +
       `<h3 class="subhead">From the observatory</h3><p class="subnote">Research on “${esc(u ? u.arxiv : topic)}” from peer reviewed journals and NASA${d.topic_title && d.topic_title !== 'Direct search' ? ' · ' + esc(d.topic_title) : ''}</p>` +
       paperList(d.papers);
+    if (n + np) filterMatches();
   } catch (e) {
     if (tok !== searchTok) return;
     $('#exploreHead').innerHTML = ''; $('#exploreOut').innerHTML = `<div class="empty">Couldn't reach the AI just now (${esc(e.message)}). Try again in a moment.</div>`;
@@ -1185,6 +1205,7 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 
 /* ---------------- global clicks: everything connects ---------------- */
 document.addEventListener('click', e => {
+  if (e.target.closest('#mtMore')) return showMore();
   const mt = e.target.closest('[data-mt-filter]');
   if (mt) return filterMatches(mt.dataset.mtFilter);
   const ec = e.target.closest('[data-echo]');
@@ -1511,23 +1532,38 @@ function reportText() {
 let SUGG = [];
 function buildSuggestions() {
   const m = new Map();
-  const add = (text, kind, n = 0) => { const k = text.toLowerCase().trim(); if (!k) return; if (!m.has(k)) m.set(k, {text, kind, n}); else m.get(k).n += n; };
+  const add = (text, kind, n = 0, src = null) => {
+    const k = text.toLowerCase().trim(); if (!k) return;
+    if (!m.has(k)) m.set(k, {text, kind, n, srcs: src ? [src] : null});
+    else { const s = m.get(k); s.n += n; if (src && s.srcs && !s.srcs.includes(src)) s.srcs.push(src); }
+  };
   Object.values(TOPIC_NAMES).forEach(t => add(t, 'Theme'));
   HERO_CHIPS.forEach(t => add(t, 'Popular'));
   ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Quantum entanglement', 'Seasons', 'Time', 'Light', 'Water cycle', 'Creation of the universe']
     .forEach(t => add(t, 'Science'));
-  VERSES.filter(v => FSET.AOL.includes(v.label) && v.concept).forEach(v => add(v.concept, 'In the verses', 1));
+  VERSES.filter(v => FSET.AOL.includes(v.label) && v.concept).forEach(v => add(v.concept, 'In the verses', 1, v.source || 'the verses'));
   SUGG = [...m.values()];
+  SUGG.forEach(s => { if (s.srcs) s.kind = s.srcs.length > 1 ? `In ${s.srcs.length} texts` : `In ${s.srcs[0]}`; });
 }
 const markHit = (t, q) => { const i = q ? t.toLowerCase().indexOf(q) : -1; return i < 0 ? esc(t) : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length)); };
 function attachSuggest(input, box, onPick, scope) {
   let items = [], hi = -1;
-  const pool = () => scope === 'verses' ? SUGG.filter(s => s.kind === 'In the verses' || s.kind === 'Theme') : SUGG;
+  const pool = () => scope === 'verses' ? SUGG.filter(s => s.srcs || s.kind === 'Theme') : SUGG;
+  // verse concepts are taken in turn from each text, so one large text cannot fill the whole list
+  const balance = list => {
+    const q = {}; list.forEach(s => (q[s.srcs[0]] = q[s.srcs[0]] || []).push(s));
+    const lists = Object.values(q), out = [];
+    for (let i = 0; out.length < list.length; i++) lists.forEach(l => { if (l[i]) out.push(l[i]); });
+    return out;
+  };
   const render = () => {
     const q = input.value.trim().toLowerCase();
-    items = q ? pool().filter(s => s.text.toLowerCase().includes(q))
-                .sort((a, b) => (b.text.toLowerCase().startsWith(q) - a.text.toLowerCase().startsWith(q)) || (b.n - a.n)).slice(0, 7)
-              : pool().filter(s => s.kind === 'Theme').slice(0, 8);
+    if (q) {
+      const hits = pool().filter(s => s.text.toLowerCase().includes(q))
+        .sort((a, b) => (b.text.toLowerCase().startsWith(q) - a.text.toLowerCase().startsWith(q)) || (b.n - a.n));
+      const fixed = hits.filter(s => !s.srcs).slice(0, 3);
+      items = [...fixed, ...balance(hits.filter(s => s.srcs))].slice(0, 8);
+    } else items = pool().filter(s => s.kind === 'Theme').slice(0, 8);
     // main search boxes: whatever was typed can always be sent to the AI as-is
     const aiRow = scope !== 'verses' && q && !items.some(s => s.text.toLowerCase() === q);
     if (aiRow) items.unshift({text: input.value.trim(), kind: 'AI', ai: true});
