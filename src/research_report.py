@@ -57,6 +57,11 @@ TOPICS = {
     "monsoon": ("Monsoon dynamics and the water cycle",
         ["rain", "water cycle", "monsoon", "famine", "hydrology", "groundwater", "drought"],
         ['all:"Indian summer monsoon" AND all:variability', 'all:"hydrological cycle"']),
+    # after "monsoon" on purpose: rain verses that mention lightning stay with the water cycle
+    "cosmic_flash": ("Cosmic flashes: neutron star collisions, gamma-ray bursts, X-ray transients",
+        ["lightning flash", "lightning as", "flash of light", "outshin", "dimmed by", "sparks", "burst", "explosion",
+         "collision", "colliding", "neutron", "magnetar"],
+        ['all:"fast X-ray transient" AND all:"neutron star merger"', 'all:"short gamma-ray burst" AND all:magnetar']),
 }
 
 

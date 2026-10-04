@@ -310,6 +310,27 @@ h2.title em{color:var(--gold-hi)}
 .src-btn b{margin-left:3px;color:var(--gold-hi)}
 .src-btn.on{background:rgba(227,185,95,.18);border-color:var(--gold)}
 .src-btn:disabled{opacity:.4;cursor:default}
+/* latest discovery */
+.disc{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+.disc-main,.disc-side{background:rgba(22,20,34,.6);border:1px solid var(--line);border-radius:20px;padding:26px 28px}
+.disc-lede{font-size:16px;line-height:1.7;color:var(--parch);margin:0 0 18px}
+.disc-lede b{color:var(--gold-hi)}
+.disc-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.disc-facts div{border-top:2px solid var(--gold);padding-top:8px}
+.disc-facts b{display:block;font-family:var(--sans);font-size:20px;color:var(--gold-hi)}
+.disc-facts span{font-size:12.5px;color:var(--dim)}
+.disc h4{margin:14px 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.disc-links{display:flex;flex-wrap:wrap;gap:8px}
+.disc-links a{font-size:13px;color:var(--parch);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:rgba(255,255,255,.03)}
+.disc-links a:hover{border-color:var(--gold);color:var(--gold-hi)}
+.disc-note{font-size:13px;line-height:1.6;color:var(--dim);margin:0 0 12px}
+.disc-echo{display:block;width:100%;text-align:left;background:rgba(236,217,166,.06);border:1px solid rgba(236,217,166,.2);border-radius:12px;
+  padding:10px 12px;margin-bottom:8px;cursor:pointer;color:var(--parch);font-family:var(--sans)}
+.disc-echo:hover{border-color:var(--gold)}
+.disc-echo .ta{display:block;font-family:var(--tamil);font-size:15px;line-height:1.5;color:var(--leaf1)}
+.disc-echo .c{display:block;font-size:12.5px;color:var(--dim);margin-top:3px}
+.disc-btn{margin-top:8px}
+@media(max-width:820px){.disc{grid-template-columns:1fr}.disc-facts{grid-template-columns:repeat(2,1fr)}}
 /* observational lens */
 .obs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .obs{border-radius:16px;padding:16px 18px;background:rgba(22,20,34,.55);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
@@ -680,6 +701,47 @@ body.has-mouse #cursorGlow{opacity:1}
   <div class="legend" id="legend"></div>
 </section>
 
+<!-- LATEST DISCOVERY -->
+<section class="block" id="discovery">
+  <div class="kicker reveal">Latest discovery</div>
+  <h2 class="title reveal">A neutron star collision behind a <em>mysterious X-ray flash</em></h2>
+  <div class="disc reveal">
+    <div class="disc-main">
+      <p class="disc-lede">Since 2024 the Einstein Probe telescope has caught brief X-ray flashes with no known source. One of them,
+        <b>EP250704a</b>, has now been traced to its cause: two neutron stars colliding about <b>6 billion light years</b> away.
+        A half-second gamma-ray burst came first, then an X-ray flash lasting almost ten minutes, the longest ever seen from such a
+        merger. The collision most likely left behind a <b>magnetar</b>, a fast-spinning neutron star with an enormous magnetic field.</p>
+      <div class="disc-facts">
+        <div><b>0.5 s</b><span>gamma-ray burst</span></div>
+        <div><b>~10 min</b><span>X-ray flash</span></div>
+        <div><b>6 billion</b><span>light years away</span></div>
+        <div><b>Magnetar</b><span>left behind</span></div>
+      </div>
+      <h4>Seen by</h4>
+      <div class="disc-links">
+        <a href="https://ep.bao.ac.cn/ep/" target="_blank" rel="noopener">Einstein Probe · CAS ↗</a>
+        <a href="https://www.cosmos.esa.int/web/einstein-probe" target="_blank" rel="noopener">Einstein Probe · ESA ↗</a>
+        <a href="https://www.svom.eu/en/home/" target="_blank" rel="noopener">SVOM · CNSA &amp; CNES ↗</a>
+        <a href="http://hxmten.ihep.ac.cn/" target="_blank" rel="noopener">Insight-HXMT · China ↗</a>
+        <a href="https://www.eso.org/public/teles-instr/paranal-observatory/vlt/vlt-instr/x-shooter/" target="_blank" rel="noopener">ESO VLT X-Shooter ↗</a>
+      </div>
+      <h4>Read the research</h4>
+      <div class="disc-links">
+        <a href="https://doi.org/10.1093/mnras/stag1295" target="_blank" rel="noopener">GRB 250704B/EP250704a: a short gamma-ray burst powered by a magnetar · MNRAS 2026 ↗</a>
+        <a href="https://www.ligo.caltech.edu/page/press-release-gw170817" target="_blank" rel="noopener">GW170817 · the 2017 neutron star merger heard in gravitational waves · LIGO ↗</a>
+        <a href="https://www.iflscience.com/neutron-star-collisions-might-be-the-source-of-mysterious-cosmic-x-ray-flashes-84818" target="_blank" rel="noopener">News report · IFLScience ↗</a>
+      </div>
+    </div>
+    <div class="disc-side">
+      <h4>Echoes in the verses</h4>
+      <p class="disc-note">Analogies only: the poets were not describing X-ray astronomy. Vallalar compares life to a lightning flash and
+        sees a radiance that outshines the sun, moon and fire.</p>
+      <div id="discEchoes"></div>
+      <button class="btn disc-btn" data-topic="Cosmic flashes" data-key="cosmic_flash">Explore cosmic flashes →</button>
+    </div>
+  </div>
+</section>
+
 <!-- EXPLORE -->
 <section class="block" id="explore">
   <div class="kicker reveal">Explore</div>
@@ -752,7 +814,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const LABEL = {A:'Cosmic vision', O:'Observed nature', L:'Literal fact', M:'Metaphor', N:'No science'};
 const TOPIC_NAMES = {holographic:'Holographic universe', multiverse:'Multiverse', extra_dim:'Extra dimensions', light_medium:'Cosmic light',
   dissolution:'End of the universe', no_centre:'No cosmic centre', cosmogony:'Birth of the cosmos', lunar:'The Moon',
-  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle'};
+  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle', cosmic_flash:'Cosmic flashes'};
 let VERSES = [], BY_ID = {}, CUSTOM = {};
 
 async function api(path, body) {
@@ -910,7 +972,7 @@ async function runSearch(topic, key) {
 }
 $('#heroForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#heroInput').value); });
 $('#exploreForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#exploreInput').value); });
-const HERO_CHIPS = ['Black holes', 'Multiverse', 'Atoms', 'Rain and monsoon', 'Moon phases', 'Five elements', 'Dawn and planets', 'Seasons'];
+const HERO_CHIPS = ['Black holes', 'Neutron star collisions', 'Multiverse', 'Atoms', 'Rain and monsoon', 'Moon phases', 'Five elements', 'Dawn and planets', 'Seasons'];
 $('#heroChips').innerHTML = HERO_CHIPS.map(t => `<button class="chip" data-topic="${t}">${t}</button>`).join('');
 
 /* ---------------- modal (deep reading) ---------------- */
@@ -1125,6 +1187,8 @@ $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sam
 document.addEventListener('click', e => {
   const mt = e.target.closest('[data-mt-filter]');
   if (mt) return filterMatches(mt.dataset.mtFilter);
+  const ec = e.target.closest('[data-echo]');
+  if (ec) return openVerse(BY_ID[ec.dataset.echo]);
   const sf = e.target.closest('[data-src-filter]');
   if (sf && !sf.disabled) return filterMatches(null, sf.dataset.srcFilter);
   if (e.target.closest('[data-close]')) return closeModal();
@@ -1511,6 +1575,9 @@ api('/api/me').then(me => {
       .filter((t, i, a) => a.indexOf(t) === i).map(t => `<button class="chip" data-topic="${esc(t)}">${esc(t)}</button>`).join('');
     countUp($('#statScience'), VERSES.filter(v => 'AOL'.includes(v.label)).length);
     renderArchive();
+    const ECHOES = ['arutpa:T158:495', 'arutpa:T7:26', 'arutpa:T122:10', 'arutpa:T372:37'];
+    $('#discEchoes').innerHTML = ECHOES.filter(id => BY_ID[id]).map(id => { const v = BY_ID[id];
+      return `<button class="disc-echo" data-echo="${esc(id)}"><span class="ta">${esc(v.tamil.split(String.fromCharCode(10))[0])}</span><span class="c">${esc(v.source)} · ${esc(v.ref)} · ${esc(v.concept)}</span></button>`; }).join('');
   } catch (e) { toast('Could not load verses: ' + e.message); }
   buildMap().catch(e => toast('Map failed: ' + e.message));
 })();

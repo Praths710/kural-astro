@@ -353,7 +353,9 @@ DEEP_SYS = (
     "Each {method, applies, how, instrument, organization, url}:\n"
     "    applies: true if this method genuinely helps study the natural phenomenon behind the verse's imagery, else false\n"
     "    how: 1-2 sentences on how the method would study it, or why it does not apply\n"
-    "    instrument: a real official instrument, survey, mission or facility. For sky phenomena prefer ISRO AstroSat, "
+    "    instrument: a real official instrument, survey, mission or facility. For flashes, bursts, explosions and other "
+    "high-energy or short-lived sky events prefer Einstein Probe (CAS/ESA), SVOM (CNSA/CNES), Insight-HXMT, NASA Fermi and "
+    "Swift, ISRO AstroSat CZTI, and the LIGO, Virgo and KAGRA gravitational-wave detectors. For other sky phenomena prefer ISRO AstroSat, "
     "NCRA GMRT, SKA, NRAO VLA, ALMA, SDSS, Gaia, JWST, Hubble, Planck, Rubin Observatory LSST. For Earth, weather or "
     "living-world phenomena use real Earth-observation or field instruments (weather radar, INSAT-3D, Oceansat, GPM, "
     "NOAA, ECMWF) and NEVER an astronomical telescope: GMRT, SKA, VLA, ALMA, Hubble, JWST, Gaia, SDSS, Planck and AstroSat "
@@ -707,7 +709,7 @@ class Handler(BaseHTTPRequestHandler):
                     if sum(1 for o in d["observation"] if o["how"]) >= 3:
                         break
                 return d
-            out = cached(ckey("deep-v8", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = cached(ckey("deep-v9", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
