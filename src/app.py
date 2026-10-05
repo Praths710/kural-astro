@@ -136,9 +136,10 @@ def gemini_json(prompt, attempts=6, temperature=0.2):
 
 
 def match_topic(concept):
-    cl = concept.lower()
+    cl = concept.lower() + " "   # trailing space lets a trigger like "star " match a last word
     for key, (title, trig, queries) in rr.TOPICS.items():
-        if any(t in cl for t in trig):
+        # triggers match at the start of a word, so "sea" does not fire inside "disease"
+        if any(re.search(r"\b" + re.escape(t), cl) for t in trig):
             return key, title, queries
     return None, None, None
 
@@ -244,7 +245,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v11-theme" if key else "search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -292,7 +293,19 @@ def _search_live(topic, key=None, lang="en"):
     matches = [m for m in matches if not (m["id"] in seen or seen.add(m["id"]))]
     # word search on top of the AI: every science verse whose concept or meaning contains the search words is
     # included, so a topic like "atoms" returns all its verses rather than only the ones the AI chose to list
-    words = topic_words(understood["topic"] if understood else topic) | topic_words(topic)
+    words = set() if key else topic_words(understood["topic"] if understood else topic) | topic_words(topic)
+    if key:
+        # a planet on the cosmic map: show exactly that theme's verses, so the count matches the number on the map.
+        # the AI still supplies the reason for those it picked; anything else it picked becomes a possible link.
+        in_theme = {v["id"] for v in verses if match_topic(v["concept"])[0] == key}
+        title = topic
+        for m in matches:
+            if m["id"] not in in_theme:
+                m["match_type"], m["score"] = "possible", min(m["score"], 2)
+        chosen = {m["id"] for m in matches}
+        matches += [{**v, "match_type": "thematic", "score": 2, "matched_on": title,
+                     "reason": f'Its science concept, "{v["concept"]}", belongs to the {title} theme.'}
+                    for v in verses if v["id"] in in_theme and v["id"] not in chosen]
     if words:
         chosen = {m["id"] for m in matches}
         for v in verses:

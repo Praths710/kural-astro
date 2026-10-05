@@ -699,7 +699,7 @@ body.has-mouse #cursorGlow{opacity:1}
   <h2 class="title reveal">Every theme the <em>verses touch</em></h2>
   <p class="lede reveal">Each planet is a branch of modern science. Its size is how many verses echo it. Click one to open its verses and papers.</p>
   <div class="mapwrap reveal">
-    <svg id="map" viewBox="0 0 1000 620"></svg>
+    <svg id="map" viewBox="0 0 1000 780"></svg>
     <div class="maphint">Click a planet ✦</div>
   </div>
   <div class="legend" id="legend"></div>
@@ -818,7 +818,10 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const LABEL = {A:'Cosmic vision', O:'Observed nature', L:'Literal fact', M:'Metaphor', N:'No science'};
 const TOPIC_NAMES = {holographic:'Holographic universe', multiverse:'Multiverse', extra_dim:'Extra dimensions', light_medium:'Cosmic light',
   dissolution:'End of the universe', no_centre:'No cosmic centre', cosmogony:'Birth of the cosmos', lunar:'The Moon',
-  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle', cosmic_flash:'Cosmic flashes'};
+  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle', cosmic_flash:'Cosmic flashes',
+  elements:'Five elements', vast_cosmos:'Countless worlds', time_cycles:'Day, night & seasons', light_optics:'Light & vision',
+  sound_speech:'Sound & speech', matter_heat:'Fire, heat & matter', water_ocean:'Water & oceans', earth_land:'Earth & mountains',
+  body_mind:'Human body & senses', life_bio:'Plants & animals', mechanics:'Machines & forces'};
 let VERSES = [], BY_ID = {}, CUSTOM = {};
 
 async function api(path, body) {
@@ -1238,15 +1241,20 @@ async function buildMap() {
   const topics = await api('/api/topics');
   const svg = $('#map');
   const nodes = Object.entries(topics).filter(([, t]) => t.count > 0).sort((a, b) => b[1].count - a[1].count)
-    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: i % 3, ang: i * 2.4}));
-  const C = {x:500, y:310}, OR = [{rx:190, ry:86, sp:.0022}, {rx:320, ry:146, sp:.0014}, {rx:450, ry:205, sp:.0009}];
+    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: 0}));
+  // inner rings are short, so they get fewer planets: fill whichever ring is emptiest for its length
+  const cap = [3, 5, 7, 8], used = [0, 0, 0, 0];
+  nodes.forEach(n => { let best = 3; for (let o = 2; o >= 0; o--) if (used[o] / cap[o] < used[best] / cap[best]) best = o; n.orbit = best; used[best]++; });
+  // spread each orbit's planets evenly round it, offset per orbit so the rings do not line up
+  [0, 1, 2, 3].forEach(o => { const on = nodes.filter(n => n.orbit === o); on.forEach((n, j) => { n.ang = j * 2 * Math.PI / on.length + o * 0.7; }); });
+  const C = {x:500, y:390}, OR = [{rx:150, ry:92, sp:.0024}, {rx:250, ry:160, sp:.0016}, {rx:350, ry:230, sp:.0011}, {rx:440, ry:330, sp:.0008}];
   let html = `<defs><radialGradient id="sun"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#f6d58c"/><stop offset="1" stop-color="#c8743a" stop-opacity="0"/></radialGradient>
     <radialGradient id="pl"><stop offset="0" stop-color="#f6d58c"/><stop offset="1" stop-color="#b8692f"/></radialGradient></defs>`;
   OR.forEach(o => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(227,185,95,.22)" stroke-dasharray="3 7"/>`);
   html += `<circle cx="${C.x}" cy="${C.y}" r="70" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="16" fill="#fff3d0"/>
     <text x="${C.x}" y="${C.y + 44}" text-anchor="middle" style="font-family:var(--serif);font-size:18px;fill:#f6d58c">the verses</text>`;
   nodes.forEach((n, i) => {
-    const r = 9 + Math.sqrt(n.count) * 3.6;
+    const r = 6 + Math.sqrt(n.count) * 2.6;
     html += `<g class="planet" data-topic="${esc(n.name)}" data-key="${n.key}" id="pl${i}">
       <circle class="glow" r="${r + 12}" fill="#e3b95f" opacity=".12"/><circle class="body" r="${r}" fill="url(#pl)"/>
       <text x="${r + 10}" y="-2">${esc(n.name)}</text><text class="cnt" x="${r + 10}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
@@ -1275,7 +1283,7 @@ async function buildMap() {
       const prefer = n.x > 700 ? ['left', 'right', 'above', 'below'] : ['right', 'left', 'above', 'below'];
       const order = n.place ? [n.place, ...prefer.filter(p => p !== n.place)] : prefer;
       const free = p => { const b = boxFor(n, p);
-        return b.l > 4 && b.r < 996 && b.t > 4 && b.b < 616 && !hitBox(b, CENTRE_TEXT) && !hitCircle(b, C.x, C.y, 24)
+        return b.l > 4 && b.r < 996 && b.t > 4 && b.b < 776 && !hitBox(b, CENTRE_TEXT) && !hitCircle(b, C.x, C.y, 24)
           && !nodes.some(m => m !== n && hitCircle(b, m.x, m.y, m.r0 + 3)) && !placed.some(q => hitBox(b, q)); };
       const choice = order.find(free) || prefer[0];
       if (choice !== n.place) {
@@ -1291,7 +1299,7 @@ async function buildMap() {
   }
   (function spin() {
     nodes.forEach((n, i) => {
-      if (!paused) n.ang += OR[n.orbit].sp * (1 + i * .03);
+      if (!paused) n.ang += OR[n.orbit].sp;   // one speed per orbit keeps the even spacing
       const o = OR[n.orbit]; n.x = C.x + o.rx * Math.cos(n.ang); n.y = C.y + o.ry * Math.sin(n.ang);
       n.el.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
       n.el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
