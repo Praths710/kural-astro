@@ -245,7 +245,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v11-theme" if key else "search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v12-theme" if key else "search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -302,6 +302,8 @@ def _search_live(topic, key=None, lang="en"):
         for m in matches:
             if m["id"] not in in_theme:
                 m["match_type"], m["score"] = "possible", min(m["score"], 2)
+            elif m["match_type"] == "possible":
+                m["match_type"] = "thematic"
         chosen = {m["id"] for m in matches}
         matches += [{**v, "match_type": "thematic", "score": 2, "matched_on": title,
                      "reason": f'Its science concept, "{v["concept"]}", belongs to the {title} theme.'}
