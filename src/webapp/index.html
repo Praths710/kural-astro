@@ -687,8 +687,8 @@ body.has-mouse #cursorGlow{opacity:1}
   <h2 class="title reveal">From palm leaf <em>to telescope</em></h2>
   <p class="lede reveal">Four Tamil classics — Thiruvalluvar's Thirukkural, Vallalar's Thiruvarutpa, the Tolkappiyam and Andal's Thiruppavai — read line by line by an AI, then tied to what scientists are publishing today.</p>
   <div class="steps">
-    <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>11,007 couplets, hymns and sutras are scanned for sky, light, atoms, rain and the cosmos.</p></div>
-    <div class="step reveal" style="transition-delay:.12s"><div class="ic">✦</div><h3>Name the idea</h3><p>Gemini labels each verse and names the modern concept it resembles — nested universes, lunar phases, the water cycle.</p></div>
+    <div class="step reveal"><div class="ic">📜</div><h3>Read every verse</h3><p>11,007 couplets, hymns and sutras are scanned for the sky, the Sun and Moon, planets, light, atoms and the cosmos.</p></div>
+    <div class="step reveal" style="transition-delay:.12s"><div class="ic">✦</div><h3>Name the idea</h3><p>Gemini labels each verse and names the modern concept it resembles — nested universes, lunar phases, planets at dawn.</p></div>
     <div class="step reveal" style="transition-delay:.24s"><div class="ic">🔭</div><h3>Find the science</h3><p>That idea is searched among peer reviewed papers with registered DOIs (IEEE, Springer Nature, Elsevier, Current Science and more) and NASA reports. Every paper is real, with its official link.</p></div>
   </div>
 </section>
@@ -697,7 +697,7 @@ body.has-mouse #cursorGlow{opacity:1}
 <section class="block" id="map-sec">
   <div class="kicker reveal">The cosmic map</div>
   <h2 class="title reveal">Every theme the <em>verses touch</em></h2>
-  <p class="lede reveal">Each planet is a branch of modern science. Its size is how many verses echo it. Click one to open its verses and papers.</p>
+  <p class="lede reveal">Each planet is a branch of astronomy and astrophysics. Its size is how many verses echo it. Click one to open its verses and papers.</p>
   <div class="mapwrap reveal">
     <svg id="map" viewBox="0 0 1000 780"></svg>
     <div class="maphint">Click a planet ✦</div>
@@ -818,10 +818,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const LABEL = {A:'Cosmic vision', O:'Observed nature', L:'Literal fact', M:'Metaphor', N:'No science'};
 const TOPIC_NAMES = {holographic:'Holographic universe', multiverse:'Multiverse', extra_dim:'Extra dimensions', light_medium:'Cosmic light',
   dissolution:'End of the universe', no_centre:'No cosmic centre', cosmogony:'Birth of the cosmos', lunar:'The Moon',
-  eclipse:'Eclipses', solar_motion:'Motion of the Sun', monsoon:'Monsoon & water cycle', cosmic_flash:'Cosmic flashes',
-  elements:'Five elements', vast_cosmos:'Countless worlds', time_cycles:'Day, night & seasons', light_optics:'Light & vision',
-  sound_speech:'Sound & speech', matter_heat:'Fire, heat & matter', water_ocean:'Water & oceans', earth_land:'Earth & mountains',
-  body_mind:'Human body & senses', life_bio:'Plants & animals', mechanics:'Machines & forces'};
+  eclipse:'Eclipses', solar_motion:'Motion of the Sun', cosmic_flash:'Cosmic flashes', vast_cosmos:'Countless worlds', planets:'Planets at dawn'};
 let VERSES = [], BY_ID = {}, CUSTOM = {};
 
 async function api(path, body) {
@@ -995,7 +992,7 @@ async function runSearch(topic, key) {
 }
 $('#heroForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#heroInput').value); });
 $('#exploreForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#exploreInput').value); });
-const HERO_CHIPS = ['Black holes', 'Neutron star collisions', 'Multiverse', 'Atoms', 'Rain and monsoon', 'Moon phases', 'Five elements', 'Dawn and planets', 'Seasons'];
+const HERO_CHIPS = ['Black holes', 'Neutron star collisions', 'Multiverse', 'Atoms', 'Moon phases', 'Planets at dawn', 'Eclipses', 'Birth of the universe', 'Cosmic light'];
 $('#heroChips').innerHTML = HERO_CHIPS.map(t => `<button class="chip" data-topic="${t}">${t}</button>`).join('');
 
 /* ---------------- modal (deep reading) ---------------- */
@@ -1203,7 +1200,7 @@ $('#analyzeBtn').addEventListener('click', () => readCustom($('#verseInput').val
 const SAMPLES = [
   {ta:'அண்டமு மதன்மே லண்டமு மவற்றுள பண்டமுங் காட்டிய பரம்பர மணியே', note:'Thiruvarutpa — universe above universe'},
   {ta:'நிறைநீர நீரவர் கேண்மை பிறைமதிப் பின்னீர பேதையார் நட்பு', note:'Thirukkural 782 — the waxing moon'},
-  {ta:'வான்நின்று உலகம் வழங்கி வருதலால் தான்அமிழ்தம் என்றுணரற் பாற்று', note:'Thirukkural 11 — the gift of rain'}];
+  {ta:'வெள்ளி எழுந்து வியாழம் உறங்கிற்று', note:'Thiruppavai 13 — Venus rises, Jupiter sets'}];
 $('#samples').innerHTML = SAMPLES.map((s, i) => `<button class="sample" data-sample="${i}">${esc(s.ta)}<small>${esc(s.note)} · click to read</small></button>`).join('');
 
 /* ---------------- global clicks: everything connects ---------------- */
@@ -1334,7 +1331,7 @@ addEventListener('scroll', () => {
 
 /* ---------------- archive ---------------- */
 let filter = 'AOL', shown = 24, archQ = '';
-const FILTERS = [['AOL','All science'], ['A','Cosmic vision'], ['O','Observed nature'], ['L','Literal fact'], ['M','Metaphor'], ['SAVED','★ Saved']];
+const FILTERS = [['AOL','All astronomy'], ['A','Cosmic vision'], ['O','Observed sky'], ['L','Literal fact'], ['SAVED','★ Saved']];
 const FSET = {AOL:['A','O','L'], A:['A'], O:['O'], L:['L'], M:['M']};
 function renderArchive() {
   $('#filters').innerHTML = FILTERS.map(([k, l]) => `<button class="chip ${k === filter ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('') +
@@ -1345,7 +1342,7 @@ function renderArchive() {
   renderList();
 }
 let archSrc = 'all';
-const archBase = () => filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => FSET[filter].includes(v.label));
+const archBase = () => filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => v.astro && FSET[filter].includes(v.label));
 const archCount = x => archBase().filter(v => x === 'all' || v.source === x).length.toLocaleString();
 // mix the texts round-robin so no single text fills the first pages (cosmic vision verses are mostly Thiruvarutpa)
 function interleaveBySource(rows) {
@@ -1547,9 +1544,9 @@ function buildSuggestions() {
   };
   Object.values(TOPIC_NAMES).forEach(t => add(t, 'Theme'));
   HERO_CHIPS.forEach(t => add(t, 'Popular'));
-  ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Quantum entanglement', 'Seasons', 'Time', 'Light', 'Water cycle', 'Creation of the universe']
+  ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Big Bang', 'Expanding universe', 'Cosmic microwave background', 'Venus', 'Creation of the universe']
     .forEach(t => add(t, 'Science'));
-  VERSES.filter(v => FSET.AOL.includes(v.label) && v.concept).forEach(v => add(v.concept, 'In the verses', 1, v.source || 'the verses'));
+  VERSES.filter(v => v.astro && v.concept).forEach(v => add(v.concept, 'In the verses', 1, v.source || 'the verses'));
   SUGG = [...m.values()];
   SUGG.forEach(s => { if (s.srcs) s.kind = s.srcs.length > 1 ? `In ${s.srcs.length} texts` : `In ${s.srcs[0]}`; });
 }
@@ -1581,7 +1578,7 @@ function attachSuggest(input, box, onPick, scope) {
       items.map((s, i) => s.ai
         ? `<div class="sg ai" data-i="${i}" role="option"><span>✦ Ask the AI: “${esc(s.text)}”</span><span class="sg-k">understands any question</span></div>`
         : `<div class="sg" data-i="${i}" role="option"><span>${markHit(s.text, q)}</span><span class="sg-k">${esc(s.kind)}${s.n > 1 ? ' · ' + s.n + ' verses' : ''}</span></div>`).join('') +
-      (scope !== 'verses' && !q ? `<div class="sg-tip">Or ask in your own words — <i>“which verses talk about tiny particles?”</i>, <i>“did they know rain comes from the sea?”</i>, or in Tamil.</div>` : '');
+      (scope !== 'verses' && !q ? `<div class="sg-tip">Or ask in your own words — <i>“which verses talk about tiny particles?”</i>, <i>“did they know the Moon has phases?”</i>, or in Tamil.</div>` : '');
     box.classList.add('show');
   };
   const pick = i => { const it = items[i]; if (!it) return; box.classList.remove('show'); input.value = it.text; onPick(it.text); };
@@ -1617,7 +1614,7 @@ api('/api/me').then(me => {
     attachSuggest($('#exploreInput'), $('#exploreSuggest'), t => runSearch(t));
     $('#exploreChips').innerHTML = [...Object.values(TOPIC_NAMES).slice(0, 7), ...HERO_CHIPS.slice(0, 4)]
       .filter((t, i, a) => a.indexOf(t) === i).map(t => `<button class="chip" data-topic="${esc(t)}">${esc(t)}</button>`).join('');
-    countUp($('#statScience'), VERSES.filter(v => 'AOL'.includes(v.label)).length);
+    countUp($('#statScience'), VERSES.filter(v => v.astro).length);
     renderArchive();
     const ECHOES = ['arutpa:T158:495', 'arutpa:T7:26', 'arutpa:T122:10', 'arutpa:T372:37'];
     $('#discEchoes').innerHTML = ECHOES.filter(id => BY_ID[id]).map(id => { const v = BY_ID[id];

@@ -111,6 +111,9 @@ def verse_list():
                     "concept": r.get("science_concept", ""), "meaning": r.get("meaning", "")})
     order = {"A": 0, "O": 1, "L": 2, "M": 3, "N": 4}
     out.sort(key=lambda v: order.get(v["label"], 9))
+    # the site is about astronomy and astrophysics only: a science verse counts when its idea lands in an astro theme
+    for v in out:
+        v["astro"] = v["label"] in ("L", "O", "A") and match_topic(v["concept"])[0] in rr.ASTRO_THEMES
     return out
 
 
@@ -245,7 +248,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v12-theme" if key else "search-v10", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v13-theme" if key else "search-v11-astro", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -253,7 +256,7 @@ def interleaved_science_verses():
     """Science verses taken round-robin from each text, so no text sits at the top of the list the AI reads."""
     by_src = {}
     for v in verse_list():
-        if v["label"] in ("L", "O", "A"):
+        if v["astro"]:
             by_src.setdefault(v["source"], []).append(v)
     out, queues = [], list(by_src.values())
     while any(queues):
@@ -269,7 +272,10 @@ def _search_live(topic, key=None, lang="en"):
     verses = interleaved_science_verses()
     listing = "\n".join(f'{i}::{v["source"]}::{v["concept"]}::{v["meaning"]}' for i, v in enumerate(verses))
     reason_lang = " Write each reason in Tamil." if lang == "ta" else ""
-    raw = gemini_json(temperature=0, prompt=f"{SEARCH_SYS}{reason_lang}\n\nTopic: {ask}\n\nList (index::work::concept::meaning):\n{listing}")
+    prompt = f"{SEARCH_SYS}{reason_lang}\n\nTopic: {ask}\n\nList (index::work::concept::meaning):\n{listing}"
+    raw = gemini_json(temperature=0, prompt=prompt)
+    if raw == []:   # an empty answer is sometimes a fluke: ask once more before caching "no verses" for a week
+        raw = gemini_json(temperature=0.3, prompt=prompt)
     if raw is None:
         return None
     raw = raw or []
@@ -638,12 +644,10 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/verses":
             return self._json(200, verse_list())
         if path == "/api/topics":
-            counts = {k: {"title": t[0], "count": 0} for k, t in rr.TOPICS.items()}
+            counts = {k: {"title": rr.TOPICS[k][0], "count": 0} for k in rr.ASTRO_THEMES}
             for v in verse_list():
-                if v["label"] in ("L", "O", "A"):
-                    key, *_ = match_topic(v["concept"])
-                    if key:
-                        counts[key]["count"] += 1
+                if v["astro"]:
+                    counts[match_topic(v["concept"])[0]]["count"] += 1
             return self._json(200, counts)
         if path == "/api/concepts":
             lang = (parse_qs(url.query).get("lang") or ["en"])[0]

@@ -20,16 +20,24 @@ NS = {"a": "http://www.w3.org/2005/Atom"}
 
 # topic -> (title, trigger substrings in the verse's concept text, arXiv queries)
 TOPICS = {
+    # first of all: a verse that names a planet is astronomy even when birds or cattle share the line
+    "planets": ("Planets in the dawn sky (planetary motion, heliacal rising)",
+        ["venus", "jupiter", "saturn", "mars ", "planet", "eastern sky", "morning star", "evening star"],
+        ['all:Venus AND all:Jupiter', 'all:"transit of Venus"', 'all:Venus AND all:observations']),
+    # checked first and never shown: poetic comparisons that only borrow a sky word ("moon-like face")
+    "earthly_imagery": ("Earthly imagery (not astrophysics)",
+        ["face", "pavilion", "gossip", "fortification", "plant", "honey", "fragrance", "breeze", "grove"],
+        []),
     "holographic": ("Holographic principle / information in bounded regions",
-        ["atom", "macro-in-micro", "macrocosm", "microcosm", "small point", "contained within",
-         "enclosed", "fraction of an atom", "dust of an atom", "subatomic"],
+        ["atom", "macro-in-micro", "macrocosm", "microcosm", "small point",
+         "fraction of an atom", "dust of an atom", "subatomic"],
         ['all:"holographic principle"']),
     "multiverse": ("Multiverse / many-universe cosmology",
         ["universe", "multiverse", "cosmoses", "nested", "worlds within worlds", "cosmic realms",
          "cosmic worlds", "many worlds", "cosmic eggs", "cosmic generation"],
         ['all:multiverse AND all:cosmology']),
     "extra_dim": ("Extra dimensions / nested spaces (braneworld, Kaluza-Klein)",
-        ["space", "dimension", "layered", "transcendental", "paramakasa"],
+        ["space", "multidimensional", "layered", "transcendental", "paramakasa"],
         ['all:"extra dimensions" AND all:braneworld', 'all:"Kaluza-Klein"']),
     "light_medium": ("Light pervading the universe (CMB / background radiation)",
         ["light pervad", "light fill", "cosmic light", "radiant light", "light extending",
@@ -50,35 +58,24 @@ TOPICS = {
         ['all:"lunar maria" AND all:origin', 'all:"lunar phases"']),
     "eclipse": ("Eclipse mechanics (orbital alignment)",
         ["eclipse"],
-        ['all:"solar eclipse" AND all:mechanism', 'all:"lunar eclipse" AND all:geometry']),
-    "solar_motion": ("Apparent solar motion (Earth's rotation, diurnal cycle)",
-        ["apparent movement of the sun", "solar heat", "sunlight", "sun blocking"],
-        ['all:"diurnal motion" AND all:sun', 'all:"apparent motion" AND all:sun AND all:earth']),
+        ['all:"solar eclipse"', 'all:"lunar eclipse"']),
+    # "monsoon" sits before "cosmic_flash" so rain verses that mention lightning stay with the water cycle
     "monsoon": ("Monsoon dynamics and the water cycle",
         ["rain", "water cycle", "monsoon", "famine", "hydrology", "groundwater", "drought"],
         ['all:"Indian summer monsoon" AND all:variability', 'all:"hydrological cycle"']),
-    # after "monsoon" on purpose: rain verses that mention lightning stay with the water cycle
     "cosmic_flash": ("Cosmic flashes: neutron star collisions, gamma-ray bursts, X-ray transients",
         ["lightning flash", "lightning as", "flash of light", "outshin", "dimmed by", "sparks", "burst", "explosion",
          "collision", "colliding", "neutron", "magnetar"],
         ['all:"fast X-ray transient" AND all:"neutron star merger"', 'all:"short gamma-ray burst" AND all:magnetar']),
-    # Earth and life science themes. They come after the cosmic ones, so a verse keeps its cosmic theme when it has one.
+    "vast_cosmos": ("Countless worlds and the scale of the cosmos (galaxies, stars, exoplanets)",
+        ["cosmic", "cosmos", "cosmolog", "worlds", "universe", "countless worlds", "galax", "stars", "star ", "starlight",
+         "celestial", "planet", "orbit", "gravit", "night sky", "sky/cosmos", "infinite expanse"],
+        ['all:"large-scale structure" AND all:galaxies', 'all:"exoplanet occurrence rate"']),
+    # Earth and life science themes. They are not astrophysics and are never shown: they only catch earthly verses
+    # (rain, birds at dawn, the body) so that the looser Sun theme below cannot claim them.
     "elements": ("The five elements and states of matter",
         ["element", "pancha", "five great", "fivefold"],
         ['all:"states of matter" AND all:"phase transition"', 'all:"classical elements" AND all:history']),
-    "vast_cosmos": ("Countless worlds and the scale of the cosmos (galaxies, stars, exoplanets)",
-        ["cosmic", "cosmos", "world", "universe", "universal", "expanse", "vast", "sphere", "crore", "countless",
-         "boundless", "infinite", "galax", "stars", "star ", "starlight", "sky", "space", "spatial", "heaven", "celestial", "planet", "orbit",
-         "gravit", "realm", "region"],
-        ['all:"large-scale structure" AND all:galaxies', 'all:"exoplanet occurrence rate"']),
-    "time_cycles": ("Day, night and the seasons (Earth's rotation and axial tilt)",
-        ["dawn", "dusk", "night", "evening", "morning", "diurnal", "season", "summer", "winter", "spring season", "solstice",
-         "sunrise", "sunset", "timing", "time", "calendar", "year", "daily", "day"],
-        ['all:"seasonal cycle" AND all:"axial tilt"', 'all:"circadian rhythm" AND all:light']),
-    "light_optics": ("Light, colour and vision (optics)",
-        ["light", "lumin", "glow", "shin", "bright", "radian", "lamp", "colour", "color", "reflect", "mirror",
-         "shadow", "dark", "lightning", "flash", "ray"],
-        ['all:"optics" AND all:"colour vision"', 'all:"light scattering" AND all:atmosphere']),
     "sound_speech": ("Sound and the science of speech (acoustics, phonetics)",
         ["sound", "phonet", "consonant", "vowel", "articulat", "speech", "voice", "echo", "mora", "acoustic",
          "music", "drum", "nasal", "pronunci", "syllab", "tongue", "lingu", "noise", "roar"],
@@ -124,7 +121,19 @@ TOPICS = {
          "pull", "push", "air", "bubble", "mirage", "fabric", "movement", "assembl", "dispers", "game",
          "wasteland", "barren", "extreme", "diversity"],
         ['all:"classical mechanics" AND all:friction', 'all:"vortex dynamics"']),
+    "light_optics": ("Light, colour and vision (optics)",
+        ["light", "lumin", "glow", "shin", "bright", "radian", "lamp", "colour", "color", "reflect", "mirror",
+         "shadow", "dark", "lightning", "flash", "ray"],
+        ['all:"optics" AND all:"colour vision"', 'all:"light scattering" AND all:atmosphere']),
+    "solar_motion": ("Motion of the Sun: Earth's rotation, day and night, the seasons",
+        ["apparent movement of the sun", "solar heat", "sunlight", "sun blocking", "sunrise", "sunset", "day and night",
+         "night and day", "diurnal cycle", "solstice", "equinox", "sun's", "sun ", "solar"],
+        ['all:"diurnal motion" AND all:sun', 'all:"apparent motion" AND all:sun AND all:earth']),
 }
+
+# the only themes the site shows: astronomy and astrophysics. A science verse appears on the site only if it lands in one.
+ASTRO_THEMES = ("planets", "holographic", "multiverse", "extra_dim", "light_medium", "dissolution", "no_centre", "cosmogony",
+                "lunar", "eclipse", "cosmic_flash", "vast_cosmos", "solar_motion")
 
 
 def arxiv(query, sort):
