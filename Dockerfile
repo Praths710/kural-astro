@@ -11,7 +11,7 @@ COPY src/app.py src/auth.py src/library.py src/store.py src/gemini_label.py src/
 COPY src/webapp/ src/webapp/
 COPY data/raw/thirukkural.json data/raw/
 COPY data/processed/thiruvarutpa.jsonl data/processed/tolkappiyam_text.jsonl data/processed/thiruppavai.jsonl data/processed/arxiv_cache.json data/processed/
-COPY data/labels/gemini_labels_dedup.json data/labels/
+COPY data/labels/gemini_labels_dedup.json data/labels/astro_accepted.json data/labels/
 RUN chown -R app:app /app/data
 
 USER app

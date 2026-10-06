@@ -109,11 +109,22 @@ def verse_list():
                     "english": "", "url": v["source_url"]}
         out.append({"id": vid, **item, "label": r.get("label", ""),
                     "concept": r.get("science_concept", ""), "meaning": r.get("meaning", "")})
-    order = {"A": 0, "O": 1, "L": 2, "M": 3, "N": 4}
-    out.sort(key=lambda v: order.get(v["label"], 9))
     # the site is about astronomy and astrophysics only: a science verse counts when its idea lands in an astro theme
     for v in out:
-        v["astro"] = v["label"] in ("L", "O", "A") and match_topic(v["concept"])[0] in rr.ASTRO_THEMES
+        key = match_topic(v["concept"])[0] if v["label"] in ("L", "O", "A") else None
+        v["theme"] = key if key in rr.ASTRO_THEMES else None
+    # second, astronomy-only pass (astro_pass.py): sky verses the broad first pass had filed as metaphor or no science
+    extra = ROOT / "data/labels/astro_accepted.json"
+    if extra.exists():
+        accepted = json.loads(extra.read_text(encoding="utf-8"))
+        for v in out:
+            a = accepted.get(v["id"])
+            if a and not v["theme"]:
+                v.update(label=a["label"], theme=a["theme"], concept=a["concept"], meaning=a["meaning"])
+    for v in out:
+        v["astro"] = bool(v["theme"])
+    order = {"A": 0, "O": 1, "L": 2, "M": 3, "N": 4}
+    out.sort(key=lambda v: order.get(v["label"], 9))
     return out
 
 
@@ -248,7 +259,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v13-theme" if key else "search-v11-astro", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v14-theme" if key else "search-v12-astro", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -303,7 +314,7 @@ def _search_live(topic, key=None, lang="en"):
     if key:
         # a planet on the cosmic map: show exactly that theme's verses, so the count matches the number on the map.
         # the AI still supplies the reason for those it picked; anything else it picked becomes a possible link.
-        in_theme = {v["id"] for v in verses if match_topic(v["concept"])[0] == key}
+        in_theme = {v["id"] for v in verses if v["theme"] == key}
         title = topic
         for m in matches:
             if m["id"] not in in_theme:
@@ -647,7 +658,7 @@ class Handler(BaseHTTPRequestHandler):
             counts = {k: {"title": rr.TOPICS[k][0], "count": 0} for k in rr.ASTRO_THEMES}
             for v in verse_list():
                 if v["astro"]:
-                    counts[match_topic(v["concept"])[0]]["count"] += 1
+                    counts[v["theme"]]["count"] += 1
             return self._json(200, counts)
         if path == "/api/concepts":
             lang = (parse_qs(url.query).get("lang") or ["en"])[0]
