@@ -15,3 +15,4 @@
 !data/processed/arxiv_cache.json
 !data/labels/gemini_labels_dedup.json
 !data/labels/astro_accepted.json
+!data/labels/astro_english.json

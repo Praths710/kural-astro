@@ -25,8 +25,25 @@ def tolkappiyam():
         for iyal in adhikaram["i"]:
             for v in iyal["v"]:
                 n += 1
+                title = re.sub(r"^\d+\.\s*", "", v.get("t", "")).strip()
+                text = v["m"].strip()
+                if not text:   # 19 entries keep the sutra elsewhere in the portal's record
+                    lines = (v.get("u") or "").strip().split("\n")
+                    first = lines[0].strip()
+                    if re.match(r"^\d+\.\s", first):          # "42. \tஉச்ச காரம் இரு மொழிக்கு உரித்தே." (may run over lines)
+                        sutra = []
+                        for line in lines:
+                            sutra.append(re.sub(r"^\d+\.\s*", "", line).strip())
+                            if line.strip().endswith("."):
+                                break
+                        text = "\n".join(sutra)
+                    elif title.endswith("."):                   # the title field holds the sutra itself
+                        text = title
+                    elif not title:                             # a row of the commentary's count of rhyme patterns
+                        text = first if re.search(r"\d", first) else f'{first} — {v.get("un", "")}'
+                        title = "தொடை விகற்பக் கணக்கு (உரை)"
                 rows.append({"no": n, "adhikaram": adhikaram["n"], "iyal": iyal["n"], "iyal_no": v.get("mn"),
-                             "title": re.sub(r"^\d+\.\s*", "", v.get("t", "")).strip(), "text": v["m"].strip(),
+                             "title": title, "text": text,
                              "explanation": v.get("u", "").strip(), "source_url": TOLKA_URL})
     assert data["meta"]["total"] == len(rows), (data["meta"]["total"], len(rows))
     return rows

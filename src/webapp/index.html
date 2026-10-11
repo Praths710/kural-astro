@@ -165,7 +165,29 @@ h2.title em{color:var(--gold-hi)}
 .cap-concept{font-family:var(--serif);font-size:21px;font-style:italic;color:var(--gold-hi);margin:0 0 3px}
 .cap-reason{font-size:13px;line-height:1.55;color:var(--dim);margin:0}
 .cap-foot{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:12px;color:#7d7563}
-.cap-foot .open{color:var(--gold);font-weight:600}
+.cap-foot .open{color:var(--gold);font-weight:600;font-family:inherit;font-size:inherit;background:none;border:0;padding:0;cursor:pointer}
+.cap-foot .open:hover{text-decoration:underline}
+.ola-leaf{transition:transform .2s ease-in}
+.ola .ola-leaf.turning,.ola-leaf.big.turning{transform:rotateY(90deg)!important}
+.ola-leaf.fetching{opacity:.6;cursor:progress}
+.ola-leaf[data-bigflip],.ola .ola-leaf{cursor:pointer}
+.flip-hint{position:absolute;top:8px;right:44px;font:700 10.5px var(--sans);letter-spacing:.06em;color:#7a4e22;opacity:.75;pointer-events:none}
+.score{background:rgba(227,185,95,.07);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 16px}
+.score-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score-top b{font:700 28px var(--sans);font-variant-numeric:lining-nums tabular-nums;color:var(--gold-hi);line-height:1}.score-top b small{font-size:15px;color:var(--dim);margin-left:2px}
+.score-top span{font-weight:700;color:var(--parch)}
+.score-top em{font-style:normal;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.score-bar{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:10px 0 8px}
+.score-bar i{height:7px;border-radius:4px;background:rgba(255,255,255,.08)}.score-bar i.on{background:var(--gold)}
+.score-why{margin:0 0 6px!important}.score-scale{font-size:11.5px!important;color:var(--dim)!important;margin:0!important}
+.map-rows{display:grid;gap:8px;margin:4px 0 12px}
+.map-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;font-size:14px;line-height:1.5;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.map-row .mv{font-style:italic}.map-row .ma{color:var(--gold);font-weight:700}.map-row .ms{color:var(--parch)}
+@media(max-width:640px){.map-row{grid-template-columns:1fr}.map-row .ma{display:none}}
+.rw-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.ola .ola-ta.ola-en{font-family:var(--serif);font-style:italic;font-size:16.5px;line-height:1.55;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;white-space:normal}
+.ola-leaf.big .ola-ta.ola-en{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.6;white-space:normal}
+.flip-note{text-align:center;font-size:12.5px;color:var(--dim);margin:8px 0 0}
 .ola-leaf.big{cursor:default;min-height:120px}
 .ola-leaf.big .ola-ta{-webkit-line-clamp:unset;font-size:20px}
 .bundle.single::before,.bundle.single::after{top:6px;bottom:6px}
@@ -230,7 +252,6 @@ h2.title em{color:var(--gold-hi)}
 .m-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .m-actions .ghost-btn{text-decoration:none;display:inline-flex;align-items:center;height:36px;padding:0 14px;box-sizing:border-box}
 .m-actions .save-btn{margin-left:0;height:36px;box-sizing:border-box}
-.m-en{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--dim);margin:22px 0 0;text-align:center}
 .concept-link{display:inline-flex;gap:10px;align-items:center;margin:26px 0 8px;background:rgba(227,185,95,.08);border:1px solid rgba(227,185,95,.4);
   color:var(--gold-hi);border-radius:999px;padding:11px 20px;font-size:15px;cursor:pointer;font-family:var(--serif);font-style:italic;transition:all .2s}
 .concept-link:hover{background:rgba(227,185,95,.18)}
@@ -294,6 +315,8 @@ h2.title em{color:var(--gold-hi)}
 .mt-note{font-size:13px;color:var(--dim);min-height:0;margin:0 0 6px}
 .mt-note:empty{display:none}
 .ola.mt-hide{display:none}
+.off-topic{border:1px solid rgba(227,185,95,.45);background:rgba(227,185,95,.08);border-radius:16px;padding:18px 20px;max-width:720px}
+.off-topic b{font:600 20px var(--serif);color:var(--gold-hi)}.off-topic p{color:var(--parch);margin:8px 0 12px}
 .mt-more{display:block;margin:18px auto 8px;font:600 14px var(--sans);color:#1b1206;background:var(--gold);border:0;border-radius:999px;padding:11px 26px;cursor:pointer}
 .mt-more span{font-weight:500;opacity:.75;margin-left:4px}
 .mt-more:hover{background:var(--gold-hi)}
@@ -347,14 +370,6 @@ h2.title em{color:var(--gold-hi)}
 .obs p{margin:0;font-size:13px;line-height:1.55;color:var(--parch);opacity:.9}
 .obs-inst{font-size:12.5px;color:var(--parch);opacity:.85}
 .obs-inst span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-bottom:1px}
-.beta{margin-top:6px;padding-top:10px;border-top:1px dashed var(--line)}
-.beta svg{width:100%;height:auto;font:10px var(--sans);fill:#bfb49c}
-.beta-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--parch)}
-.beta-row input{flex:1;accent-color:#e3b95f}
-.beta-presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.beta-presets button{font:600 11px var(--sans);color:var(--parch);background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:3px 9px;cursor:pointer}
-.beta-presets button:hover{border-color:var(--gold)}
-.beta-note{font-size:11.5px!important;color:var(--dim)!important;margin-top:6px!important}
 /* official NASA images */
 .nasa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .nasa{display:flex;flex-direction:column;text-decoration:none;border-radius:14px;overflow:hidden;background:rgba(22,20,34,.7);border:1px solid var(--line);transition:border-color .2s,transform .2s}
@@ -781,7 +796,7 @@ body.has-mouse #cursorGlow{opacity:1}
 <section class="block" id="archive">
   <div class="kicker reveal">The archive</div>
   <h2 class="title reveal">Every leaf, <em>catalogued</em></h2>
-  <p class="lede reveal">All analysed verses. Filter by what they hold; open any one for the full reading.</p>
+  <p class="lede reveal">The astronomy verses by kind, or every verse of every work under <b>Full texts</b>. Tap a leaf to turn it over to English; <b>Read deeper</b> opens the full reading.</p>
   <div class="filters" id="filters"></div>
   <div class="count" id="count"></div>
   <div id="archiveOut"></div>
@@ -883,19 +898,39 @@ function verseLines(text, max) {
 function leafCard(v, i = 0) {
   return `<article class="ola ${v.match_type === 'possible' ? 'possible' : ''}" data-id="${esc(v.id)}" data-mt="${esc(v.match_type || '')}" data-src="${esc(v.source || '')}" style="--d:${i*70}ms">
     <span class="frame"></span><span class="glare"></span>
-    <div class="ola-leaf"><span class="hole l"></span><span class="hole r"></span>${verseLines(v.tamil, 2)}</div>
+    <div class="ola-leaf" title="Tap to turn the leaf: English translation"><span class="hole l"></span><span class="hole r"></span><span class="flip-hint">⟲ English</span>${verseLines(v.tamil, 2)}</div>
     <div class="ola-cap">
       <div class="cap-top"><span class="src">${esc(v.source)}</span><span class="lbl lbl-${esc(v.label)}">${LABEL[v.label] || esc(v.label)}</span>
         <button class="cap-save ${SAVED[v.id] ? 'on' : ''}" data-save="${esc(v.id)}" title="${SAVED[v.id] ? 'Saved — click to remove' : 'Save this leaf'}">${SAVED[v.id] ? '★' : '☆'}</button></div>
       ${v.concept ? `<p class="cap-concept">${esc(v.concept)}</p>` : ''}
       ${v.reason ? `<div class="why"><div class="why-top"><span class="why-h">Why this verse</span>${v.match_type ? `<span class="why-type mt-${esc(v.match_type)}">${esc(MT_NAME[v.match_type] || v.match_type)}</span>` : ''}${v.score ? `<span class="why-score" title="Relevance ${v.score}/5">${'●'.repeat(v.score)}${'○'.repeat(5 - v.score)}</span>` : ''}</div>
         <p>${esc(v.reason)}</p>${v.matched_on ? `<span class="on"><b>Matched on:</b> ${esc(v.matched_on)}</span>` : ''}</div>` : (v.meaning ? `<p class="cap-reason">${esc(v.meaning)}</p>` : '')}
-      <div class="cap-foot"><span>${esc(v.ref)}</span><span class="open">Read deeper →</span></div>
+      <div class="cap-foot"><span>${esc(v.ref)}</span><button class="open" type="button" data-read="${esc(v.id)}">Read deeper →</button></div>
     </div>
   </article>`;
 }
 const bundle = (inner, cls = '') => `<div class="bundle ${cls}"><div class="board"></div><div class="leaves">${inner}</div><div class="board"></div></div>`;
-const bigLeaf = text => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big"><span class="frame"></span><span class="hole l"></span><span class="hole r"></span><p class="ola-ta">${esc(text)}</p></div></div></div>`;
+const bigLeaf = (text, flip) => `<div class="bundle single"><div class="leaves" style="padding:0"><div class="ola-leaf big" ${flip ? 'data-bigflip title="Tap to turn the leaf: English translation"' : ''}><span class="frame"></span><span class="hole l"></span><span class="hole r"></span>${flip ? '<span class="flip-hint">⟲ English</span>' : ''}<p class="ola-ta">${esc(text)}</p></div></div></div>`;
+// tap a leaf to turn it over: Tamil on the front, English on the back (fetched once if the verse has none yet)
+async function turnLeaf(leaf, v) {
+  if (!leaf || !v || leaf.classList.contains('turning')) return;
+  const toEn = !leaf.classList.contains('en');
+  let en = v.english || (CUR && CUR.verse && CUR.verse.id === v.id && CUR.deep && CUR.deep.translation) || '';
+  if (toEn && !en) {
+    leaf.classList.add('fetching');
+    try { en = (await api('/api/translate', {id: v.id})).english; v.english = en; if (BY_ID[v.id]) BY_ID[v.id].english = en; }
+    catch (e) { en = ''; toast('The translation is not ready yet. Tap again in a moment.'); }
+    leaf.classList.remove('fetching');
+    if (!en) return;
+  }
+  leaf.classList.add('turning');
+  setTimeout(() => {
+    const p = leaf.querySelector('.ola-ta'), big = leaf.classList.contains('big');
+    p.outerHTML = toEn ? `<p class="ola-ta ola-en">${esc(en)}</p>` : (big ? `<p class="ola-ta">${esc(v.tamil)}</p>` : verseLines(v.tamil, 2));
+    const hint = leaf.querySelector('.flip-hint'); if (hint) hint.textContent = toEn ? '⟲ தமிழ்' : '⟲ English';
+    leaf.classList.toggle('en', toEn); leaf.classList.remove('turning');
+  }, 200);
+}
 function paperList(papers) {
   papers = (papers || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
   if (!papers.length) return `<div class="empty">No peer reviewed papers matched this idea closely enough.</div>`;
@@ -971,6 +1006,13 @@ async function runSearch(topic, key) {
   try {
     const d = await api('/api/search_topic', {topic, key});
     if (tok !== searchTok) return;
+    if (d.off_topic) {   // the site covers astronomy and astrophysics only
+      $('#exploreHead').innerHTML = `<div class="off-topic"><b>“${esc(topic)}” is not related to astrophysics.</b>
+        <p>${esc(d.reason || '')} Kural Astro only searches the verses for astronomy and astrophysics.</p>
+        ${d.suggestion ? `<button class="chip" data-topic="${esc(d.suggestion)}">Try: ${esc(d.suggestion)}</button>` : ''}</div>`;
+      $('#exploreOut').innerHTML = '';
+      return;
+    }
     d.matches.forEach(m => { BY_ID[m.id] = {...(BY_ID[m.id] || m), ...m}; });
     const n = d.matches.filter(m => m.match_type !== 'possible').length, np = d.matches.length - n;
     const u = d.understood;
@@ -1017,83 +1059,64 @@ function modalHtml(v, fromSaved) {
         <button class="save-btn" id="saveBtn" data-modal-save>☆ Save this leaf</button>
       </div>
     </div>
-    ${bigLeaf(v.tamil)}
-    ${v.english ? `<p class="m-en">“${esc(v.english)}”</p>` : ''}
+    ${bigLeaf(v.tamil, true)}
+    <p class="flip-note">Tap the leaf to turn it over and read it in English.</p>
     ${v.concept ? `<button class="concept-link" data-topic="${esc(v.concept)}">✦ ${esc(v.concept)} <span>explore this idea across all verses →</span></button>` : ''}
     <div class="note-wrap" id="noteWrap" style="display:none"><label for="noteInput">Your note on this leaf</label>
       <textarea id="noteInput" maxlength="1000" placeholder="Why does this leaf matter to you? What would you tell your professor?"></textarea>
       <span class="note-hint" id="noteHint">Saved automatically to your leaves</span></div>
     <div class="m-grid">
       <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
-      <div class="m-card"><h4>The cosmic analogy</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
+      <div class="m-card"><h4>The astronomy connection</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
     </div>
     <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
-    <div class="m-section"><h3>Observational astronomy lens</h3><p class="note">How astronomers would actually study the natural idea behind this verse: radio spectral imaging, photometry, cosmology, beta (spectral index) scaling, petascale data and visualisation, each with a real official instrument.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
-    <div class="m-section"><h3>In the real world</h3><p class="note">Grouped by field. Top space agencies, research institutes and universities come first, then newest first. Every “Official source” link was opened and checked. AI-summarised — verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
+    <div class="m-section"><h3>How astronomers would study it</h3><p class="note">Only the observing methods that genuinely fit this verse's phenomenon, each with the real instrument that does it.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
+    <div class="m-section"><h3>In the real world</h3><p class="note">Missions, telescopes and results that study this exact idea. A link is shown only when it opens the page for that specific mission or result (checked automatically); otherwise just the name is given. AI-summarised, so verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Official images</h3><p class="note">From the NASA Image and Video Library, including radio images. Click an image for its official page.</p><div id="mImg">${v.concept ? loading('Opening the NASA archive…') : '<div class="empty">No natural-science idea to look up.</div>'}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
-  const strength = {strong:3, moderate:2, weak:1}[d.strength] || 0;
   const L = a => Array.isArray(a) ? a : [];
   $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>` +
     (L(d.key_words).length ? `<div class="pts-h" style="color:var(--gold)">Key words in the verse</div><div class="kw-row">${L(d.key_words).map(k =>
       `<span class="kw"><b>${esc(k.tamil)}</b>${k.transliteration ? `<i>${esc(k.transliteration)}</i>` : ''}— ${esc(k.meaning)}</span>`).join('')}</div>` : '') +
     (d.context ? `<p class="ctx"><b>Tradition</b>${esc(d.context)}</p>` : '');
-  $('#mAnalogy').innerHTML = `<p>${esc(d.analogy || '—')}</p>` +
-    (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') +
-    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') +
-    (strength ? `<div class="meter">${[1,2,3].map(i => `<i class="${i<=strength?'on':''}"></i>`).join('')}<span>${esc(d.strength)} analogy</span></div>` : '') +
-    (d.strength_reason ? `<div class="meter-why">${esc(d.strength_reason)}</div>` : '');
-  const rw = Array.isArray(d.real_world) ? d.real_world : [];
-  $('#mReal').innerHTML = realWorldHtml(rw);
+  // score out of 10 with what each band means; older saved readings only have strong / moderate / weak
+  const score = +d.score || ({strong: 8, moderate: 5, weak: 2}[d.strength] || 0);
+  const band = score >= 9 ? 'Describes the real phenomenon' : score >= 7 ? 'Close match' : score >= 5 ? 'Structural analogy' : score >= 3 ? 'Shared theme only' : 'Word in common only';
+  const meter = score ? `<div class="score">
+      <div class="score-top"><b>${score}<small>/10</small></b><span>${band}</span>${d.match_type ? `<em>${esc(d.match_type)}</em>` : ''}</div>
+      <div class="score-bar">${[...Array(10)].map((_, i) => `<i class="${i < score ? 'on' : ''}"></i>`).join('')}</div>
+      ${d.verdict || d.strength_reason ? `<p class="score-why">${esc(d.verdict || d.strength_reason)}</p>` : ''}
+      <p class="score-scale">9–10 the verse describes the actual phenomenon · 7–8 close match · 5–6 same shape as a science model · 3–4 shared theme · 1–2 one word in common</p></div>` : '';
+  const mapping = L(d.mapping).length ? `<div class="pts-h">Verse ↔ science, side by side</div><div class="map-rows">${L(d.mapping).map(m =>
+      `<div class="map-row"><span class="mv">${esc(m.verse)}</span><span class="ma">↔</span><span class="ms">${esc(m.science)}</span></div>`).join('')}</div>`
+    : (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
+  $('#mAnalogy').innerHTML = meter +
+    (d.picture ? `<div class="pts-h">What the verse pictures</div><p>${esc(d.picture)}</p>` : '') +
+    `<div class="pts-h">The science, simply</div><p>${esc(d.science || d.analogy || '—')}</p>` + mapping +
+    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
+  $('#mReal').innerHTML = realWorldHtml(d.real_world);
   $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
   $('#mObs').innerHTML = obsHtml(d.observation);
-  initBeta();
 }
 const OBS_ICON = {'Radio spectral imaging': '📡', 'Photometry': '🔆', 'Cosmology': '🌌', 'Beta scaling': '📈',
   'Petascale data': '🗄️', 'Visualisation': '🗺️'};
 function obsHtml(obs) {
-  obs = (Array.isArray(obs) ? obs : []).filter(o => o && o.method && o.how);
-  if (!obs.length) return '<div class="empty">No observational reading for this one.</div>';
-  return `<div class="obs-grid">${obs.map(o => `<div class="obs ${o.applies ? 'on' : ''}">
-    <div class="obs-top"><span class="obs-ic">${OBS_ICON[o.method] || '✦'}</span><b>${esc(o.method)}</b>
-      <span class="obs-badge">${o.applies ? 'Applies' : 'Limited'}</span></div>
-    <p>${esc(o.how || '')}</p>
+  // only the methods that genuinely apply to this verse's phenomenon
+  obs = (Array.isArray(obs) ? obs : []).filter(o => o && o.method && o.how && o.applies !== false);
+  if (!obs.length) return '<div class="empty">No observing method fits this verse closely.</div>';
+  return `<div class="obs-grid">${obs.map(o => `<div class="obs on">
+    <div class="obs-top"><span class="obs-ic">${OBS_ICON[o.method] || '✦'}</span><b>${esc(o.method)}</b></div>
+    <p>${esc(o.how)}</p>
     ${o.instrument ? `<div class="obs-inst"><span>Instrument</span>${esc(o.instrument)}${o.organization ? ` · ${esc(o.organization)}` : ''}</div>` : ''}
-    ${o.url ? `<a class="rw-link" href="${esc(o.url)}" target="_blank" rel="noopener">Official page ↗</a>` : ''}
-    ${o.method === 'Beta scaling' ? BETA_WIDGET : ''}
+    ${o.url ? `<a class="rw-link" href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.instrument || 'Instrument')} page ↗</a>` : ''}
   </div>`).join('')}</div>`;
-}
-const BETA_WIDGET = `<div class="beta" data-beta>
-  <svg viewBox="0 0 320 170" aria-label="Brightness against frequency on log scales for the chosen beta"></svg>
-  <div class="beta-row"><label>β <b data-bval>-0.7</b></label><input type="range" min="-3" max="4" step="0.1" value="-0.7" data-bslider></div>
-  <div class="beta-presets"><button data-bp="-0.7">Synchrotron −0.7</button><button data-bp="-0.1">Free-free −0.1</button><button data-bp="2">Rayleigh-Jeans +2</button><button data-bp="3.7">Thermal dust +3.7</button></div>
-  <p class="beta-note">Brightness S ∝ ν<sup>β</sup>: the slope on a log-log plot tells you what is emitting.</p></div>`;
-function drawBeta(box, b) {
-  const W = 320, H = 170, L = 34, B = 24, x = lv => L + (lv + 1) / 3 * (W - L - 8), y = ls => 8 + (1 - (ls + 4) / 8) * (H - B - 8);
-  let path = '';
-  for (let i = 0; i <= 60; i++) { const lv = -1 + i / 20, ls = Math.max(-4, Math.min(4, b * lv)); path += (i ? 'L' : 'M') + x(lv).toFixed(1) + ' ' + y(ls).toFixed(1); }
-  const ticks = [-1, 0, 1, 2].map(t => `<line x1="${x(t)}" y1="${H - B}" x2="${x(t)}" y2="${H - B + 4}" stroke="#8a8173"/><text x="${x(t)}" y="${H - 8}" text-anchor="middle">${[0.1, 1, 10, 100][t + 1]}</text>`).join('');
-  box.querySelector('svg').innerHTML = `<rect x="${L}" y="8" width="${W - L - 8}" height="${H - B - 8}" fill="rgba(255,255,255,.03)" stroke="rgba(236,217,166,.2)"/>
-    ${ticks}<text x="${(W + L) / 2}" y="${H}" text-anchor="middle" opacity=".7">frequency ν (GHz, log)</text>
-    <text x="10" y="${(H - B) / 2}" transform="rotate(-90 10 ${(H - B) / 2})" text-anchor="middle" opacity=".7">brightness S (log)</text>
-    <path d="${path}" fill="none" stroke="#e3b95f" stroke-width="2.5"/>`;
-  box.querySelector('[data-bval]').textContent = b.toFixed(1);
-}
-function initBeta() {
-  document.querySelectorAll('[data-beta]').forEach(box => {
-    const sl = box.querySelector('[data-bslider]');
-    const go = v => { sl.value = v; drawBeta(box, +v); };
-    sl.addEventListener('input', () => go(sl.value));
-    box.querySelectorAll('[data-bp]').forEach(btn => btn.addEventListener('click', () => go(btn.dataset.bp)));
-    go(sl.value);
-  });
 }
 function imagesHtml(d) {
   const all = [...(d.radio || []).map(i => ({...i, radio: true})), ...(d.general || [])];
-  const seen = new Set(), items = all.filter(i => !seen.has(i.url) && seen.add(i.url)).slice(0, 8);
+  const seen = new Set(), items = all.filter(i => !seen.has(i.url) && seen.add(i.url)).slice(0, 6);
   if (!items.length) return '<div class="empty">NASA has no close image match for this idea.</div>';
   return `<div class="nasa-grid">${items.map(i => `<a class="nasa" href="${esc(i.url)}" target="_blank" rel="noopener" title="${esc(i.description || i.title)}">
     <img src="${esc(i.thumb)}" alt="${esc(i.title)}" loading="lazy">
@@ -1107,7 +1130,7 @@ function hypothesesHtml(hs) {
   const K = {'testable hypothesis': 'k-test', 'theoretical idea': 'k-theory', 'application idea': 'k-app'};
   return `<div class="hyps">${hs.map((h, i) => `<div class="hyp ${K[h.kind] || ''}" style="--d:${i * 90}ms">
     <div class="hyp-main">
-      <div class="hyp-top"><span class="hyp-kind">${HYP_ICON[h.kind] || '💡'} ${esc(h.kind || 'idea')}</span>${h.field ? `<span class="hyp-field">${FIELD_ICON[h.field] || '✦'} ${esc(h.field)}</span>` : ''}</div>
+      <div class="hyp-top"><span class="hyp-kind">${HYP_ICON[h.kind] || '💡'} ${esc(h.kind || 'idea')}</span>${h.field ? `<span class="hyp-field">${esc(h.field)}</span>` : ''}</div>
       <b class="hyp-title">${esc(h.title || 'Idea')}</b>
       <p class="hyp-st">${esc(h.statement)}</p>
     </div>
@@ -1118,35 +1141,16 @@ function hypothesesHtml(hs) {
     </div>
   </div>`).join('')}</div>`;
 }
-const FIELD_ICON = {'Space & Astronomy': '🚀', 'Physics': '⚛️', 'Earth & Climate': '🌍', 'Water & Oceans': '💧', 'Medicine & Health': '🩺',
-  'Biology & Life': '🧬', 'Agriculture & Food': '🌾', 'Energy': '⚡', 'Technology & Engineering': '🛠️', 'Mathematics & Computing': '📐',
-  'Economy & Finance': '💰', 'Environment & Ecology': '🌱', 'Environment & Agriculture': '🌱', 'General': '✦'};
-const FIELD_DESC = {'Space & Astronomy': 'planets, stars, missions, telescopes', 'Physics': 'matter, energy, light, forces',
-  'Earth & Climate': 'weather, monsoon, climate, geology', 'Water & Oceans': 'rain, rivers, groundwater, oceans',
-  'Medicine & Health': 'the body, disease, treatment, nutrition', 'Biology & Life': 'living things, genetics, evolution',
-  'Agriculture & Food': 'crops, soil, farming, food supply', 'Energy': 'solar power, fuel, electricity',
-  'Technology & Engineering': 'instruments, machines, built systems', 'Mathematics & Computing': 'models, computation, AI',
-  'Economy & Finance': 'wealth, money, trade, governance', 'Environment & Ecology': 'ecosystems, conservation, pollution',
-  'General': 'not tied to one domain'};
 const ORG_RANK = {'space agency': 0, 'university': 0, 'research institute': 1, 'government': 1, 'company': 2};
 function realWorldHtml(rw) {
-  const items = (Array.isArray(rw) ? rw : []).filter(r => r && r.title).map(r => ({...r, field: r.field || 'General'}));
+  const items = (Array.isArray(rw) ? rw : []).filter(r => r && r.title);
   if (!items.length) return '<div class="empty">No real-world examples for this one.</div>';
   const rank = r => ORG_RANK[String(r.org_type || '').toLowerCase()] ?? 3;
   items.sort((a, b) => rank(a) - rank(b) || (parseInt(b.year) || 0) - (parseInt(a.year) || 0));
-  const groups = {};
-  items.forEach(r => (groups[r.field] = groups[r.field] || []).push(r));
-  const order = Object.keys(groups).sort((a, b) => Math.min(...groups[a].map(rank)) - Math.min(...groups[b].map(rank)) || groups[b].length - groups[a].length);
-  let k = 0;
-  const top = items.filter(r => rank(r) <= 1).length;
-  const summary = `<div class="rw-summary">${order.map(f => `<span class="rw-pill">${FIELD_ICON[f] || '✦'} ${esc(f)} <b>${groups[f].length}</b></span>`).join('')}
-    <span class="rw-top">✓ ${top} of ${items.length} from top organisations</span></div>`;
-  return summary + `<p class="rw-basis">Each example is placed in the domain of what it actually studies — e.g. a rainfall satellite goes under Water, a nutrition study under Health.</p>` +
-    '<div class="rw-fields">' + order.map(f => `<div class="rw-field" style="--n:${Math.min(groups[f].length, 3)}"><div class="rw-head"><span class="rw-ic">${FIELD_ICON[f] || '✦'}</span><span class="rw-hname"><span class="rw-fname">${esc(f)}<span class="rw-n">${groups[f].length}</span></span><span class="rw-desc" title="${esc(FIELD_DESC[f] || '')}">${esc(FIELD_DESC[f] || '')}</span></span></div>
-    <div class="real">${groups[f].map(r => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${(k++) * 70}ms">
-      <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${rank(r) <= 1 ? '<span class="cred-badge">✓ Top source</span>' : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
-      <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>${r.domain_reason ? `<span class="rw-why">${esc(r.domain_reason)}</span>` : ''}
-      ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Official source ↗</a></div>` : ''}</div>`).join('')}</div></div>`).join('') + '</div>';
+  return `<div class="rw-list">${items.map((r, k) => `<div class="real-card ${rank(r) <= 1 ? 'cred' : ''}" style="--d:${k * 70}ms">
+      <div class="rw-org">${r.organization ? `<span class="org">${esc(r.organization)}</span>` : ''}${parseInt(r.year) ? `<span class="rw-year">${esc(r.year)}</span>` : ''}</div>
+      <b>${esc(r.title)}</b><span>${esc(r.detail)}</span>
+      ${r.url ? `<div><a class="rw-link" href="${esc(r.url)}" target="_blank" rel="noopener">Open the ${esc(r.organization || 'official')} page for this ↗</a></div>` : ''}</div>`).join('')}</div>`;
 }
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
@@ -1159,8 +1163,8 @@ async function openVerse(v, opts = {}) {
   if (!v.id || v.id === 'custom') v.id = 'custom:' + hashStr(v.tamil);
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
-  // readings saved before real-world examples had fields/organisations are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && (d.key_words || []).length && (d.hypotheses || []).length && (d.observation || []).filter(o => o.how).length >= 3 && (d.real_world || []).length && d.real_world.every(r => r.field && r.org_type && r.domain_reason);
+  // readings saved before the 1-10 score, translation and verse-science mapping are refreshed (and re-saved) instead of reused
+  const upToDate = d => d && d.literal && d.translation && d.score && (d.mapping || []).length && (d.real_world || []).length;
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const official = ps => (ps || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
   const cachedPapers = official(v.papers).length ? official(v.papers) : (saved && official(saved.papers).length ? official(saved.papers) : null);
@@ -1220,13 +1224,15 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-copy-report]')) { navigator.clipboard.writeText(reportText()).then(() => toast('Report copied ✓'), () => toast('Could not copy')); return; }
   if (e.target.closest('[data-lib]') || e.target.closest('.who .av') || e.target.closest('.who .name')) { e.preventDefault(); return openLibrary(); }
   const qs = e.target.closest('[data-save]');
-  if (qs) { const id = qs.dataset.save; return SAVED[id] ? unsaveLeaf(id) : saveLeaf(BY_ID[id]); }
+  if (qs) { const id = qs.dataset.save; return SAVED[id] ? unsaveLeaf(id) : saveLeaf(BY_ID[id]).then(() => attachSources(BY_ID[id])); }
   if (e.target.closest('[data-modal-save]')) { if (!CUR) return; return SAVED[CUR.verse.id] ? unsaveLeaf(CUR.verse.id) : saveLeaf(CUR.verse, CUR.deep, CUR.papers); }
   if (e.target.closest('[data-refresh]')) { if (CUR) openVerse(CUR.verse, {fresh: true}); return; }
   const os = e.target.closest('[data-open-saved]');
   if (os) { const it = SAVED[os.dataset.openSaved]; if (it) { closeLibrary(); openVerse({...it.verse, id: it.id}); } return; }
   const un = e.target.closest('[data-unsave]'); if (un) return unsaveLeaf(un.dataset.unsave);
-  const leaf = e.target.closest('.ola[data-id]'); if (leaf) return openVerse(BY_ID[leaf.dataset.id]);
+  const rd = e.target.closest('[data-read]'); if (rd) return openVerse(BY_ID[rd.dataset.read]);
+  const bf = e.target.closest('[data-bigflip]'); if (bf && CUR) return turnLeaf(bf, CUR.verse);
+  const leaf = e.target.closest('.ola[data-id]'); if (leaf) return turnLeaf(leaf.querySelector('.ola-leaf'), BY_ID[leaf.dataset.id]);
   const t = e.target.closest('[data-topic]'); if (t) return runSearch(t.dataset.topic, t.dataset.key);
   const s = e.target.closest('[data-sample]'); if (s) { $('#verseInput').value = SAMPLES[+s.dataset.sample].ta; return readCustom(SAMPLES[+s.dataset.sample].ta); }
   const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; shown = 24; document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('on', b.dataset.filter === filter)); renderList(); }
@@ -1331,7 +1337,7 @@ addEventListener('scroll', () => {
 
 /* ---------------- archive ---------------- */
 let filter = 'AOL', shown = 24, archQ = '';
-const FILTERS = [['AOL','All astronomy'], ['A','Cosmic vision'], ['O','Observed sky'], ['L','Literal fact'], ['SAVED','★ Saved']];
+const FILTERS = [['AOL','All astronomy'], ['A','Cosmic vision'], ['O','Observed sky'], ['L','Literal fact'], ['FULL','📖 Full texts (every verse)'], ['SAVED','★ Saved']];
 const FSET = {AOL:['A','O','L'], A:['A'], O:['O'], L:['L'], M:['M']};
 function renderArchive() {
   $('#filters').innerHTML = FILTERS.map(([k, l]) => `<button class="chip ${k === filter ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('') +
@@ -1342,7 +1348,9 @@ function renderArchive() {
   renderList();
 }
 let archSrc = 'all';
-const archBase = () => filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id]) : VERSES.filter(v => v.astro && FSET[filter].includes(v.label));
+// "Full texts" is every verse of every work in its own order (all 1,607 Tolkappiyam sutras, all 1,330 kurals ...)
+const archBase = () => filter === 'SAVED' ? VERSES.filter(v => SAVED[v.id])
+  : filter === 'FULL' ? [...VERSES].sort((a, b) => a.n - b.n) : VERSES.filter(v => v.astro && FSET[filter].includes(v.label));
 const archCount = x => archBase().filter(v => x === 'all' || v.source === x).length.toLocaleString();
 // mix the texts round-robin so no single text fills the first pages (cosmic vision verses are mostly Thiruvarutpa)
 function interleaveBySource(rows) {
@@ -1354,7 +1362,7 @@ function interleaveBySource(rows) {
 function renderList() {
   const q = archQ.trim().toLowerCase();
   let rows = archBase();
-  rows = archSrc === 'all' ? interleaveBySource(rows) : rows.filter(v => v.source === archSrc);
+  rows = archSrc !== 'all' ? rows.filter(v => v.source === archSrc) : filter === 'FULL' ? rows : interleaveBySource(rows);
   document.querySelectorAll('[data-arch-src] b').forEach(b => { b.textContent = archCount(b.parentElement.dataset.archSrc); });
   if (q) rows = rows.filter(v => (v.tamil + ' ' + v.english + ' ' + v.concept + ' ' + v.meaning + ' ' + v.ref).toLowerCase().includes(q));
   $('#count').textContent = `${rows.length.toLocaleString()} leaves`;
@@ -1396,6 +1404,16 @@ async function saveLeaf(v, deep, papers, quiet) {
     SAVED[item.id] = item; updateLibCount(); refreshSaveMarks(); renderLibraryIfOpen();
     if (!quiet) toast('Saved to your leaves ★');
   } catch (e) { toast(e.message); }
+}
+// a leaf starred straight from a card has no reading yet: fetch its reading and papers, then save them with it
+async function attachSources(v) {
+  if (!v || !SAVED[v.id] || (SAVED[v.id].deep || {}).literal) return;
+  try {
+    const text = v.tamil + (v.english ? ' | ' + v.english : '') + (v.commentary ? ' | உரை: ' + v.commentary : '');
+    const [deep, pp] = await Promise.all([api('/api/deep', {text, concept: v.concept}),
+      v.concept ? api('/api/papers?q=' + encodeURIComponent(v.concept)) : Promise.resolve({papers: []})]);
+    if (SAVED[v.id]) saveLeaf(v, deep, pp.papers, true);
+  } catch (e) { /* the collection analysis fills it in later */ }
 }
 async function unsaveLeaf(id) {
   const prev = SAVED[id]; if (!prev) return;
@@ -1505,7 +1523,7 @@ function reportHtml(d) {
     <span>${esc(c.relation)}</span>${c.how ? `<span class="how">How: ${esc(c.how)}</span>` : ''}
     <div class="basis-row"><span class="bchip sem">Basis: ${esc(c.basis || 'meaning')} (semantic, AI)</span>
       <span class="bchip lex">Word overlap ${m.word_overlap ?? 0}%${(m.shared_words || []).length ? ': ' + m.shared_words.map(esc).join(', ') : ''}</span>
-      <span class="bchip src">${m.shared_sources || 0} shared source${m.shared_sources === 1 ? '' : 's'}</span></div></div>`; }).join('');
+      ${m.shared_sources ? `<span class="bchip src">${m.shared_sources} shared source${m.shared_sources === 1 ? '' : 's'}</span>` : ''}</div></div>`; }).join('');
   const method = `<div class="method"><h5>How this analysis compares your leaves</h5><ul style="margin:0;padding-left:18px">
     <li><b>By meaning (semantic):</b> the AI reads each verse, its reading, its real-world sources and your notes, and compares the ideas and imagery — not the spelling of words. This drives the themes, connections and conclusions.</li>
     <li><b>By words (lexical):</b> for every connection we also count the Tamil words the two verses literally share, so you can see whether a link is about wording or only about meaning.</li>
@@ -1515,7 +1533,7 @@ function reportHtml(d) {
       <button class="ghost-btn" data-report-close>← Back</button></div>
     <p class="note" style="color:var(--dim);font-size:13px;margin:0">${d.count} leaves analysed · AI interpretation — verify before citing.</p>
     ${method}
-    ${missing.length ? `<p class="rep-hint">${missing.length} of your leaves have no real-world sources saved yet (${missing.map(chip).join(' ')}). Open each one, let the reading load, and save again to include its science.</p>` : ''}
+    ${missing.length ? `<p class="rep-hint">${missing.length} of your leaves hold no science sources (${missing.map(chip).join(' ')}).</p>` : ''}
     ${sec('Overview', r.overview ? `<p>${esc(r.overview)}</p>` : '')}
     ${sec('The science behind your leaves', science)}
     ${sec('Sources your leaves share', shared)}

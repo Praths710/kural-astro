@@ -36,6 +36,12 @@ def _clean(raw):
         "deep": {"literal": _s(d.get("literal"), 1500), "analogy": _s(d.get("analogy"), 1500),
                  "strength": _s(d.get("strength"), 12), "strength_reason": _s(d.get("strength_reason"), 400),
                  "context": _s(d.get("context"), 600),
+                 "translation": _s(d.get("translation"), 1500), "picture": _s(d.get("picture"), 400),
+                 "science": _s(d.get("science"), 1500), "verdict": _s(d.get("verdict"), 400),
+                 "match_type": _s(d.get("match_type"), 30),
+                 "score": int(d.get("score")) if str(d.get("score", "")).isdigit() and 1 <= int(d.get("score")) <= 10 else 0,
+                 "mapping": [{"verse": _s(m.get("verse"), 300), "science": _s(m.get("science"), 300)}
+                             for m in (d.get("mapping") or [])[:4] if isinstance(m, dict)],
                  "similarities": [_s(x, 300) for x in (d.get("similarities") or [])[:4] if isinstance(x, str)],
                  "differences": [_s(x, 300) for x in (d.get("differences") or [])[:4] if isinstance(x, str)],
                  "key_words": [{"tamil": _s(k.get("tamil"), 60), "transliteration": _s(k.get("transliteration"), 60),

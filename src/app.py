@@ -123,6 +123,15 @@ def verse_list():
                 v.update(label=a["label"], theme=a["theme"], concept=a["concept"], meaning=a["meaning"])
     for v in out:
         v["astro"] = bool(v["theme"])
+    # English for the flip side of each card (translate_astro.py); Thirukkural keeps its standard translation
+    eng = ROOT / "data/labels/astro_english.json"
+    if eng.exists():
+        english = json.loads(eng.read_text(encoding="utf-8"))
+        for v in out:
+            if not v.get("english") and v["id"] in english:
+                v["english"] = english[v["id"]]
+    for i, v in enumerate(out):
+        v["n"] = i            # position in its own text, for reading a work in order
     order = {"A": 0, "O": 1, "L": 2, "M": 3, "N": 4}
     out.sort(key=lambda v: order.get(v["label"], 9))
     return out
@@ -259,7 +268,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v14-theme" if key else "search-v12-astro", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v15-theme" if key else "search-v13-gate", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -277,7 +286,35 @@ def interleaved_science_verses():
     return out
 
 
+ASTRO_WORDS = re.compile(r"\b(astro|cosm|universe|galax|star|sun|solar|moon|lunar|planet|venus|jupiter|mars|saturn|"
+                         r"mercury|eclipse|orbit|comet|meteor|asteroid|nebula|black hole|neutron|pulsar|quasar|supernova|"
+                         r"big bang|dark matter|dark energy|gravit|spacetime|space|sky|telescope|light|radiation|atom|"
+                         r"particle|quantum|multiverse|dimension|dawn|dusk|night sky|season|equinox|solstice|tide|"
+                         r"satellite|rocket|exoplanet|redshift|spectr|photon|plasma|magnet|x-ray|gamma|cmb)", re.I)
+GATE_SYS = (
+    "A student is searching a website that ONLY covers astronomy and astrophysics in classical Tamil verses. Decide whether "
+    "their search is about astronomy, astrophysics, cosmology, space science, or the physics of light, matter and atoms "
+    "(which links to the cosmos). Food, plants, animals, the body, medicine, weather, money, people or everyday objects "
+    "are NOT, unless the search clearly asks about them in space. The search may be in Tamil.\n"
+    'Return JSON {"astro": true/false, "reason": one short sentence, "suggestion": a close astronomy topic they could '
+    'search instead (English, 2-4 words)}.'
+)
+
+
+def astro_gate(topic):
+    """Is this search inside the site's subject? Plain astronomy words pass at once; anything else asks the AI once."""
+    if ASTRO_WORDS.search(topic):
+        return {"astro": True}
+    out = cached(ckey("gate-v1", topic.lower()), None,
+                 lambda: gemini_json(f"{GATE_SYS}\n\nSearch: {topic}", attempts=3, temperature=0))
+    return out if isinstance(out, dict) and "astro" in out else {"astro": True}   # if the AI is down, let it through
+
+
 def _search_live(topic, key=None, lang="en"):
+    gate = {"astro": True} if key else astro_gate(topic)
+    if gate.get("astro") is False:
+        return {"matches": [], "papers": [], "topic_title": "", "understood": None, "off_topic": True,
+                "reason": str(gate.get("reason") or "")[:200], "suggestion": str(gate.get("suggestion") or "")[:60]}
     understood = None if key or is_plain_term(topic) else understand_query(topic)
     ask = f"{understood['topic']} (the student typed: \"{topic}\" -- meaning: {understood['intent']})" if understood else topic
     verses = interleaved_science_verses()
@@ -365,72 +402,111 @@ def concept_translations(lang):
     return out
 
 
-FIELDS = ["Space & Astronomy", "Physics", "Earth & Climate", "Water & Oceans", "Medicine & Health", "Biology & Life",
-          "Agriculture & Food", "Energy", "Technology & Engineering", "Mathematics & Computing", "Economy & Finance",
-          "Environment & Ecology"]
+FIELDS = ["Space & Astronomy", "Physics", "Mathematics & Computing", "Technology & Engineering"]
 CREDIBLE = {"space agency": 0, "university": 0, "research institute": 1, "government": 1, "company": 2}
 
 OBS_METHODS = ["Radio spectral imaging", "Photometry", "Cosmology", "Beta scaling", "Petascale data", "Visualisation"]
+MATCH_TYPES_DEEP = ("direct observation", "structural analogy", "loose imagery")
 
 DEEP_SYS = (
-    "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts "
-    "with modern science. Be honest: the poet did not know modern science; this is an analogy. Write clearly for a student.\n"
+    "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts with modern "
+    "astronomy and astrophysics. Be honest: the poet did not know modern science; this is a comparison, not a claim. "
+    "Write plainly and concretely for a first-year student: short sentences, no filler, no vague words like 'profound'.\n"
     "Return JSON with keys:\n"
-    "  literal: 3-4 sentences -- what the verse actually says, in plain English, in its own religious/ethical context\n"
-    "  key_words: array of 2-5 {tamil, transliteration, meaning} -- the Tamil words in the verse that carry its natural or "
-    "cosmic imagery (copy the Tamil exactly as it appears in the verse)\n"
-    "  context: 1-2 sentences -- where the verse sits (its Thirukkural chapter, Thiruvarutpa hymn, Tolkappiyam "
-    "section or Thiruppavai pasuram) and how "
-    "traditional commentators read it\n"
-    "  analogy: 3-4 sentences -- the modern science concept and exactly how the verse's imagery maps onto it\n"
-    "  similarities: array of 2-3 short points where the verse and the science genuinely line up\n"
-    "  differences: array of 2-3 short points where the analogy breaks down\n"
-    "  strength: one of 'strong', 'moderate', 'weak' -- how close the analogy honestly is\n"
-    "  strength_reason: one sentence explaining that rating\n"
-    "  real_world: array of 4-6 objects {title, detail, field, domain_reason, organization, org_type, year, url} -- real, "
-    "well-documented modern missions, experiments, observations, studies or technologies connected to the concept, "
-    "spread across every domain it genuinely touches (health, water, food, energy, economy... not only space).\n"
-    "    field: the domain, exactly one of " + ", ".join(FIELDS) + "\n"
-    "    domain_reason: a short phrase saying why this example belongs to that domain (what it studies)\n"
-    "    organization: who did it -- strongly prefer top credible bodies: NASA, ISRO, ESA, JAXA, CNSA, Roscosmos, CERN, "
-    "NOAA, WHO, FAO, IMF, World Bank, and leading universities (Stanford, MIT, Caltech, Harvard, Oxford, Cambridge, IISc, IITs...)\n"
+    "  translation: a faithful English translation of the whole verse (no commentary)\n"
+    "  literal: 2-3 sentences -- what the verse is saying in its own religious, ethical or grammatical context\n"
+    "  key_words: array of 2-5 {tamil, transliteration, meaning} -- the Tamil words that carry the sky or cosmic imagery "
+    "(copy the Tamil exactly as it appears in the verse)\n"
+    "  context: 1-2 sentences -- where the verse sits (Thirukkural chapter, Thiruvarutpa hymn, Tolkappiyam section or "
+    "Thiruppavai pasuram) and how traditional commentators read it\n"
+    "  picture: one sentence -- the sky or cosmic picture the verse paints, in the poet's own terms\n"
+    "  science: 2-3 sentences -- the modern astronomy idea it resembles, explained simply, with at least one concrete fact "
+    "or number (e.g. the Moon's 29.5-day cycle, about 2 trillion galaxies in the observable universe)\n"
+    "  mapping: array of 2-4 {verse, science} pairs -- each pair puts one image from the verse beside the exact "
+    "scientific counterpart it corresponds to\n"
+    "  differences: array of 2-3 short points where the comparison breaks down\n"
+    "  match_type: one of 'direct observation' (the verse describes a real sky phenomenon itself: moon phases, sunrise "
+    "driving away night, a planet rising, an eclipse), 'structural analogy' (the verse's picture has the same shape as a "
+    "science model, e.g. countless nested worlds and the multiverse), 'loose imagery' (only a shared theme or word)\n"
+    "  score: an integer 1-10 for how closely the verse matches the science, using this scale:\n"
+    "    9-10 the verse accurately describes the actual phenomenon (the moon waxing and waning; Venus rising as Jupiter sets)\n"
+    "    7-8 a real phenomenon described with poetic exaggeration, or a structural parallel that also matches a specific detail\n"
+    "    5-6 a clear structural analogy with no physical mechanism (worlds within worlds and the multiverse)\n"
+    "    3-4 shares a theme only\n"
+    "    1-2 only a word in common\n"
+    "    Judge each verse on its own; do not default to a middle or low score.\n"
+    "  verdict: one sentence saying plainly how close the match is and why\n"
+    "  real_world: array of 3-4 objects {title, detail, organization, org_type, year, url} -- real astronomy or space "
+    "missions, telescopes, surveys, observations or published results that study exactly this science idea:\n"
+    "    detail: 1-2 sentences on what it did or found that relates to the verse's idea\n"
+    "    organization: who did it, preferring NASA, ISRO, ESA, JAXA, CNSA, ESO, CERN, NCRA-TIFR, IUCAA, IIA and leading universities\n"
     "    org_type: one of 'space agency', 'university', 'research institute', 'government', 'company', 'other'\n"
     "    year: the year of the mission or result (number)\n"
-    "    url: the official page URL only if you are confident it exists, otherwise an empty string\n"
+    "    url: the official page for THAT specific mission, instrument or result (for example "
+    "https://science.nasa.gov/mission/juno/ or https://www.isro.gov.in/Chandrayaan3_Details.html), never an agency "
+    "homepage; an empty string if you are not sure of the exact page\n"
     "    Only use things you are confident exist; no invented projects.\n"
     "  hypotheses: array of 2-3 objects {kind, title, statement, inspired_by, how_to_test, prediction, field} -- NEW ideas a "
     "researcher could build today, inspired by the verse's imagery (not claims that the poet knew science):\n"
-    "    kind: one of 'testable hypothesis' (a falsifiable scientific claim), 'theoretical idea' (a model or thought experiment), "
-    "'application idea' (a technology, AI/ML system or project someone could build)\n"
-    "    title: a short name for the idea (max 8 words)\n"
-    "    statement: 1-2 crisp sentences (max 45 words) stating the hypothesis or idea precisely\n"
-    "    inspired_by: the Tamil words of the verse that sparked it, with a 3-6 word English gloss (max 15 words)\n"
+    "    kind: one of 'testable hypothesis', 'theoretical idea', 'application idea'\n"
+    "    title: max 8 words; statement: 1-2 crisp sentences (max 45 words)\n"
+    "    inspired_by: the Tamil words that sparked it, with a 3-6 word English gloss (max 15 words)\n"
     "    how_to_test: 1-2 short sentences (max 40 words) -- the concrete data, instrument, experiment, simulation or model\n"
     "    prediction: one short sentence (max 30 words) -- what result would support it and what would refute it\n"
     "    field: exactly one of " + ", ".join(FIELDS) + "\n"
-    "    Make them specific and scientifically sound; at least one should be doable by a student (e.g. with public data or ML).\n"
-    "  observation: array of exactly 6 objects, one per method in this order: " + ", ".join(OBS_METHODS) + ". "
-    "Each {method, applies, how, instrument, organization, url}:\n"
-    "    applies: true if this method genuinely helps study the natural phenomenon behind the verse's imagery, else false\n"
-    "    how: 1-2 sentences on how the method would study it, or why it does not apply\n"
-    "    instrument: a real official instrument, survey, mission or facility. For flashes, bursts, explosions and other "
-    "high-energy or short-lived sky events prefer Einstein Probe (CAS/ESA), SVOM (CNSA/CNES), Insight-HXMT, NASA Fermi and "
-    "Swift, ISRO AstroSat CZTI, and the LIGO, Virgo and KAGRA gravitational-wave detectors. For other sky phenomena prefer ISRO AstroSat, "
-    "NCRA GMRT, SKA, NRAO VLA, ALMA, SDSS, Gaia, JWST, Hubble, Planck, Rubin Observatory LSST. For Earth, weather or "
-    "living-world phenomena use real Earth-observation or field instruments (weather radar, INSAT-3D, Oceansat, GPM, "
-    "NOAA, ECMWF) and NEVER an astronomical telescope: GMRT, SKA, VLA, ALMA, Hubble, JWST, Gaia, SDSS, Planck and AstroSat "
-    "observe the sky and must not be named for rain, clouds, weather, oceans, land, plants or animals (for radar or radio "
-    "measurements of weather name a weather radar such as ISRO DWR or NOAA NEXRAD). Set applies false when the method has no "
-    "genuine use.\n"
-    "    organization: who runs it; url: its official page only if you are confident it exists, else ''\n"
-    "    Radio spectral imaging = mapping the sky at radio frequencies and how intensity changes across frequency. "
-    "Photometry = measuring brightness through filters over time or colour. Cosmology = the origin, structure and "
-    "evolution of the universe. Beta scaling = a power law in which flux or brightness scales as frequency or "
-    "wavelength to the power beta, e.g. the radio spectral index of synchrotron emission (about -0.7), the dust "
-    "emissivity index (about 1.5 to 2) or the ultraviolet slope beta of galaxies. Petascale data = petabyte datasets "
-    "and petaflop computing, as in SKA, Rubin LSST or climate reanalysis. Visualisation = the clearest way to show the "
-    "phenomenon (sky map, light curve, spectrum, simulation) and the official tool or dataset that provides it."
+    "    At least one should be doable by a student with public data or ML.\n"
+    "  observation: array of 2-4 objects, ONLY for methods from this list that genuinely help study the phenomenon: "
+    + ", ".join(OBS_METHODS) + ". Each {method, how, instrument, organization, url}:\n"
+    "    how: 1-2 sentences on exactly what the method would measure for this phenomenon\n"
+    "    instrument: a real official instrument, survey, mission or facility (flashes and bursts: Einstein Probe, SVOM, "
+    "Insight-HXMT, Fermi, Swift, AstroSat CZTI, LIGO/Virgo/KAGRA; other sky phenomena: AstroSat, GMRT, SKA, VLA, ALMA, "
+    "SDSS, Gaia, JWST, Hubble, Planck, Rubin LSST). It must be an instrument that actually observes this object or "
+    "phenomenon: for the Moon use lunar missions (Chandrayaan, LRO, Kaguya) or ground telescopes, for the Sun solar "
+    "observatories (Aditya-L1, SDO, SOHO, Parker Solar Probe); never name Gaia or JWST for the Moon or Sun\n"
+    "    url: that instrument's own official page only if you are sure of it, else ''\n"
+    "    Radio spectral imaging = mapping the sky at radio frequencies across frequency. Photometry = measuring brightness "
+    "over time or colour. Cosmology = origin, structure and evolution of the universe. Beta scaling = a power law where "
+    "flux scales as frequency to the power beta (spectral index). Petascale data = petabyte surveys and petaflop "
+    "simulations. Visualisation = sky maps, light curves, spectra or simulations that show the phenomenon."
 )
+
+STOP_TERMS = {"mission", "missions", "nasa", "isro", "esa", "observatory", "telescope", "space", "survey", "project",
+              "programme", "program", "study", "studies", "observations", "observation", "official", "data", "the",
+              "and", "from", "with", "into", "about", "first", "results", "result", "national", "international",
+              "science", "research", "institute", "agency", "array", "experiment", "satellite"}
+
+
+def page_about(u, label):
+    """Keep a link only if it opens a specific page (not a homepage) whose title or heading names the thing cited."""
+    if not re.fullmatch(r"https://[^\s\"'<>]{4,300}", u or ""):
+        return False
+    path = urlparse(u).path.strip("/")
+    if not path or re.fullmatch(r"(index|home|en|default)(\.\w+)?", path, re.I):
+        return False
+    terms = {w for w in re.findall(r"[a-z0-9][a-z0-9\-]{2,}", (label or "").lower()) if w not in STOP_TERMS}
+    if not terms:
+        return False
+    try:
+        r = subprocess.run(["curl", "-sL", "-m", "10", "--max-filesize", "3000000", "-A", "Mozilla/5.0 (KuralAstro link check)",
+                            "-w", "\n%{http_code} %{url_effective}", u], capture_output=True, timeout=14)
+        body, _, tail = r.stdout.decode("utf-8", "ignore").rpartition("\n")
+        code, _, final = tail.partition(" ")
+        if not 200 <= int(code or 0) < 300 or not urlparse(final).path.strip("/"):
+            return False             # dead, or redirected to a homepage
+        page = body[:400000]
+        parts = re.findall(r"<title[^>]*>(.*?)</title>", page, re.S | re.I) + re.findall(r"<h1[^>]*>(.*?)</h1>", page, re.S | re.I)
+        head = re.sub(r"<[^>]+>", " ", " ".join(parts)).lower()
+        return any(t in head for t in terms)
+    except (ValueError, subprocess.SubprocessError, OSError):
+        return False
+
+
+def deep_reading(text, concept, lang="en", fresh=False):
+    """The 'Read deeper' reading for one verse (cached; one AI call on a miss)."""
+    def read_it():
+        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+        return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
+    return cached(ckey("deep-v10", lang, text, concept), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
@@ -446,13 +522,24 @@ def url_ok(u):
 
 
 def finalize_deep(d):
-    """Normalise real-world examples: known field, verified link, top organisations first, then newest first."""
-    items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")]
+    """Clean the reading: score and match type, links that open the exact page cited, top organisations first."""
+    try:
+        d["score"] = max(1, min(10, int(d.get("score"))))
+    except (TypeError, ValueError):
+        d["score"] = 0
+    d["match_type"] = d.get("match_type") if d.get("match_type") in MATCH_TYPES_DEEP else ""
+    # the older 3-level rating, kept for saved leaves and the collection analysis
+    d["strength"] = "strong" if d["score"] >= 7 else "moderate" if d["score"] >= 4 else "weak" if d["score"] else ""
+    d["strength_reason"] = str(d.get("verdict") or "")
+    d["analogy"] = str(d.get("science") or "")
+    d["mapping"] = [m for m in (d.get("mapping") or []) if isinstance(m, dict) and m.get("verse") and m.get("science")][:4]
+    d["similarities"] = [f'{m["verse"]} ↔ {m["science"]}' for m in d["mapping"]]
+    items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")][:4]
     with ThreadPoolExecutor(6) as ex:
-        oks = list(ex.map(url_ok, [r.get("url", "") for r in items]))
+        oks = list(ex.map(lambda r: page_about(r.get("url", ""), r.get("title", "")), items))
     for r, ok in zip(items, oks):
         r["url"] = r.get("url", "") if ok else ""
-        r["field"] = r.get("field") if r.get("field") in FIELDS else "General"
+        r["field"] = "Space & Astronomy"
         r["org_type"] = str(r.get("org_type") or "other").lower()
         r["credible"] = CREDIBLE.get(r["org_type"], 3) <= 1
         m = re.search(r"\d{4}", str(r.get("year") or ""))
@@ -463,25 +550,23 @@ def finalize_deep(d):
     hyps = [h for h in (d.get("hypotheses") or []) if isinstance(h, dict) and h.get("statement")]
     for h in hyps:
         h["kind"] = h.get("kind") if h.get("kind") in kinds else "theoretical idea"
-        h["field"] = h.get("field") if h.get("field") in FIELDS else "General"
+        h["field"] = h.get("field") if h.get("field") in FIELDS else "Space & Astronomy"
     d["hypotheses"] = hyps[:3]
-    # match the model's method names loosely ("Radio Spectral Imaging", "Petascale Data Handling", ...)
+    # only the methods that apply; names matched loosely ("Radio Spectral Imaging", "Petascale Data Handling", ...)
     keys = {"radio": 0, "photometr": 1, "cosmolog": 2, "beta": 3, "peta": 4, "visuali": 5}
-    obs = {}
+    rows, seen = [], set()
     for o in (d.get("observation") or []):
         name = str(o.get("method", "")).lower() if isinstance(o, dict) else ""
         hit = next((i for k, i in keys.items() if k in name), None)
-        if hit is not None and hit not in obs:
-            obs[hit] = o
-    rows = [{**obs.get(i, {}), "method": m} for i, m in enumerate(OBS_METHODS)]
+        if hit is not None and hit not in seen and o.get("how") and o.get("applies", True) is not False:
+            seen.add(hit)
+            rows.append({"method": OBS_METHODS[hit], "applies": True,
+                         **{k: str(o.get(k) or "")[:400] for k in ("how", "instrument", "organization", "url")}})
     with ThreadPoolExecutor(6) as ex:
-        oks = list(ex.map(url_ok, [o.get("url", "") for o in rows]))
+        oks = list(ex.map(lambda o: page_about(o["url"], o["instrument"]), rows))
     for o, ok in zip(rows, oks):
-        o["applies"] = bool(o.get("applies"))
-        o["url"] = o.get("url", "") if ok else ""
-        for k in ("how", "instrument", "organization"):
-            o[k] = str(o.get(k) or "")[:400]
-    d["observation"] = rows
+        o["url"] = o["url"] if ok else ""
+    d["observation"] = rows[:4]
     return d
 
 
@@ -511,6 +596,22 @@ def analyse_collection(user, lang, fresh=False):
     items = library.list_items(user)[:40]
     if len(items) < 2:
         return None, "Save at least 2 leaves to analyse them together."
+    # a leaf starred from a search card was saved before its reading loaded: fetch its reading and papers now
+    def complete(i):
+        v = i["verse"]
+        if not (i.get("deep") or {}).get("real_world"):
+            text = v.get("tamil", "") + (" | " + v["english"] if v.get("english") else "")
+            d = deep_reading(text, v.get("concept", ""), lang)
+            if isinstance(d, dict):
+                i["deep"] = d
+        if not i.get("papers") and v.get("concept"):
+            i["papers"] = papers_for(v["concept"])[1] or []
+        return library.upsert(user, i)[0] or i
+    missing = [i for i in items if not (i.get("deep") or {}).get("real_world") or not i.get("papers")]
+    if missing:
+        with ThreadPoolExecutor(4) as ex:
+            done = {x["id"]: x for x in ex.map(complete, missing)}
+        items = [done.get(i["id"], i) for i in items]
     brief = [{"id": i["id"], "source": i["verse"].get("source") or "user verse", "ref": i["verse"].get("ref", ""),
               "label": i["verse"].get("label", ""), "concept": i["verse"].get("concept", ""),
               "tamil": i["verse"].get("tamil", "")[:200], "meaning": i["verse"].get("meaning", ""),
@@ -754,20 +855,24 @@ class Handler(BaseHTTPRequestHandler):
             if r.get("label") in ("L", "O", "A") and r.get("science_concept"):
                 topic_title, papers = papers_for(r["science_concept"])
             return self._json(200, {**r, "topic_title": topic_title, "papers": papers})
+        if path == "/api/translate":
+            v = next((x for x in verse_list() if x["id"] == str(body.get("id", ""))), None)
+            if not v:
+                return self._json(404, {"error": "unknown verse"})
+            if v.get("english"):
+                return self._json(200, {"english": v["english"]})
+            out = cached(ckey("translate-v1", v["id"]), None, lambda: gemini_json(
+                "Translate this classical Tamil verse into clear, faithful modern English for students. Keep the poet's "
+                "images exactly; no commentary or explanation. A Tolkappiyam sutra is a grammar rule: translate the rule. "
+                'Return JSON {"english": "..."}.\n\n' + v["tamil"], attempts=3, temperature=0))
+            if not (isinstance(out, dict) and out.get("english")):
+                return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
+            return self._json(200, {"english": str(out["english"])[:1500]})
         if path == "/api/deep":
             text, concept = (body.get("text") or "").strip()[:2000], (body.get("concept") or "").strip()[:200]
             if not text:
                 return self._json(400, {"error": "empty text"})
-            def read_it():
-                for _ in range(2):   # retry once if the model skipped the observational lens
-                    d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
-                    if not (isinstance(d, dict) and d.get("literal")):
-                        return None
-                    d = finalize_deep(d)
-                    if sum(1 for o in d["observation"] if o["how"]) >= 3:
-                        break
-                return d
-            out = cached(ckey("deep-v9", lang, text, concept), None, read_it, fresh=bool(body.get("fresh")))
+            out = deep_reading(text, concept, lang, bool(body.get("fresh")))
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
