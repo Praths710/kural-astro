@@ -1076,6 +1076,8 @@ function modalHtml(v, fromSaved) {
     <div class="m-section"><h3>In the real world</h3><p class="note">Missions, telescopes and results that study this exact idea. A link is shown only when it opens the page for that specific mission or result (checked automatically); otherwise just the name is given. AI-summarised, so verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
+// a list item may arrive as an object ({point: ...}) in older readings: show its text, never "[object Object]"
+const txt = x => typeof x === 'string' ? x : x && typeof x === 'object' ? Object.values(x).map(txt).filter(Boolean).join(' — ') : (x == null ? '' : String(x));
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
   const L = a => Array.isArray(a) ? a : [];
@@ -1092,13 +1094,13 @@ function fillDeep(d, tok) {
       ${d.verdict || d.strength_reason ? `<p class="score-why">${esc(d.verdict || d.strength_reason)}</p>` : ''}
       <p class="score-scale">8–10 direct: the verse states this astronomy itself · 5–7 analogy: its imagery parallels it · 3–4 shared theme · 1–2 possible link</p></div>` : '';
   const mapping = L(d.mapping).length ? `<div class="pts-h">Verse ↔ science, side by side</div><div class="map-rows">${L(d.mapping).map(m =>
-      `<div class="map-row"><span class="mv">${esc(m.verse)}</span><span class="ma">↔</span><span class="ms">${esc(m.science)}</span></div>`).join('')}</div>`
-    : (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
+      `<div class="map-row"><span class="mv">${esc(txt(m.verse))}</span><span class="ma">↔</span><span class="ms">${esc(txt(m.science))}</span></div>`).join('')}</div>`
+    : (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : '');
   const fromSearch = CUR && CUR.search ? `<p class="from-search">Your search “${esc(CUR.search.topic)}” found this verse as a <b>${esc(MT_NAME[CUR.search.type] || CUR.search.type)}</b>. The score below uses the same scale: a direct match is 8–10, an analogy 5–7, a shared theme 3–4.</p>` : '';
   $('#mAnalogy').innerHTML = fromSearch + meter +
     (d.picture ? `<div class="pts-h">What the verse pictures</div><p>${esc(d.picture)}</p>` : '') +
     `<div class="pts-h">The science, simply</div><p>${esc(d.science || d.analogy || '—')}</p>` + mapping +
-    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
+    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : '');
   $('#mReal').innerHTML = realWorldHtml(d.real_world);
   $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
   $('#mObs').innerHTML = obsHtml(d.observation);

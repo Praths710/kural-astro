@@ -499,6 +499,63 @@ def page_about(u, label):
         return False
 
 
+# official pages of the instruments and missions the readings name most often (each opened and checked by hand);
+# used when the AI's own link does not open the right page. Pattern -> page.
+OFFICIAL_PAGES = [
+    (r"sdss|sloan digital", "https://www.sdss.org/"),
+    (r"gaia", "https://www.esa.int/Science_Exploration/Space_Science/Gaia"),
+    (r"webb|jwst", "https://science.nasa.gov/mission/webb/"),
+    (r"hubble", "https://science.nasa.gov/mission/hubble/"),
+    (r"planck", "https://www.esa.int/Science_Exploration/Space_Science/Planck"),
+    (r"wmap|wilkinson", "https://science.nasa.gov/mission/wmap/"),
+    (r"euclid", "https://www.esa.int/Science_Exploration/Space_Science/Euclid"),
+    (r"rubin|lsst", "https://rubinobservatory.org/"),
+    (r"alma\b|atacama large", "https://www.almaobservatory.org/en/home/"),
+    (r"very large array|\bvla\b", "https://public.nrao.edu/telescopes/vla/"),
+    (r"very large telescope|\bvlt\b", "https://www.eso.org/public/teles-instr/paranal-observatory/vlt/"),
+    (r"gmrt|giant metrewave", "https://www.gmrt.ncra.tifr.res.in/"),
+    (r"\bska\b|square kilometre", "https://www.skao.int/en"),
+    (r"fast\b|five-hundred-meter", "https://fast.bao.ac.cn/"),
+    (r"astrosat", "https://www.isro.gov.in/AstroSat.html"),
+    (r"aditya", "https://www.isro.gov.in/Aditya_L1.html"),
+    (r"chandrayaan-?3", "https://www.isro.gov.in/Chandrayaan3_Details.html"),
+    (r"chandrayaan-?2", "https://www.isro.gov.in/Chandrayaan2.html"),
+    (r"fermi", "https://science.nasa.gov/mission/fermi/"),
+    (r"swift", "https://science.nasa.gov/mission/swift/"),
+    (r"nustar", "https://science.nasa.gov/mission/nustar/"),
+    (r"chandra\b|chandra x-ray", "https://science.nasa.gov/mission/chandra/"),
+    (r"xmm", "https://www.esa.int/Science_Exploration/Space_Science/XMM-Newton"),
+    (r"einstein probe", "https://ep.bao.ac.cn/ep/"),
+    (r"svom", "https://www.svom.eu/en/home/"),
+    (r"ligo", "https://www.ligo.caltech.edu/"),
+    (r"virgo\b", "https://www.virgo-gw.eu/"),
+    (r"kagra", "https://gwcenter.icrr.u-tokyo.ac.jp/en/"),
+    (r"lunar reconnaissance|\blro\b", "https://science.nasa.gov/mission/lro/"),
+    (r"solar dynamics|\bsdo\b", "https://science.nasa.gov/mission/sdo/"),
+    (r"soho", "https://science.nasa.gov/mission/soho/"),
+    (r"parker solar", "https://science.nasa.gov/mission/parker-solar-probe/"),
+    (r"kepler", "https://science.nasa.gov/mission/kepler/"),
+    (r"\btess\b|transiting exoplanet", "https://science.nasa.gov/mission/tess/"),
+    (r"spitzer", "https://science.nasa.gov/mission/spitzer/"),
+]
+
+
+def official_page(*names):
+    text = " ".join(str(n or "") for n in names).lower()
+    return next((u for pat, u in OFFICIAL_PAGES if re.search(r"\b(?:" + pat + ")", text)), "")
+
+
+def as_text(x):
+    """The AI sometimes returns a list item as an object ({point: ...}); flatten it to plain text."""
+    if isinstance(x, str):
+        return x.strip()
+    if isinstance(x, dict):
+        return " — ".join(as_text(v) for v in x.values() if as_text(v))
+    if isinstance(x, list):
+        return "; ".join(as_text(v) for v in x if as_text(v))
+    return str(x) if x is not None else ""
+
+
 def link_candidates(r):
     """The AI's link first, then the standard page addresses of NASA and ESA for that mission's name."""
     title, org = str(r.get("title") or ""), str(r.get("organization") or "").lower()
@@ -520,7 +577,13 @@ def verified_link(r):
     title = str(r.get("title") or "")
     initials = "".join(w[0] for w in re.findall(r"[A-Za-z]+", re.sub(r"\(.*?\)", "", title)) if w[0].isupper())
     label = f"{title} {initials if len(initials) >= 3 else ''}"     # pages titled only "SDO" or "WMAP" still count
-    return next((u for u in link_candidates(r) if page_about(u, label)), "")
+    url = str(r.get("url") or "")
+    if url and page_about(url, label):
+        return url
+    known = official_page(title, r.get("organization"))
+    if known:
+        return known
+    return next((u for u in link_candidates(r)[1:] if page_about(u, label)), "")
 
 
 SEARCH_TO_DEEP = {"direct": "direct", "analogy": "analogy", "thematic": "shared theme", "possible": "possible link"}
@@ -541,7 +604,7 @@ def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
         if match:
             d["match_type"] = match     # finalize_deep then keeps the score inside this band
         return finalize_deep(d)
-    return cached(ckey("deep-v11", lang, text, concept, match or ""), None, read_it, fresh=fresh)
+    return cached(ckey("deep-v12", lang, text, concept, match or ""), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
@@ -571,7 +634,13 @@ def finalize_deep(d):
     d["strength"] = "strong" if d["score"] >= 8 else "moderate" if d["score"] >= 5 else "weak" if d["score"] else ""
     d["strength_reason"] = str(d.get("verdict") or "")
     d["analogy"] = str(d.get("science") or "")
-    d["mapping"] = [m for m in (d.get("mapping") or []) if isinstance(m, dict) and m.get("verse") and m.get("science")][:4]
+    for k in ("translation", "literal", "context", "picture", "science", "verdict"):
+        d[k] = as_text(d.get(k))
+    d["differences"] = [t for t in (as_text(x) for x in (d.get("differences") or [])) if t][:3]
+    d["key_words"] = [{k: as_text(w.get(k)) for k in ("tamil", "transliteration", "meaning")}
+                      for w in (d.get("key_words") or []) if isinstance(w, dict)][:5]
+    d["mapping"] = [{"verse": as_text(m.get("verse")), "science": as_text(m.get("science"))}
+                    for m in (d.get("mapping") or []) if isinstance(m, dict) and m.get("verse") and m.get("science")][:4]
     d["similarities"] = [f'{m["verse"]} ↔ {m["science"]}' for m in d["mapping"]]
     # every example shown must open its own official page: try the AI's link, then the agencies' standard addresses,
     # and drop any example none of them confirms
@@ -604,9 +673,10 @@ def finalize_deep(d):
             rows.append({"method": OBS_METHODS[hit], "applies": True,
                          **{k: str(o.get(k) or "")[:400] for k in ("how", "instrument", "organization", "url")}})
     with ThreadPoolExecutor(6) as ex:
-        oks = list(ex.map(lambda o: page_about(o["url"], o["instrument"]), rows))
-    for o, ok in zip(rows, oks):
-        o["url"] = o["url"] if ok else ""
+        links = list(ex.map(lambda o: verified_link({"title": o["instrument"], "organization": o["organization"],
+                                                     "url": o["url"]}), rows))
+    for o, u in zip(rows, links):
+        o["url"] = u
     d["observation"] = rows[:4]
     return d
 
