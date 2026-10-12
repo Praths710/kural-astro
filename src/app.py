@@ -424,6 +424,7 @@ DEEP_SYS = (
     "or number (e.g. the Moon's 29.5-day cycle, about 2 trillion galaxies in the observable universe)\n"
     "  mapping: array of 2-4 {verse, science} pairs -- each pair puts one image from the verse beside the exact "
     "scientific counterpart it corresponds to\n"
+    "  matches: array of 2-3 short points where the verse and the science genuinely agree (what the verse gets right)\n"
     "  differences: array of 2-3 short points where the comparison breaks down\n"
     "  match_type: how directly the verse states this astronomy idea, on the SAME scale the site's search uses: one of "
     "'direct' (the verse itself states the idea or describes the phenomenon: the moon waxing and waning; countless "
@@ -636,7 +637,7 @@ def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
         if match:
             d["match_type"] = match     # finalize_deep then keeps the score inside this band
         return finalize_deep(d)
-    return cached(ckey("deep-v13", lang, text, concept, match or ""), None, read_it, fresh=fresh)
+    return cached(ckey("deep-v14", lang, text, concept, match or ""), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
@@ -673,7 +674,9 @@ def finalize_deep(d):
                       for w in (d.get("key_words") or []) if isinstance(w, dict)][:5]
     d["mapping"] = [{"verse": as_text(m.get("verse")), "science": as_text(m.get("science"))}
                     for m in (d.get("mapping") or []) if isinstance(m, dict) and m.get("verse") and m.get("science")][:4]
-    d["similarities"] = [f'{m["verse"]} ↔ {m["science"]}' for m in d["mapping"]]
+    d["matches"] = [t for t in (as_text(x) for x in (d.get("matches") or [])) if t][:3]
+    # "similarities" is what saved leaves and the collection analysis read
+    d["similarities"] = d["matches"] or [f'{m["verse"]} ↔ {m["science"]}' for m in d["mapping"]]
     # every example shown must open its own official page: try the AI's link, then the agencies' standard addresses,
     # and drop any example none of them confirms
     items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")][:6]
