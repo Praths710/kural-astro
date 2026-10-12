@@ -172,6 +172,7 @@ h2.title em{color:var(--gold-hi)}
 .ola-leaf.fetching{opacity:.6;cursor:progress}
 .ola-leaf[data-bigflip],.ola .ola-leaf{cursor:pointer}
 .flip-hint{position:absolute;top:8px;right:44px;font:700 10.5px var(--sans);letter-spacing:.06em;color:#7a4e22;opacity:.75;pointer-events:none}
+.from-search{font-size:13.5px;color:var(--parch);background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:8px;padding:9px 12px;margin:0 0 12px}
 .score{background:rgba(227,185,95,.07);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 16px}
 .score-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .score-top b{font:700 28px var(--sans);font-variant-numeric:lining-nums tabular-nums;color:var(--gold-hi);line-height:1}.score-top b small{font-size:15px;color:var(--dim);margin-left:2px}
@@ -256,7 +257,7 @@ h2.title em{color:var(--gold-hi)}
   color:var(--gold-hi);border-radius:999px;padding:11px 20px;font-size:15px;cursor:pointer;font-family:var(--serif);font-style:italic;transition:all .2s}
 .concept-link:hover{background:rgba(227,185,95,.18)}
 .concept-link span{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--parch);opacity:.7}
-.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.m-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:22px}
 @media(max-width:760px){.m-grid{grid-template-columns:1fr}}
 .m-card{background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:20px;padding:22px 24px}
 .m-card h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
@@ -764,8 +765,7 @@ body.has-mouse #cursorGlow{opacity:1}
 <!-- EXPLORE -->
 <section class="block" id="explore">
   <div class="kicker reveal">Explore</div>
-  <h2 class="title reveal">Search the <em>heavens</em></h2>
-  <p class="lede reveal">Type a topic or ask a question in your own words — English or Tamil. The AI works out what you mean, finds verses that echo it and pulls the real research behind it. Open any leaf to go deeper.</p>
+  <p class="lede reveal">Type an astronomy or astrophysics topic, or ask a question in your own words, in English or Tamil. The AI finds the verses that match it and the real research behind it. Tap a leaf for English; Read deeper for the full reading.</p>
   <form class="searchbar" id="exploreForm" style="width:100%">
     <input id="exploreInput" placeholder="e.g. dark matter, or “what did Vallalar say about the universe?”" autocomplete="off">
     <button class="btn" type="submit">Search</button>
@@ -993,8 +993,10 @@ function filterMatches(t, src) {
   if ((t || src) && bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 function showMore() { SHOWN += PAGE; filterMatches(); }
+let LAST_SEARCH = '';
 async function runSearch(topic, key) {
   topic = (topic || '').trim(); if (!topic) return;
+  LAST_SEARCH = topic;
   closeModal(); closeLibrary();
   document.querySelectorAll('.suggest').forEach(b => b.classList.remove('show'));
   $('#exploreInput').value = topic; $('#heroInput').value = topic;
@@ -1072,7 +1074,6 @@ function modalHtml(v, fromSaved) {
     <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
     <div class="m-section"><h3>How astronomers would study it</h3><p class="note">Only the observing methods that genuinely fit this verse's phenomenon, each with the real instrument that does it.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
     <div class="m-section"><h3>In the real world</h3><p class="note">Missions, telescopes and results that study this exact idea. A link is shown only when it opens the page for that specific mission or result (checked automatically); otherwise just the name is given. AI-summarised, so verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
-    <div class="m-section"><h3>Official images</h3><p class="note">From the NASA Image and Video Library, including radio images. Click an image for its official page.</p><div id="mImg">${v.concept ? loading('Opening the NASA archive…') : '<div class="empty">No natural-science idea to look up.</div>'}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
 }
 function fillDeep(d, tok) {
@@ -1084,16 +1085,17 @@ function fillDeep(d, tok) {
     (d.context ? `<p class="ctx"><b>Tradition</b>${esc(d.context)}</p>` : '');
   // score out of 10 with what each band means; older saved readings only have strong / moderate / weak
   const score = +d.score || ({strong: 8, moderate: 5, weak: 2}[d.strength] || 0);
-  const band = score >= 9 ? 'Describes the real phenomenon' : score >= 7 ? 'Close match' : score >= 5 ? 'Structural analogy' : score >= 3 ? 'Shared theme only' : 'Word in common only';
+  const band = score >= 8 ? 'Direct: the verse states it' : score >= 5 ? 'Analogy: the imagery parallels it' : score >= 3 ? 'Shared theme' : 'Possible link';
   const meter = score ? `<div class="score">
       <div class="score-top"><b>${score}<small>/10</small></b><span>${band}</span>${d.match_type ? `<em>${esc(d.match_type)}</em>` : ''}</div>
       <div class="score-bar">${[...Array(10)].map((_, i) => `<i class="${i < score ? 'on' : ''}"></i>`).join('')}</div>
       ${d.verdict || d.strength_reason ? `<p class="score-why">${esc(d.verdict || d.strength_reason)}</p>` : ''}
-      <p class="score-scale">9–10 the verse describes the actual phenomenon · 7–8 close match · 5–6 same shape as a science model · 3–4 shared theme · 1–2 one word in common</p></div>` : '';
+      <p class="score-scale">8–10 direct: the verse states this astronomy itself · 5–7 analogy: its imagery parallels it · 3–4 shared theme · 1–2 possible link</p></div>` : '';
   const mapping = L(d.mapping).length ? `<div class="pts-h">Verse ↔ science, side by side</div><div class="map-rows">${L(d.mapping).map(m =>
       `<div class="map-row"><span class="mv">${esc(m.verse)}</span><span class="ma">↔</span><span class="ms">${esc(m.science)}</span></div>`).join('')}</div>`
     : (L(d.similarities).length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${L(d.similarities).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
-  $('#mAnalogy').innerHTML = meter +
+  const fromSearch = CUR && CUR.search ? `<p class="from-search">Your search “${esc(CUR.search.topic)}” found this verse as a <b>${esc(MT_NAME[CUR.search.type] || CUR.search.type)}</b>. The score below uses the same scale: a direct match is 8–10, an analogy 5–7, a shared theme 3–4.</p>` : '';
+  $('#mAnalogy').innerHTML = fromSearch + meter +
     (d.picture ? `<div class="pts-h">What the verse pictures</div><p>${esc(d.picture)}</p>` : '') +
     `<div class="pts-h">The science, simply</div><p>${esc(d.science || d.analogy || '—')}</p>` + mapping +
     (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
@@ -1113,15 +1115,6 @@ function obsHtml(obs) {
     ${o.instrument ? `<div class="obs-inst"><span>Instrument</span>${esc(o.instrument)}${o.organization ? ` · ${esc(o.organization)}` : ''}</div>` : ''}
     ${o.url ? `<a class="rw-link" href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.instrument || 'Instrument')} page ↗</a>` : ''}
   </div>`).join('')}</div>`;
-}
-function imagesHtml(d) {
-  const all = [...(d.radio || []).map(i => ({...i, radio: true})), ...(d.general || [])];
-  const seen = new Set(), items = all.filter(i => !seen.has(i.url) && seen.add(i.url)).slice(0, 6);
-  if (!items.length) return '<div class="empty">NASA has no close image match for this idea.</div>';
-  return `<div class="nasa-grid">${items.map(i => `<a class="nasa" href="${esc(i.url)}" target="_blank" rel="noopener" title="${esc(i.description || i.title)}">
-    <img src="${esc(i.thumb)}" alt="${esc(i.title)}" loading="lazy">
-    <span class="nasa-cap">${i.radio ? '<em>Radio</em>' : ''}${esc(i.title)}</span>
-    <span class="nasa-meta">NASA ${esc(i.center)}${i.year ? ' · ' + esc(i.year) : ''} ↗</span></a>`).join('')}</div>`;
 }
 const HYP_ICON = {'testable hypothesis': '🧪', 'theoretical idea': '💭', 'application idea': '🛠️'};
 function hypothesesHtml(hs) {
@@ -1168,18 +1161,15 @@ async function openVerse(v, opts = {}) {
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const official = ps => (ps || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
   const cachedPapers = official(v.papers).length ? official(v.papers) : (saved && official(saved.papers).length ? official(saved.papers) : null);
-  CUR = {verse: v, deep: cachedDeep, papers: cachedPapers};
+  CUR = {verse: v, deep: cachedDeep, papers: cachedPapers, search: opts.search && v.match_type ? {topic: opts.search, type: v.match_type} : null};
   openModalShell(modalHtml(v, !!cachedDeep));
   setSaveBtn(!!SAVED[v.id]);
   const keepSaved = () => { if (SAVED[v.id] && tok === modalTok) saveLeaf(CUR.verse, CUR.deep, CUR.papers, true); };
   if (cachedDeep) fillDeep(cachedDeep, tok);
-  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : '') + (v.commentary ? ' | உரை: ' + v.commentary : ''), concept: v.concept, fresh: !!opts.fresh})
+  else api('/api/deep', {text: v.tamil + (v.english ? ' | ' + v.english : '') + (v.commentary ? ' | உரை: ' + v.commentary : ''), concept: v.concept, fresh: !!opts.fresh, match: CUR.search ? CUR.search.type : ''})
     .then(d => { if (tok !== modalTok) return; CUR.deep = d; fillDeep(d, tok); keepSaved(); })
     .catch(e => deepFailed(tok, e.message));
   if (v.concept) {
-    api('/api/images?q=' + encodeURIComponent(v.concept))
-      .then(d => { if (tok === modalTok) $('#mImg').innerHTML = imagesHtml(d); })
-      .catch(() => { if (tok === modalTok) $('#mImg').innerHTML = '<div class="empty">The NASA archive did not respond.</div>'; });
     if (cachedPapers) $('#mPapers').innerHTML = paperList(cachedPapers);
     else api('/api/papers?q=' + encodeURIComponent(v.concept))
       .then(d => { if (tok !== modalTok) return; CUR.papers = d.papers; $('#mPapers').innerHTML = paperList(d.papers); keepSaved(); })
@@ -1230,7 +1220,8 @@ document.addEventListener('click', e => {
   const os = e.target.closest('[data-open-saved]');
   if (os) { const it = SAVED[os.dataset.openSaved]; if (it) { closeLibrary(); openVerse({...it.verse, id: it.id}); } return; }
   const un = e.target.closest('[data-unsave]'); if (un) return unsaveLeaf(un.dataset.unsave);
-  const rd = e.target.closest('[data-read]'); if (rd) return openVerse(BY_ID[rd.dataset.read]);
+  const rd = e.target.closest('[data-read]');
+  if (rd) return openVerse(BY_ID[rd.dataset.read], rd.closest('#exploreOut') ? {search: LAST_SEARCH} : {});
   const bf = e.target.closest('[data-bigflip]'); if (bf && CUR) return turnLeaf(bf, CUR.verse);
   const leaf = e.target.closest('.ola[data-id]'); if (leaf) return turnLeaf(leaf.querySelector('.ola-leaf'), BY_ID[leaf.dataset.id]);
   const t = e.target.closest('[data-topic]'); if (t) return runSearch(t.dataset.topic, t.dataset.key);

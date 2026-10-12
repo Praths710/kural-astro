@@ -406,7 +406,7 @@ FIELDS = ["Space & Astronomy", "Physics", "Mathematics & Computing", "Technology
 CREDIBLE = {"space agency": 0, "university": 0, "research institute": 1, "government": 1, "company": 2}
 
 OBS_METHODS = ["Radio spectral imaging", "Photometry", "Cosmology", "Beta scaling", "Petascale data", "Visualisation"]
-MATCH_TYPES_DEEP = ("direct observation", "structural analogy", "loose imagery")
+MATCH_TYPES_DEEP = ("direct", "analogy", "shared theme", "possible link")
 
 DEEP_SYS = (
     "You are explaining a classical Tamil verse to a student project that compares ancient Tamil texts with modern "
@@ -425,18 +425,16 @@ DEEP_SYS = (
     "  mapping: array of 2-4 {verse, science} pairs -- each pair puts one image from the verse beside the exact "
     "scientific counterpart it corresponds to\n"
     "  differences: array of 2-3 short points where the comparison breaks down\n"
-    "  match_type: one of 'direct observation' (the verse describes a real sky phenomenon itself: moon phases, sunrise "
-    "driving away night, a planet rising, an eclipse), 'structural analogy' (the verse's picture has the same shape as a "
-    "science model, e.g. countless nested worlds and the multiverse), 'loose imagery' (only a shared theme or word)\n"
-    "  score: an integer 1-10 for how closely the verse matches the science, using this scale:\n"
-    "    9-10 the verse accurately describes the actual phenomenon (the moon waxing and waning; Venus rising as Jupiter sets)\n"
-    "    7-8 a real phenomenon described with poetic exaggeration, or a structural parallel that also matches a specific detail\n"
-    "    5-6 a clear structural analogy with no physical mechanism (worlds within worlds and the multiverse)\n"
-    "    3-4 shares a theme only\n"
-    "    1-2 only a word in common\n"
-    "    Judge each verse on its own; do not default to a middle or low score.\n"
+    "  match_type: how directly the verse states this astronomy idea, on the SAME scale the site's search uses: one of "
+    "'direct' (the verse itself states the idea or describes the phenomenon: the moon waxing and waning; countless "
+    "universes for the multiverse; light filling the cosmos; Venus rising as Jupiter sets), 'analogy' (the verse's "
+    "imagery parallels the idea without stating it), 'shared theme' (only a broad theme in common), 'possible link' "
+    "(a faint, uncertain connection)\n"
+    "  score: an integer 1-10 that agrees with match_type: direct 8-10, analogy 5-7, shared theme 3-4, possible link 1-2. "
+    "Score how directly the verse expresses the astronomy idea; a religious or poetic setting does NOT lower it (that "
+    "belongs in 'differences'). Within a band, go higher when the verse is specific (numbers, motion, phases, structure).\n"
     "  verdict: one sentence saying plainly how close the match is and why\n"
-    "  real_world: array of 3-4 objects {title, detail, organization, org_type, year, url} -- real astronomy or space "
+    "  real_world: array of 6 objects {title, detail, organization, org_type, year, url} -- real astronomy or space "
     "missions, telescopes, surveys, observations or published results that study exactly this science idea:\n"
     "    detail: 1-2 sentences on what it did or found that relates to the verse's idea\n"
     "    organization: who did it, preferring NASA, ISRO, ESA, JAXA, CNSA, ESO, CERN, NCRA-TIFR, IUCAA, IIA and leading universities\n"
@@ -444,7 +442,7 @@ DEEP_SYS = (
     "    year: the year of the mission or result (number)\n"
     "    url: the official page for THAT specific mission, instrument or result (for example "
     "https://science.nasa.gov/mission/juno/ or https://www.isro.gov.in/Chandrayaan3_Details.html), never an agency "
-    "homepage; an empty string if you are not sure of the exact page\n"
+    "homepage. Every item needs its exact page, so prefer well-known missions and facilities whose official page you know\n"
     "    Only use things you are confident exist; no invented projects.\n"
     "  hypotheses: array of 2-3 objects {kind, title, statement, inspired_by, how_to_test, prediction, field} -- NEW ideas a "
     "researcher could build today, inspired by the verse's imagery (not claims that the poet knew science):\n"
@@ -501,12 +499,49 @@ def page_about(u, label):
         return False
 
 
-def deep_reading(text, concept, lang="en", fresh=False):
-    """The 'Read deeper' reading for one verse (cached; one AI call on a miss)."""
+def link_candidates(r):
+    """The AI's link first, then the standard page addresses of NASA and ESA for that mission's name."""
+    title, org = str(r.get("title") or ""), str(r.get("organization") or "").lower()
+    words = [w for w in re.findall(r"[A-Za-z0-9]+", re.sub(r"\(.*?\)", "", title)) if w.lower() not in STOP_TERMS]
+    acronyms = [a.strip() for a in re.findall(r"\(([A-Za-z0-9\- ]{2,14})\)", title)]
+    initials = "".join(w[0] for w in re.findall(r"[A-Za-z]+", re.sub(r"\(.*?\)", "", title)) if w[0].isupper())
+    acronyms += [initials] if len(initials) >= 2 else []      # Solar Dynamics Observatory -> sdo
+    slugs = [s for s in dict.fromkeys(["-".join(words).lower(), *(w.lower() for w in words[:1] + words[-1:]),
+                                       *(a.lower().replace(" ", "-") for a in acronyms)]) if s]
+    out = [str(r.get("url") or "")]
+    if "nasa" in org:
+        out += [f"https://science.nasa.gov/mission/{s}/" for s in slugs]
+    if "esa" in org.split() or "european space" in org:
+        out += [f"https://www.esa.int/Science_Exploration/Space_Science/{'_'.join(words)}"]
+    return [u for u in dict.fromkeys(out) if u]
+
+
+def verified_link(r):
+    title = str(r.get("title") or "")
+    initials = "".join(w[0] for w in re.findall(r"[A-Za-z]+", re.sub(r"\(.*?\)", "", title)) if w[0].isupper())
+    label = f"{title} {initials if len(initials) >= 3 else ''}"     # pages titled only "SDO" or "WMAP" still count
+    return next((u for u in link_candidates(r) if page_about(u, label)), "")
+
+
+SEARCH_TO_DEEP = {"direct": "direct", "analogy": "analogy", "thematic": "shared theme", "possible": "possible link"}
+
+
+def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
+    """The 'Read deeper' reading for one verse (cached; one AI call on a miss).
+
+    search_match: how the site's search rated this verse when the reading was opened from search results, so the
+    reading's score uses the same verdict instead of a second, possibly different judgement."""
+    match = SEARCH_TO_DEEP.get(search_match or "")
+    hint = (f"\nThe site's search already judged this verse a '{match}' match for its astronomy idea. Use match_type "
+            f"'{match}' and a score in that band, and write the verdict on that basis (one verdict across the site).") if match else ""
     def read_it():
-        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
-        return finalize_deep(d) if isinstance(d, dict) and d.get("literal") else None
-    return cached(ckey("deep-v10", lang, text, concept), None, read_it, fresh=fresh)
+        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}{hint}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+        if not (isinstance(d, dict) and d.get("literal")):
+            return None
+        if match:
+            d["match_type"] = match     # finalize_deep then keeps the score inside this band
+        return finalize_deep(d)
+    return cached(ckey("deep-v11", lang, text, concept, match or ""), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
@@ -528,17 +563,23 @@ def finalize_deep(d):
     except (TypeError, ValueError):
         d["score"] = 0
     d["match_type"] = d.get("match_type") if d.get("match_type") in MATCH_TYPES_DEEP else ""
+    # the score stays inside its match type's band, the same bands the search uses
+    lo, hi = {"direct": (8, 10), "analogy": (5, 7), "shared theme": (3, 4), "possible link": (1, 2)}.get(d["match_type"], (1, 10))
+    if d["score"]:
+        d["score"] = max(lo, min(hi, d["score"]))
     # the older 3-level rating, kept for saved leaves and the collection analysis
-    d["strength"] = "strong" if d["score"] >= 7 else "moderate" if d["score"] >= 4 else "weak" if d["score"] else ""
+    d["strength"] = "strong" if d["score"] >= 8 else "moderate" if d["score"] >= 5 else "weak" if d["score"] else ""
     d["strength_reason"] = str(d.get("verdict") or "")
     d["analogy"] = str(d.get("science") or "")
     d["mapping"] = [m for m in (d.get("mapping") or []) if isinstance(m, dict) and m.get("verse") and m.get("science")][:4]
     d["similarities"] = [f'{m["verse"]} ↔ {m["science"]}' for m in d["mapping"]]
-    items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")][:4]
+    # every example shown must open its own official page: try the AI's link, then the agencies' standard addresses,
+    # and drop any example none of them confirms
+    items = [r for r in (d.get("real_world") or []) if isinstance(r, dict) and r.get("title")][:6]
     with ThreadPoolExecutor(6) as ex:
-        oks = list(ex.map(lambda r: page_about(r.get("url", ""), r.get("title", "")), items))
-    for r, ok in zip(items, oks):
-        r["url"] = r.get("url", "") if ok else ""
+        links = list(ex.map(verified_link, items))
+    items = [{**r, "url": u} for r, u in zip(items, links) if u][:4]
+    for r in items:
         r["field"] = "Space & Astronomy"
         r["org_type"] = str(r.get("org_type") or "other").lower()
         r["credible"] = CREDIBLE.get(r["org_type"], 3) <= 1
@@ -872,7 +913,7 @@ class Handler(BaseHTTPRequestHandler):
             text, concept = (body.get("text") or "").strip()[:2000], (body.get("concept") or "").strip()[:200]
             if not text:
                 return self._json(400, {"error": "empty text"})
-            out = deep_reading(text, concept, lang, bool(body.get("fresh")))
+            out = deep_reading(text, concept, lang, bool(body.get("fresh")), str(body.get("match") or "")[:20])
             if not isinstance(out, dict):
                 return self._json(502, {"error": "The AI service is busy. Try again in a few seconds."})
             return self._json(200, out)
