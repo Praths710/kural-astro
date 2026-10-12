@@ -113,7 +113,35 @@ h2.title em{color:var(--gold-hi)}
 #map text{font-family:var(--sans);fill:var(--parch);font-size:14px;pointer-events:none}
 #map text.cnt{fill:var(--dim);font-size:11.5px}
 .maphint{position:absolute;left:24px;bottom:18px;font-size:12px;color:var(--dim)}
-.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.map-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);gap:22px;align-items:stretch}
+@media(max-width:900px){.map-grid{grid-template-columns:1fr}}
+.map-info{border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(22,20,34,.85),rgba(12,11,22,.85));padding:26px 26px 24px;display:flex;flex-direction:column;gap:12px}
+.mi-ring{display:flex;align-items:center;gap:8px;font:700 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--rc)}
+.mi-ring i{width:9px;height:9px;border-radius:50%;background:var(--rc);box-shadow:0 0 10px var(--rc)}
+.mi-name{font:500 32px/1.1 var(--serif);margin:0;color:var(--parch)}
+.mi-desc{margin:0;font-size:14.5px;line-height:1.6;color:var(--parch);opacity:.85}
+.mi-count{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.mi-count b{font:700 34px var(--sans);font-variant-numeric:lining-nums;color:var(--gold-hi)}.mi-count span{font-size:13px;color:var(--dim)}
+.mi-bar{display:flex;height:8px;border-radius:6px;overflow:hidden;gap:2px}.mi-bar i{display:block;min-width:4px}
+.mi-srcs{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--dim)}
+.mi-srcs i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}.mi-srcs b{color:var(--parch);font-weight:600}
+.mi-ex{margin-top:6px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.mi-ex-h{font:700 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.mi-ta{font-family:var(--tamil);font-size:15px;line-height:1.7;margin:0;color:var(--leaf1)}
+.mi-en{font-family:var(--serif);font-style:italic;font-size:15.5px;line-height:1.45;margin:6px 0 0;color:var(--parch);opacity:.85}
+.mi-ref{font-size:11.5px;color:var(--dim);margin-top:8px}
+.mi-read{margin-top:10px;height:32px;font-size:12.5px}
+.mi-all{margin-top:auto;align-self:flex-start}
+#map .ring-lbl{font:700 11px var(--sans);letter-spacing:.18em;opacity:.75}
+#map .sun-n{font:700 20px var(--sans);fill:#fff3d0}#map .sun-l{font:600 11px var(--sans);fill:#f6d58c;letter-spacing:.06em}
+#map .planet.sel circle.ring{opacity:1}#map .planet.sel circle.glow{opacity:.32}
+#map .planet:hover circle.ring{opacity:.6}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px 26px;margin-top:26px}
+.lg-h{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font:700 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--rc);margin-bottom:10px}
+.lg-h i{width:8px;height:8px;border-radius:50%;background:var(--rc)}
+.lg-h span{flex-basis:100%;font:400 12px var(--sans);letter-spacing:0;text-transform:none;color:var(--dim)}
+.lg-chips{display:flex;flex-wrap:wrap;gap:8px}.lg-chips .chip.on{border-color:var(--rc);color:var(--parch);background:rgba(255,255,255,.06)}
+
 
 /* explore */
 .explore-bar{display:flex;gap:12px;align-items:center;margin-bottom:22px}
@@ -171,7 +199,9 @@ h2.title em{color:var(--gold-hi)}
 .ola .ola-leaf.turning,.ola-leaf.big.turning{transform:rotateY(90deg)!important}
 .ola-leaf.fetching{opacity:.6;cursor:progress}
 .ola-leaf[data-bigflip],.ola .ola-leaf{cursor:pointer}
-.flip-hint{position:absolute;top:8px;right:44px;font:700 10.5px var(--sans);letter-spacing:.06em;color:#7a4e22;opacity:.75;pointer-events:none}
+.ola .ola-leaf{padding-top:22px!important}.ola-leaf.big[data-bigflip]{padding-top:46px}
+.ola-leaf.big .flip-hint{top:16px;right:24px}
+.flip-hint{position:absolute;top:0;right:0;font:700 10.5px var(--sans);letter-spacing:.06em;color:#7a4e22;opacity:.75;pointer-events:none}
 .from-search{font-size:13.5px;color:var(--parch);background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:8px;padding:9px 12px;margin:0 0 12px}
 .score{background:rgba(227,185,95,.07);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 16px}
 .score-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -251,7 +281,7 @@ h2.title em{color:var(--gold-hi)}
   transition:transform .55s cubic-bezier(.2,.8,.2,1);box-shadow:0 -30px 80px rgba(0,0,0,.6)}
 .modal.open{pointer-events:auto}.modal.open .modal-bg{opacity:1}.modal.open .modal-panel{transform:none}
 .modal-x{position:sticky;top:0;float:right;margin:-18px -20px 0 0;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
-  background:rgba(20,18,32,.9);color:var(--parch);font-size:20px;cursor:pointer;z-index:2}
+  background:rgba(20,18,32,.9);color:var(--parch);font-size:20px;cursor:pointer;z-index:8}
 .modal-x:hover{border-color:var(--gold);color:var(--gold-hi)}
 @media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0;overflow-x:hidden}.modal-x{margin:-14px -6px 0 0}}
 .m-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;margin-bottom:22px}
@@ -274,6 +304,29 @@ h2.title em{color:var(--gold-hi)}
 .meter{display:flex;gap:6px;margin-top:14px;align-items:center;font-size:12px;color:var(--dim)}
 .meter i{width:34px;height:6px;border-radius:3px;background:rgba(255,255,255,.1)}
 .meter i.on{background:linear-gradient(90deg,var(--gold),var(--ember))}
+.m-nav{position:sticky;top:-1px;z-index:5;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:30px -6px 0;padding:10px 60px 10px 6px;
+  background:rgba(15,14,26,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.m-nav::-webkit-scrollbar{display:none}
+.m-nav button{flex:none;font:600 12.5px var(--sans);color:var(--dim);background:none;border:1px solid transparent;border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .2s,background .2s}
+.m-nav button:hover{color:var(--parch);border-color:var(--line)}
+.m-nav button.on{color:#1b1206;background:var(--gold)}
+.m-sec{margin-top:48px;scroll-margin-top:72px}
+.m-sec + .m-sec{padding-top:40px;border-top:1px solid rgba(227,185,95,.1)}
+.m-sec-h{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.m-num{flex:none;font:600 12px var(--sans);font-variant-numeric:lining-nums;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:5px 9px;margin-top:5px}
+.m-sec h3{font:500 30px/1.15 var(--serif);margin:0;color:var(--parch)}
+.m-sec .note{font-size:13px;line-height:1.55;color:var(--dim);margin:6px 0 0;max-width:720px}
+.lit-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(220px,1fr);gap:28px}
+.lit-main p{font-size:16px;line-height:1.75}
+.kw-col{display:flex;flex-direction:column;gap:8px;margin-top:10px}.kw-col .kw{align-self:flex-start}
+.ac-top{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.6fr);gap:16px;align-items:stretch}
+.ac-top .score{margin:0;padding:20px}
+.ac-text p{margin:0 0 4px}
+.ac-map{margin-top:16px}
+.ac-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.ac-yes{border-color:rgba(143,211,176,.32)}.ac-no{border-color:rgba(232,154,122,.32)}
+.ac-pair .pts{margin-top:10px}
+@media(max-width:760px){.lit-grid,.ac-top,.ac-pair{grid-template-columns:1fr}.m-sec h3{font-size:25px}}
 .m-section{margin-top:38px}
 .m-section h3{font-family:var(--serif);font-weight:500;font-size:28px;margin:0 0 4px}
 .m-section .note{font-size:12.5px;color:var(--dim);margin:0 0 16px}
@@ -722,10 +775,10 @@ body.has-mouse #cursorGlow{opacity:1}
 <section class="block" id="map-sec">
   <div class="kicker reveal">The cosmic map</div>
   <h2 class="title reveal">Every theme the <em>verses touch</em></h2>
-  <p class="lede reveal">Each planet is a branch of astronomy and astrophysics. Its size is how many verses echo it. Click one to open its verses and papers.</p>
-  <div class="mapwrap reveal">
-    <svg id="map" viewBox="0 0 1000 780"></svg>
-    <div class="maphint">Click a planet ✦</div>
+  <p class="lede reveal">The rings run outward from our own sky to the origin and fate of the universe. Each planet is a theme, sized by how many verses hold it. Click a planet to see what it means and its verses.</p>
+  <div class="map-grid reveal">
+    <div class="mapwrap"><svg id="map" viewBox="0 0 1000 780"></svg><div class="maphint">Click a planet ✦ hover to pause</div></div>
+    <aside class="map-info" id="mapInfo"></aside>
   </div>
   <div class="legend" id="legend"></div>
 </section>
@@ -1057,6 +1110,13 @@ function openModalShell(html) {
 function closeModal() {
   $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); modalTok++;
 }
+// the reading in numbered sections, with a sticky bar to jump between them
+const M_SECTIONS = [['sec-meaning', 'Meaning'], ['sec-astro', 'Astronomy'], ['sec-ideas', 'Ideas'], ['sec-future', 'Future'],
+  ['sec-observe', 'Observe'], ['sec-real', 'Real world'], ['sec-papers', 'Papers']];
+const mSec = (i, id, title, note, inner) => `<section class="m-sec" id="${id}">
+    <div class="m-sec-h"><span class="m-num">${String(i).padStart(2, '0')}</span><div><h3>${title}</h3>${note ? `<p class="note">${note}</p>` : ''}</div></div>
+    ${inner}</section>`;
+const skel = (n = 3) => [...Array(n)].map((_, i) => `<div class="skel" style="width:${[100, 86, 64][i % 3]}%"></div>`).join('');
 function modalHtml(v, fromSaved) {
   return `
     <div class="m-head">
@@ -1076,48 +1136,62 @@ function modalHtml(v, fromSaved) {
     <div class="note-wrap" id="noteWrap" style="display:none"><label for="noteInput">Your note on this leaf</label>
       <textarea id="noteInput" maxlength="1000" placeholder="Why does this leaf matter to you? What would you tell your professor?"></textarea>
       <span class="note-hint" id="noteHint">Saved automatically to your leaves</span></div>
-    <div class="m-grid">
-      <div class="m-card"><h4>What the verse says</h4><div id="mLiteral"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:60%"></div></div></div>
-      <div class="m-card"><h4>The astronomy connection</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
-    </div>
-    <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
-    <div class="m-section"><h3>Future scope</h3><p class="note">Real projects working on this idea right now, or approved and on the way, and which of the theories above each one will test. Only projects that exist and have an official page are listed; if nobody is working on it yet, this stays empty. Dates are as last reported; the official page has the latest.</p><div id="mFuture">${loading('Checking current missions…')}</div></div>
-    <div class="m-section"><h3>How astronomers would study it</h3><p class="note">Only the observing methods that genuinely fit this verse's phenomenon, each with the real instrument that does it.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
-    <div class="m-section"><h3>In the real world</h3><p class="note">Missions, telescopes and results that study this exact idea. A link is shown only when it opens the page for that specific mission or result (checked automatically); otherwise just the name is given. AI-summarised, so verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
-    <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
+    <nav class="m-nav" id="mNav" aria-label="Sections of this reading">${M_SECTIONS.map(([id, l], i) => `<button class="${i ? '' : 'on'}" data-mnav="${id}">${l}</button>`).join('')}</nav>
+    ${mSec(1, 'sec-meaning', 'What the verse says', '', `<div class="m-card" id="mLiteral">${skel()}</div>`)}
+    ${mSec(2, 'sec-astro', 'The astronomy connection', 'How directly the verse states this astronomy, the science behind it, and where the comparison holds and where it fails.', `<div id="mAnalogy"><div class="m-card">${skel()}</div></div>`)}
+    ${mSec(3, 'sec-ideas', 'Ideas from this verse', 'Hypotheses a researcher could test today, sparked by the verse. They are new ideas, not claims that the poet knew modern science.', `<div id="mHyp">${loading('Forming hypotheses…')}</div>`)}
+    ${mSec(4, 'sec-future', 'Future scope', 'Real projects working on this idea now or approved and on the way, and which idea above each one tests. Only projects with an official page are listed; dates are as last reported.', `<div id="mFuture">${loading('Checking current missions…')}</div>`)}
+    ${mSec(5, 'sec-observe', 'How astronomers would study it', 'The observing methods that fit this phenomenon, each with the real instrument that does it.', `<div id="mObs">${loading('Pointing the telescopes…')}</div>`)}
+    ${mSec(6, 'sec-real', 'In the real world', 'Missions, telescopes and results that study this exact idea, each linked to its own official page.', `<div id="mReal">${loading('Consulting the archives…')}</div>`)}
+    ${mSec(7, 'sec-papers', 'Research papers', 'Peer reviewed papers with a registered DOI, and NASA technical reports. Every link opens the official DOI or NASA page.', `<div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no science idea to search for.</div>'}</div>`)}`;
 }
 // a list item may arrive as an object ({point: ...}) in older readings: show its text, never "[object Object]"
 const txt = x => typeof x === 'string' ? x : x && typeof x === 'object' ? Object.values(x).map(txt).filter(Boolean).join(' — ') : (x == null ? '' : String(x));
 function fillDeep(d, tok) {
   if (tok !== modalTok) return;
   const L = a => Array.isArray(a) ? a : [];
-  $('#mLiteral').innerHTML = `<p>${esc(d.literal || '—')}</p>` +
-    (L(d.key_words).length ? `<div class="pts-h" style="color:var(--gold)">Key words in the verse</div><div class="kw-row">${L(d.key_words).map(k =>
-      `<span class="kw"><b>${esc(k.tamil)}</b>${k.transliteration ? `<i>${esc(k.transliteration)}</i>` : ''}— ${esc(k.meaning)}</span>`).join('')}</div>` : '') +
-    (d.context ? `<p class="ctx"><b>Tradition</b>${esc(d.context)}</p>` : '');
+  $('#mLiteral').innerHTML = `<div class="lit-grid"><div class="lit-main"><p>${esc(d.literal || '—')}</p>
+      ${d.context ? `<p class="ctx"><b>Tradition</b>${esc(d.context)}</p>` : ''}</div>
+    ${L(d.key_words).length ? `<div class="lit-side"><div class="pts-h" style="color:var(--gold);margin-top:0">Key words in the verse</div><div class="kw-col">${L(d.key_words).map(k =>
+      `<span class="kw"><b>${esc(k.tamil)}</b>${k.transliteration ? `<i>${esc(k.transliteration)}</i>` : ''}— ${esc(k.meaning)}</span>`).join('')}</div></div>` : ''}</div>`;
   // score out of 10 with what each band means; older saved readings only have strong / moderate / weak
   const score = +d.score || ({strong: 8, moderate: 5, weak: 2}[d.strength] || 0);
   const band = score >= 8 ? 'Direct: the verse states it' : score >= 5 ? 'Analogy: the imagery parallels it' : score >= 3 ? 'Shared theme' : 'Possible link';
   const meter = score ? `<div class="score">
-      <div class="score-top"><b>${score}<small>/10</small></b><span>${band}</span>${d.match_type ? `<em>${esc(d.match_type)}</em>` : ''}</div>
+      <div class="score-top"><b>${score}<small>/10</small></b><span>${band}</span></div>
       <div class="score-bar">${[...Array(10)].map((_, i) => `<i class="${i < score ? 'on' : ''}"></i>`).join('')}</div>
       ${d.verdict || d.strength_reason ? `<p class="score-why">${esc(d.verdict || d.strength_reason)}</p>` : ''}
-      <p class="score-scale">8–10 direct: the verse states this astronomy itself · 5–7 analogy: its imagery parallels it · 3–4 shared theme · 1–2 possible link</p></div>` : '';
-  const mapping = L(d.mapping).length ? `<div class="pts-h">Verse ↔ science, side by side</div><div class="map-rows">${L(d.mapping).map(m =>
-      `<div class="map-row"><span class="mv">${esc(txt(m.verse))}</span><span class="ma">↔</span><span class="ms">${esc(txt(m.science))}</span></div>`).join('')}</div>`
-    : '';
+      <p class="score-scale">8–10 direct · 5–7 analogy · 3–4 shared theme · 1–2 possible link</p></div>` : '';
+  const fromSearch = CUR && CUR.search ? `<p class="from-search">Your search “${esc(CUR.search.topic)}” found this verse as a <b>${esc(MT_NAME[CUR.search.type] || CUR.search.type)}</b>; the score uses the same scale.</p>` : '';
   const agree = L(d.matches).length ? d.matches : L(d.similarities);
-  const fromSearch = CUR && CUR.search ? `<p class="from-search">Your search “${esc(CUR.search.topic)}” found this verse as a <b>${esc(MT_NAME[CUR.search.type] || CUR.search.type)}</b>. The score below uses the same scale: a direct match is 8–10, an analogy 5–7, a shared theme 3–4.</p>` : '';
-  $('#mAnalogy').innerHTML = fromSearch + meter +
-    (d.picture ? `<div class="pts-h">What the verse pictures</div><p>${esc(d.picture)}</p>` : '') +
-    `<div class="pts-h">The science, simply</div><p>${esc(d.science || d.analogy || '—')}</p>` + mapping +
-    (agree.length ? `<div class="pts-h yes">Where it matches</div><ul class="pts yes">${agree.map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : '') +
-    (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : '');
+  $('#mAnalogy').innerHTML = fromSearch +
+    `<div class="ac-top">${meter}<div class="m-card ac-text">
+      ${d.picture ? `<div class="pts-h" style="margin-top:0">What the verse pictures</div><p>${esc(d.picture)}</p>` : ''}
+      <div class="pts-h" ${d.picture ? '' : 'style="margin-top:0"'}>The science, simply</div><p>${esc(d.science || d.analogy || '—')}</p></div></div>` +
+    (L(d.mapping).length ? `<div class="m-card ac-map"><div class="pts-h" style="margin-top:0">Verse ↔ science, side by side</div><div class="map-rows">${L(d.mapping).map(m =>
+      `<div class="map-row"><span class="mv">${esc(txt(m.verse))}</span><span class="ma">↔</span><span class="ms">${esc(txt(m.science))}</span></div>`).join('')}</div></div>` : '') +
+    `<div class="ac-pair">
+      ${agree.length ? `<div class="m-card ac-yes"><div class="pts-h yes" style="margin-top:0">Where it matches</div><ul class="pts yes">${agree.map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul></div>` : ''}
+      ${L(d.differences).length ? `<div class="m-card ac-no"><div class="pts-h no" style="margin-top:0">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul></div>` : ''}
+    </div>`;
   $('#mReal').innerHTML = realWorldHtml(d.real_world);
   $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
   $('#mFuture').innerHTML = futureHtml(d.future_scope);
   $('#mObs').innerHTML = obsHtml(d.observation);
 }
+// highlight the section being read in the sticky bar
+function updateMNav() {
+  const panel = document.querySelector('.modal-panel'), nav = $('#mNav'); if (!panel || !nav) return;
+  const top = panel.getBoundingClientRect().top + 110;
+  let cur = M_SECTIONS[0][0];
+  M_SECTIONS.forEach(([id]) => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= top) cur = id; });
+  nav.querySelectorAll('[data-mnav]').forEach(b => b.classList.toggle('on', b.dataset.mnav === cur));
+}
+document.querySelector('.modal-panel').addEventListener('scroll', updateMNav, {passive: true});
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-mnav]'); if (!b) return;
+  const el = document.getElementById(b.dataset.mnav); if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+});
 const OBS_ICON = {'Radio spectral imaging': '📡', 'Photometry': '🔆', 'Cosmology': '🌌', 'Beta scaling': '📈',
   'Petascale data': '🗄️', 'Visualisation': '🗺️'};
 function obsHtml(obs) {
@@ -1257,38 +1331,92 @@ document.addEventListener('click', e => {
 addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#drawer').classList.contains('open')) closeLibrary(); else closeModal(); } });
 
 /* ---------------- cosmic map ---------------- */
+// the rings run outward from what the poets could see to the origin and fate of the universe
+const RINGS = [
+  {name: 'Our sky', note: 'what the poets could see: the Sun, the Moon, planets, eclipses', color: '#9fc4ff', keys: ['lunar', 'solar_motion', 'planets', 'eclipse']},
+  {name: 'Light & flashes', note: 'light filling space, and sudden bursts of it', color: '#f6d58c', keys: ['light_medium', 'cosmic_flash']},
+  {name: 'Cosmic structure', note: 'countless, nested and layered worlds', color: '#b9a6ff', keys: ['vast_cosmos', 'multiverse', 'extra_dim', 'holographic']},
+  {name: 'Origin & fate', note: 'how the universe begins, ends and has no centre', color: '#f2a38a', keys: ['cosmogony', 'dissolution', 'no_centre']}];
+const TOPIC_DESC = {
+  lunar: 'The Moon: its phases, its light and its motion across the sky.',
+  solar_motion: 'The Sun rising and setting, its daily path, and the cycle of day and night.',
+  planets: 'Planets seen in the dawn sky, such as Venus rising as Jupiter sets.',
+  eclipse: 'The Sun or the Moon being covered: eclipses.',
+  light_medium: 'Light that fills the whole cosmos, the way the cosmic microwave background does.',
+  cosmic_flash: 'Sudden flashes and bursts of light, like gamma-ray bursts and neutron-star collisions.',
+  vast_cosmos: 'Countless worlds and the sheer scale of the cosmos: stars, galaxies, other planets.',
+  multiverse: 'Many universes, and universes beyond universes.',
+  extra_dim: 'Layered and nested spaces, space within space: extra dimensions.',
+  holographic: 'The whole universe held inside an atom: the very large within the very small.',
+  cosmogony: 'How the cosmos came to be from a first state, as in the Big Bang.',
+  dissolution: 'How the cosmos ends: dissolving, heat death, the big crunch.',
+  no_centre: 'A cosmos with no centre and no edge.'};
+const SRC_COLOR = {Thirukkural: '#e59a6f', Thiruvarutpa: '#e3b95f', Tolkappiyam: '#8fd3b0', Thiruppavai: '#9fc4ff'};
+let MAP_NODES = [];
+function mapInfoHtml(n) {
+  const ring = RINGS[n.orbit];
+  const vs = VERSES.filter(v => v.astro && v.theme === n.key);
+  const bySrc = SOURCES.map(s => [s, vs.filter(v => v.source === s).length]).filter(x => x[1]);
+  const total = vs.length || n.count;
+  // example: from the text that holds this theme most, a clear observation or cosmic vision first
+  const top = bySrc.slice().sort((a, b) => b[1] - a[1])[0];
+  const pool = top ? vs.filter(v => v.source === top[0]) : vs, rank = {O: 0, A: 1, L: 2};
+  const ex = pool.slice().sort((a, b) => (rank[a.label] ?? 3) - (rank[b.label] ?? 3) || (b.english ? 1 : 0) - (a.english ? 1 : 0))[0];
+  return `<div class="mi-ring" style="--rc:${ring.color}"><i></i>${esc(ring.name)}</div>
+    <h3 class="mi-name">${esc(n.name)}</h3>
+    <p class="mi-desc">${esc(TOPIC_DESC[n.key] || '')}</p>
+    <div class="mi-count"><b>${total}</b><span>verse${total === 1 ? '' : 's'} hold this idea</span></div>
+    ${bySrc.length ? `<div class="mi-bar">${bySrc.map(([s, c]) => `<i style="flex:${c};background:${SRC_COLOR[s]}" title="${esc(s)}: ${c}"></i>`).join('')}</div>
+      <div class="mi-srcs">${bySrc.map(([s, c]) => `<span><i style="background:${SRC_COLOR[s]}"></i>${esc(s)} <b>${c}</b></span>`).join('')}</div>` : ''}
+    ${ex ? `<div class="mi-ex"><div class="mi-ex-h">An example</div>
+      <p class="mi-ta">${esc(ex.tamil.split(String.fromCharCode(10)).slice(0, 2).join(' · '))}</p>
+      ${ex.english ? `<p class="mi-en">${esc(ex.english.length > 170 ? ex.english.slice(0, 170) + '…' : ex.english)}</p>` : ''}
+      <div class="mi-ref">${esc(ex.source)} · ${esc(ex.ref)}</div>
+      <button class="ghost-btn mi-read" data-read="${esc(ex.id)}">Read deeper →</button></div>` : ''}
+    <button class="btn mi-all" data-topic="${esc(n.name)}" data-key="${esc(n.key)}">See all ${total} verses →</button>`;
+}
+function selectTheme(key) {
+  const n = MAP_NODES.find(x => x.key === key); if (!n) return;
+  $('#mapInfo').innerHTML = mapInfoHtml(n);
+  MAP_NODES.forEach(m => m.el && m.el.classList.toggle('sel', m.key === key));
+  document.querySelectorAll('[data-map-key]').forEach(b => b.classList.toggle('on', b.dataset.mapKey === key));
+}
 async function buildMap() {
   const topics = await api('/api/topics');
-  const svg = $('#map');
-  const nodes = Object.entries(topics).filter(([, t]) => t.count > 0).sort((a, b) => b[1].count - a[1].count)
-    .map(([key, t], i) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: 0}));
-  // inner rings are short, so they get fewer planets: fill whichever ring is emptiest for its length
-  const cap = [3, 5, 7, 8], used = [0, 0, 0, 0];
-  nodes.forEach(n => { let best = 3; for (let o = 2; o >= 0; o--) if (used[o] / cap[o] < used[best] / cap[best]) best = o; n.orbit = best; used[best]++; });
-  // spread each orbit's planets evenly round it, offset per orbit so the rings do not line up
-  [0, 1, 2, 3].forEach(o => { const on = nodes.filter(n => n.orbit === o); on.forEach((n, j) => { n.ang = j * 2 * Math.PI / on.length + o * 0.7; }); });
-  const C = {x:500, y:390}, OR = [{rx:150, ry:92, sp:.0024}, {rx:250, ry:160, sp:.0016}, {rx:350, ry:230, sp:.0011}, {rx:440, ry:330, sp:.0008}];
+  const svg = $('#map'), C = {x: 500, y: 390};
+  const ringOf = k => RINGS.findIndex(r => r.keys.includes(k));
+  const OR = [{rx: 150, ry: 92, sp: .0016}, {rx: 248, ry: 158, sp: .0012}, {rx: 348, ry: 226, sp: .0009}, {rx: 448, ry: 300, sp: .0007}];
+  const nodes = MAP_NODES = Object.entries(topics).filter(([k, t]) => t.count > 0 && ringOf(k) >= 0)
+    .map(([key, t]) => ({key, name: TOPIC_NAMES[key] || t.title, count: t.count, orbit: ringOf(key)}));
+  // planets of one ring spread evenly round it, each ring offset so they do not line up
+  RINGS.forEach((_, o) => { const on = nodes.filter(n => n.orbit === o).sort((a, b) => b.count - a.count);
+    on.forEach((n, j) => { n.ang = j * 2 * Math.PI / on.length + o * 1.1 + 0.5; }); });
+  const total = VERSES.filter(v => v.astro).length;
   let html = `<defs><radialGradient id="sun"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#f6d58c"/><stop offset="1" stop-color="#c8743a" stop-opacity="0"/></radialGradient>
-    <radialGradient id="pl"><stop offset="0" stop-color="#f6d58c"/><stop offset="1" stop-color="#b8692f"/></radialGradient></defs>`;
-  OR.forEach(o => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="rgba(227,185,95,.22)" stroke-dasharray="3 7"/>`);
-  html += `<circle cx="${C.x}" cy="${C.y}" r="70" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="16" fill="#fff3d0"/>
-    <text x="${C.x}" y="${C.y + 44}" text-anchor="middle" style="font-family:var(--serif);font-size:18px;fill:#f6d58c">the verses</text>`;
+    ${RINGS.map((r, i) => `<radialGradient id="pl${i}" cx=".35" cy=".35"><stop offset="0" stop-color="#ffffff" stop-opacity=".95"/><stop offset=".25" stop-color="${r.color}"/><stop offset="1" stop-color="${r.color}" stop-opacity=".45"/></radialGradient>`).join('')}</defs>`;
+  OR.forEach((o, i) => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="${RINGS[i].color}" stroke-opacity=".28" stroke-dasharray="2 8"/>
+    <text class="ring-lbl" x="${C.x}" y="${C.y - o.ry - 7}" text-anchor="middle" fill="${RINGS[i].color}">${RINGS[i].name.toUpperCase()}</text>`);
+  html += `<circle cx="${C.x}" cy="${C.y}" r="64" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="15" fill="#fff3d0"/>
+    <text class="sun-n" x="${C.x}" y="${C.y + 40}" text-anchor="middle">${total || ''}</text>
+    <text class="sun-l" x="${C.x}" y="${C.y + 56}" text-anchor="middle">astronomy verses</text>`;
   nodes.forEach((n, i) => {
-    const r = 6 + Math.sqrt(n.count) * 2.6;
-    html += `<g class="planet" data-topic="${esc(n.name)}" data-key="${n.key}" id="pl${i}">
-      <circle class="glow" r="${r + 12}" fill="#e3b95f" opacity=".12"/><circle class="body" r="${r}" fill="url(#pl)"/>
+    const r = 8 + Math.sqrt(n.count) * 3.1;
+    html += `<g class="planet" data-map-key="${n.key}" id="pn${i}" style="--rc:${RINGS[n.orbit].color}">
+      <circle class="glow" r="${r + 12}" fill="${RINGS[n.orbit].color}" opacity=".12"/><circle class="ring" r="${r + 5}" fill="none" stroke="${RINGS[n.orbit].color}" stroke-width="1.6" opacity="0"/>
+      <circle class="body" r="${r}" fill="url(#pl${n.orbit})"/>
       <text x="${r + 10}" y="-2">${esc(n.name)}</text><text class="cnt" x="${r + 10}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
   });
   svg.innerHTML = html;
   let paused = false;
-  svg.addEventListener('mouseover', e => { if (e.target.closest('.planet')) paused = true; });
-  svg.addEventListener('mouseout', e => { if (e.target.closest('.planet')) paused = false; });
+  svg.addEventListener('mouseenter', () => { paused = true; });
+  svg.addEventListener('mouseleave', () => { paused = false; });
+  svg.addEventListener('click', e => { const p = e.target.closest('.planet'); if (p) selectTheme(p.dataset.mapKey); });
   nodes.forEach((n, i) => {
-    n.el = document.getElementById('pl' + i); n.r0 = +n.el.querySelector('circle.body').getAttribute('r');
+    n.el = document.getElementById('pn' + i); n.r0 = +n.el.querySelector('circle.body').getAttribute('r');
     [n.t1, n.t2] = n.el.querySelectorAll('text');
     n.w = Math.max(n.t1.getComputedTextLength(), n.t2.getComputedTextLength()) + 6; n.place = null;
   });
-  // labels take the first free spot (right/left/above/below) so they never cover another planet, label or the centre text
+  // labels take the first free spot (right/left/above/below) so they never cover another planet, label, ring name or the sun
   const boxFor = (n, p) => { const r = n.r0, w = n.w, x = n.x, y = n.y;
     return p === 'right' ? {l: x + r + 8, r: x + r + 10 + w, t: y - 15, b: y + 18}
          : p === 'left' ? {l: x - r - 10 - w, r: x - r - 8, t: y - 15, b: y + 18}
@@ -1296,14 +1424,15 @@ async function buildMap() {
          : {l: x - w / 2, r: x + w / 2, t: y + r + 6, b: y + r + 40}; };
   const hitBox = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
   const hitCircle = (b, cx, cy, cr) => { const nx = Math.max(b.l, Math.min(cx, b.r)), ny = Math.max(b.t, Math.min(cy, b.b)); return (nx - cx) ** 2 + (ny - cy) ** 2 < cr * cr; };
-  const CENTRE_TEXT = {l: C.x - 50, r: C.x + 50, t: C.y + 30, b: C.y + 52};
+  const fixed = [{l: C.x - 70, r: C.x + 70, t: C.y + 26, b: C.y + 62},
+    ...OR.map((o, i) => { const w = RINGS[i].name.length * 7.6; return {l: C.x - w / 2, r: C.x + w / 2, t: C.y - o.ry - 20, b: C.y - o.ry - 2}; })];
   function layoutLabels() {
-    const placed = [];
+    const placed = [...fixed];
     nodes.forEach(n => {
       const prefer = n.x > 700 ? ['left', 'right', 'above', 'below'] : ['right', 'left', 'above', 'below'];
       const order = n.place ? [n.place, ...prefer.filter(p => p !== n.place)] : prefer;
       const free = p => { const b = boxFor(n, p);
-        return b.l > 4 && b.r < 996 && b.t > 4 && b.b < 776 && !hitBox(b, CENTRE_TEXT) && !hitCircle(b, C.x, C.y, 24)
+        return b.l > 4 && b.r < 996 && b.t > 4 && b.b < 776 && !hitCircle(b, C.x, C.y, 26)
           && !nodes.some(m => m !== n && hitCircle(b, m.x, m.y, m.r0 + 3)) && !placed.some(q => hitBox(b, q)); };
       const choice = order.find(free) || prefer[0];
       if (choice !== n.place) {
@@ -1318,16 +1447,20 @@ async function buildMap() {
     });
   }
   (function spin() {
-    nodes.forEach((n, i) => {
-      if (!paused) n.ang += OR[n.orbit].sp;   // one speed per orbit keeps the even spacing
+    nodes.forEach(n => {
+      if (!paused) n.ang += OR[n.orbit].sp;
       const o = OR[n.orbit]; n.x = C.x + o.rx * Math.cos(n.ang); n.y = C.y + o.ry * Math.sin(n.ang);
       n.el.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
-      n.el.style.opacity = (.55 + .45 * (Math.sin(n.ang) + 1) / 2).toFixed(2);
     });
     layoutLabels();
     requestAnimationFrame(spin);
   })();
-  $('#legend').innerHTML = nodes.map(n => `<button class="chip" data-topic="${esc(n.name)}" data-key="${n.key}">${esc(n.name)} · ${n.count}</button>`).join('');
+  // themes grouped by ring under the map
+  $('#legend').innerHTML = RINGS.map((r, i) => { const ns = nodes.filter(n => n.orbit === i).sort((a, b) => b.count - a.count);
+    return ns.length ? `<div class="lg-group" style="--rc:${r.color}"><div class="lg-h"><i></i>${esc(r.name)}<span>${esc(r.note)}</span></div>
+      <div class="lg-chips">${ns.map(n => `<button class="chip" data-map-key="${n.key}">${esc(n.name)} · ${n.count}</button>`).join('')}</div></div>` : ''; }).join('');
+  $('#legend').addEventListener('click', e => { const b = e.target.closest('[data-map-key]'); if (b) selectTheme(b.dataset.mapKey); });
+  selectTheme([...nodes].sort((a, b) => b.count - a.count)[0].key);
 }
 
 /* ---------------- interaction: scroll progress, cursor light, 3D leaves ---------------- */

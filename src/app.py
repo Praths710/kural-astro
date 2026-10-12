@@ -433,7 +433,9 @@ DEEP_SYS = (
     "(a faint, uncertain connection)\n"
     "  score: an integer 1-10 that agrees with match_type: direct 8-10, analogy 5-7, shared theme 3-4, possible link 1-2. "
     "Score how directly the verse expresses the astronomy idea; a religious or poetic setting does NOT lower it (that "
-    "belongs in 'differences'). Within a band, go higher when the verse is specific (numbers, motion, phases, structure).\n"
+    "belongs in 'differences'). A verse that describes the Sun, Moon, stars or planets as they are actually seen (a "
+    "full moon, sunrise ending the night, a planet rising, the moon waxing) is 'direct' even when it sits in a prayer or a "
+    "love poem. Within a band, go higher when the verse is specific (numbers, motion, phases, structure).\n"
     "  verdict: one sentence saying plainly how close the match is and why\n"
     "  real_world: array of 6 objects {title, detail, organization, org_type, year, url} -- real astronomy or space "
     "missions, telescopes, surveys, observations or published results that study exactly this science idea:\n"
@@ -631,13 +633,14 @@ def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
         today = (f"\nToday's date is {time.strftime('%d %B %Y')}. Give each future-scope status and timeline as of today: "
                  "a project whose launch or first light date has passed is 'operating' if it happened, and a delayed one "
                  "gets its current target date.")
-        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}{hint}{today}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}{hint}{today}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}",
+                        temperature=0)   # the same verse should get the same verdict every time
         if not (isinstance(d, dict) and d.get("literal")):
             return None
         if match:
             d["match_type"] = match     # finalize_deep then keeps the score inside this band
         return finalize_deep(d)
-    return cached(ckey("deep-v14", lang, text, concept, match or ""), None, read_it, fresh=fresh)
+    return cached(ckey("deep-v15", lang, text, concept, match or ""), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
