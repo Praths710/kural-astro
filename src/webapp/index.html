@@ -185,6 +185,15 @@ h2.title em{color:var(--gold-hi)}
 .map-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;font-size:14px;line-height:1.5;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .map-row .mv{font-style:italic}.map-row .ma{color:var(--gold);font-weight:700}.map-row .ms{color:var(--parch)}
 @media(max-width:640px){.map-row{grid-template-columns:1fr}.map-row .ma{display:none}}
+.future{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.fut{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.fut-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.fut-status{font:700 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.fut-when{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.fut-name{font:600 19px var(--serif);color:var(--gold-hi)}.fut-org{font-size:12.5px;color:var(--dim)}
+.fut p{margin:4px 0;font-size:14px;line-height:1.55;color:var(--parch)}
+.fut-builds{font-size:13px;color:var(--parch);border-left:3px solid var(--gold);padding-left:10px}
+.fut-builds span{display:block;font:700 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .rw-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .ola .ola-ta.ola-en{font-family:var(--serif);font-style:italic;font-size:16.5px;line-height:1.55;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;white-space:normal}
 .ola-leaf.big .ola-ta.ola-en{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.6;white-space:normal}
@@ -1072,6 +1081,7 @@ function modalHtml(v, fromSaved) {
       <div class="m-card"><h4>The astronomy connection</h4><div id="mAnalogy"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:70%"></div></div></div>
     </div>
     <div class="m-section"><h3>Hypotheses &amp; ideas from this verse</h3><p class="note">New ideas a researcher could build today, sparked by the verse's imagery — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.</p><div id="mHyp">${loading('Forming hypotheses…')}</div></div>
+    <div class="m-section"><h3>Future scope</h3><p class="note">Real projects working on this idea right now, or approved and on the way, and which of the theories above each one will test. Only projects that exist and have an official page are listed; if nobody is working on it yet, this stays empty. Dates are as last reported; the official page has the latest.</p><div id="mFuture">${loading('Checking current missions…')}</div></div>
     <div class="m-section"><h3>How astronomers would study it</h3><p class="note">Only the observing methods that genuinely fit this verse's phenomenon, each with the real instrument that does it.</p><div id="mObs">${loading('Pointing the telescopes…')}</div></div>
     <div class="m-section"><h3>In the real world</h3><p class="note">Missions, telescopes and results that study this exact idea. A link is shown only when it opens the page for that specific mission or result (checked automatically); otherwise just the name is given. AI-summarised, so verify before citing.</p><div id="mReal">${loading('Consulting the archives…')}</div></div>
     <div class="m-section"><h3>Research papers</h3><p class="note">Peer reviewed journal and conference papers with a registered DOI (Crossref), from any recognised publisher (IEEE, Springer Nature, Elsevier, IOP, AAS, APS, Current Science and more), plus NASA technical reports. Every link opens the official DOI or NASA page.</p><div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no natural-science idea to search for.</div>'}</div></div>`;
@@ -1103,6 +1113,7 @@ function fillDeep(d, tok) {
     (L(d.differences).length ? `<div class="pts-h no">Where it breaks down</div><ul class="pts no">${L(d.differences).map(x => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : '');
   $('#mReal').innerHTML = realWorldHtml(d.real_world);
   $('#mHyp').innerHTML = hypothesesHtml(d.hypotheses);
+  $('#mFuture').innerHTML = futureHtml(d.future_scope);
   $('#mObs').innerHTML = obsHtml(d.observation);
 }
 const OBS_ICON = {'Radio spectral imaging': '📡', 'Photometry': '🔆', 'Cosmology': '🌌', 'Beta scaling': '📈',
@@ -1136,6 +1147,17 @@ function hypothesesHtml(hs) {
     </div>
   </div>`).join('')}</div>`;
 }
+const FUTURE_ICON = {'operating': '🛰️', 'under construction': '🏗️', 'approved': '✅', 'active research': '🔬'};
+function futureHtml(fs) {
+  fs = (Array.isArray(fs) ? fs : []).filter(f => f && f.project && f.url);
+  if (!fs.length) return '<div class="empty">No current project is working on this idea yet.</div>';
+  return `<div class="future">${fs.map((f, i) => `<div class="fut" style="--d:${i * 80}ms">
+    <div class="fut-top"><span class="fut-status">${FUTURE_ICON[f.status] || '🔬'} ${esc(f.status)}</span>${f.timeline ? `<span class="fut-when">${esc(f.timeline)}</span>` : ''}</div>
+    <b class="fut-name">${esc(f.project)}</b>${f.organization ? `<span class="fut-org">${esc(f.organization)}</span>` : ''}
+    <p>${esc(txt(f.what_next))}</p>
+    ${f.builds_on ? `<div class="fut-builds"><span>Tests</span>${esc(txt(f.builds_on))}</div>` : ''}
+    <a class="rw-link" href="${esc(f.url)}" target="_blank" rel="noopener">Official page ↗</a></div>`).join('')}</div>`;
+}
 const ORG_RANK = {'space agency': 0, 'university': 0, 'research institute': 1, 'government': 1, 'company': 2};
 function realWorldHtml(rw) {
   const items = (Array.isArray(rw) ? rw : []).filter(r => r && r.title);
@@ -1150,7 +1172,7 @@ function realWorldHtml(rw) {
 function deepFailed(tok, msg) {
   if (tok !== modalTok) return;
   $('#mLiteral').innerHTML = $('#mAnalogy').innerHTML = `<p style="color:var(--dim)">The AI is busy — ${esc(msg)}</p>`;
-  $('#mReal').innerHTML = $('#mHyp').innerHTML = $('#mObs').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
+  $('#mReal').innerHTML = $('#mHyp').innerHTML = $('#mObs').innerHTML = $('#mFuture').innerHTML = `<div class="empty">Couldn't load. Close and reopen to retry.</div>`;
 }
 async function openVerse(v, opts = {}) {
   if (!v) return;
@@ -1159,7 +1181,7 @@ async function openVerse(v, opts = {}) {
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
   // readings saved before the 1-10 score, translation and verse-science mapping are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && d.translation && d.score && (d.mapping || []).length && (d.real_world || []).length;
+  const upToDate = d => d && d.literal && d.translation && d.score && (d.mapping || []).length && (d.real_world || []).length && Array.isArray(d.future_scope);
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const official = ps => (ps || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
   const cachedPapers = official(v.papers).length ? official(v.papers) : (saved && official(saved.papers).length ? official(saved.papers) : null);

@@ -453,6 +453,15 @@ DEEP_SYS = (
     "    prediction: one short sentence (max 30 words) -- what result would support it and what would refute it\n"
     "    field: exactly one of " + ", ".join(FIELDS) + "\n"
     "    At least one should be doable by a student with public data or ML.\n"
+    "  future_scope: array of 0-3 objects {project, organization, status, timeline, what_next, builds_on, url} -- REAL work "
+    "happening now, or approved and funded, that will take this astronomy idea further: missions about to launch or "
+    "operating, surveys running, telescopes or detectors under construction, active research programmes. Include ONLY "
+    "projects that genuinely exist and are active or approved; if none fits, return an empty array. Never invent.\n"
+    "    status: one of 'operating', 'under construction', 'approved', 'active research'\n"
+    "    timeline: short, e.g. 'launch 2027', 'first light 2029', 'running since 2021'\n"
+    "    what_next: 1-2 sentences -- what it will find out that matters for this idea\n"
+    "    builds_on: which of your hypotheses (its title) or which theory named in this reading it bears on\n"
+    "    url: the official page of that project\n"
     "  observation: array of 2-4 objects, ONLY for methods from this list that genuinely help study the phenomenon: "
     + ", ".join(OBS_METHODS) + ". Each {method, how, instrument, organization, url}:\n"
     "    how: 1-2 sentences on exactly what the method would measure for this phenomenon\n"
@@ -537,6 +546,26 @@ OFFICIAL_PAGES = [
     (r"kepler", "https://science.nasa.gov/mission/kepler/"),
     (r"\btess\b|transiting exoplanet", "https://science.nasa.gov/mission/tess/"),
     (r"spitzer", "https://science.nasa.gov/mission/spitzer/"),
+    # current and upcoming projects, for the future scope
+    (r"lisa\b|laser interferometer space", "https://www.esa.int/Science_Exploration/Space_Science/LISA"),
+    (r"roman space|nancy grace roman", "https://science.nasa.gov/mission/roman-space-telescope/"),
+    (r"extremely large telescope|\belt\b", "https://elt.eso.org/"),
+    (r"thirty meter|\btmt\b", "https://www.tmt.org/"),
+    (r"cmb-s4", "https://cmb-s4.org/"),
+    (r"simons observatory", "https://simonsobservatory.org/"),
+    (r"desi\b|dark energy spectroscopic", "https://www.desi.lbl.gov/"),
+    (r"artemis", "https://www.nasa.gov/humans-in-space/artemis/"),
+    (r"plato\b", "https://www.esa.int/Science_Exploration/Space_Science/Plato"),
+    (r"ariel\b", "https://www.esa.int/Science_Exploration/Space_Science/Ariel"),
+    (r"europa clipper", "https://science.nasa.gov/mission/europa-clipper/"),
+    (r"spherex", "https://science.nasa.gov/mission/spherex/"),
+    (r"gaganyaan", "https://www.isro.gov.in/Gaganyaan.html"),
+    (r"cosmic explorer", "https://cosmicexplorer.org/"),
+    (r"ctao|cherenkov telescope array", "https://www.ctao.org/"),
+    (r"dragonfly", "https://science.nasa.gov/mission/dragonfly/"),
+    (r"juice\b|jupiter icy moons", "https://www.esa.int/Science_Exploration/Space_Science/Juice"),
+    (r"nanograv", "https://nanograv.org/"),
+    (r"pulsar timing array|\bipta\b", "https://www.ipta4gw.org/"),
 ]
 
 
@@ -598,13 +627,16 @@ def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
     hint = (f"\nThe site's search already judged this verse a '{match}' match for its astronomy idea. Use match_type "
             f"'{match}' and a score in that band, and write the verdict on that basis (one verdict across the site).") if match else ""
     def read_it():
-        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}{hint}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
+        today = (f"\nToday's date is {time.strftime('%d %B %Y')}. Give each future-scope status and timeline as of today: "
+                 "a project whose launch or first light date has passed is 'operating' if it happened, and a delayed one "
+                 "gets its current target date.")
+        d = gemini_json(f"{DEEP_SYS}{LANG_NOTE[lang]}{hint}{today}\n\nVerse: {text}\nModern concept: {concept or '(none identified)'}")
         if not (isinstance(d, dict) and d.get("literal")):
             return None
         if match:
             d["match_type"] = match     # finalize_deep then keeps the score inside this band
         return finalize_deep(d)
-    return cached(ckey("deep-v12", lang, text, concept, match or ""), None, read_it, fresh=fresh)
+    return cached(ckey("deep-v13", lang, text, concept, match or ""), None, read_it, fresh=fresh)
 
 
 def url_ok(u):
@@ -662,6 +694,15 @@ def finalize_deep(d):
         h["kind"] = h.get("kind") if h.get("kind") in kinds else "theoretical idea"
         h["field"] = h.get("field") if h.get("field") in FIELDS else "Space & Astronomy"
     d["hypotheses"] = hyps[:3]
+    # future scope: only real, current or approved projects, and only those whose official page opens
+    statuses = ("operating", "under construction", "approved", "active research")
+    future = [{k: as_text(f.get(k))[:400] for k in ("project", "organization", "status", "timeline", "what_next", "builds_on", "url")}
+              for f in (d.get("future_scope") or []) if isinstance(f, dict) and f.get("project") and f.get("what_next")][:5]
+    with ThreadPoolExecutor(5) as ex:
+        links = list(ex.map(lambda f: verified_link({"title": f["project"], "organization": f["organization"], "url": f["url"]}), future))
+    future = [{**f, "url": u, "status": f["status"].lower() if f["status"].lower() in statuses else "active research"}
+              for f, u in zip(future, links) if u]
+    d["future_scope"] = future[:3]
     # only the methods that apply; names matched loosely ("Radio Spectral Imaging", "Petascale Data Handling", ...)
     keys = {"radio": 0, "photometr": 1, "cosmolog": 2, "beta": 3, "peta": 4, "visuali": 5}
     rows, seen = [], set()
