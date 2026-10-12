@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --void:#05060c; --night:#0b0d1a; --glass:rgba(22,20,34,.55); --line:rgba(227,185,95,.18);
-  --gold:#e3b95f; --gold-hi:#f6d58c; --ember:#c8743a; --parch:#efe3c8; --dim:#9d937e;
+  --void:#06070f; --night:#0d0f1e; --glass:rgba(28,26,42,.6); --line:rgba(232,192,106,.26);
+  --gold:#e8c06a; --gold-hi:#f8dc96; --ember:#c8743a; --parch:#f5ecd6; --dim:#b8ae98;
   --ink:#3a2410; --leaf1:#ecd9a6; --leaf2:#d7bc82;
   --A:#e3b95f; --O:#8fd3b0; --L:#e59a6f; --M:#8a7d64; --N:#5b5446;
   --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --tamil:'Noto Serif Tamil','Latha',serif;
@@ -66,13 +66,13 @@ body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opa
   -webkit-backdrop-filter:blur(12px);box-shadow:0 0 0 0 rgba(227,185,95,.0),0 20px 60px rgba(0,0,0,.5);transition:box-shadow .3s,border-color .3s}
 .searchbar:focus-within{border-color:var(--gold);box-shadow:0 0 0 6px rgba(227,185,95,.1),0 20px 60px rgba(0,0,0,.5)}
 .searchbar input{flex:1;background:none;border:none;outline:none;color:var(--parch);font-size:16px;font-family:var(--sans);min-width:0;padding:12px 0}
-.searchbar input::placeholder{color:#7d7563}
+.searchbar input::placeholder{color:#a39981}
 .btn{background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,var(--ember));color:#1b1206;border:none;border-radius:999px;
   padding:14px 26px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:transform .15s,box-shadow .2s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(227,185,95,.35)}
 .btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
 .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;max-width:720px;position:relative}
-.chip{background:rgba(227,185,95,.06);border:1px solid var(--line);color:var(--parch);padding:8px 16px;border-radius:999px;
+.chip{background:rgba(232,192,106,.1);border:1px solid var(--line);color:var(--parch);padding:8px 16px;border-radius:999px;
   font-size:13px;cursor:pointer;transition:all .2s;font-family:var(--sans)}
 .chip:hover{border-color:var(--gold);background:rgba(227,185,95,.14);color:var(--gold-hi)}
 .stats{display:flex;gap:48px;justify-content:center;margin-top:64px;flex-wrap:wrap;position:relative}
@@ -110,8 +110,8 @@ h2.title em{color:var(--gold-hi)}
 #map .planet{cursor:pointer}
 #map .planet circle.body{transition:r .25s}
 #map .planet:hover circle.glow{opacity:.55}
-#map text{font-family:var(--sans);fill:var(--parch);font-size:14px;pointer-events:none}
-#map text.cnt{fill:var(--dim);font-size:11.5px}
+#map text{font-family:var(--serif);font-weight:600;fill:#f6ecd4;font-size:17px;pointer-events:none}
+#map text.cnt{font-family:var(--sans);font-weight:500;fill:var(--dim);font-size:12px}
 .maphint{position:absolute;left:24px;bottom:18px;font-size:12px;color:var(--dim)}
 .map-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);gap:22px;align-items:stretch}
 @media(max-width:900px){.map-grid{grid-template-columns:1fr}}
@@ -132,8 +132,8 @@ h2.title em{color:var(--gold-hi)}
 .mi-ref{font-size:11.5px;color:var(--dim);margin-top:8px}
 .mi-read{margin-top:10px;height:32px;font-size:12.5px}
 .mi-all{margin-top:auto;align-self:flex-start}
-#map .ring-lbl{font:700 11px var(--sans);letter-spacing:.18em;opacity:.75}
-#map .sun-n{font:700 20px var(--sans);fill:#fff3d0}#map .sun-l{font:600 11px var(--sans);fill:#f6d58c;letter-spacing:.06em}
+#map .ring-lbl{font:600 10.5px var(--sans);letter-spacing:.32em;fill:#e3b95f;opacity:.6}
+#map .sun-n{font:600 26px var(--serif);fill:#fff6df}#map .sun-l{font:italic 400 14px var(--serif);fill:#e9d6a8}
 #map .planet.sel circle.ring{opacity:1}#map .planet.sel circle.glow{opacity:.32}
 #map .planet:hover circle.ring{opacity:.6}
 .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px 26px;margin-top:26px}
@@ -283,7 +283,7 @@ h2.title em{color:var(--gold-hi)}
 .modal-x{position:sticky;top:0;float:right;margin:-18px -20px 0 0;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
   background:rgba(20,18,32,.9);color:var(--parch);font-size:20px;cursor:pointer;z-index:8}
 .modal-x:hover{border-color:var(--gold);color:var(--gold-hi)}
-@media(max-width:640px){.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0;overflow-x:hidden}.modal-x{margin:-14px -6px 0 0}}
+@media(max-width:640px){.m-nav{top:-30px}.modal-panel{padding:30px 16px 50px;border-radius:22px 22px 0 0;overflow-x:hidden}.modal-x{margin:-14px -6px 0 0}}
 .m-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;margin-bottom:22px}
 .m-title{display:flex;flex-direction:column;gap:8px;min-width:0}
 .m-kicker{display:flex;align-items:center;gap:10px}
@@ -298,18 +298,29 @@ h2.title em{color:var(--gold-hi)}
 .concept-link span{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--parch);opacity:.7}
 .m-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:22px}
 @media(max-width:760px){.m-grid{grid-template-columns:1fr}}
-.m-card{background:rgba(22,20,34,.85);border:1px solid var(--line);border-radius:20px;padding:22px 24px}
+.m-card{background:linear-gradient(180deg,rgba(32,29,48,.9),rgba(24,22,38,.9));border:1px solid var(--line);border-radius:20px;padding:22px 24px}
 .m-card h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
-.m-card p{margin:0;color:var(--parch);font-size:15px;line-height:1.65}
+.m-card p{margin:0;color:var(--parch);font-size:15.5px;line-height:1.7}
 .meter{display:flex;gap:6px;margin-top:14px;align-items:center;font-size:12px;color:var(--dim)}
 .meter i{width:34px;height:6px;border-radius:3px;background:rgba(255,255,255,.1)}
 .meter i.on{background:linear-gradient(90deg,var(--gold),var(--ember))}
-.m-nav{position:sticky;top:-1px;z-index:5;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:30px -6px 0;padding:10px 60px 10px 6px;
-  background:rgba(15,14,26,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.m-nav::-webkit-scrollbar{display:none}
-.m-nav button{flex:none;font:600 12.5px var(--sans);color:var(--dim);background:none;border:1px solid transparent;border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .2s,background .2s}
-.m-nav button:hover{color:var(--parch);border-color:var(--line)}
-.m-nav button.on{color:#1b1206;background:var(--gold)}
+.m-nav{position:sticky;top:-40px;z-index:5;margin:30px -8px 0;padding:14px 62px 14px 8px;
+  background:linear-gradient(180deg,rgba(16,15,27,.98) 70%,rgba(16,15,27,.88));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.m-nav-in{display:flex;gap:4px;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none;padding:5px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid rgba(227,185,95,.24);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 10px 28px rgba(0,0,0,.4)}
+.m-nav-in::-webkit-scrollbar{display:none}
+.m-nav button{display:inline-flex;align-items:center;gap:8px;flex:none;font:600 13px var(--sans);letter-spacing:.01em;color:#b9ae96;
+  background:none;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:color .25s,background .25s,box-shadow .25s}
+.mn-i{font:700 10px var(--sans);font-variant-numeric:lining-nums tabular-nums;letter-spacing:.08em;color:rgba(227,185,95,.6);transition:color .25s}
+.m-nav button:hover{color:var(--parch);background:rgba(227,185,95,.08)}
+.m-nav button.on{color:#1b1206;background:linear-gradient(135deg,#f8dd9a,#e3b95f 55%,#c8943f);
+  box-shadow:0 6px 18px rgba(227,185,95,.32),inset 0 1px 0 rgba(255,255,255,.55)}
+.m-nav button.on .mn-i{color:rgba(27,18,6,.55)}
+.m-nav-prog{position:absolute;left:8px;bottom:4px;height:2px;width:0;max-width:calc(100% - 16px);border-radius:2px;
+  background:linear-gradient(90deg,rgba(227,185,95,.2),#f6d58c);box-shadow:0 0 10px rgba(246,213,140,.55);transition:width .12s linear}
+.m-subh{margin:0 0 12px;font:700 11.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.m-sub{margin-top:34px}
 .m-sec{margin-top:48px;scroll-margin-top:72px}
 .m-sec + .m-sec{padding-top:40px;border-top:1px solid rgba(227,185,95,.1)}
 .m-sec-h{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
@@ -1111,7 +1122,7 @@ function closeModal() {
   $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); modalTok++;
 }
 // the reading in numbered sections, with a sticky bar to jump between them
-const M_SECTIONS = [['sec-meaning', 'Meaning'], ['sec-astro', 'Astronomy'], ['sec-ideas', 'Ideas'], ['sec-future', 'Future'],
+const M_SECTIONS = [['sec-meaning', 'Meaning'], ['sec-ideas', 'Hypotheses'], ['sec-future', 'Future scope'],
   ['sec-observe', 'Observe'], ['sec-real', 'Real world'], ['sec-papers', 'Papers']];
 const mSec = (i, id, title, note, inner) => `<section class="m-sec" id="${id}">
     <div class="m-sec-h"><span class="m-num">${String(i).padStart(2, '0')}</span><div><h3>${title}</h3>${note ? `<p class="note">${note}</p>` : ''}</div></div>
@@ -1136,14 +1147,16 @@ function modalHtml(v, fromSaved) {
     <div class="note-wrap" id="noteWrap" style="display:none"><label for="noteInput">Your note on this leaf</label>
       <textarea id="noteInput" maxlength="1000" placeholder="Why does this leaf matter to you? What would you tell your professor?"></textarea>
       <span class="note-hint" id="noteHint">Saved automatically to your leaves</span></div>
-    <nav class="m-nav" id="mNav" aria-label="Sections of this reading">${M_SECTIONS.map(([id, l], i) => `<button class="${i ? '' : 'on'}" data-mnav="${id}">${l}</button>`).join('')}</nav>
-    ${mSec(1, 'sec-meaning', 'What the verse says', '', `<div class="m-card" id="mLiteral">${skel()}</div>`)}
-    ${mSec(2, 'sec-astro', 'The astronomy connection', 'How directly the verse states this astronomy, the science behind it, and where the comparison holds and where it fails.', `<div id="mAnalogy"><div class="m-card">${skel()}</div></div>`)}
-    ${mSec(3, 'sec-ideas', 'Ideas from this verse', 'Hypotheses a researcher could test today, sparked by the verse. They are new ideas, not claims that the poet knew modern science.', `<div id="mHyp">${loading('Forming hypotheses…')}</div>`)}
-    ${mSec(4, 'sec-future', 'Future scope', 'Real projects working on this idea now or approved and on the way, and which idea above each one tests. Only projects with an official page are listed; dates are as last reported.', `<div id="mFuture">${loading('Checking current missions…')}</div>`)}
-    ${mSec(5, 'sec-observe', 'How astronomers would study it', 'The observing methods that fit this phenomenon, each with the real instrument that does it.', `<div id="mObs">${loading('Pointing the telescopes…')}</div>`)}
-    ${mSec(6, 'sec-real', 'In the real world', 'Missions, telescopes and results that study this exact idea, each linked to its own official page.', `<div id="mReal">${loading('Consulting the archives…')}</div>`)}
-    ${mSec(7, 'sec-papers', 'Research papers', 'Peer reviewed papers with a registered DOI, and NASA technical reports. Every link opens the official DOI or NASA page.', `<div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no science idea to search for.</div>'}</div>`)}`;
+    <nav class="m-nav" id="mNav" aria-label="Sections of this reading"><div class="m-nav-in">${M_SECTIONS.map(([id, l], i) =>
+      `<button class="${i ? '' : 'on'}" data-mnav="${id}"><span class="mn-i">${String(i + 1).padStart(2, '0')}</span>${l}</button>`).join('')}</div><i class="m-nav-prog" id="mNavProg"></i></nav>
+    ${mSec(1, 'sec-meaning', 'The meaning', 'What the verse says, and how directly it connects to astronomy.',
+      `<h4 class="m-subh">What the verse says</h4><div class="m-card" id="mLiteral">${skel()}</div>
+       <div class="m-sub"><h4 class="m-subh">The astronomy connection</h4><div id="mAnalogy"><div class="m-card">${skel()}</div></div></div>`)}
+    ${mSec(2, 'sec-ideas', 'Hypotheses &amp; ideas from this verse', 'New ideas a researcher could build today, sparked by the verse — not claims that the poet knew modern science. Each says how you would test it and what result would prove it wrong.', `<div id="mHyp">${loading('Forming hypotheses…')}</div>`)}
+    ${mSec(3, 'sec-future', 'Future scope', 'Real projects working on this idea now or approved and on the way, and which idea above each one tests. Only projects with an official page are listed; dates are as last reported.', `<div id="mFuture">${loading('Checking current missions…')}</div>`)}
+    ${mSec(4, 'sec-observe', 'How astronomers would study it', 'The observing methods that fit this phenomenon, each with the real instrument that does it.', `<div id="mObs">${loading('Pointing the telescopes…')}</div>`)}
+    ${mSec(5, 'sec-real', 'In the real world', 'Missions, telescopes and results that study this exact idea, each linked to its own official page.', `<div id="mReal">${loading('Consulting the archives…')}</div>`)}
+    ${mSec(6, 'sec-papers', 'Research papers', 'Peer reviewed papers with a registered DOI, and NASA technical reports. Every link opens the official DOI or NASA page.', `<div id="mPapers">${v.concept ? loading('Searching official publishers…') : '<div class="empty">This verse holds no science idea to search for.</div>'}</div>`)}`;
 }
 // a list item may arrive as an object ({point: ...}) in older readings: show its text, never "[object Object]"
 const txt = x => typeof x === 'string' ? x : x && typeof x === 'object' ? Object.values(x).map(txt).filter(Boolean).join(' — ') : (x == null ? '' : String(x));
@@ -1186,6 +1199,8 @@ function updateMNav() {
   let cur = M_SECTIONS[0][0];
   M_SECTIONS.forEach(([id]) => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= top) cur = id; });
   nav.querySelectorAll('[data-mnav]').forEach(b => b.classList.toggle('on', b.dataset.mnav === cur));
+  const max = panel.scrollHeight - panel.clientHeight, prog = $('#mNavProg');
+  if (prog) prog.style.width = (max > 0 ? Math.min(100, panel.scrollTop / max * 100) : 0) + '%';
 }
 document.querySelector('.modal-panel').addEventListener('scroll', updateMNav, {passive: true});
 document.addEventListener('click', e => {
@@ -1333,10 +1348,10 @@ addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#drawer').cl
 /* ---------------- cosmic map ---------------- */
 // the rings run outward from what the poets could see to the origin and fate of the universe
 const RINGS = [
-  {name: 'Our sky', note: 'what the poets could see: the Sun, the Moon, planets, eclipses', color: '#9fc4ff', keys: ['lunar', 'solar_motion', 'planets', 'eclipse']},
-  {name: 'Light & flashes', note: 'light filling space, and sudden bursts of it', color: '#f6d58c', keys: ['light_medium', 'cosmic_flash']},
-  {name: 'Cosmic structure', note: 'countless, nested and layered worlds', color: '#b9a6ff', keys: ['vast_cosmos', 'multiverse', 'extra_dim', 'holographic']},
-  {name: 'Origin & fate', note: 'how the universe begins, ends and has no centre', color: '#f2a38a', keys: ['cosmogony', 'dissolution', 'no_centre']}];
+  {name: 'Our sky', note: 'what the poets could see: the Sun, the Moon, planets, eclipses', color: '#e3b95f', keys: ['lunar', 'solar_motion', 'planets', 'eclipse']},
+  {name: 'Light & flashes', note: 'light filling space, and sudden bursts of it', color: '#e3b95f', keys: ['light_medium', 'cosmic_flash']},
+  {name: 'Cosmic structure', note: 'countless, nested and layered worlds', color: '#e3b95f', keys: ['vast_cosmos', 'multiverse', 'extra_dim', 'holographic']},
+  {name: 'Origin & fate', note: 'how the universe begins, ends and has no centre', color: '#e3b95f', keys: ['cosmogony', 'dissolution', 'no_centre']}];
 const TOPIC_DESC = {
   lunar: 'The Moon: its phases, its light and its motion across the sky.',
   solar_motion: 'The Sun rising and setting, its daily path, and the cycle of day and night.',
@@ -1351,7 +1366,7 @@ const TOPIC_DESC = {
   cosmogony: 'How the cosmos came to be from a first state, as in the Big Bang.',
   dissolution: 'How the cosmos ends: dissolving, heat death, the big crunch.',
   no_centre: 'A cosmos with no centre and no edge.'};
-const SRC_COLOR = {Thirukkural: '#e59a6f', Thiruvarutpa: '#e3b95f', Tolkappiyam: '#8fd3b0', Thiruppavai: '#9fc4ff'};
+const SRC_COLOR = {Thiruvarutpa: '#e3b95f', Thirukkural: '#f7e3b0', Tolkappiyam: '#a8742e', Thiruppavai: '#fff6df'};
 let MAP_NODES = [];
 function mapInfoHtml(n) {
   const ring = RINGS[n.orbit];
@@ -1393,17 +1408,22 @@ async function buildMap() {
     on.forEach((n, j) => { n.ang = j * 2 * Math.PI / on.length + o * 1.1 + 0.5; }); });
   const total = VERSES.filter(v => v.astro).length;
   let html = `<defs><radialGradient id="sun"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#f6d58c"/><stop offset="1" stop-color="#c8743a" stop-opacity="0"/></radialGradient>
-    ${RINGS.map((r, i) => `<radialGradient id="pl${i}" cx=".35" cy=".35"><stop offset="0" stop-color="#ffffff" stop-opacity=".95"/><stop offset=".25" stop-color="${r.color}"/><stop offset="1" stop-color="${r.color}" stop-opacity=".45"/></radialGradient>`).join('')}</defs>`;
-  OR.forEach((o, i) => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="${RINGS[i].color}" stroke-opacity=".28" stroke-dasharray="2 8"/>
-    <text class="ring-lbl" x="${C.x}" y="${C.y - o.ry - 7}" text-anchor="middle" fill="${RINGS[i].color}">${RINGS[i].name.toUpperCase()}</text>`);
-  html += `<circle cx="${C.x}" cy="${C.y}" r="64" fill="url(#sun)" opacity=".9"/><circle cx="${C.x}" cy="${C.y}" r="15" fill="#fff3d0"/>
-    <text class="sun-n" x="${C.x}" y="${C.y + 40}" text-anchor="middle">${total || ''}</text>
-    <text class="sun-l" x="${C.x}" y="${C.y + 56}" text-anchor="middle">astronomy verses</text>`;
+    <radialGradient id="plg" cx=".35" cy=".32"><stop offset="0" stop-color="#fffaf0"/><stop offset=".3" stop-color="#f6d58c"/><stop offset=".85" stop-color="#b98436"/><stop offset="1" stop-color="#7a5320"/></radialGradient>
+    ${OR.map((o, i) => `<path id="arc${i}" d="M ${C.x - o.rx - 10} ${C.y} A ${o.rx + 10} ${o.ry + 10} 0 0 1 ${C.x + o.rx + 10} ${C.y}" fill="none"/>`).join('')}</defs>`;
+  // fine engraved rings; the ring's name follows its arc
+  OR.forEach((o, i) => html += `<ellipse cx="${C.x}" cy="${C.y}" rx="${o.rx}" ry="${o.ry}" fill="none" stroke="#e3b95f" stroke-opacity="${.34 - i * .05}" stroke-width="1"/>
+    <text class="ring-lbl"><textPath href="#arc${i}" startOffset="${[50, 30, 70, 38][i]}%" text-anchor="middle">${RINGS[i].name.toUpperCase()}</textPath></text>`);
+  html += [...Array(72)].map((_, k) => { const a = k * Math.PI / 36, o = OR[3], l = k % 6 ? 5 : 10;
+    const x1 = C.x + (o.rx + 18) * Math.cos(a), y1 = C.y + (o.ry + 18) * Math.sin(a), x2 = C.x + (o.rx + 18 + l) * Math.cos(a), y2 = C.y + (o.ry + 18 + l) * Math.sin(a);
+    return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#e3b95f" stroke-opacity=".22"/>`; }).join('');
+  html += `<circle cx="${C.x}" cy="${C.y}" r="70" fill="url(#sun)" opacity=".55"/><circle cx="${C.x}" cy="${C.y}" r="11" fill="#fff6df"/>
+    <text class="sun-n" x="${C.x}" y="${C.y + 46}" text-anchor="middle">${total || ''}</text>
+    <text class="sun-l" x="${C.x}" y="${C.y + 64}" text-anchor="middle">astronomy verses</text>`;
   nodes.forEach((n, i) => {
     const r = 8 + Math.sqrt(n.count) * 3.1;
-    html += `<g class="planet" data-map-key="${n.key}" id="pn${i}" style="--rc:${RINGS[n.orbit].color}">
-      <circle class="glow" r="${r + 12}" fill="${RINGS[n.orbit].color}" opacity=".12"/><circle class="ring" r="${r + 5}" fill="none" stroke="${RINGS[n.orbit].color}" stroke-width="1.6" opacity="0"/>
-      <circle class="body" r="${r}" fill="url(#pl${n.orbit})"/>
+    html += `<g class="planet" data-map-key="${n.key}" id="pn${i}">
+      <circle class="glow" r="${r + 10}" fill="#f6d58c" opacity=".08"/><circle class="ring" r="${r + 6}" fill="none" stroke="#f6d58c" stroke-width="1.2" opacity="0"/>
+      <circle class="body" r="${r}" fill="url(#plg)"/>
       <text x="${r + 10}" y="-2">${esc(n.name)}</text><text class="cnt" x="${r + 10}" y="14">${n.count} verse${n.count > 1 ? 's' : ''}</text></g>`;
   });
   svg.innerHTML = html;
@@ -1424,7 +1444,7 @@ async function buildMap() {
          : {l: x - w / 2, r: x + w / 2, t: y + r + 6, b: y + r + 40}; };
   const hitBox = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
   const hitCircle = (b, cx, cy, cr) => { const nx = Math.max(b.l, Math.min(cx, b.r)), ny = Math.max(b.t, Math.min(cy, b.b)); return (nx - cx) ** 2 + (ny - cy) ** 2 < cr * cr; };
-  const fixed = [{l: C.x - 70, r: C.x + 70, t: C.y + 26, b: C.y + 62},
+  const fixed = [{l: C.x - 70, r: C.x + 70, t: C.y + 24, b: C.y + 70},
     ...OR.map((o, i) => { const w = RINGS[i].name.length * 7.6; return {l: C.x - w / 2, r: C.x + w / 2, t: C.y - o.ry - 20, b: C.y - o.ry - 2}; })];
   function layoutLabels() {
     const placed = [...fixed];
