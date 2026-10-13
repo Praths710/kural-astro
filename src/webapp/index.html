@@ -19,7 +19,8 @@
 *{scrollbar-width:thin;scrollbar-color:rgba(227,185,95,.35) transparent}
 ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(227,185,95,.3);border-radius:8px}::-webkit-scrollbar-track{background:transparent}
 html{scroll-behavior:smooth;overflow-x:clip}
-body{margin:0;background:var(--void);color:var(--parch);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--void);color:var(--parch);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#map text{font-variant-numeric:lining-nums}
 body.lock{overflow:hidden}
 a{color:var(--gold-hi)}
 #sky{position:fixed;inset:0;z-index:-2;display:block}
@@ -391,7 +392,7 @@ h2.title em{color:var(--gold-hi)}
 .mt-note:empty{display:none}
 .ola.mt-hide{display:none}
 .off-topic{border:1px solid rgba(227,185,95,.45);background:rgba(227,185,95,.08);border-radius:16px;padding:18px 20px;max-width:720px}
-.off-topic b{font:600 20px var(--serif);color:var(--gold-hi)}.off-topic p{color:var(--parch);margin:8px 0 12px}
+.off-topic b{font:600 22px var(--serif);color:var(--gold-hi)}.off-topic p{font:400 15px/1.6 var(--sans)!important;color:var(--parch);margin:8px 0 14px}
 .mt-more{display:block;margin:18px auto 8px;font:600 14px var(--sans);color:#1b1206;background:var(--gold);border:0;border-radius:999px;padding:11px 26px;cursor:pointer}
 .mt-more span{font-weight:500;opacity:.75;margin-left:4px}
 .mt-more:hover{background:var(--gold-hi)}
@@ -879,7 +880,7 @@ body.has-mouse #cursorGlow{opacity:1}
 
 <footer>
   <div class="orn">✦ ✦ ✦</div>
-  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Tolkappiyam: Central Institute of Classical Tamil (CICT) · Thiruppavai: Tamil Wikisource · Papers: Crossref DOI registry (peer reviewed journals and conferences) and NASA NTRS · Images: NASA Image and Video Library<br>
+  Thirukkural text: tk120404/thirukkural (Apache-2.0) · Thiruvarutpa: thiruarutpa.org · Tolkappiyam: Central Institute of Classical Tamil (CICT) · Thiruppavai: Tamil Wikisource · Papers: Crossref DOI registry (peer reviewed journals and conferences) and NASA NTRS<br>
   Labels and explanations are AI-generated and unverified. These are analogies — not evidence that the poets knew modern physics.
 </footer>
 
