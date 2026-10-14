@@ -44,7 +44,7 @@ def _clean(raw):
                              for m in (d.get("mapping") or [])[:4] if isinstance(m, dict)],
                  "future_scope": [{k: _s(f.get(k), n) for k, n in
                                    (("project", 160), ("organization", 100), ("status", 30), ("timeline", 60),
-                                    ("what_next", 500), ("builds_on", 200), ("url", 300))}
+                                    ("what_next", 500), ("builds_on", 200), ("basis", 10), ("url", 300))}
                                   for f in (d.get("future_scope") or [])[:3]
                                   if isinstance(f, dict) and str(f.get("url", "")).startswith("https://")],
                  "similarities": [_s(x, 300) for x in (d.get("similarities") or [])[:4] if isinstance(x, str)],

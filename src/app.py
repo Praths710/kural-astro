@@ -636,7 +636,59 @@ def verified_link(r):
 SEARCH_TO_DEEP = {"direct": "direct", "analogy": "analogy", "thematic": "shared theme", "possible": "possible link"}
 
 
+# future scope for every verse: when the AI finds no project for the verse itself, these real, current projects working
+# on the verse's theme are shown instead (each page opened and checked by hand). (project, organisation, status,
+# timeline, what it will find out, official page)
+_P = {
+    "artemis": ("Artemis", "NASA", "approved", "missions under way", "Returning astronauts to the Moon to study its surface, its polar ice and its history.", "https://www.nasa.gov/humans-in-space/artemis/"),
+    "lro": ("Lunar Reconnaissance Orbiter", "NASA", "operating", "running since 2009", "Maps the whole Moon and how sunlight falls across it through every phase.", "https://science.nasa.gov/mission/lro/"),
+    "aditya": ("Aditya-L1", "ISRO", "operating", "running since 2024", "Watches the Sun without a break from the L1 point, studying its corona and how its output changes.", "https://www.isro.gov.in/Aditya_L1.html"),
+    "parker": ("Parker Solar Probe", "NASA", "operating", "running since 2018", "Flies through the Sun's outer atmosphere to learn how the solar wind is driven.", "https://science.nasa.gov/mission/parker-solar-probe/"),
+    "soho": ("SOHO", "ESA and NASA", "operating", "running since 1995", "Blocks the Sun's disc with a coronagraph, an artificial eclipse, to watch the corona every day.", "https://science.nasa.gov/mission/soho/"),
+    "envision": ("EnVision", "ESA", "under construction", "launch planned in the 2030s", "Will map Venus from orbit with radar to learn how the planet's surface and atmosphere evolved.", "https://www.esa.int/Science_Exploration/Space_Science/EnVision"),
+    "juice": ("JUICE", "ESA", "operating", "on its way to Jupiter", "Will study Jupiter and its icy moons Ganymede, Callisto and Europa.", "https://www.esa.int/Science_Exploration/Space_Science/Juice"),
+    "simons": ("Simons Observatory", "Simons Observatory collaboration", "active research", "observations under way", "Maps the cosmic microwave background, the oldest light filling the universe, to test how the cosmos began.", "https://simonsobservatory.org/"),
+    "spherex": ("SPHEREx", "NASA", "operating", "running since 2025", "Surveys the whole sky in 102 colours, measuring the faint background light from all galaxies.", "https://science.nasa.gov/mission/spherex/"),
+    "ep": ("Einstein Probe", "CAS with ESA and MPE", "operating", "running since 2024", "Watches large parts of the sky for sudden X-ray flashes, such as neutron star collisions.", "https://ep.bao.ac.cn/ep/"),
+    "svom": ("SVOM", "CNSA and CNES", "operating", "running since 2024", "Catches gamma-ray bursts, the brightest flashes in the universe, within seconds.", "https://www.svom.eu/en/home/"),
+    "rubin": ("Rubin Observatory LSST", "NSF and DOE", "operating", "running since 2025", "Photographs the whole southern sky every few nights, cataloguing billions of galaxies and stars.", "https://rubinobservatory.org/"),
+    "euclid": ("Euclid", "ESA", "operating", "running since 2023", "Maps the shapes and distances of billions of galaxies to chart dark matter and dark energy.", "https://www.esa.int/Science_Exploration/Space_Science/Euclid"),
+    "desi": ("DESI", "US DOE, Berkeley Lab", "operating", "running since 2021", "Measures distances to millions of galaxies to trace how fast the universe expands, and its fate.", "https://www.desi.lbl.gov/"),
+    "ligo": ("LIGO", "Caltech and MIT, NSF", "operating", "observing runs under way", "Detects ripples in spacetime itself from colliding black holes and neutron stars.", "https://www.ligo.caltech.edu/"),
+    "lisa": ("LISA", "ESA with NASA", "approved", "launch planned in the 2030s", "A space gravitational-wave observatory that will hear spacetime ripples LIGO cannot.", "https://www.esa.int/Science_Exploration/Space_Science/LISA"),
+    "webb": ("James Webb Space Telescope", "NASA, ESA, CSA", "operating", "running since 2022", "Looks back to the first galaxies, a few hundred million years after the Big Bang.", "https://science.nasa.gov/mission/webb/"),
+}
+FUTURE_BY_THEME = {"lunar": ("artemis", "lro"), "solar_motion": ("aditya", "parker"), "eclipse": ("soho", "aditya"),
+                   "planets": ("envision", "juice"), "light_medium": ("simons", "spherex"), "cosmic_flash": ("ep", "svom"),
+                   "vast_cosmos": ("rubin", "euclid"), "multiverse": ("simons", "desi"), "extra_dim": ("ligo", "lisa"),
+                   "holographic": ("ligo", "lisa"), "spacetime_4d": ("ligo", "lisa"), "dimensionality": ("ligo", "lisa"),
+                   "cosmogony": ("webb", "euclid"), "dissolution": ("desi", "euclid"), "no_centre": ("desi", "rubin")}
+
+
+@lru_cache(maxsize=1)
+def _THEME_OF_CONCEPT():
+    return {v["concept"]: v["theme"] for v in verse_list() if v["astro"] and v["concept"]}
+
+
+def with_future_scope(d, concept):
+    """Every reading gets a future scope: the AI's own picks if it found any, otherwise current projects on its theme."""
+    if not isinstance(d, dict) or d.get("future_scope"):
+        return d
+    # the verse's own stored theme first (it also covers the second astronomy pass), then the theme rules
+    key = _THEME_OF_CONCEPT().get(concept or "") or match_topic(concept or "")[0]
+    if key not in FUTURE_BY_THEME:
+        return d
+    theme = rr.TOPICS[key][0].split(":")[0].split("(")[0].strip()
+    return {**d, "future_scope": [{"project": p, "organization": o, "status": s, "timeline": t, "what_next": w,
+                                    "builds_on": theme, "basis": "theme", "url": u}
+                                   for p, o, s, t, w, u in (_P[k] for k in FUTURE_BY_THEME[key])]}
+
+
 def deep_reading(text, concept, lang="en", fresh=False, search_match=None):
+    return with_future_scope(_deep_reading(text, concept, lang, fresh, search_match), concept)
+
+
+def _deep_reading(text, concept, lang="en", fresh=False, search_match=None):
     """The 'Read deeper' reading for one verse (cached; one AI call on a miss).
 
     search_match: how the site's search rated this verse when the reading was opened from search results, so the

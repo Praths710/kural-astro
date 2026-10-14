@@ -1249,7 +1249,7 @@ function futureHtml(fs) {
     <div class="fut-top"><span class="fut-status">${FUTURE_ICON[f.status] || '🔬'} ${esc(f.status)}</span>${f.timeline ? `<span class="fut-when">${esc(f.timeline)}</span>` : ''}</div>
     <b class="fut-name">${esc(f.project)}</b>${f.organization ? `<span class="fut-org">${esc(f.organization)}</span>` : ''}
     <p>${esc(txt(f.what_next))}</p>
-    ${f.builds_on ? `<div class="fut-builds"><span>Tests</span>${esc(txt(f.builds_on))}</div>` : ''}
+    ${f.builds_on ? `<div class="fut-builds"><span>${f.basis === 'theme' ? 'Related to this verse's theme' : 'Tests'}</span>${esc(txt(f.builds_on))}</div>` : ''}
     <a class="rw-link" href="${esc(f.url)}" target="_blank" rel="noopener">Official page ↗</a></div>`).join('')}</div>`;
 }
 const ORG_RANK = {'space agency': 0, 'university': 0, 'research institute': 1, 'government': 1, 'company': 2};
@@ -1275,7 +1275,7 @@ async function openVerse(v, opts = {}) {
   const tok = ++modalTok;
   const saved = opts.fresh ? null : SAVED[v.id];
   // readings saved before the 1-10 score, translation and verse-science mapping are refreshed (and re-saved) instead of reused
-  const upToDate = d => d && d.literal && d.translation && d.score && (d.mapping || []).length && (d.real_world || []).length && Array.isArray(d.future_scope) && (d.similarities || []).length;
+  const upToDate = d => d && d.literal && d.translation && d.score && (d.mapping || []).length && (d.real_world || []).length && (d.future_scope || []).length && (d.similarities || []).length;
   const cachedDeep = saved && upToDate(saved.deep) ? saved.deep : null;
   const official = ps => (ps || []).filter(p => p && p.url && !/arxiv\.org/i.test(p.url));
   const cachedPapers = official(v.papers).length ? official(v.papers) : (saved && official(saved.papers).length ? official(saved.papers) : null);
