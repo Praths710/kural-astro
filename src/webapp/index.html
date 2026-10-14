@@ -908,7 +908,8 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const LABEL = {A:'Cosmic vision', O:'Observed nature', L:'Literal fact', M:'Metaphor', N:'No science'};
 const TOPIC_NAMES = {holographic:'Holographic universe', multiverse:'Multiverse', extra_dim:'Extra dimensions', light_medium:'Cosmic light',
   dissolution:'End of the universe', no_centre:'No cosmic centre', cosmogony:'Birth of the cosmos', lunar:'The Moon',
-  eclipse:'Eclipses', solar_motion:'Motion of the Sun', cosmic_flash:'Cosmic flashes', vast_cosmos:'Countless worlds', planets:'Planets at dawn'};
+  eclipse:'Eclipses', solar_motion:'Motion of the Sun', cosmic_flash:'Cosmic flashes', vast_cosmos:'Countless worlds', planets:'Planets at dawn',
+  spacetime_4d:'4D spacetime', dimensionality:'Dimensionality'};
 let VERSES = [], BY_ID = {}, CUSTOM = {};
 
 async function api(path, body) {
@@ -1352,7 +1353,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#drawer').cl
 const RINGS = [
   {name: 'Our sky', note: 'what the poets could see: the Sun, the Moon, planets, eclipses', color: '#e3b95f', keys: ['lunar', 'solar_motion', 'planets', 'eclipse']},
   {name: 'Light & flashes', note: 'light filling space, and sudden bursts of it', color: '#e3b95f', keys: ['light_medium', 'cosmic_flash']},
-  {name: 'Cosmic structure', note: 'countless, nested and layered worlds', color: '#e3b95f', keys: ['vast_cosmos', 'multiverse', 'extra_dim', 'holographic']},
+  {name: 'Cosmic structure', note: 'countless, nested and layered worlds', color: '#e3b95f', keys: ['vast_cosmos', 'multiverse', 'extra_dim', 'holographic', 'dimensionality', 'spacetime_4d']},
   {name: 'Origin & fate', note: 'how the universe begins, ends and has no centre', color: '#e3b95f', keys: ['cosmogony', 'dissolution', 'no_centre']}];
 const TOPIC_DESC = {
   lunar: 'The Moon: its phases, its light and its motion across the sky.',
@@ -1363,6 +1364,8 @@ const TOPIC_DESC = {
   cosmic_flash: 'Sudden flashes and bursts of light, like gamma-ray bursts and neutron-star collisions.',
   vast_cosmos: 'Countless worlds and the sheer scale of the cosmos: stars, galaxies, other planets.',
   multiverse: 'Many universes, and universes beyond universes.',
+  spacetime_4d: 'Space and time joined into one four-dimensional fabric, as in relativity: worlds spread across space and across eons.',
+  dimensionality: 'The directions and dimensions of space: above, below, the eight directions, and spaces of many dimensions.',
   extra_dim: 'Layered and nested spaces, space within space: extra dimensions.',
   holographic: 'The whole universe held inside an atom: the very large within the very small.',
   cosmogony: 'How the cosmos came to be from a first state, as in the Big Bang.',
@@ -1729,7 +1732,7 @@ function buildSuggestions() {
   };
   Object.values(TOPIC_NAMES).forEach(t => add(t, 'Theme'));
   HERO_CHIPS.forEach(t => add(t, 'Popular'));
-  ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Big Bang', 'Expanding universe', 'Cosmic microwave background', 'Venus', 'Creation of the universe']
+  ['Dark matter', 'Gravity', 'Galaxies', 'Stars', 'Solar system', 'Big Bang', 'Expanding universe', 'Cosmic microwave background', 'Venus', 'Creation of the universe', '4D spacetime', 'Dimensionality', 'Fourth dimension']
     .forEach(t => add(t, 'Science'));
   VERSES.filter(v => v.astro && v.concept).forEach(v => add(v.concept, 'In the verses', 1, v.source || 'the verses'));
   SUGG = [...m.values()];

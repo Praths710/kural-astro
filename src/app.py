@@ -268,7 +268,7 @@ def understand_query(text):
 
 
 def search_by_topic(topic, key=None, lang="en"):
-    return cached(ckey("search-v15-theme" if key else "search-v13-gate", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
+    return cached(ckey("search-v16-theme" if key else "search-v16-named", topic.lower(), key or "", lang), 7 * DAY, lambda: _search_live(topic, key, lang))
 
 
 @lru_cache(maxsize=1)
@@ -362,6 +362,21 @@ def _search_live(topic, key=None, lang="en"):
         matches += [{**v, "match_type": "thematic", "score": 2, "matched_on": title,
                      "reason": f'Its science concept, "{v["concept"]}", belongs to the {title} theme.'}
                     for v in verses if v["id"] in in_theme and v["id"] not in chosen]
+    else:
+        # a typed search that names a map theme ("4D spacetime", "Dimensionality") always includes that theme's verses
+        asked = f'{topic} {understood["topic"] if understood else ""}'
+        named = [match_topic(asked)[0]]
+        # "4D dimensionality" names two themes at once: dimensions of space, and space with time
+        if re.search(r"dimension", asked, re.I):
+            named.append("dimensionality")
+        if re.search(r"\b4d\b|space-?time|fourth dimension|four-dimensional", asked, re.I):
+            named.append("spacetime_4d")
+        for key_named in dict.fromkeys(k for k in named if k in rr.ASTRO_THEMES):
+            title = rr.TOPICS[key_named][0].split(":")[0].split("(")[0].strip()
+            chosen = {m["id"] for m in matches}
+            matches += [{**v, "match_type": "thematic", "score": 2, "matched_on": title,
+                         "reason": f'It belongs to the {title} theme on the cosmic map.'}
+                        for v in verses if v["theme"] == key_named and v["id"] not in chosen]
     if words:
         chosen = {m["id"] for m in matches}
         for v in verses:

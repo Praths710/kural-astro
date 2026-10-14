@@ -28,6 +28,14 @@ TOPICS = {
     "earthly_imagery": ("Earthly imagery (not astrophysics)",
         ["face", "pavilion", "gossip", "fortification", "plant", "honey", "fragrance", "breeze", "grove"],
         []),
+    # before the other cosmic themes, so verses that join space and time or name directions and dimensions land here
+    "spacetime_4d": ("Four-dimensional spacetime: space and time as one fabric (relativity)",
+        ["spacetime", "space-time", "space and time", "time and space", "endless time", "eons", "eon ", "four-dimensional",
+         "fourth dimension", "4d"],
+        ['all:"four-dimensional spacetime" AND all:relativity', 'all:"Minkowski spacetime"']),
+    "dimensionality": ("Dimensionality: the directions and dimensions of space",
+        ["dimension", "multidimensional", "direction", "top, bottom", "above, below", "up/down", "axes", "three-dimensional", "3d"],
+        ['all:"dimensionality of space"', 'all:"number of spatial dimensions"']),
     "holographic": ("Holographic principle / information in bounded regions",
         ["atom", "macro-in-micro", "macrocosm", "microcosm", "small point",
          "fraction of an atom", "dust of an atom", "subatomic"],
@@ -132,7 +140,7 @@ TOPICS = {
 }
 
 # the only themes the site shows: astronomy and astrophysics. A science verse appears on the site only if it lands in one.
-ASTRO_THEMES = ("planets", "holographic", "multiverse", "extra_dim", "light_medium", "dissolution", "no_centre", "cosmogony",
+ASTRO_THEMES = ("planets", "spacetime_4d", "dimensionality", "holographic", "multiverse", "extra_dim", "light_medium", "dissolution", "no_centre", "cosmogony",
                 "lunar", "eclipse", "cosmic_flash", "vast_cosmos", "solar_motion")
 
 
