@@ -1,0 +1,22 @@
+name: Deploy to Render
+
+# For a Render service created from the public repo URL (no GitHub connection), Render cannot see pushes by itself.
+# This job tells it to redeploy after every push to main. Setup, once: in Render open the service > Settings >
+# Deploy Hook, copy the URL, then in GitHub add it as the secret RENDER_DEPLOY_HOOK
+# (Settings > Secrets and variables > Actions > Secrets). Without the secret this job does nothing.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Trigger the Render deploy
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "RENDER_DEPLOY_HOOK not set; skipping."; exit 0; fi
+          curl -fsS -m 30 -X POST "$HOOK" > /dev/null && echo "Render deploy triggered."
