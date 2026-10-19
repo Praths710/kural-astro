@@ -1,0 +1,43 @@
+name: Deploy to Hugging Face Space
+
+# Every push to main copies the files the app needs to run (the same ones the Dockerfile uses) to the Hugging Face
+# Space, which then rebuilds the Docker image. Setup, once, in this repo's Settings > Secrets and variables > Actions:
+#   secret   HF_TOKEN  a Hugging Face access token with write access
+#   variable HF_SPACE  the Space, e.g. your-name/kural-astro
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ vars.HF_SPACE != '' }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect the app files
+        run: |
+          mkdir -p space/src space/data/raw space/data/processed space/data/labels
+          cp Dockerfile requirements.txt space/
+          cp src/app.py src/auth.py src/library.py src/store.py src/gemini_label.py src/research_report.py src/official_sources.py space/src/
+          cp -r src/webapp space/src/
+          cp data/raw/thirukkural.json space/data/raw/
+          cp data/processed/thiruvarutpa.jsonl data/processed/tolkappiyam_text.jsonl data/processed/thiruppavai.jsonl data/processed/arxiv_cache.json space/data/processed/
+          cp data/labels/gemini_labels_dedup.json data/labels/astro_accepted.json data/labels/astro_english.json space/data/labels/
+          # the header Hugging Face reads to build and run the Space
+          printf -- '---\ntitle: Kural Astro\nemoji: 🌙\ncolorFrom: yellow\ncolorTo: indigo\nsdk: docker\napp_port: 7860\npinned: false\n---\n\nClassical Tamil verses read for astronomy and astrophysics. Source: https://github.com/%s\n' "$GITHUB_REPOSITORY" > space/README.md
+
+      - name: Push to the Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}
+        run: |
+          cd space
+          git init -q -b main
+          git config user.email "actions@github.com"
+          git config user.name "github-actions"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA::7} from GitHub"
+          git push -q --force "https://user:${HF_TOKEN}@huggingface.co/spaces/${HF_SPACE}" main
