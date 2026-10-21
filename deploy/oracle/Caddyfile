@@ -1,0 +1,5 @@
+# SITE_HOST comes from .env, e.g. kural-astro.129-154-1-2.sslip.io; Caddy gets and renews its HTTPS certificate.
+{$SITE_HOST} {
+	encode gzip
+	reverse_proxy app:7860
+}

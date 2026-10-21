@@ -1,0 +1,30 @@
+# Kural Astro on an Oracle Cloud Always Free server: the app plus Caddy, which serves it over HTTPS with an
+# automatic certificate. Started by setup.sh; update.sh rebuilds it when GitHub has new commits.
+services:
+  app:
+    build: ../..
+    env_file: ../../.env
+    environment:
+      HOST: 0.0.0.0
+      PORT: "7860"
+    restart: unless-stopped
+    expose:
+      - "7860"
+
+  caddy:
+    image: caddy:2
+    depends_on:
+      - app
+    env_file: ../../.env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
