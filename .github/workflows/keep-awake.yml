@@ -1,8 +1,9 @@
 name: Keep site awake
 
-# Free hosts put the app to sleep when nobody visits; a ping every 10 min keeps it awake.
-# The address comes from the repo variable SITE_URL (Settings > Secrets and variables > Actions > Variables),
-# e.g. https://your-name-kural-astro.hf.space, so moving hosts needs no code change.
+# Render's free plan sleeps after 15 min without visitors; a ping every 10 min keeps the site awake.
+# One always-on service fits Render's 750 free hours a month (FinBuddy's ping is paused for that reason).
+# Pings https://kural-astro.onrender.com unless the repo variable SITE_URL names another address
+# (Settings > Secrets and variables > Actions > Variables).
 on:
   schedule:
     - cron: "*/10 * * * *"
@@ -11,8 +12,9 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
-    if: ${{ vars.SITE_URL != '' }}
     timeout-minutes: 4
     steps:
       - name: Ping the health endpoint
-        run: curl -fsS -m 90 --retry 3 --retry-delay 15 "${{ vars.SITE_URL }}/health"
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://kural-astro.onrender.com' }}
+        run: curl -fsS -m 90 --retry 3 --retry-delay 15 "$SITE_URL/health"
